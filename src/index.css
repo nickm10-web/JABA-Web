@@ -1301,238 +1301,178 @@
 }
 
 /* ───────────────────────────────────────────────
-   PRESS SECTION
+   PRESS PAGE
    ─────────────────────────────────────────────── */
 
-.press-section {
-  position: relative;
-  background: #000;
-  padding: 7rem 1.5rem 8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  overflow: hidden;
-}
-
-.press-inner {
-  max-width: 1100px;
-  margin: 0 auto;
+.press-page-hero {
+  padding: 10rem 1.5rem 4rem;
   text-align: center;
 }
 
-.press-overline {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: #dfff00;
-  margin: 0 0 1.5rem;
+.press-page-hero-inner {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.press-headline {
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(2.8rem, 6vw, 5rem);
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-  color: #f7f7f7;
-  margin: 0 0 1rem;
+.press-page-articles {
+  padding: 0 1.5rem 6rem;
 }
 
-.press-headline-accent {
-  color: rgba(255, 255, 255, 0.35);
-}
-
-.press-subtext {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.4);
-  max-width: 520px;
-  margin: 0 auto 4rem;
-}
-
-.press-grid {
+.press-page-articles-inner {
+  max-width: 820px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2.5rem;
 }
 
-.press-card {
-  text-align: left;
-  border-radius: 20px;
+/* Individual article */
+.press-article {
+  border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease, background 0.3s ease;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.press-card-visible {
+.press-article-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.press-card-expanded {
-  border-color: rgba(223, 255, 0, 0.12);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.press-card-header {
-  all: unset;
+.press-article-header {
+  padding: 2.5rem 2.5rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 1.75rem 2rem;
-  cursor: pointer;
-  box-sizing: border-box;
-  transition: background 0.2s ease;
+  gap: 0.6rem;
 }
 
-.press-card-header:hover {
-  background: rgba(255, 255, 255, 0.015);
-}
-
-.press-card-meta {
+.press-article-meta {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1.25rem;
 }
 
-.press-card-date {
+.press-article-date,
+.press-article-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.press-article-date {
   color: #dfff00;
 }
 
-.press-card-location {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.25);
-  letter-spacing: 0.04em;
+.press-article-location {
+  color: rgba(255, 255, 255, 0.3);
 }
 
-.press-card-partner {
+.press-article-meta-icon {
+  width: 13px;
+  height: 13px;
+  opacity: 0.6;
+}
+
+.press-article-partner {
   font-family: "Instrument Serif", serif;
-  font-size: 1.5rem;
-  line-height: 1.15;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.1;
   letter-spacing: -0.03em;
   color: #f7f7f7;
   margin: 0.25rem 0 0;
 }
 
-.press-card-headline {
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.45);
-  max-width: 680px;
-}
-
-.press-card-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.5rem;
-}
-
-.press-card-toggle-text {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #dfff00;
-  letter-spacing: 0.02em;
-}
-
-.press-card-chevron {
-  width: 14px;
-  height: 14px;
-  color: #dfff00;
-  transition: transform 0.3s ease;
-}
-
-.press-card-chevron-open {
-  transform: rotate(90deg);
-}
-
-.press-card-body {
-  padding: 0 2rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  animation: press-expand 0.35s ease;
-}
-
-@keyframes press-expand {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.press-card-summary {
+.press-article-headline {
   font-size: 0.92rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.55);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding-top: 1.5rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 400;
+  max-width: 640px;
 }
 
-.press-card-quotes {
+/* Body paragraphs */
+.press-article-body {
+  padding: 1.75rem 2.5rem 0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.press-card-quote {
-  padding: 1.25rem 1.5rem;
-  border-radius: 14px;
-  background: rgba(223, 255, 0, 0.03);
-  border: 1px solid rgba(223, 255, 0, 0.06);
+.press-article-paragraph {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.52);
 }
 
-.press-card-quote-text {
-  font-family: "Instrument Serif", serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  font-style: italic;
-  color: rgba(255, 255, 255, 0.65);
-  margin: 0 0 0.75rem;
-}
-
-.press-card-quote-attr {
+/* Quotes */
+.press-article-quotes {
+  padding: 1.5rem 2.5rem 0;
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
+  gap: 1rem;
 }
 
-.press-card-quote-author {
-  font-size: 0.78rem;
+.press-article-quote {
+  padding: 1.5rem 1.75rem;
+  border-radius: 16px;
+  background: rgba(223, 255, 0, 0.025);
+  border: 1px solid rgba(223, 255, 0, 0.07);
+}
+
+.press-article-quote-text {
+  font-family: "Instrument Serif", serif;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.62);
+  margin: 0 0 1rem;
+}
+
+.press-article-quote-attr {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.press-article-quote-author {
+  font-size: 0.8rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.55);
 }
 
-.press-card-quote-title {
+.press-article-quote-title {
   font-size: 0.72rem;
   color: rgba(255, 255, 255, 0.28);
 }
 
-.press-card-points {
+/* Highlights */
+.press-article-highlights {
+  padding: 1.5rem 2.5rem 2.5rem;
+}
+
+.press-article-highlights-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 0 0.75rem;
+}
+
+.press-article-highlights-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.6rem 1.5rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  gap: 0.5rem 1.5rem;
 }
 
-@media (max-width: 640px) {
-  .press-card-points {
-    grid-template-columns: 1fr;
-  }
-}
-
-.press-card-point {
+.press-article-highlight {
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -1540,7 +1480,7 @@
   color: rgba(255, 255, 255, 0.42);
 }
 
-.press-card-point-dot {
+.press-article-highlight-dot {
   flex-shrink: 0;
   width: 5px;
   height: 5px;
@@ -1550,16 +1490,28 @@
 }
 
 @media (max-width: 640px) {
-  .press-card-header {
-    padding: 1.25rem 1.25rem;
+  .press-article-header {
+    padding: 1.75rem 1.5rem 0;
   }
 
-  .press-card-body {
-    padding: 0 1.25rem 1.5rem;
+  .press-article-body {
+    padding: 1.25rem 1.5rem 0;
   }
 
-  .press-card-partner {
-    font-size: 1.25rem;
+  .press-article-quotes {
+    padding: 1.25rem 1.5rem 0;
+  }
+
+  .press-article-highlights {
+    padding: 1.25rem 1.5rem 1.75rem;
+  }
+
+  .press-article-highlights-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .press-article-meta {
+    gap: 0.75rem;
   }
 }
 
