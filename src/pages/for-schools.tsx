@@ -21,7 +21,7 @@ const painPoints = [
   {
     icon: FileWarning,
     title: "Athletes aren't checking your portal",
-    body: "You invested in tools — but your athletes are 18–22 and don't log into dashboards. Deadlines get missed because the communication channel doesn't match how they actually operate.",
+    body: "You invested in tools, but your athletes are 18–22 and don't log into dashboards. Deadlines get missed because the communication channel doesn't match how they actually operate.",
   },
   {
     icon: ShieldAlert,
@@ -34,7 +34,7 @@ const solutions = [
   {
     icon: Brain,
     title: "Upload contracts. JABA handles the rest.",
-    body: "Upload a brand deal and JABA's AI extracts every detail — brand name, amount, deliverables, dates, parties. Assign athletes, set reminder cadences, and launch. No manual data entry.",
+    body: "Upload a brand deal and JABA's AI extracts every detail: brand name, amount, deliverables, dates, parties. Assign athletes, set reminder cadences, and launch. No manual data entry.",
   },
   {
     icon: LayoutDashboard,
@@ -44,7 +44,7 @@ const solutions = [
   {
     icon: Bell,
     title: "Every campaign tracked through 5 phases",
-    body: "From setup to contract to content to publish to wrap-up — your entire pipeline is visible at a glance. Know what's live, what's overdue, and what's waiting on approval across every sport.",
+    body: "From setup to contract to content to publish to wrap-up, your entire pipeline is visible at a glance. Know what's live, what's overdue, and what's waiting on approval across every sport.",
   },
   {
     icon: FileCheck,
@@ -88,7 +88,7 @@ export default function ForSchoolsPage() {
             <span className="audience-page-h1-accent">than the systems built to support it.</span>
           </h1>
           <p className="audience-page-subtitle">
-            Third-party NIL unlocks opportunity — and thousands of deliverables
+            Third-party NIL unlocks opportunity and thousands of deliverables
             to manage. JABA gives your department the operating layer to handle it all.
           </p>
           <div className="audience-page-hero-cta">
@@ -188,7 +188,7 @@ export default function ForSchoolsPage() {
             <span className="cta-headline-accent">chasing?</span>
           </h2>
           <p className="audience-page-cta-sub">
-            See how JABA helps athletic departments manage NIL at scale — without the fire drills.
+            See how JABA helps athletic departments manage NIL at scale, without the fire drills.
           </p>
           <VoltButton icon={<Zap className="h-4 w-4" />}>
             Book a demo

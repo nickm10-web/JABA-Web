@@ -4,7 +4,7 @@ const floatingChips = [
   { label: "Contract signed", x: "8%", y: "18%", delay: 0 },
   { label: "IG Reel submitted", x: "72%", y: "12%", delay: 0.4 },
   { label: "Reminder sent via text", x: "5%", y: "72%", delay: 0.8 },
-  { label: "$24k deal — Phase 3", x: "78%", y: "68%", delay: 1.2 },
+  { label: "$24k deal (Phase 3)", x: "78%", y: "68%", delay: 1.2 },
   { label: "JABA Score: 91", x: "68%", y: "42%", delay: 0.6 },
   { label: "Forecast: 2.4M views", x: "12%", y: "46%", delay: 1.0 },
 ];
@@ -47,7 +47,7 @@ export default function ProductShowcaseSection() {
           Schools and agents manage rosters, upload contracts, and JABA
           extracts the details automatically. Brands discover athletes,
           build campaigns, and forecast ROI before spending a dollar.
-          Athletes never log in — JABA reaches them by text.
+          Athletes never log in. JABA reaches them by text.
         </p>
 
         <div className={`showcase-device ${visible ? "showcase-device-visible" : ""}`}>

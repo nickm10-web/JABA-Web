@@ -21,12 +21,12 @@ const painPoints = [
   {
     icon: AlertTriangle,
     title: "Deals fall apart in execution",
-    body: "You closed the deal — but the athlete missed the posting window, the caption was wrong, and the brand is frustrated. You're spending more time chasing deliverables than closing new business.",
+    body: "You closed the deal, but the athlete missed the posting window, the caption was wrong, and the brand is frustrated. You're spending more time chasing deliverables than closing new business.",
   },
   {
     icon: BarChart2,
     title: "Your athletes don't see your impact",
-    body: "You're grinding behind the scenes, but athletes and their families can't see the full picture. Without organized reporting, your value is invisible — even when you're the reason deals are landing.",
+    body: "You're grinding behind the scenes, but athletes and their families can't see the full picture. Without organized reporting, your value is invisible, even when you're the reason deals are landing.",
   },
 ];
 
@@ -39,17 +39,17 @@ const solutions = [
   {
     icon: Search,
     title: "AI-generated pitch decks and media kits",
-    body: "Stop building decks manually. JABA generates professional, data-backed media kits and personalized pitches instantly — tailored to the brand you're targeting.",
+    body: "Stop building decks manually. JABA generates professional, data-backed media kits and personalized pitches instantly, tailored to the brand you're targeting.",
   },
   {
     icon: Send,
     title: "Automated campaign management",
-    body: "Once the deal closes, JABA takes over execution. Text reminders to athletes, deadline tracking, content approvals, and payment status — all in one pipeline with full CRM built in.",
+    body: "Once the deal closes, JABA takes over execution. Text reminders to athletes, deadline tracking, content approvals, and payment status, all in one pipeline with full CRM built in.",
   },
   {
     icon: LineChart,
     title: "Show your athletes what you've built",
-    body: "Generate reports showing every deal, deliverable, and dollar across your roster. Track deal history, rate trends, and growth over time. Your impact — documented and shareable.",
+    body: "Generate reports showing every deal, deliverable, and dollar across your roster. Track deal history, rate trends, and growth over time. Your impact, documented and shareable.",
   },
 ];
 
@@ -89,7 +89,7 @@ export default function ForAgenciesPage() {
           </h1>
           <p className="audience-page-subtitle">
             JABA gives agencies and agents complete visibility across every
-            athlete, deal, and deliverable in their portfolio — so nothing
+            athlete, deal, and deliverable in their portfolio, so nothing
             slips and your impact is always clear.
           </p>
           <div className="audience-page-hero-cta">

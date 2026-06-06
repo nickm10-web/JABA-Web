@@ -1,0 +1,46 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.content-section {
+  position: relative;
+  z-index: 20;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(180deg, #000000 0%, #0a1628 100%);
+}
+
+.content-section.alt {
+  background: linear-gradient(180deg, #0a1628 0%, #000000 100%);
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  text-align: center;
+}
+
+.content-wrapper h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.content-wrapper p {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .content-section {
+    padding: 3rem 1.5rem;
+  }
+}

@@ -1,0 +1,544 @@
+.auburn-case-study {
+  position: relative;
+  min-height: 100vh;
+  padding: 8rem 2rem;
+  background: linear-gradient(180deg, #000000 0%, #0a0e1a 50%, #000000 100%);
+  overflow: hidden;
+}
+
+/* Auburn Brand Colors */
+:root {
+  --auburn-orange: #E87722;
+  --auburn-blue: #03244D;
+  --auburn-navy: #0C2340;
+}
+
+/* Background Effects */
+.auburn-bg-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.auburn-gradient-1 {
+  position: absolute;
+  top: 20%;
+  left: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(232, 119, 34, 0.15) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: floatAuburn1 10s ease-in-out infinite alternate;
+}
+
+.auburn-gradient-2 {
+  position: absolute;
+  bottom: 10%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(3, 36, 77, 0.2) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: floatAuburn2 12s ease-in-out infinite alternate;
+}
+
+@keyframes floatAuburn1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(30px, 30px) scale(1.1);
+  }
+}
+
+@keyframes floatAuburn2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-30px, -30px) scale(1.1);
+  }
+}
+
+/* Container */
+.auburn-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.auburn-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.auburn-badge {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(232, 119, 34, 0.1);
+  border: 2px solid var(--auburn-orange);
+  border-radius: 30px;
+  margin-bottom: 1.5rem;
+}
+
+.badge-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--auburn-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.auburn-title {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.03em;
+}
+
+.auburn-highlight {
+  color: var(--auburn-orange);
+  text-shadow: 0 0 30px rgba(232, 119, 34, 0.5);
+}
+
+.auburn-subtitle {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 2rem;
+  margin-bottom: 5rem;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, rgba(232, 119, 34, 0.1) 0%, rgba(3, 36, 77, 0.1) 100%);
+  border: 2px solid rgba(232, 119, 34, 0.3);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--auburn-orange);
+  box-shadow: 0 20px 40px rgba(232, 119, 34, 0.2);
+}
+
+.stat-value {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  color: var(--auburn-orange);
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 20px rgba(232, 119, 34, 0.5);
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Dashboard Preview Section */
+.dashboard-preview-section {
+  margin-bottom: 5rem;
+}
+
+.preview-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Dashboard Tabs */
+.dashboard-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  padding: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--auburn-orange) rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dashboard-tabs::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.dashboard-tabs::-webkit-scrollbar-thumb {
+  background: var(--auburn-orange);
+  border-radius: 3px;
+}
+
+.tab-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tab-button:hover {
+  background: rgba(232, 119, 34, 0.1);
+  border-color: rgba(232, 119, 34, 0.5);
+  color: #ffffff;
+}
+
+.tab-button.active {
+  background: var(--auburn-orange);
+  border-color: var(--auburn-orange);
+  color: #000;
+  box-shadow: 0 4px 20px rgba(232, 119, 34, 0.4);
+}
+
+.tab-icon {
+  font-size: 1.5rem;
+}
+
+.tab-label {
+  font-size: 1rem;
+}
+
+/* Tab Content */
+.tab-content {
+  margin-top: 2rem;
+}
+
+.content-header {
+  margin-bottom: 2rem;
+}
+
+.content-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--auburn-orange);
+  margin-bottom: 0.75rem;
+}
+
+.content-description {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* Dashboard Mockup */
+.dashboard-mockup {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.mockup-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mockup-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mockup-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.mockup-title {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+.mockup-content {
+  padding: 0;
+}
+
+/* Preview Visual */
+.preview-visual {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: linear-gradient(135deg, rgba(3, 36, 77, 0.3) 0%, rgba(232, 119, 34, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-visual.home {
+  background:
+    linear-gradient(135deg, rgba(3, 36, 77, 0.4) 0%, rgba(232, 119, 34, 0.15) 100%),
+    radial-gradient(circle at 30% 30%, rgba(232, 119, 34, 0.2) 0%, transparent 50%);
+}
+
+.preview-visual.athletes {
+  background:
+    linear-gradient(180deg, rgba(232, 119, 34, 0.15) 0%, rgba(3, 36, 77, 0.3) 100%),
+    repeating-linear-gradient(90deg, transparent 0px, transparent 100px, rgba(255, 255, 255, 0.02) 100px, rgba(255, 255, 255, 0.02) 101px);
+}
+
+.preview-visual.workflow {
+  background:
+    linear-gradient(45deg, rgba(3, 36, 77, 0.3) 0%, rgba(232, 119, 34, 0.2) 100%),
+    radial-gradient(circle at 70% 50%, rgba(232, 119, 34, 0.15) 0%, transparent 60%);
+}
+
+.preview-visual.analytics {
+  background:
+    linear-gradient(225deg, rgba(232, 119, 34, 0.2) 0%, rgba(3, 36, 77, 0.4) 100%),
+    repeating-linear-gradient(45deg, transparent 0px, transparent 50px, rgba(255, 255, 255, 0.02) 50px, rgba(255, 255, 255, 0.02) 51px);
+}
+
+.preview-visual.news {
+  background:
+    linear-gradient(90deg, rgba(3, 36, 77, 0.4) 0%, rgba(232, 119, 34, 0.15) 100%),
+    radial-gradient(circle at 50% 50%, rgba(232, 119, 34, 0.2) 0%, transparent 50%);
+}
+
+.visual-overlay {
+  text-align: center;
+  padding: 2rem;
+}
+
+.overlay-text {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--auburn-orange);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.overlay-subtext {
+  display: block;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Testimonial Section */
+.testimonial-section {
+  margin-bottom: 5rem;
+}
+
+.testimonial-card {
+  position: relative;
+  background: linear-gradient(135deg, rgba(3, 36, 77, 0.4) 0%, rgba(232, 119, 34, 0.1) 100%);
+  border: 2px solid rgba(232, 119, 34, 0.3);
+  border-radius: 24px;
+  padding: 3rem;
+  backdrop-filter: blur(20px);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.quote-mark {
+  font-size: 6rem;
+  color: var(--auburn-orange);
+  opacity: 0.2;
+  line-height: 1;
+  position: absolute;
+  top: 1rem;
+  left: 2rem;
+}
+
+.testimonial-text {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.author-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--auburn-orange);
+  margin-bottom: 0.25rem;
+}
+
+.author-title {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.auburn-logo-placeholder {
+  font-size: 3rem;
+  filter: drop-shadow(0 0 10px rgba(232, 119, 34, 0.5));
+}
+
+/* CTA Section */
+.auburn-cta {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(232, 119, 34, 0.1) 0%, rgba(3, 36, 77, 0.1) 100%);
+  border-radius: 24px;
+  border: 2px solid rgba(232, 119, 34, 0.3);
+}
+
+.cta-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.cta-subtitle {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-primary,
+.cta-secondary {
+  padding: 1.25rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.cta-primary {
+  background: var(--auburn-orange);
+  color: #000;
+  box-shadow: 0 10px 30px rgba(232, 119, 34, 0.4);
+}
+
+.cta-primary:hover {
+  box-shadow: 0 15px 40px rgba(232, 119, 34, 0.6);
+  transform: translateY(-2px);
+}
+
+.cta-secondary {
+  background: transparent;
+  color: var(--auburn-orange);
+  border: 2px solid var(--auburn-orange);
+}
+
+.cta-secondary:hover {
+  background: rgba(232, 119, 34, 0.1);
+  border-color: var(--auburn-orange);
+  box-shadow: 0 10px 30px rgba(232, 119, 34, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .auburn-case-study {
+    padding: 5rem 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .dashboard-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .tab-button {
+    padding: 0.875rem 1.25rem;
+  }
+
+  .preview-visual {
+    height: 350px;
+  }
+
+  .testimonial-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .quote-mark {
+    font-size: 4rem;
+    left: 1rem;
+  }
+
+  .testimonial-author {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-visual {
+    height: 280px;
+  }
+}

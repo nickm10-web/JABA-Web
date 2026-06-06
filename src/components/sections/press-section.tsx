@@ -177,7 +177,7 @@ export default function PressSection() {
           <span className="press-headline-accent">JABA.</span>
         </h2>
         <p className="press-subtext">
-          From Power Five programs to professional leagues — here's what they're
+          From Power Five programs to professional leagues, here's what they're
           saying.
         </p>
 

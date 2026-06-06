@@ -6,19 +6,19 @@ const steps = [
     number: "01",
     icon: Upload,
     title: "Upload a contract or build a deal",
-    body: "Schools upload contracts and JABA's AI extracts every detail — brand, amount, deliverables, dates. Brands use the Deal Builder to select athletes and forecast campaign performance before committing budget.",
+    body: "Schools upload contracts and JABA's AI extracts every detail: brand, amount, deliverables, dates. Brands use the Deal Builder to select athletes and forecast campaign performance before committing budget.",
   },
   {
     number: "02",
     icon: Cpu,
     title: "JABA manages the campaign",
-    body: "Athletes get reminders and content ideas through text — no app to download, no portal to learn. Deadlines, follow-ups, and escalations are automated. Your 5-phase pipeline tracks every deal from setup to wrap-up.",
+    body: "Athletes get reminders and content ideas through text. No app to download, no portal to learn. Deadlines, follow-ups, and escalations are automated. Your 5-phase pipeline tracks every deal from setup to wrap-up.",
   },
   {
     number: "03",
     icon: BarChart3,
     title: "See what's actually working",
-    body: "Track real-time campaign performance, compare athletes side by side, and generate reports that prove ROI. Every metric — from engagement to estimated media value — in one view.",
+    body: "Track real-time campaign performance, compare athletes side by side, and generate reports that prove ROI. Every metric, from engagement to estimated media value, in one view.",
   },
 ];
 

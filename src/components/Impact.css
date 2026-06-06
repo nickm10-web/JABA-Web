@@ -1,0 +1,246 @@
+.impact-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 8rem 2rem;
+  background: linear-gradient(180deg, #000000 0%, #0a0e1a 50%, #000000 100%);
+  overflow: hidden;
+}
+
+/* Background Effects */
+.impact-bg-effects {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.impact-gradient-1 {
+  position: absolute;
+  top: 20%;
+  left: -15%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(223, 240, 0, 0.15) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: floatImpact1 12s ease-in-out infinite alternate;
+}
+
+.impact-gradient-2 {
+  position: absolute;
+  bottom: 20%;
+  right: -15%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(223, 240, 0, 0.1) 0%, transparent 70%);
+  filter: blur(100px);
+  animation: floatImpact2 15s ease-in-out infinite alternate;
+}
+
+@keyframes floatImpact1 {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(40px, 40px);
+  }
+}
+
+@keyframes floatImpact2 {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-40px, -40px);
+  }
+}
+
+/* Container */
+.impact-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.impact-header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.impact-title {
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.03em;
+}
+
+.impact-highlight {
+  color: #DFF000;
+  text-shadow: 0 0 30px rgba(223, 240, 0, 0.6);
+}
+
+.impact-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Metrics Grid */
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 2.5rem;
+  margin-bottom: 5rem;
+}
+
+/* Impact Card */
+.impact-card {
+  background: linear-gradient(135deg, rgba(223, 240, 0, 0.08) 0%, rgba(223, 240, 0, 0.03) 100%);
+  border: 2px solid rgba(223, 240, 0, 0.2);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+}
+
+.impact-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(223, 240, 0, 0.5);
+  box-shadow: 0 20px 40px rgba(223, 240, 0, 0.15);
+  background: linear-gradient(135deg, rgba(223, 240, 0, 0.12) 0%, rgba(223, 240, 0, 0.05) 100%);
+}
+
+.impact-value {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  color: #DFF000;
+  margin-bottom: 0.75rem;
+  text-shadow:
+    0 0 20px rgba(223, 240, 0, 0.5),
+    0 0 40px rgba(223, 240, 0, 0.3);
+  line-height: 1;
+}
+
+.impact-label {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+
+/* Brand Partners Showcase */
+.brands-showcase {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(223, 240, 0, 0.05) 0%, rgba(223, 240, 0, 0.02) 100%);
+  border-radius: 24px;
+  border: 2px solid rgba(223, 240, 0, 0.2);
+}
+
+.brands-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #DFF000;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.brands-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.brand-item {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.brand-item:hover {
+  background: rgba(223, 240, 0, 0.1);
+  border-color: rgba(223, 240, 0, 0.3);
+  color: #DFF000;
+  transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .impact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .impact-section {
+    padding: 5rem 1.5rem;
+  }
+
+  .impact-header {
+    margin-bottom: 3rem;
+  }
+
+  .impact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 1.5rem;
+  }
+
+  .impact-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .brands-showcase {
+    padding: 3rem 1.5rem;
+  }
+
+  .brands-list {
+    gap: 1rem;
+  }
+
+  .brand-item {
+    font-size: 1rem;
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .impact-section {
+    padding: 4rem 1rem;
+  }
+
+  .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .brands-showcase {
+    padding: 2.5rem 1rem;
+  }
+
+  .brands-list {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .brand-item {
+    width: 100%;
+    text-align: center;
+  }
+}

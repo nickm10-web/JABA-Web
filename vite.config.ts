@@ -7,6 +7,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "react": "/Users/jaba/FRAMER/node_modules/react",
+      "react-dom": "/Users/jaba/FRAMER/node_modules/react-dom",
     },
+    dedupe: ["react", "react-dom", "motion"],
   },
 });

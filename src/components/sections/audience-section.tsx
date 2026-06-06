@@ -17,7 +17,7 @@ const audiences: Audience[] = [
     headline: "Know exactly where every deal stands.",
     points: [
       "See every active partnership and what you owe in one place",
-      "Get nudged before deadlines slip — not after",
+      "Get nudged before deadlines slip, not after",
       "Spend less time in email, more time performing",
     ],
   },
@@ -36,7 +36,7 @@ const audiences: Audience[] = [
     id: "brands",
     label: "Brands",
     icon: Megaphone,
-    headline: "Campaigns that deliver — literally.",
+    headline: "Campaigns that deliver. Literally.",
     points: [
       "Track every deliverable across every athlete partner",
       "Real-time status on content, approvals, and posting",

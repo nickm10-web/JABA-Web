@@ -16,7 +16,7 @@ const painPoints = [
   {
     icon: Target,
     title: "You're guessing on talent",
-    body: "Follower counts don't tell you who will actually drive engagement. You need to know who's authentic, who's growing, and who will move product — before you commit budget.",
+    body: "Follower counts don't tell you who will actually drive engagement. You need to know who's authentic, who's growing, and who will move product, before you commit budget.",
   },
   {
     icon: Eye,
@@ -39,12 +39,12 @@ const solutions = [
   {
     icon: Sparkles,
     title: "Forecast before you spend",
-    body: "JABA's campaign forecasting predicts expected views, engagement, and estimated media value before you commit a dollar — complete with confidence intervals.",
+    body: "JABA's campaign forecasting predicts expected views, engagement, and estimated media value before you commit a dollar, complete with confidence intervals.",
   },
   {
     icon: Send,
     title: "Build deals in minutes",
-    body: "Select athletes, define deliverables, set compensation, and send — all through a guided Deal Builder. Contracts, timelines, and approvals managed in one pipeline.",
+    body: "Select athletes, define deliverables, set compensation, and send. All through a guided Deal Builder. Contracts, timelines, and approvals managed in one pipeline.",
   },
   {
     icon: BarChart3,
@@ -88,7 +88,7 @@ export default function ForBrandsPage() {
             <span className="audience-page-h1-accent">managed for you.</span>
           </h1>
           <p className="audience-page-subtitle">
-            This is JABA. AI that makes it easy to collaborate with athletes —
+            This is JABA. AI that makes it easy to collaborate with athletes,
             from finding talent to measuring results.
           </p>
           <div className="audience-page-hero-cta">

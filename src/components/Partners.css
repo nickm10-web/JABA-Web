@@ -1,0 +1,260 @@
+.partners-section {
+  position: relative;
+  padding: 3.75rem 2rem;
+  margin-top: 0;
+  background: transparent;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.partners-section::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to bottom, #000000 0%, transparent 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Background Gradient */
+.partners-bg-gradient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(ellipse at center, rgba(223, 240, 0, 0.03) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+/* Container */
+.partners-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.partners-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.partners-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.volt-text {
+  color: #DFF000;
+}
+
+.partners-subtitle {
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  color: rgba(160, 160, 160, 0.9);
+  font-weight: 400;
+  margin-bottom: 50px;
+}
+
+/* Auto-Scrolling Carousel Wrapper */
+.partners-scroll-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* Scrolling Track Container */
+.partners-scroll-track {
+  display: flex;
+  gap: 1.5rem;
+  width: fit-content;
+  animation: scroll 40s linear infinite;
+}
+
+/* Pause animation on hover */
+.partners-scroll-track:hover {
+  animation-play-state: paused;
+}
+
+/* Keyframe Animation - Continuous Scroll */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%); /* Move by 1/3 since we have 3 copies */
+  }
+}
+
+/* Partner Card - Minimal Pill Style */
+.partner-card {
+  flex-shrink: 0;
+  width: 220px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Completely transparent background */
+  background: transparent;
+
+  /* Transparent border in normal state */
+  border: 2px solid transparent;
+
+  /* Pill shape - rounded edges */
+  border-radius: 20px;
+
+  /* Comfortable padding */
+  padding: 25px 35px;
+
+  /* Smooth transitions */
+  transition: all 300ms ease;
+  cursor: pointer;
+}
+
+.partner-card:hover {
+  /* Volt border appears on hover */
+  border: 2px solid #DFF000;
+
+  /* Slightly more visible volt background */
+  background: rgba(223, 240, 0, 0.08);
+
+  /* Soft glow effect */
+  box-shadow: 0 0 20px rgba(223, 240, 0, 0.2);
+
+  /* Subtle scale for interactivity */
+  transform: scale(1.02);
+}
+
+/* Partner Logo */
+.partner-logo {
+  max-width: 100%;
+  max-height: 65px;
+  height: auto;
+
+  /* Slightly muted in normal state */
+  opacity: 0.9;
+  filter: brightness(1.1);
+
+  transition: all 300ms ease;
+}
+
+.partner-card:hover .partner-logo {
+  /* Full brightness on hover */
+  opacity: 1;
+  filter: brightness(1.3);
+}
+
+/* Partner Placeholder */
+.partner-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.partner-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  transition: all 0.3s ease;
+}
+
+.partner-card:hover .partner-name {
+  color: #DFF000;
+  text-shadow: 0 0 8px rgba(223, 240, 0, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .partners-scroll-track {
+    gap: 1.25rem;
+    animation: scroll 35s linear infinite;
+  }
+
+  .partner-card {
+    width: 190px;
+    height: 100px;
+    padding: 22px 30px;
+  }
+
+  .partner-logo {
+    max-height: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .partners-section {
+    padding: 3rem 1.5rem;
+    margin-top: 300px;
+  }
+
+  .partners-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .partners-scroll-track {
+    gap: 1rem;
+    animation: scroll 30s linear infinite;
+  }
+
+  .partner-card {
+    width: 160px;
+    height: 85px;
+    padding: 18px 25px;
+    border-radius: 16px;
+  }
+
+  .partner-logo {
+    max-height: 55px;
+  }
+
+  .partner-name {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .partners-section {
+    padding: 2.5rem 1rem;
+  }
+
+  .partners-scroll-track {
+    gap: 0.75rem;
+    animation: scroll 25s linear infinite;
+  }
+
+  .partner-card {
+    width: 140px;
+    height: 75px;
+    padding: 15px 22px;
+    border-radius: 14px;
+  }
+
+  .partner-logo {
+    max-height: 50px;
+  }
+
+  .partner-name {
+    font-size: 0.65rem;
+  }
+}
+

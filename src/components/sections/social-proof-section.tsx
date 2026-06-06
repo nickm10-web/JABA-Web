@@ -47,6 +47,36 @@ const logos: Logo[] = [
     height: 52,
   },
   {
+    name: "Notre Dame",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/87.png",
+    height: 52,
+  },
+  {
+    name: "LSU",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/99.png",
+    height: 52,
+  },
+  {
+    name: "Michigan State",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/127.png",
+    height: 52,
+  },
+  {
+    name: "San Diego",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/301.png",
+    height: 50,
+  },
+  {
+    name: "Washington",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/264.png",
+    height: 52,
+  },
+  {
+    name: "California",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/25.png",
+    height: 52,
+  },
+  {
     name: "Athletes Unlimited",
     src: "https://auprosports.com/wp-content/themes/au/assets/img/logo-athletes-unlimited-white.svg",
     height: 34,
@@ -76,7 +106,9 @@ export default function SocialProofSection() {
                 alt={logo.name}
                 className={`social-proof-logo-img${logo.invert ? " social-proof-logo-invert" : ""}`}
                 style={{ height: logo.height }}
-                loading="lazy"
+                loading="eager"
+                decoding="async"
+                aria-hidden={i >= logos.length}
               />
             </div>
           ))}

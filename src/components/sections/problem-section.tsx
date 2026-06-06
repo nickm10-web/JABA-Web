@@ -4,12 +4,12 @@ const painPoints = [
   {
     number: "01",
     title: "You're the system",
-    body: "Contracts in email. Deliverables in spreadsheets. Reminders in your head. You're manually stitching together every deal across every athlete — and it doesn't scale.",
+    body: "Contracts in email. Deliverables in spreadsheets. Reminders in your head. You're manually stitching together every deal across every athlete, and it doesn't scale.",
   },
   {
     number: "02",
     title: "Athletes don't check dashboards",
-    body: "You bought a portal. Nobody logs in. Athletes are 18–22, live on their phones, and respond to texts — not app notifications. Missed deadlines pile up because the tool doesn't meet them where they are.",
+    body: "You bought a portal. Nobody logs in. Athletes are 18–22, live on their phones, and respond to texts (not app notifications). Missed deadlines pile up because the tool doesn't meet them where they are.",
   },
   {
     number: "03",

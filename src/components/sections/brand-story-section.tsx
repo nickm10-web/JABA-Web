@@ -13,7 +13,7 @@ const storyStates: StoryState[] = [
     headline: "Other platforms track deals. JABA runs them.",
     proofLabel: "The intelligence layer for NIL.",
     proofBody:
-      "Proprietary athlete scoring, campaign forecasting with confidence intervals, and an AI assistant that communicates with athletes directly via text. Both sides of the marketplace — one platform.",
+      "Proprietary athlete scoring, campaign forecasting with confidence intervals, and an AI assistant that communicates with athletes directly via text. Both sides of the marketplace, one platform.",
     leftImage: "/story-card-left-1.png",
     rightImage: "/story-card-right-1.png",
   },
@@ -21,7 +21,7 @@ const storyStates: StoryState[] = [
     headline: "Athletes never log in. That's the point.",
     proofLabel: "Meet them where they are.",
     proofBody:
-      "College athletes are 18–22. They live on their phones. JABA's AI texts them reminders, content ideas, and campaign updates through iMessage and RCS — no app to download, no dashboard to learn. Response rates 5–10x higher than any portal.",
+      "College athletes are 18–22. They live on their phones. JABA's AI texts them reminders, content ideas, and campaign updates through iMessage and RCS. No app to download, no dashboard to learn. Response rates 5–10x higher than any portal.",
     leftImage: "/story-card-left-2.png",
     rightImage: "/story-card-right-2.png",
   },
@@ -107,7 +107,7 @@ export default function BrandStorySection() {
   return (
     <section
       ref={sectionRef}
-      className="story-section relative bg-black"
+      className="story-section relative bg-[#eeeeee]"
       aria-label="Brand story"
     >
       <div className="story-stage hidden md:flex">
