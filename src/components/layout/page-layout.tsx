@@ -44,13 +44,13 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
             />
           </a>
 
-          <nav className="page-nav-pill liquid-glass-shell hidden md:inline-flex">
+          {/* Same nav rail as the homepage hero (src/App.tsx), pinned dark. */}
+          <nav
+            data-glass="on-dark"
+            className="hero-nav-rail liquid-glass-shell hidden md:inline-flex"
+          >
             {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className={`page-nav-link ${isActive(item.href) ? "page-nav-link-active" : ""}`}
-              >
+              <a key={item.label} href={item.href} className="hero-nav-link">
                 {item.label}
               </a>
             ))}
