@@ -286,7 +286,7 @@ function MonitorHero() {
                   className="liquid-email-glass absolute bottom-4 left-4 !w-auto cursor-pointer gap-2 !rounded-full !py-2 pl-4 pr-4"
                 >
                   <span className="font-sans text-[12px] font-semibold tracking-[0.14em] text-white">
-                    PLAY · SPECIAL REPORT
+                    PLAY · LAUNCH FILM
                   </span>
                 </button>
               ) : null}
@@ -306,26 +306,26 @@ function MonitorHero() {
                 className="inline-block h-[6px] w-[6px]"
                 style={{ background: LIME }}
               />
-              JBA/BROADCAST · SPECIAL REPORT
+              JBA/FILM · THE LAUNCH
             </p>
             <h2 className="mt-4 font-display text-3xl leading-tight md:text-4xl">
-              Damar Hamlin takes the anchor desk.
+              AI has changed the game. So we changed ours.
             </h2>
             <p className="mt-4 font-sans text-sm leading-relaxed text-white/60">
-              The Buffalo Bills safety joins JABA to break down how AI is
-              rewiring the business of athlete marketing, from the wire to
-              the locker room.
+              The official JABA launch film, introduced by creative director
+              Damar Hamlin: why athlete marketing needed rebuilding, and what
+              we built instead.
             </p>
             <dl
               className="mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t border-white/10 pt-4 font-sans text-[11px] tracking-[0.14em]"
               style={{ fontVariantNumeric: "tabular-nums" }}
             >
               <dt className="text-white/35">FORMAT</dt>
-              <dd className="text-white/70">BROADCAST</dd>
-              <dt className="text-white/35">TALENT</dt>
-              <dd className="text-white/70">D. HAMLIN · NFL</dd>
+              <dd className="text-white/70">LAUNCH FILM</dd>
+              <dt className="text-white/35">FEATURING</dt>
+              <dd className="text-white/70">D. HAMLIN · CREATIVE DIRECTOR</dd>
               <dt className="text-white/35">STATUS</dt>
-              <dd className="text-white/70">AIRED</dd>
+              <dd className="text-white/70">NOW SHOWING</dd>
             </dl>
           </div>
         </div>
