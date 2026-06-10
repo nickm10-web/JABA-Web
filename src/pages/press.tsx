@@ -479,14 +479,16 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
             <span className="absolute -right-1.5 -top-1.5 h-3 w-3 border-r border-t border-black/30" />
             <span className="absolute -bottom-1.5 -left-1.5 h-3 w-3 border-b border-l border-black/30" />
             <span className="absolute -bottom-1.5 -right-1.5 h-3 w-3 border-b border-r border-black/30" />
-            <div className="flex aspect-square w-full items-center justify-center overflow-hidden border border-black/15 bg-black">
-              {release.graphic ? (
+            {release.graphic ? (
+              <div className="overflow-hidden border border-black/15">
                 <img
                   src={release.graphic}
                   alt={`${release.partner} announcement`}
-                  className="h-full w-full object-contain p-3"
+                  className="block w-full"
                 />
-              ) : (
+              </div>
+            ) : (
+              <div className="flex aspect-square w-full items-center justify-center overflow-hidden border border-black/15 bg-black">
                 <div className="flex flex-col items-center gap-4">
                   {release.logo ? (
                     <img
@@ -499,8 +501,8 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
                     Announcement graphic
                   </p>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Spec table */}
