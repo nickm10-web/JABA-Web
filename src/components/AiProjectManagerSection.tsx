@@ -92,15 +92,15 @@ export default function AiProjectManagerSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-black py-24 text-white md:py-32 lg:py-40"
+      className="bg-black py-16 text-white md:py-20"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-12">
-        <div className="mb-16 text-center md:mb-20">
+        <div className="mb-10 text-center md:mb-12">
           <h2 className="font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
             The <span className="italic">AI project manager</span> for athlete
             campaigns.
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
             JABA runs every campaign, content drop, and brand deal across your
             athletes, start to finish. No rip and replace. No new login. Built
             to speak the language of the sport.
@@ -123,7 +123,7 @@ export default function AiProjectManagerSection() {
                 animate={{ flexGrow: isDesktop && isHovered ? 1.6 : 1 }}
                 transition={{ type: "spring", stiffness: 200, damping: 30 }}
                 style={{ flexBasis: 0 }}
-                className="relative aspect-[3/4] cursor-pointer overflow-hidden rounded-3xl md:aspect-auto md:h-[60vh] lg:h-[70vh] xl:h-[75vh]"
+                className="relative aspect-[3/4] cursor-pointer overflow-hidden rounded-3xl md:aspect-auto md:h-[48vh] lg:h-[52vh] xl:h-[56vh]"
               >
                 <video
                   ref={(el) => {
