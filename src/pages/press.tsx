@@ -5,6 +5,7 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
+import { Play } from "lucide-react";
 import PageLayout from "@/components/layout/page-layout";
 
 const LIME = "#dfff00";
@@ -279,14 +280,18 @@ function MonitorHero() {
                 onClick={toggle}
                 className="aspect-video w-full cursor-pointer object-cover"
               />
-              {/* Glass play pill */}
+              {/* Centered liquid-glass play button */}
               {!playing ? (
                 <button
                   onClick={toggle}
-                  className="liquid-email-glass absolute bottom-4 left-4 !w-auto cursor-pointer gap-2 !rounded-full !py-2 pl-4 pr-4"
+                  aria-label="Play the launch film"
+                  className="absolute inset-0 z-10 flex cursor-pointer flex-col items-center justify-center gap-3"
                 >
-                  <span className="font-sans text-[12px] font-semibold tracking-[0.14em] text-white">
-                    PLAY · LAUNCH FILM
+                  <span className="liquid-email-glass flex !h-16 !w-16 items-center justify-center !rounded-full !p-0">
+                    <Play className="ml-0.5 h-6 w-6 fill-white text-white" />
+                  </span>
+                  <span className="font-sans text-[11px] font-semibold tracking-[0.22em] text-white/85 drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
+                    PRESS PLAY
                   </span>
                 </button>
               ) : null}
