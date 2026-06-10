@@ -224,7 +224,7 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
             position: "absolute",
             left: "50%",
             /* Move top anchor up so visible character is centered, cropping bottom empty space */
-            top: "65%",
+            top: agent.number === "05" ? "57%" : "65%",
             width: "100%",
             transform: `translate(-50%, -50%) scale(${agent.number === "05" ? 1.5 : 1.4})`,
             transformOrigin: "center center",
