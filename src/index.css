@@ -131,11 +131,11 @@
       border-color 0.45s ease;
   }
 
-  /* Press plates: FT-style drop cap on the first paragraph, the one lime
-     element of each plate. */
+  /* Press plates: FT-style drop cap on the first paragraph. Black, not
+     lime — volt has no contrast on the off-white print side. */
   .plate-copy > p:first-of-type::first-letter {
     font-family: "Instrument Serif", serif;
-    color: #dfff00;
+    color: #000;
     float: left;
     font-size: 3.4em;
     line-height: 0.78;
