@@ -95,16 +95,19 @@ export default function AiProjectManagerSection() {
       className="bg-black py-16 text-white md:py-20"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-12">
-        <div className="mb-10 text-center md:mb-12">
-          <h2 className="font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
-            The <span className="italic">AI project manager</span> for athlete
-            campaigns.
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/70 md:text-lg">
-            JABA runs every campaign, content drop, and brand deal across your
-            athletes, start to finish. No rip and replace. No new login. Built
-            to speak the language of the sport.
-          </p>
+        <div className="mb-10 md:mb-12">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-16">
+            <h2 className="max-w-2xl font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
+              The <span className="italic">AI project manager</span> for
+              athlete campaigns.
+            </h2>
+            <p className="max-w-md text-base leading-relaxed text-white/60 md:pb-1 md:text-lg">
+              JABA runs every campaign, content drop, and brand deal across
+              your athletes, start to finish. No rip and replace. No new
+              login. Built to speak the language of the sport.
+            </p>
+          </div>
+          <div className="mt-10 h-px bg-white/10" />
         </div>
 
         <div className="flex w-full flex-col gap-3 md:flex-row md:gap-4">
