@@ -309,12 +309,13 @@ function MonitorHero() {
               JBA/FILM · THE LAUNCH
             </p>
             <h2 className="mt-4 font-display text-3xl leading-tight md:text-4xl">
-              AI has changed the game. So we changed ours.
+              Never miss an opportunity again.
             </h2>
             <p className="mt-4 font-sans text-sm leading-relaxed text-white/60">
               The official JABA launch film, introduced by creative director
-              Damar Hamlin: why athlete marketing needed rebuilding, and what
-              we built instead.
+              Damar Hamlin. AI built for athletes and the people who work
+              with them, from contracts and compliance to captions and
+              connections.
             </p>
             <dl
               className="mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-t border-white/10 pt-4 font-sans text-[11px] tracking-[0.14em]"
