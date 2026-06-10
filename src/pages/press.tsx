@@ -527,14 +527,6 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
 
 /* ── Press kit counter ── */
 function PressKit() {
-  const [copied, setCopied] = useState(false);
-  const copyEmail = () => {
-    navigator.clipboard?.writeText("press@jaba.ai").then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  };
-
   const assets = [
     { label: "Wordmark · white · PNG", href: "/JABA%20White%201%20(1).png", file: "jaba-wordmark-white.png" },
     { label: "Mascot · face · PNG", href: "/jaba-face.png", file: "jaba-mascot-face.png" },
@@ -553,19 +545,8 @@ function PressKit() {
             </h2>
             <p className="mt-4 max-w-sm font-sans text-sm leading-relaxed text-white/55">
               Logos, mascot assets, and brand marks, cleared for editorial
-              use. For interviews, embargoes, and anything else, write to us.
+              use.
             </p>
-            <button
-              onClick={copyEmail}
-              className="liquid-email-glass mt-8 !w-auto cursor-pointer gap-3 !rounded-full !py-2.5 pl-5 pr-5"
-            >
-              <span
-                className="font-sans text-[13px] font-semibold tracking-[0.06em]"
-                style={{ color: copied ? LIME : "#fff" }}
-              >
-                {copied ? "Copied to clipboard" : "press@jaba.ai · copy"}
-              </span>
-            </button>
           </div>
 
           <div className="md:col-span-7">
