@@ -4,6 +4,14 @@ const footerLinks = {
   Legal: ["Privacy", "Terms", "Security"],
 };
 
+// Links with real routes; everything else falls back to a dead anchor.
+const linkHrefs: Record<string, string> = {
+  Platform: "#/",
+  Press: "#/press",
+  Privacy: "#/privacy",
+  Terms: "#/terms",
+};
+
 export default function FooterSection() {
   return (
     <footer className="footer-section">
@@ -27,7 +35,10 @@ export default function FooterSection() {
                 {links.map((link) => (
                   <li key={link}>
                     <a
-                      href={`#${link.toLowerCase().replace(/\s+/g, "-")}`}
+                      href={
+                        linkHrefs[link] ??
+                        `#${link.toLowerCase().replace(/\s+/g, "-")}`
+                      }
                       className="footer-link"
                     >
                       {link}
