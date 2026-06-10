@@ -233,7 +233,7 @@ export default function TextAssistantSection() {
                             <div
                               className={`flex w-full items-end gap-1.5 ${
                                 isMe ? "justify-end" : ""
-                              } ${m.reaction ? "mt-2" : ""}`}
+                              } ${m.reaction && !showSender ? "mt-2" : ""}`}
                             >
                               {!isMe ? (
                                 m.sender === "jaba" ? (
