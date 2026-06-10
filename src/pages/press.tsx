@@ -312,8 +312,6 @@ function MonitorHero() {
               <dd className="text-white/70">LAUNCH FILM</dd>
               <dt className="text-white/35">FEATURING</dt>
               <dd className="text-white/70">D. HAMLIN · CREATIVE DIRECTOR</dd>
-              <dt className="text-white/35">STATUS</dt>
-              <dd className="text-white/70">NOW SHOWING</dd>
             </dl>
           </div>
         </div>
