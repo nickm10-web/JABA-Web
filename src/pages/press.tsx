@@ -295,20 +295,7 @@ function MonitorHero() {
 
           {/* Story metadata column */}
           <div className="flex flex-col md:col-span-4">
-            <p
-              className="flex items-center gap-2 border-b border-white/10 pb-3 font-sans text-[11px] tracking-[0.16em] text-white/50"
-              style={{ fontVariantNumeric: "tabular-nums" }}
-            >
-              <motion.span
-                aria-hidden
-                animate={{ opacity: [1, 0.25, 1] }}
-                transition={{ duration: 1.2, repeat: Infinity }}
-                className="inline-block h-[6px] w-[6px]"
-                style={{ background: LIME }}
-              />
-              JBA/FILM · THE LAUNCH
-            </p>
-            <h2 className="mt-4 font-display text-3xl leading-tight md:text-4xl">
+            <h2 className="font-display text-3xl leading-tight md:text-4xl">
               Never miss an opportunity again.
             </h2>
             <p className="mt-4 font-sans text-sm leading-relaxed text-white/60">
