@@ -185,12 +185,16 @@ export default function TextAssistantSection() {
                             >
                               {!isMe ? (
                                 m.sender === "jaba" ? (
-                                  <img
-                                    src="/jaba-3d-logo.png"
-                                    alt=""
-                                    aria-hidden
-                                    className="h-7 w-7 shrink-0 rounded-full bg-black object-cover"
-                                  />
+                                  // Crop into the mascot's head for a
+                                  // contact-photo style avatar.
+                                  <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full bg-black">
+                                    <img
+                                      src="/meet-jaba.png"
+                                      alt=""
+                                      aria-hidden
+                                      className="absolute left-[-39%] top-[-32%] w-[178%] max-w-none"
+                                    />
+                                  </span>
                                 ) : (
                                   <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-[#a8a8ad] to-[#8e8e93] text-[12px] font-medium text-white">
                                     {m.name[0]}
