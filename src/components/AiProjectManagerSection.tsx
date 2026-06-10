@@ -96,9 +96,6 @@ export default function AiProjectManagerSection() {
     >
       <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-12">
         <div className="mb-16 text-center md:mb-20">
-          <p className="mb-6 text-xs uppercase tracking-[0.2em] text-white/50">
-            THE PLATFORM
-          </p>
           <h2 className="font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
             The <span className="italic">AI project manager</span> for athlete
             campaigns.
