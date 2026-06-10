@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
+import { ChevronLeft, ChevronRight, Video, Wifi } from "lucide-react";
 
 // NOTE: The conversation autoplays once the phone scrolls into view: a
 // timer chain reveals messages with texting-like pacing (longer texts
@@ -49,6 +50,7 @@ const gapBefore = (m: ChatMessage) =>
 export default function TextAssistantSection() {
   const phoneRef = useRef<HTMLDivElement | null>(null);
   const [visibleCount, setVisibleCount] = useState(0);
+  const [readShown, setReadShown] = useState(false);
   const playing = useInView(phoneRef, { once: true, amount: 0.6 });
 
   useEffect(() => {
@@ -58,6 +60,8 @@ export default function TextAssistantSection() {
       at += i === 0 ? 0 : gapBefore(m);
       return setTimeout(() => setVisibleCount(i + 1), at);
     });
+    // Read receipt lands a beat after the last message sends.
+    timers.push(setTimeout(() => setReadShown(true), at + 900));
     return () => timers.forEach(clearTimeout);
   }, [playing]);
 
@@ -125,14 +129,62 @@ export default function TextAssistantSection() {
                   {/* Dynamic Island */}
                   <div className="absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black" />
 
+                  {/* Status bar */}
+                  <div className="flex items-center justify-between px-7 pb-1 pt-2.5 text-black">
+                    <span className="text-[13px] font-semibold tracking-tight">
+                      2:14
+                    </span>
+                    <div className="flex items-center gap-1">
+                      {/* Cell signal bars */}
+                      <span className="flex items-end gap-[1.5px]" aria-hidden>
+                        <span className="h-[4px] w-[2.5px] rounded-[1px] bg-black" />
+                        <span className="h-[6px] w-[2.5px] rounded-[1px] bg-black" />
+                        <span className="h-[8px] w-[2.5px] rounded-[1px] bg-black" />
+                        <span className="h-[10px] w-[2.5px] rounded-[1px] bg-black/30" />
+                      </span>
+                      <Wifi className="h-3.5 w-3.5" strokeWidth={2.5} />
+                      {/* Battery */}
+                      <span
+                        className="relative h-[11px] w-[22px] rounded-[3px] border border-black/35"
+                        aria-hidden
+                      >
+                        <span className="absolute inset-[1.5px] right-[6px] rounded-[1.5px] bg-black" />
+                        <span className="absolute -right-[3px] top-1/2 h-[4px] w-[1.5px] -translate-y-1/2 rounded-r-sm bg-black/35" />
+                      </span>
+                    </div>
+                  </div>
+
                   {/* Chat header */}
-                  <div className="border-b border-black/5 bg-white/95 px-4 pb-3 pt-12 backdrop-blur-sm">
-                    <p className="text-center text-[15px] font-semibold leading-tight text-black">
-                      Brielle, JABA
-                    </p>
-                    <p className="mt-0.5 text-center text-[11px] text-black/50">
-                      iMessage
-                    </p>
+                  <div className="border-b border-black/5 bg-white/95 px-3 pb-2 pt-1 backdrop-blur-sm">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center text-[#007aff]">
+                        <ChevronLeft className="h-6 w-6" strokeWidth={2.4} />
+                        <span className="-ml-0.5 rounded-full bg-[#e9e9eb] px-2 py-[2px] text-[11px] font-semibold text-black">
+                          47
+                        </span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <div className="flex -space-x-2.5">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-b from-[#a8aeb8] to-[#8e95a1] text-[15px] font-medium text-white ring-2 ring-white">
+                            B
+                          </span>
+                          <img
+                            src="/jaba-face.png"
+                            alt=""
+                            aria-hidden
+                            className="h-9 w-9 rounded-full object-cover ring-2 ring-white"
+                          />
+                        </div>
+                        <p className="mt-1 flex items-center text-[11px] leading-none text-black">
+                          3 People
+                          <ChevronRight className="h-3 w-3 text-black/35" />
+                        </p>
+                      </div>
+                      <Video
+                        className="mt-1.5 h-6 w-6 text-[#007aff]"
+                        strokeWidth={1.7}
+                      />
+                    </div>
                   </div>
 
                   {/* Message list — justify-end so messages stack from the
@@ -226,6 +278,17 @@ export default function TextAssistantSection() {
                                 </p>
                               </div>
                             </div>
+                            {isMe && i === messages.length - 1 && readShown ? (
+                              <motion.p
+                                initial={{ opacity: 0, y: 3 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.35 }}
+                                className="mt-0.5 pr-1 text-right text-[10px] text-black/40"
+                              >
+                                <span className="font-semibold">Read</span>{" "}
+                                2:15 PM
+                              </motion.p>
+                            ) : null}
                           </motion.div>
                         );
                       })}
