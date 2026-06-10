@@ -68,7 +68,7 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
   // Info section starts this far down from card top
   const INFO_TOP = 130;
   // Card height = info top + nameplate content (~140px)
-  const CARD_H = featured ? 290 : 270;
+  const CARD_H = featured ? 350 : 330;
 
   return (
     <motion.div
@@ -102,11 +102,11 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
           borderRadius: "18px",
           background: "linear-gradient(160deg, #101010 0%, #060606 100%)",
           border: featured
-            ? `1px solid ${LIME}55`
-            : "1px solid rgba(255,255,255,0.09)",
+            ? `1px solid ${LIME}66`
+            : `1px solid ${LIME}28`,
           boxShadow: featured
-            ? `0 20px 70px rgba(0,0,0,0.9), 0 0 45px ${LIME}14`
-            : "0 10px 50px rgba(0,0,0,0.85)",
+            ? `0 20px 70px rgba(0,0,0,0.9), 0 0 45px ${LIME}18`
+            : `0 10px 50px rgba(0,0,0,0.85), 0 0 24px ${LIME}08`,
           zIndex: 2,
         }}
       >
@@ -139,10 +139,10 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
             style={{
               fontVariantNumeric: "tabular-nums",
               fontWeight: 600,
-              fontSize: "11px",
+              fontSize: "12px",
               letterSpacing: "0.08em",
-              color: featured ? LIME : "rgba(255,255,255,0.38)",
-              marginBottom: "6px",
+              color: LIME,
+              marginBottom: "7px",
             }}
           >
             {agent.number} · {agent.position}
@@ -162,10 +162,10 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
           <h3
             className="font-display"
             style={{
-              fontSize: featured ? "1.35rem" : "1.2rem",
+              fontSize: featured ? "1.6rem" : "1.45rem",
               color: "#fff",
               lineHeight: 1.15,
-              marginBottom: "5px",
+              marginBottom: "7px",
             }}
           >
             {agent.name}
@@ -175,10 +175,10 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
           <p
             className="font-sans"
             style={{
-              fontSize: "0.72rem",
-              color: "rgba(255,255,255,0.55)",
-              lineHeight: 1.5,
-              marginBottom: "8px",
+              fontSize: "0.82rem",
+              color: "rgba(255,255,255,0.6)",
+              lineHeight: 1.55,
+              marginBottom: "10px",
             }}
           >
             {agent.description}
@@ -188,8 +188,8 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
           <p
             className="font-sans"
             style={{
-              fontSize: "10px",
-              color: "rgba(255,255,255,0.38)",
+              fontSize: "11px",
+              color: "rgba(255,255,255,0.42)",
               letterSpacing: "0.02em",
               whiteSpace: "nowrap",
               overflow: "hidden",
