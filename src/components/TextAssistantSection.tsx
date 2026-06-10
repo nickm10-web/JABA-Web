@@ -36,7 +36,7 @@ const messages: ChatMessage[] = [
 // Texting-like pacing: short messages arrive fast, long ones take a
 // beat longer (someone "typing"), capped so the scene never drags.
 const gapBefore = (m: ChatMessage) =>
-  Math.min(700 + m.text.length * 16, 2000);
+  Math.min(450 + m.text.length * 10, 1300);
 
 export default function TextAssistantSection() {
   const phoneRef = useRef<HTMLDivElement | null>(null);
@@ -45,7 +45,7 @@ export default function TextAssistantSection() {
 
   useEffect(() => {
     if (!playing) return;
-    let at = 400;
+    let at = 300;
     const timers = messages.map((m, i) => {
       at += i === 0 ? 0 : gapBefore(m);
       return setTimeout(() => setVisibleCount(i + 1), at);
@@ -120,7 +120,7 @@ export default function TextAssistantSection() {
                   {/* Chat header */}
                   <div className="border-b border-black/5 bg-white/95 px-4 pb-3 pt-12 backdrop-blur-sm">
                     <p className="text-center text-[15px] font-semibold leading-tight text-black">
-                      Brielle, Casey, JABA
+                      Brielle, JABA
                     </p>
                     <p className="mt-0.5 text-center text-[11px] text-black/50">
                       iMessage
@@ -137,13 +137,16 @@ export default function TextAssistantSection() {
                     </p>
                     <AnimatePresence initial={false}>
                       {messages.slice(0, visibleCount).map((m, i, arr) => {
-                        const isJaba = m.sender === "jaba";
+                        // Casey is the admin viewing this thread: their
+                        // messages are "me" (blue, right, no sender label).
+                        const isMe = m.sender === "casey";
                         const showSender =
-                          i === 0 || arr[i - 1].sender !== m.sender;
-                        const alignClass = isJaba
+                          !isMe &&
+                          (i === 0 || arr[i - 1].sender !== m.sender);
+                        const alignClass = isMe
                           ? "items-end"
                           : "items-start";
-                        const bubbleClass = isJaba
+                        const bubbleClass = isMe
                           ? "bg-[#007aff] text-white rounded-2xl rounded-br-md"
                           : "bg-[#e9e9eb] text-black rounded-2xl rounded-bl-md";
 
@@ -163,11 +166,7 @@ export default function TextAssistantSection() {
                             className={`flex flex-col ${alignClass}`}
                           >
                             {showSender ? (
-                              <span
-                                className={`mb-0.5 text-[10px] text-black/40 ${
-                                  isJaba ? "pr-3" : "pl-3"
-                                }`}
-                              >
+                              <span className="mb-0.5 pl-3 text-[10px] text-black/40">
                                 {m.name}
                               </span>
                             ) : null}
