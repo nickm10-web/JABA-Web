@@ -34,7 +34,7 @@ export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionPro
 
       {/* Info band — full-bleed liquid glass across the bottom of the loop. */}
       <div className="footer-glass absolute inset-x-0 bottom-0 border-x-0 border-b-0">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-5 md:flex-row md:justify-between md:px-10 lg:px-12">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-9 md:flex-row md:justify-between md:px-10 lg:px-12">
           <a href="#/" aria-label="JABA home">
             <img
               src="/JABA%20White%201%20(1).png"
