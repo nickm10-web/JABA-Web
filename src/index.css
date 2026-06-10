@@ -131,6 +131,18 @@
       border-color 0.45s ease;
   }
 
+  /* Press plates: FT-style drop cap on the first paragraph, the one lime
+     element of each plate. */
+  .plate-copy > p:first-of-type::first-letter {
+    font-family: "Instrument Serif", serif;
+    color: #dfff00;
+    float: left;
+    font-size: 3.4em;
+    line-height: 0.78;
+    padding-right: 0.1em;
+    padding-top: 0.04em;
+  }
+
   /* Film-grain overlay: gives flat black sections a paper/film material. */
   .film-grain {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");

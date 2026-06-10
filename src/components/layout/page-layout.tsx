@@ -5,10 +5,11 @@ import FooterSection from "@/components/sections/footer-section";
 
 const navItems = [
   { label: "Platform", href: "#/" },
-  { label: "For Brands", href: "#/for-brands" },
-  { label: "For Schools", href: "#/for-schools" },
-  { label: "For Agencies", href: "#/for-agencies" },
   { label: "Press", href: "#/press" },
+  // Temporarily hidden, matching the homepage nav (see src/App.tsx).
+  // { label: "For Brands", href: "#/for-brands" },
+  // { label: "For Schools", href: "#/for-schools" },
+  // { label: "For Agencies", href: "#/for-agencies" },
 ];
 
 function useCurrentHash() {
