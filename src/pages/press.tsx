@@ -34,6 +34,7 @@ const pressReleases: PressRelease[] = [
     wireDate: "FEB 18 2026 · CINCINNATI, OH",
     plateDate: "FEB 18",
     logo: "https://a.espncdn.com/i/teamlogos/ncaa/500/2132.png",
+    graphic: "/press/jabaxcincinnati.png",
     headline:
       "Cincinnati Athletics enters NIL partnership with JABA AI.",
     location: "Cincinnati, OH",
