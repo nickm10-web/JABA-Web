@@ -1903,12 +1903,22 @@
 }
 
 .page-nav-inner {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.9rem 1.5rem;
+}
+
+/* Center the pill in the bar, matching the homepage nav. */
+@media (min-width: 768px) {
+  .page-nav-inner > .page-nav-pill {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .page-nav-brand {

@@ -4,7 +4,7 @@ import { VoltButton } from "@/components/ui/volt-button";
 import FooterSection from "@/components/sections/footer-section";
 
 const navItems = [
-  { label: "Platform", href: "#/" },
+  { label: "Home", href: "#/" },
   { label: "Press", href: "#/press" },
   // Temporarily hidden, matching the homepage nav (see src/App.tsx).
   // { label: "For Brands", href: "#/for-brands" },
@@ -54,13 +54,10 @@ export default function PageLayout({ children }: { children: React.ReactNode }) 
                 {item.label}
               </a>
             ))}
-          </nav>
-
-          <div className="hidden md:flex">
-            <VoltButton icon={<Zap className="h-4 w-4" />}>
+            <VoltButton className="-my-1.5 ml-1" size="lg" icon={<Zap className="h-4 w-4" />}>
               Book a demo
             </VoltButton>
-          </div>
+          </nav>
 
           <div className="flex items-center gap-3 md:hidden">
             <VoltButton icon={<Zap className="h-4 w-4" />}>
