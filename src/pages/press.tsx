@@ -22,7 +22,6 @@ interface PressRelease {
   graphic?: string;
   paragraphs: string[];
   quotes: { text: string; author: string; title: string }[];
-  highlights?: string[];
 }
 
 const pressReleases: PressRelease[] = [
@@ -50,12 +49,6 @@ const pressReleases: PressRelease[] = [
         author: "Eddie Taylor",
         title: "Director of Athlete Influence, Cincinnati",
       },
-    ],
-    highlights: [
-      "Brand opportunity sourcing for all Bearcats",
-      "Personalized pitch and proposal generation",
-      "Real-time campaign performance tracking",
-      "Full deal lifecycle management",
     ],
   },
   {
@@ -87,12 +80,6 @@ const pressReleases: PressRelease[] = [
         title: "CEO, JABA",
       },
     ],
-    highlights: [
-      "AI-powered pitching automation and media kits",
-      "Verified first-party athlete data for brands",
-      "Automated compliance and contract management",
-      "Real-time ROI tracking for all partnerships",
-    ],
   },
   {
     id: "purdue",
@@ -117,12 +104,6 @@ const pressReleases: PressRelease[] = [
         author: "Ken Halpin",
         title: "Deputy Athletics Director & COO, Purdue",
       },
-    ],
-    highlights: [
-      "Prospective brand opportunity sourcing",
-      "Personalized pitches for each Boilermaker",
-      "Real-time social media campaign tracking",
-      "Full deal lifecycle management",
     ],
   },
   {
@@ -149,12 +130,6 @@ const pressReleases: PressRelease[] = [
         title: "Sr. Manager, Athlete & Content Marketing, Athletes Unlimited",
       },
     ],
-    highlights: [
-      "Brand management across three pro women's leagues",
-      "AI-driven individual athlete feedback",
-      "Streamlined workflow and deliverable management",
-      "Social presence optimization for athletes",
-    ],
   },
   {
     id: "baylor",
@@ -179,12 +154,6 @@ const pressReleases: PressRelease[] = [
         author: "David Kaye",
         title: "Athletics General Manager, Baylor",
       },
-    ],
-    highlights: [
-      "Smart, scalable brand outreach",
-      "Real-time social media and campaign metrics",
-      "Deal management from negotiation to execution",
-      "Integration with Playfly Max revenue platform",
     ],
   },
 ];
@@ -549,25 +518,6 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
             <dd className="text-black/75">{release.partner.toUpperCase()}</dd>
           </dl>
 
-          {/* Capabilities, numbered, no icons */}
-          {release.highlights ? (
-            <ol className="mt-6 border-t border-black/10 pt-4">
-              {release.highlights.map((h, n) => (
-                <li
-                  key={h}
-                  className="flex gap-4 py-1.5 font-sans text-[13px] leading-relaxed text-black/70"
-                >
-                  <span
-                    className="shrink-0 font-semibold text-black/35"
-                    style={{ fontVariantNumeric: "tabular-nums" }}
-                  >
-                    {String(n + 1).padStart(2, "0")}
-                  </span>
-                  {h}
-                </li>
-              ))}
-            </ol>
-          ) : null}
         </div>
 
         {/* Copy column */}
