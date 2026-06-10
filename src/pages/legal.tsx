@@ -22,7 +22,9 @@ export default function LegalPage({ doc }: { doc: LegalDoc }) {
   const groups = groupBlocks(doc.blocks);
 
   return (
-    <PageLayout>
+    // Legal pages end on the off-white print surface, so the footer loop
+    // fades out of that instead of black.
+    <PageLayout footerFade="#eeeeee">
       {/* Black masthead band so the fixed nav sits on its native surface. */}
       <section className="bg-black px-6 pb-12 pt-36 text-white md:px-10 md:pb-14 md:pt-40 lg:px-12">
         <div className="mx-auto max-w-3xl">

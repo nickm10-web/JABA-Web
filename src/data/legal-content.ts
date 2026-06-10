@@ -317,10 +317,6 @@ export const privacyPolicy: LegalDoc = {
     {
       "t": "p",
       "x": "If you have any questions, concerns, or requests regarding this Privacy Policy or the JABA App's privacy practices, please contact us at help@jaba.ai. By using the JABA App, you acknowledge that you have read and understood this Privacy Policy, and you agree to the collection, use, and disclosure of your personal information as described herein."
-    },
-    {
-      "t": "p",
-      "x": "<h1>Document Outline</h1><ul><li>Information We Collect: <ul><li>1.1. Personal Information: </li><li>1.2. Non-Personal Information: </li><li>1.3 Social Media Information: </li><li>1.4. Data Retention: </li><li>1.5. Google User Data Compliance: </li><li>2.1. Providing and Improving the App: </li><li>2.2. Notifications and Updates: </li><li>2.3. Customer Support: </li><li>2.4. Analytics and Research: </li><li>2.5 Handling Social Media Data: </li><li>2.5.1 Youtube Data </li><li>2.5.2 Instagram Data </li><li>2.5.3 TikTok Data </li><li>2.5.4 Calendar Data </li><li>2.6 Handling Contract Data: </li></ul></li><li>SMS Communications & Data Privacy </li><li>Sharing of Information: <ul><li>3.1. Service Providers: </li><li>3.2 School/ Organization Administrators: </li><li>3.3 Campaign Collaborators </li><li>3.4. Legal Requirements: </li><li>3.5. Business Transactions: </li></ul></li><li>Data Security: </li><li>Children's Privacy: </li><li>Changes to the Privacy Policy: </li><li>Contact Us: </li></ul>"
     }
   ]
 };
@@ -920,11 +916,6 @@ export const termsOfUse: LegalDoc = {
     {
       "t": "p",
       "x": "All notices of copyright infringement claims should be sent to the copyright agent designated above. All other feedback, comments, requests for technical support and other communications relating to the Website should be directed to: suppport@jaba.ai."
-    },
-    {
-      "t": "p",
-      "x": "<h1>Document Outline</h1><ul><li>Changes to the Terms of Use </li><li>Accessing the Website and Account Security </li><li>Your Obligations and Responsibilities </li><li>Intellectual Property Rights </li><li>You may not: </li><li>Trademarks </li><li>User Contributions </li><li>Content Standards </li><li>Affiliation with NIL Network, LLC </li><li>Compliance with State NIL Rules </li><li>AI Additional Terms of Use </li><li>Notice and Procedure for Making Claims of Copyright, Trademark, or Other Intellectual Property Infringement </li><li>By email: </li><li>support@jaba.ai </li><li>By mail: </li><li>2204 E. Carson Street, Pittsburgh, PA 15203 </li><li>Reliance on Information Posted </li><li>Changes to the Website </li><li>Changes to the Privacy Policy: </li><li>Information About You and Your Visits to the Website <ul><li>End User License Agreement (“License”) </li><li>Termination </li><li>Links from the Website </li><li>Geographic Restrictions </li><li>Disclaimer of Warranties </li><li>Limitation on Liability </li><li>Indemnification </li><li>Electronic Notices and Disclosures </li><li>Governing Law, Jurisdiction and Waivers </li><li>Arbitration </li><li>Limitation on Time to File Claims </li><li>Waiver and Severability </li><li>Entire Agreement </li><li>Your Comments and Concerns </li></ul></li></ul>"
     }
   ]
 };
-
