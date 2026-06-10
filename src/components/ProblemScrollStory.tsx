@@ -134,8 +134,10 @@ export default function ProblemScrollStory() {
         </motion.h2>
 
         <motion.div
-          animate={{ opacity: climax ? 0.4 : 1 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
+          // A transient beat, not a state: dip while the punchline enters,
+          // then come back to full so the section never reads as faded.
+          animate={{ opacity: climax ? [1, 0.45, 1] : 1 }}
+          transition={{ duration: 2.4, times: [0, 0.3, 1], ease: "easeInOut" }}
           className="mt-16 grid w-full max-w-3xl grid-cols-1 gap-14 md:mt-20 md:grid-cols-2 md:gap-10"
         >
           <Stat
