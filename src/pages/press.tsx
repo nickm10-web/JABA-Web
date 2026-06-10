@@ -330,30 +330,6 @@ function MonitorHero() {
           </div>
         </div>
 
-        {/* Index band */}
-        <div
-          className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-y border-white/10 py-4 font-sans text-[11px] tracking-[0.14em] text-white/40"
-          style={{ fontVariantNumeric: "tabular-nums" }}
-        >
-          {pressReleases.map((r, i) => (
-            <a
-              key={r.id}
-              href="#/press"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById(`release-${r.id}`)
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="group transition-colors hover:text-white"
-            >
-              <span className="transition-colors group-hover:text-[#dfff00]">
-                {indexNo(i)}
-              </span>{" "}
-              {r.partner.toUpperCase()}
-            </a>
-          ))}
-        </div>
       </div>
     </section>
   );
