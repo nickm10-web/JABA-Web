@@ -576,21 +576,6 @@ function PressKit() {
           </div>
         </div>
 
-        {/* Sign-off */}
-        <div className="mt-24 flex flex-col items-center gap-4 md:mt-28">
-          <img
-            src="/jaba-face.png"
-            alt=""
-            aria-hidden
-            className="h-10 w-10 rounded-full"
-          />
-          <p
-            className="font-sans text-[10px] tracking-[0.22em] text-white/30"
-            style={{ fontVariantNumeric: "tabular-nums" }}
-          >
-            JBA/WIRE · END OF TRANSMISSION
-          </p>
-        </div>
       </div>
     </section>
   );
