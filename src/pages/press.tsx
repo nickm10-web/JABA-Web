@@ -536,10 +536,10 @@ function PressKit() {
   };
 
   const assets = [
-    { label: "Wordmark · white · PNG", href: "/JABA%20White%201%20(1).png" },
-    { label: "Mascot · face · PNG", href: "/jaba-face.png" },
-    { label: "Mascot · full · PNG", href: "/meet-jaba.png" },
-    { label: "3D logotype · PNG", href: "/jaba-3d-logo.png" },
+    { label: "Wordmark · white · PNG", href: "/JABA%20White%201%20(1).png", file: "jaba-wordmark-white.png" },
+    { label: "Mascot · face · PNG", href: "/jaba-face.png", file: "jaba-mascot-face.png" },
+    { label: "Mascot · full · PNG", href: "/meet-jaba.png", file: "jaba-mascot-full.png" },
+    { label: "3D logotype · PNG", href: "/jaba-3d-logo.png", file: "jaba-3d-logotype.png" },
   ];
 
   return (
@@ -577,7 +577,7 @@ function PressKit() {
                 <a
                   key={a.label}
                   href={a.href}
-                  download
+                  download={a.file}
                   className="group flex items-center justify-between border-b border-white/10 py-4 font-sans text-[13px] tracking-[0.04em] text-white/70 transition-colors hover:text-white"
                 >
                   <span className="flex items-center gap-5">
