@@ -23,7 +23,7 @@ function StatNumber({
 } & React.ComponentProps<typeof CountUp>) {
   return (
     <div
-      className="my-2 font-display text-[5.5rem] font-bold italic leading-none md:my-3 md:text-[8.5rem] lg:text-[10.5rem]"
+      className="my-3 font-sans text-[5.5rem] font-extrabold leading-none tracking-tight md:my-4 md:text-[8.5rem] lg:text-[10.5rem]"
       style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}
     >
       <span
@@ -36,10 +36,10 @@ function StatNumber({
   );
 }
 
-// Quiet framing line above the stat.
+// Quiet sans framing line above the stat (data voice = sans, narrative = serif).
 const kicker =
-  "font-display text-2xl font-light leading-snug text-white/55 [text-wrap:balance] md:text-3xl";
-// Brighter payoff line below the stat.
+  "font-sans text-base font-medium leading-relaxed text-white/50 [text-wrap:balance] md:text-lg";
+// Serif payoff line below the stat.
 const support =
   "font-display text-3xl font-light leading-snug text-white [text-wrap:balance] md:text-4xl lg:text-5xl";
 
@@ -135,8 +135,7 @@ export default function ProblemScrollStory() {
             duration={1.6}
           />
           <p className={support}>
-            from a <span style={{ color: LIME }}>$1.7B</span> afterthought to
-            the most valuable media on earth.
+            from a $1.7B afterthought to the most valuable media on earth.
           </p>
         </Beat>
 
@@ -160,8 +159,7 @@ export default function ProblemScrollStory() {
 
         <Beat active={active} index={2} variant="pop">
           <p className={kicker}>
-            A <span style={{ color: LIME }}>$68B</span> industry. Still running
-            on spreadsheets.
+            A $68B industry. Still running on spreadsheets.
           </p>
           <p
             className="mt-6 font-display text-6xl font-bold md:text-7xl lg:text-8xl"
