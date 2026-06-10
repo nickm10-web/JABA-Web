@@ -5,27 +5,43 @@ import CountUp from "react-countup";
 const LIME = "#dfff00";
 
 /**
- * Oversized lime number that counts up each time its beat becomes active.
- * `fallback` is the static text shown while the beat is off-screen (the beat
- * is blurred/invisible then, so it never animates unseen).
+ * Giant standalone stat that counts up each time its beat becomes active.
+ * Lives on its own line (never inline in a paragraph) so the changing digits
+ * can't rewrap surrounding text. Width is reserved via `widthCh` + tabular
+ * digits, so the number is rock-steady while it counts.
+ * `fallback` is the static text shown while the beat is off-screen.
  */
-function HeroNumber({
+function StatNumber({
   live,
   fallback,
+  widthCh,
   ...countUp
-}: { live: boolean; fallback: string } & React.ComponentProps<typeof CountUp>) {
+}: {
+  live: boolean;
+  fallback: string;
+  widthCh: number;
+} & React.ComponentProps<typeof CountUp>) {
   return (
-    <span
-      className="font-bold italic"
-      style={{ color: LIME, fontSize: "1.3em" }}
+    <div
+      className="my-2 font-display text-[5.5rem] font-bold italic leading-none md:my-3 md:text-[8.5rem] lg:text-[10.5rem]"
+      style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}
     >
-      {live ? <CountUp {...countUp} /> : fallback}
-    </span>
+      <span
+        className="inline-block text-center"
+        style={{ minWidth: `${widthCh}ch` }}
+      >
+        {live ? <CountUp {...countUp} /> : fallback}
+      </span>
+    </div>
   );
 }
 
-const body =
-  "font-display font-light leading-snug text-4xl md:text-5xl lg:text-6xl";
+// Quiet framing line above the stat.
+const kicker =
+  "font-display text-2xl font-light leading-snug text-white/55 [text-wrap:balance] md:text-3xl";
+// Brighter payoff line below the stat.
+const support =
+  "font-display text-3xl font-light leading-snug text-white [text-wrap:balance] md:text-4xl lg:text-5xl";
 
 type Variant = "zoom" | "slide" | "pop";
 
@@ -109,40 +125,33 @@ export default function ProblemScrollStory() {
     <div className="relative bg-black">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden bg-black text-white">
         <Beat active={active} index={0} variant="zoom">
-          <p className={body}>
-            Athlete marketing went from a{" "}
-            <HeroNumber
-              live={active === 0}
-              fallback="$1.7B"
-              end={1.7}
-              decimals={1}
-              prefix="$"
-              suffix="B"
-              duration={1.6}
-            />{" "}
-            afterthought to the most valuable media on earth. It{" "}
-            <HeroNumber
-              live={active === 0}
-              fallback="40x'd"
-              end={40}
-              suffix="x'd"
-              duration={1.6}
-            />{" "}
-            in a decade.
+          <p className={kicker}>In one decade, athlete marketing grew</p>
+          <StatNumber
+            live={active === 0}
+            fallback="40x"
+            widthCh={3.4}
+            end={40}
+            suffix="x"
+            duration={1.6}
+          />
+          <p className={support}>
+            from a <span style={{ color: LIME }}>$1.7B</span> afterthought to
+            the most valuable media on earth.
           </p>
         </Beat>
 
         <Beat active={active} index={1} variant="slide">
-          <p className={body}>
-            Deals still run on DMs, spreadsheets, and group chats.{" "}
-            <HeroNumber
-              live={active === 1}
-              fallback="73"
-              end={73}
-              duration={1.2}
-            />{" "}
-            marketplaces tried to fix it.
+          <p className={kicker}>
+            But deals still run on DMs, spreadsheets, and group chats.
           </p>
+          <StatNumber
+            live={active === 1}
+            fallback="73"
+            widthCh={2.6}
+            end={73}
+            duration={1.2}
+          />
+          <p className={support}>marketplaces tried to fix it.</p>
           <p className="mt-8 font-display text-4xl font-light leading-snug md:text-5xl lg:text-6xl">
             <span className="text-white/45">Every one</span>{" "}
             <span className="font-bold text-white">failed.</span>
@@ -150,8 +159,9 @@ export default function ProblemScrollStory() {
         </Beat>
 
         <Beat active={active} index={2} variant="pop">
-          <p className="font-display text-3xl font-light leading-snug text-white/45 md:text-4xl">
-            A $68B industry. Still running on spreadsheets.
+          <p className={kicker}>
+            A <span style={{ color: LIME }}>$68B</span> industry. Still running
+            on spreadsheets.
           </p>
           <p
             className="mt-6 font-display text-6xl font-bold md:text-7xl lg:text-8xl"
@@ -160,6 +170,24 @@ export default function ProblemScrollStory() {
             So we fixed it.
           </p>
         </Beat>
+
+        {/* Beat progress dots */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-10 flex justify-center gap-2.5 transition-opacity duration-500"
+          style={{ opacity: active >= 0 ? 1 : 0 }}
+        >
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              className="h-1.5 w-1.5 rounded-full transition-all duration-500"
+              style={{
+                backgroundColor:
+                  active === i ? LIME : "rgba(255, 255, 255, 0.22)",
+                transform: active === i ? "scale(1.35)" : "scale(1)",
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Scroll sentinels — one screen each drives the active beat. */}
