@@ -34,6 +34,7 @@ const pressReleases: PressRelease[] = [
     wireDate: "DEC 16 2025 · MOON TOWNSHIP, PA",
     plateDate: "DEC 16",
     logo: "https://a.espncdn.com/i/teamlogos/ncaa/500/2523.png",
+    graphic: "/press/jabaxrmu.png",
     headline:
       "RMU Athletics integrates JABA's AI platform to power next-generation NIL for student-athletes.",
     location: "Moon Township, PA",
@@ -69,6 +70,7 @@ const pressReleases: PressRelease[] = [
     wireDate: "DEC 10 2025 · WEST LAFAYETTE, IN",
     plateDate: "DEC 10",
     logo: "https://a.espncdn.com/i/teamlogos/ncaa/500/2509.png",
+    graphic: "/press/jabaxpurdue.png",
     headline:
       "Purdue Athletics partners with JABA AI to enhance student-athlete branding and NIL opportunities.",
     location: "West Lafayette, IN",
@@ -99,6 +101,7 @@ const pressReleases: PressRelease[] = [
     wireDate: "DEC 01 2025 · NEW YORK, NY",
     plateDate: "DEC 01",
     logo: "https://auprosports.com/wp-content/themes/au/assets/img/logo-athletes-unlimited-white.svg",
+    graphic: "/press/jabaxathletesu.png",
     headline:
       "Athletes Unlimited partners with JABA to elevate athlete branding across pro women's sports.",
     location: "New York, NY",
@@ -129,6 +132,7 @@ const pressReleases: PressRelease[] = [
     wireDate: "AUG 12 2025 · WACO, TX",
     plateDate: "AUG 12",
     logo: "https://a.espncdn.com/i/teamlogos/ncaa/500/239.png",
+    graphic: "/press/jabaxbaylor.png",
     headline:
       "Baylor University partners with JABA to power athlete NIL in the revenue sharing era.",
     location: "Waco, TX",
@@ -509,7 +513,7 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
                 <img
                   src={release.graphic}
                   alt={`${release.partner} announcement`}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-contain p-3"
                 />
               ) : (
                 <div className="flex flex-col items-center gap-4">
