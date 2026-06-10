@@ -10,6 +10,8 @@ interface ChatMessage {
   sender: "casey" | "brielle" | "jaba";
   name: string;
   text: string;
+  /** iMessage tapback shown on the bubble; fromMe renders it blue. */
+  reaction?: { emoji: string; fromMe?: boolean };
 }
 
 const messages: ChatMessage[] = [
@@ -29,8 +31,14 @@ const messages: ChatMessage[] = [
     sender: "jaba",
     name: "JABA",
     text: "Done. Sent the request. Chipotle usually approves these in a few hours. I'll let you both know.",
+    reaction: { emoji: "👍", fromMe: true },
   },
-  { sender: "casey", name: "Casey", text: "you're the best" },
+  {
+    sender: "casey",
+    name: "Casey",
+    text: "you're the best",
+    reaction: { emoji: "❤️" },
+  },
 ];
 
 // Texting-like pacing: short messages arrive fast, long ones take a
@@ -166,16 +174,57 @@ export default function TextAssistantSection() {
                             className={`flex flex-col ${alignClass}`}
                           >
                             {showSender ? (
-                              <span className="mb-0.5 pl-3 text-[10px] text-black/40">
+                              <span className="mb-0.5 pl-11 text-[10px] text-black/40">
                                 {m.name}
                               </span>
                             ) : null}
                             <div
-                              className={`max-w-[75%] px-3.5 py-2 ${bubbleClass}`}
+                              className={`flex w-full items-end gap-1.5 ${
+                                isMe ? "justify-end" : ""
+                              } ${m.reaction ? "mt-2" : ""}`}
                             >
-                              <p className="whitespace-pre-wrap text-[15px] leading-snug">
-                                {m.text}
-                              </p>
+                              {!isMe ? (
+                                m.sender === "jaba" ? (
+                                  <img
+                                    src="/jaba-3d-logo.png"
+                                    alt=""
+                                    aria-hidden
+                                    className="h-7 w-7 shrink-0 rounded-full bg-black object-cover"
+                                  />
+                                ) : (
+                                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-b from-[#a8a8ad] to-[#8e8e93] text-[12px] font-medium text-white">
+                                    {m.name[0]}
+                                  </span>
+                                )
+                              ) : null}
+                              <div
+                                className={`relative max-w-[75%] px-3.5 py-2 ${bubbleClass}`}
+                              >
+                                {m.reaction ? (
+                                  <motion.span
+                                    initial={{ opacity: 0, scale: 0.3 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                      type: "spring",
+                                      stiffness: 400,
+                                      damping: 22,
+                                      delay: 0.9,
+                                    }}
+                                    className={`absolute -top-4 z-10 flex h-7 min-w-7 items-center justify-center rounded-full border-2 border-white px-1.5 text-[12px] shadow-sm ${
+                                      isMe ? "-left-3" : "-right-3"
+                                    } ${
+                                      m.reaction.fromMe
+                                        ? "bg-[#007aff]"
+                                        : "bg-[#e9e9eb]"
+                                    }`}
+                                  >
+                                    {m.reaction.emoji}
+                                  </motion.span>
+                                ) : null}
+                                <p className="whitespace-pre-wrap text-[15px] leading-snug">
+                                  {m.text}
+                                </p>
+                              </div>
                             </div>
                           </motion.div>
                         );
