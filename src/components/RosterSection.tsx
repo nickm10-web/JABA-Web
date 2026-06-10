@@ -66,7 +66,7 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
   // GIF bleed above card (px)
   const BLEED = 110;
   // Info section starts this far down from card top
-  const INFO_TOP = 130;
+  const INFO_TOP = 185;
   // Card height = info top + nameplate content (~140px)
   const CARD_H = featured ? 350 : 330;
 
@@ -226,7 +226,7 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
             /* Move top anchor up so visible character is centered, cropping bottom empty space */
             top: agent.number === "05" ? "57%" : "65%",
             width: "100%",
-            transform: `translate(-50%, -50%) scale(${agent.number === "05" ? 1.5 : 1.4})`,
+            transform: `translate(-50%, -50%) scale(${agent.number === "05" ? 1.55 : 1.45})`,
             transformOrigin: "center center",
             filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.8))",
           }}
