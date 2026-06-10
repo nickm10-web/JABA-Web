@@ -1,17 +1,10 @@
-import { useRef, useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-} from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 
-// NOTE: Reveal is driven by mapping scrollYProgress to a discrete
-// `visibleCount` via useMotionValueEvent (which reads section-relative
-// progress correctly). The actual entrance/exit/reflow animations are
-// standard React-state-triggered motion animations (initial/animate/exit
-// + layout), so they run through motion's normal animation path and not
-// the WAAPI ScrollTimeline that breaks for section-deep useScroll.
+// NOTE: The conversation autoplays once the phone scrolls into view: a
+// timer chain reveals messages with texting-like pacing (longer texts
+// take longer to "arrive"). Entrance/reflow animations are React-state
+// triggered motion animations (initial/animate + layout).
 
 interface ChatMessage {
   sender: "casey" | "brielle" | "jaba";
@@ -40,35 +33,31 @@ const messages: ChatMessage[] = [
   { sender: "casey", name: "Casey", text: "you're the best" },
 ];
 
-// Each message's reveal threshold spread across 0.05 → 0.85 of the
-// section's scroll progress.
-const thresholds = messages.map(
-  (_, i) => 0.05 + (i / messages.length) * 0.8,
-);
+// Texting-like pacing: short messages arrive fast, long ones take a
+// beat longer (someone "typing"), capped so the scene never drags.
+const gapBefore = (m: ChatMessage) =>
+  Math.min(700 + m.text.length * 16, 2000);
 
 export default function TextAssistantSection() {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const phoneRef = useRef<HTMLDivElement | null>(null);
   const [visibleCount, setVisibleCount] = useState(0);
+  const playing = useInView(phoneRef, { once: true, amount: 0.6 });
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
-    const count = thresholds.filter((t) => p >= t).length;
-    setVisibleCount((prev) => (prev === count ? prev : count));
-  });
+  useEffect(() => {
+    if (!playing) return;
+    let at = 400;
+    const timers = messages.map((m, i) => {
+      at += i === 0 ? 0 : gapBefore(m);
+      return setTimeout(() => setVisibleCount(i + 1), at);
+    });
+    return () => timers.forEach(clearTimeout);
+  }, [playing]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative w-full bg-[#eeeeee]"
-      style={{ height: "400vh" }}
-    >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
-        <div className="mx-auto h-full max-w-7xl px-6 md:px-12">
-          <div className="flex h-full flex-col items-center justify-center gap-10 md:flex-row md:gap-16">
+    <section className="relative w-full bg-[#eeeeee]">
+      <div className="w-full overflow-hidden py-24 md:py-32">
+        <div className="mx-auto max-w-7xl px-6 md:px-12">
+          <div className="flex flex-col items-center justify-center gap-10 md:flex-row md:gap-16">
             {/* Left: copy */}
             <div className="relative flex flex-1 flex-col justify-center text-center md:text-left md:pl-12 lg:pl-20">
               <motion.img
@@ -120,7 +109,10 @@ export default function TextAssistantSection() {
 
             {/* Right: phone mockup */}
             <div className="flex flex-1 items-center justify-center">
-              <div className="relative aspect-[9/19] w-[280px] rounded-[3rem] bg-black p-[10px] shadow-2xl md:w-[340px] lg:w-[380px]">
+              <div
+                ref={phoneRef}
+                className="relative aspect-[9/19] w-[280px] rounded-[3rem] bg-black p-[10px] shadow-2xl md:w-[340px] lg:w-[380px]"
+              >
                 <div className="relative flex h-full w-full flex-col overflow-hidden rounded-[2.4rem] bg-white">
                   {/* Dynamic Island */}
                   <div className="absolute left-1/2 top-2 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-black" />
