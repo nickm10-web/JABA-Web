@@ -27,6 +27,37 @@ interface PressRelease {
 
 const pressReleases: PressRelease[] = [
   {
+    id: "cincinnati",
+    partner: "University of Cincinnati",
+    tag: "NCAA D-I · Big 12",
+    date: "February 18, 2026",
+    wireDate: "FEB 18 2026 · CINCINNATI, OH",
+    plateDate: "FEB 18",
+    logo: "https://a.espncdn.com/i/teamlogos/ncaa/500/2132.png",
+    headline:
+      "Cincinnati Athletics enters NIL partnership with JABA AI.",
+    location: "Cincinnati, OH",
+    paragraphs: [
+      "The University of Cincinnati athletics department has partnered with JABA, an artificial intelligence platform tailored for the future of the name, image and likeness (NIL). JABA AI will assist Cincy Connect NIL in brand opportunity outreach, campaign metrics and management of student-athlete deals.",
+      "JABA AI's core functions include seeking out prospective brand opportunities for Cincinnati's student-athletes, personalizing pitches and proposals for each Bearcat and then tracking and tabulating campaign performance in real-time on social media.",
+      "Cincy Connect NIL, the University of Cincinnati's comprehensive student-athlete marketing and brand-building unit, works to identify and attract local, regional and national NIL opportunities for Cincinnati's student-athlete population. Those efforts will be bolstered with the added collaborative capabilities of JABA AI.",
+      "JABA's platform will also assist Cincinnati's student-athletes with backend management of their respective NIL deals as they move from start to finish throughout their years of eligibility. The partnership represents the University of Cincinnati's ongoing commitment to providing student-athletes with innovative resources and support.",
+    ],
+    quotes: [
+      {
+        text: "JABA AI will empower our student-athletes to manage the complexities of deal execution and performance tracking alongside our department. We're excited to bring this advanced capability to Cincinnati and ensure our athletes have every advantage in the competitive NIL marketplace.",
+        author: "Eddie Taylor",
+        title: "Director of Athlete Influence, Cincinnati",
+      },
+    ],
+    highlights: [
+      "Brand opportunity sourcing for all Bearcats",
+      "Personalized pitch and proposal generation",
+      "Real-time campaign performance tracking",
+      "Full deal lifecycle management",
+    ],
+  },
+  {
     id: "rmu",
     partner: "Robert Morris University",
     tag: "NCAA D-I · Horizon League",
@@ -153,36 +184,6 @@ const pressReleases: PressRelease[] = [
       "Real-time social media and campaign metrics",
       "Deal management from negotiation to execution",
       "Integration with Playfly Max revenue platform",
-    ],
-  },
-  {
-    id: "cincinnati",
-    partner: "University of Cincinnati",
-    tag: "NCAA D-I · Big 12",
-    date: "2025",
-    wireDate: "2025 · CINCINNATI, OH",
-    plateDate: "2025",
-    logo: "https://a.espncdn.com/i/teamlogos/ncaa/500/2132.png",
-    headline:
-      "University of Cincinnati partners with JABA AI for NIL brand outreach and campaign management.",
-    location: "Cincinnati, OH",
-    paragraphs: [
-      "The University of Cincinnati athletics department partnered with JABA, an artificial intelligence platform tailored for the future of the name, image and likeness. JABA AI will assist Cincy Connect NIL in brand opportunity outreach, campaign metrics, and management of student-athlete deals.",
-      "JABA AI's core functions include seeking out prospective brand opportunities for Cincinnati's student-athletes, personalizing pitches and proposals for each Bearcat, and tracking and tabulating campaign performance in real-time on social media.",
-      "Cincy Connect NIL, the University of Cincinnati's comprehensive student-athlete marketing and brand-building unit, works to identify and attract local, regional and national NIL opportunities for Cincinnati's student-athlete population.",
-    ],
-    quotes: [
-      {
-        text: "JABA AI will empower our student-athletes to manage the complexities of deal execution and performance tracking alongside our department. We're excited to bring this advanced capability to Cincinnati and ensure our athletes have every advantage in the competitive NIL marketplace.",
-        author: "Eddie Taylor",
-        title: "Director of Athlete Influence, Cincinnati",
-      },
-    ],
-    highlights: [
-      "Brand opportunity sourcing for all Bearcats",
-      "Personalized pitch and proposal generation",
-      "Real-time campaign performance tracking",
-      "Full deal lifecycle management",
     ],
   },
 ];
