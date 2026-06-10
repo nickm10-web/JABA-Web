@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Menu, X, Zap } from "lucide-react";
 import { LiquidGlassCard } from "@/components/ui/liquid-glass";
+import { LiquidGlassFilter } from "@/components/ui/liquid-glass-filter";
+import { useAdaptiveGlass } from "@/hooks/useAdaptiveGlass";
 
 import SocialProofSection from "@/components/sections/social-proof-section";
 import AiProjectManagerSection from "@/components/AiProjectManagerSection";
@@ -16,19 +18,25 @@ import { VoltButton } from "@/components/ui/volt-button";
 
 const navItems = [
   { label: "Platform", href: "#platform" },
-  { label: "For Brands", href: "#/for-brands" },
-  { label: "For Schools", href: "#/for-schools" },
-  { label: "For Agencies", href: "#/for-agencies" },
   { label: "Press", href: "#/press" },
+  // Temporarily hidden — pages still live at src/pages/{for-brands,for-schools,for-agencies}.tsx
+  // and remain routed in src/router.tsx. Re-add these entries to restore them to the nav.
+  // { label: "For Brands", href: "#/for-brands" },
+  // { label: "For Schools", href: "#/for-schools" },
+  // { label: "For Agencies", href: "#/for-agencies" },
 ];
 
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navZoneRef = useRef<HTMLDivElement>(null);
+  const navRailRef = useRef<HTMLElement>(null);
+  const glassTheme = useAdaptiveGlass(navRailRef, navZoneRef);
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <LiquidGlassFilter />
       <div className="relative">
-        <div className="pointer-events-none fixed inset-x-0 top-0 z-50">
+        <div ref={navZoneRef} className="pointer-events-none fixed inset-x-0 top-0 z-50">
           <div className="pointer-events-auto mx-auto w-full max-w-[1440px] px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
             <header className="hero-nav-split animate-fade-lift">
               <a
@@ -43,7 +51,11 @@ export default function App() {
                 />
               </a>
 
-              <nav className="hero-nav-rail liquid-glass-shell hidden md:inline-flex">
+              <nav
+                ref={navRailRef}
+                data-glass={glassTheme}
+                className="hero-nav-rail liquid-glass-shell hidden md:inline-flex"
+              >
                 {navItems.map((item) => (
                   <a
                     key={item.label}
@@ -53,13 +65,10 @@ export default function App() {
                     {item.label}
                   </a>
                 ))}
-              </nav>
-
-              <div className="hero-nav-cta hidden md:flex">
-                <VoltButton icon={<Zap className="h-4 w-4" />}>
+                <VoltButton className="-my-1.5 ml-1" size="lg" icon={<Zap className="h-4 w-4" />}>
                   Book a demo
                 </VoltButton>
-              </div>
+              </nav>
 
               <div className="hero-mobile-actions md:hidden">
                 <VoltButton icon={<Zap className="h-4 w-4" />}>

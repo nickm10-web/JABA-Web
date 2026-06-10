@@ -112,8 +112,59 @@
   }
 
   .hero-nav-rail {
-    @apply absolute left-1/2 top-1/2 hidden -translate-y-1/2 items-center gap-1.5 px-3 py-2 md:inline-flex;
+    @apply absolute left-1/2 top-1/2 hidden -translate-y-1/2 items-center gap-1.5 py-2 pl-3 pr-1 md:inline-flex;
     transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    /* Liquid glass: refract the backdrop (displacement) instead of just frosting it,
+       with a beveled rim and no outer white glow. */
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.16),
+      inset 2px 2px 1px -2px rgba(255, 255, 255, 0.9),
+      inset -2px -2px 1px -2px rgba(255, 255, 255, 0.55),
+      inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.4),
+      inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.35);
+    backdrop-filter: url("#nav-liquid-glass") blur(2px) saturate(170%);
+    -webkit-backdrop-filter: blur(3px) saturate(170%);
+    transition:
+      background 0.45s ease,
+      border-color 0.45s ease;
+  }
+
+  /* Liquid-glass email capture — same refraction + bevel as the nav. */
+  .liquid-email-glass {
+    @apply inline-flex w-full max-w-xl items-center gap-2 rounded-full py-1 pl-5 pr-1;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.16),
+      inset 2px 2px 1px -2px rgba(255, 255, 255, 0.9),
+      inset -2px -2px 1px -2px rgba(255, 255, 255, 0.55),
+      inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.4),
+      inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.35);
+    backdrop-filter: url("#nav-liquid-glass") blur(2px) saturate(170%);
+    -webkit-backdrop-filter: blur(3px) saturate(170%);
+  }
+
+  .liquid-email-input {
+    @apply h-9 min-w-0 flex-1 bg-transparent text-[0.95rem] text-white outline-none;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+  }
+
+  .liquid-email-input::placeholder {
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
+  }
+
+  /* Adaptive tint: stays glassy but tracks the content scrolling behind it. */
+  .hero-nav-rail[data-glass="on-light"] {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .hero-nav-rail[data-glass="on-dark"] {
+    background: rgba(22, 24, 30, 0.32);
+    border-color: rgba(255, 255, 255, 0.1);
   }
 
   .hero-nav-rail::before {
@@ -122,17 +173,44 @@
     inset: 0;
     z-index: 0;
     border-radius: inherit;
-    border: 1px solid rgba(255, 255, 255, 0.24);
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)),
-      radial-gradient(circle at top, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0) 56%);
-    opacity: 0.74;
+      linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.04)),
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 56%);
+    opacity: 0.4;
     pointer-events: none;
+    transition: opacity 0.45s ease;
+  }
+
+  .hero-nav-rail[data-glass="on-dark"]::before {
+    opacity: 0.18;
   }
 
   .hero-nav-link {
-    @apply relative z-10 rounded-full px-4 py-2 text-[0.92rem] font-medium text-slate-800 transition hover:bg-white/20 hover:text-slate-900;
-    opacity: 0.72;
+    @apply relative z-10 rounded-full px-4 py-2 text-[0.92rem] font-medium transition;
+    color: rgb(30, 41, 59);
+    opacity: 0.9;
+    transition:
+      color 0.45s ease,
+      background-color 0.2s ease,
+      opacity 0.45s ease;
+  }
+
+  .hero-nav-rail[data-glass="on-light"] .hero-nav-link {
+    color: rgb(15, 23, 42);
+  }
+
+  .hero-nav-rail[data-glass="on-light"] .hero-nav-link:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: rgb(2, 6, 23);
+  }
+
+  .hero-nav-rail[data-glass="on-dark"] .hero-nav-link {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .hero-nav-rail[data-glass="on-dark"] .hero-nav-link:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
   }
 
   .hero-nav-cta {

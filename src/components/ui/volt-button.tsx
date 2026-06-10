@@ -8,7 +8,7 @@ interface VoltButtonProps {
   onClick?: () => void;
   className?: string;
   icon?: ReactNode;
-  size?: "default" | "sm";
+  size?: "default" | "sm" | "lg";
 }
 
 export function VoltButton({
@@ -21,7 +21,9 @@ export function VoltButton({
   const buttonSizeClass =
     size === "sm"
       ? "gap-1 px-2.5 py-1.5 text-[0.88rem]"
-      : "gap-2 px-4 py-2 text-sm";
+      : size === "lg"
+        ? "gap-2 px-5 py-3 text-[0.95rem]"
+        : "gap-2 px-4 py-2 text-sm";
 
   return (
     <div

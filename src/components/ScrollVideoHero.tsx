@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useMotionValueEvent, useScroll } from "motion/react";
-import { Zap } from "lucide-react";
 
-import { VoltButton } from "@/components/ui/volt-button";
+import { EmailCaptureGlass } from "@/components/ui/email-capture-glass";
 
 const SWAP_THRESHOLD = 0.001;
 const SCRUB_END = 0.92;
@@ -37,7 +36,6 @@ export default function ScrollVideoHero({
   const scrubVideoRef = useRef<HTMLVideoElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const gradientRef = useRef<HTMLDivElement | null>(null);
-  const hintRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const bottomGradientRef = useRef<HTMLDivElement | null>(null);
   const lastSeekRef = useRef<number>(0);
@@ -91,7 +89,6 @@ export default function ScrollVideoHero({
     const scrub = scrubVideoRef.current;
     const overlay = overlayRef.current;
     const gradient = gradientRef.current;
-    const hint = hintRef.current;
     const stage = stageRef.current;
     const bottomGradient = bottomGradientRef.current;
 
@@ -111,11 +108,6 @@ export default function ScrollVideoHero({
 
     if (gradient) {
       gradient.style.opacity = String(headlineOpacity);
-    }
-
-    if (hint) {
-      const opacity = interpolate(progress, [0, 0.08], [1, 0]);
-      hint.style.opacity = String(opacity);
     }
 
     if (stage) {
@@ -218,20 +210,9 @@ export default function ScrollVideoHero({
             again.
           </p>
 
-          <div className="mt-8 flex items-center gap-3">
-            <VoltButton icon={<Zap className="h-4 w-4" />}>
-              See JABA in action
-            </VoltButton>
+          <div className="mt-8 flex w-full items-center gap-3">
+            <EmailCaptureGlass cta="Get early access" />
           </div>
-        </div>
-
-        <div
-          ref={hintRef}
-          style={{ opacity: 1 }}
-          className="pointer-events-none absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-2 text-xs uppercase tracking-[0.28em] text-white/70"
-        >
-          <span>Scroll to explore the JABA world</span>
-          <span className="h-6 w-px bg-white/60" aria-hidden />
         </div>
       </div>
     </section>
