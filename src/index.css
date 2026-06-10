@@ -131,6 +131,11 @@
       border-color 0.45s ease;
   }
 
+  /* Film-grain overlay: gives flat black sections a paper/film material. */
+  .film-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+
   /* Liquid-glass email capture — same refraction + bevel as the nav. */
   .liquid-email-glass {
     @apply inline-flex w-full max-w-xl items-center gap-2 rounded-full py-1 pl-5 pr-1;
