@@ -1,59 +1,53 @@
 import { motion } from "motion/react";
 
+const LIME = "#dfff00";
+
 interface Agent {
   number: string;
   position: string;
   name: string;
   description: string;
   image: string;
-  chips: string[];
-  accent: string;
-  bgFrom: string;
-  bgTo: string;
+  skills: string[];
   captain?: boolean;
 }
 
 const AGENTS: Agent[] = [
   {
-    number: "01", position: "OPS",
+    number: "01", position: "Ops",
     name: "The Ops Agent",
     description: "Reminders, follow-ups, and deadlines. Always on time.",
     image: "/ops-jaba-headset-holograms.gif",
-    chips: ["Follow-ups", "Reminders", "Scheduling"],
-    accent: "#60a5fa", bgFrom: "#0a1628", bgTo: "#060d1a",
+    skills: ["Follow-ups", "Reminders", "Scheduling"],
   },
   {
-    number: "02", position: "SALES",
+    number: "02", position: "Sales",
     name: "The Sales Agent",
     description: "Finds brands, builds pitches, and closes opportunities.",
     image: "/sales-jaba-phone-money.gif",
-    chips: ["Brand Discovery", "Outreach", "Pitches"],
-    accent: "#a3e635", bgFrom: "#0d1a06", bgTo: "#080e04",
+    skills: ["Brand discovery", "Outreach", "Pitches"],
   },
   {
-    number: "03", position: "DATA",
+    number: "03", position: "Data",
     name: "The Data Agent",
     description: "Turns campaign performance into usable insights.",
     image: "/data-jaba-glasses-charts.gif",
-    chips: ["Metrics", "Reports", "Benchmarks"],
-    accent: "#fb923c", bgFrom: "#1a0e04", bgTo: "#110900",
+    skills: ["Metrics", "Reports", "Benchmarks"],
     captain: true,
   },
   {
-    number: "04", position: "MANAGEMENT",
+    number: "04", position: "Management",
     name: "The Management Agent",
     description: "Deliverables, approvals, invoicing. Nothing slips.",
     image: "/management-jaba-invoice.gif",
-    chips: ["Deliverables", "Invoicing", "Compliance"],
-    accent: "#c084fc", bgFrom: "#110a1c", bgTo: "#0b0612",
+    skills: ["Deliverables", "Invoicing", "Compliance"],
   },
   {
-    number: "05", position: "CREATIVE",
+    number: "05", position: "Creative",
     name: "The Creative Agent",
     description: "Captions, scripts, and ideas trained on real athlete data.",
     image: "/creative-jaba-notepad-lightbulb.gif",
-    chips: ["Captions", "Scripts", "Ideas"],
-    accent: "#f472b6", bgFrom: "#1a0612", bgTo: "#10040c",
+    skills: ["Captions", "Scripts", "Ideas"],
   },
 ];
 
@@ -66,15 +60,15 @@ const FAN = [
 ];
 
 function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
-  const f   = FAN[idx];
+  const f = FAN[idx];
   const featured = !!agent.captain;
 
   // GIF bleed above card (px)
-  const BLEED    = 110;
+  const BLEED = 110;
   // Info section starts this far down from card top
   const INFO_TOP = 130;
   // Card height = info top + nameplate content (~140px)
-  const CARD_H   = featured ? 290 : 270;
+  const CARD_H = featured ? 290 : 270;
 
   return (
     <motion.div
@@ -98,9 +92,7 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
         position: "relative",
       }}
     >
-
-
-      {/* ── Card background (overflow: hidden for texture/border) ── */}
+      {/* ── Card background ── */}
       <div
         style={{
           position: "relative",
@@ -108,92 +100,104 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
           height: `${CARD_H}px`,
           overflow: "hidden",
           borderRadius: "18px",
-          background: `linear-gradient(160deg, ${agent.bgFrom} 0%, ${agent.bgTo} 100%)`,
+          background: "linear-gradient(160deg, #101010 0%, #060606 100%)",
           border: featured
-            ? `1.5px solid ${agent.accent}72`
-            : `1px solid ${agent.accent}36`,
+            ? `1px solid ${LIME}55`
+            : "1px solid rgba(255,255,255,0.09)",
           boxShadow: featured
-            ? `0 0 0 1px rgba(255,255,255,0.04), 0 20px 70px rgba(0,0,0,0.9), 0 0 55px ${agent.accent}28`
-            : `0 0 0 1px rgba(255,255,255,0.02), 0 10px 50px rgba(0,0,0,0.85), 0 0 26px ${agent.accent}16`,
+            ? `0 20px 70px rgba(0,0,0,0.9), 0 0 45px ${LIME}14`
+            : "0 10px 50px rgba(0,0,0,0.85)",
           zIndex: 2,
         }}
       >
-        {/* Foil diagonal lines */}
+        {/* Top edge highlight */}
         <div
           style={{
-            position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
-            backgroundImage: `repeating-linear-gradient(72deg, transparent 0px, transparent 20px, ${agent.accent}06 20px, ${agent.accent}06 21px)`,
+            position: "absolute", top: 0, left: 0, right: 0, height: "1px", zIndex: 3,
+            background:
+              "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)",
           }}
         />
 
-
-        {/* Field arc linework */}
-        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }} viewBox="0 0 200 300" preserveAspectRatio="none">
-          <circle cx="100" cy="310" r="150" fill="none" stroke={`${agent.accent}0d`} strokeWidth="1" />
-          <circle cx="100" cy="310" r="110" fill="none" stroke={`${agent.accent}08`} strokeWidth="0.5" />
-          <line x1="0" y1="230" x2="200" y2="230" stroke={`${agent.accent}08`} strokeWidth="0.5" />
-        </svg>
-
-        {/* Top accent bar */}
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: "2px", zIndex: 3,
-          background: `linear-gradient(90deg, transparent, ${agent.accent}, transparent)`,
-        }} />
-
         {/* Deep nameplate gradient */}
-        <div style={{
-          position: "absolute", left: 0, right: 0, bottom: 0,
-          height: "58%",
-          background: `linear-gradient(to top, rgba(0,0,0,0.98) 60%, rgba(0,0,0,0.7) 80%, transparent 100%)`,
-          zIndex: 2,
-          pointerEvents: "none",
-        }} />
+        <div
+          style={{
+            position: "absolute", left: 0, right: 0, bottom: 0,
+            height: "58%",
+            background:
+              "linear-gradient(to top, rgba(0,0,0,0.98) 60%, rgba(0,0,0,0.7) 80%, transparent 100%)",
+            zIndex: 2,
+            pointerEvents: "none",
+          }}
+        />
 
         {/* ── Nameplate content ── */}
         <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 4, padding: "0 16px 16px" }}>
-          {/* Number · position */}
-          <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "6px" }}>
-            <span style={{ fontFamily: "monospace", fontWeight: 900, fontSize: "1rem", color: agent.accent, letterSpacing: "-0.02em" }}>
-              {agent.number}
-            </span>
-            <span style={{ color: `${agent.accent}80`, fontSize: "10px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.14em" }}>
-              · {agent.position}
-            </span>
-          </div>
+          {/* Index · role — quiet, tabular, one type voice */}
+          <p
+            className="font-sans"
+            style={{
+              fontVariantNumeric: "tabular-nums",
+              fontWeight: 600,
+              fontSize: "11px",
+              letterSpacing: "0.08em",
+              color: featured ? LIME : "rgba(255,255,255,0.38)",
+              marginBottom: "6px",
+            }}
+          >
+            {agent.number} · {agent.position}
+          </p>
 
-          {/* Accent rule */}
-          <div style={{ height: "1px", background: `linear-gradient(90deg, ${agent.accent}60, transparent)`, marginBottom: "8px" }} />
+          {/* Hairline rule */}
+          <div
+            style={{
+              height: "1px",
+              background:
+                "linear-gradient(90deg, rgba(255,255,255,0.16), transparent)",
+              marginBottom: "8px",
+            }}
+          />
 
-          {/* Title */}
-          <h3 style={{ fontWeight: 900, fontSize: featured ? "1.05rem" : "0.95rem", color: "#fff", lineHeight: 1.2, marginBottom: "5px" }}>
+          {/* Name — narrative voice, serif */}
+          <h3
+            className="font-display"
+            style={{
+              fontSize: featured ? "1.35rem" : "1.2rem",
+              color: "#fff",
+              lineHeight: 1.15,
+              marginBottom: "5px",
+            }}
+          >
             {agent.name}
           </h3>
 
           {/* Description */}
-          <p style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.5, marginBottom: "10px" }}>
+          <p
+            className="font-sans"
+            style={{
+              fontSize: "0.72rem",
+              color: "rgba(255,255,255,0.55)",
+              lineHeight: 1.5,
+              marginBottom: "8px",
+            }}
+          >
             {agent.description}
           </p>
 
-          {/* Chips */}
-          <div style={{ display: "flex", flexWrap: "nowrap", gap: "4px", overflow: "hidden" }}>
-            {agent.chips.map((chip) => (
-              <span
-                key={chip}
-                style={{
-                  background: `${agent.accent}14`,
-                  border: `1px solid ${agent.accent}38`,
-                  color: agent.accent,
-                  borderRadius: "999px",
-                  padding: "2px 8px",
-                  fontSize: "9px",
-                  whiteSpace: "nowrap",
-                  fontWeight: 600,
-                }}
-              >
-                {chip}
-              </span>
-            ))}
-          </div>
+          {/* Skills — quiet dotted line instead of rainbow pills */}
+          <p
+            className="font-sans"
+            style={{
+              fontSize: "10px",
+              color: "rgba(255,255,255,0.38)",
+              letterSpacing: "0.02em",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {agent.skills.join("  ·  ")}
+          </p>
         </div>
       </div>
 
@@ -224,7 +228,7 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
             width: "100%",
             transform: `translate(-50%, -50%) scale(${agent.number === "05" ? 1.5 : 1.4})`,
             transformOrigin: "center center",
-            filter: `drop-shadow(0 4px 12px rgba(0,0,0,0.8))`,
+            filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.8))",
           }}
         />
       </div>
@@ -242,7 +246,6 @@ export default function RosterSection() {
 
       <div className="relative mx-auto max-w-7xl px-6 md:px-10 lg:px-12">
         <div className="mb-2 text-center">
-          <p className="mb-3 text-xs uppercase tracking-[0.25em] text-white/30">AI Agents</p>
           <h2 className="font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
             Expand your team without hiring more people.
           </h2>
