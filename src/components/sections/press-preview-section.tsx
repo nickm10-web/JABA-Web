@@ -1,91 +1,74 @@
-import { motion } from "motion/react";
+import { pressReleases } from "@/data/press-releases";
 
-import { pressReleases, pressIndexNo } from "@/data/press-releases";
-
-const LIME = "#dfff00";
-
-// The three most recent releases lead the preview; the rest are summarized.
-const featured = pressReleases.slice(0, 3);
+// Announcement graphics drive the gallery; duplicate the set for a seamless loop.
+const graphics = pressReleases.filter((r) => r.graphic);
+const strip = [...graphics, ...graphics];
 
 export default function PressPreviewSection() {
   return (
-    <section className="relative overflow-hidden bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
+    <section className="relative overflow-hidden bg-black py-20 text-white md:py-28">
       <div className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]" />
 
-      <div className="relative mx-auto max-w-7xl">
-        {/* Split editorial header */}
-        <div className="flex flex-col gap-6 border-b border-white/10 pb-8 md:flex-row md:items-end md:justify-between">
+      {/* Header */}
+      <div className="relative mx-auto mb-12 max-w-7xl px-6 md:mb-16 md:px-10 lg:px-12">
+        <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <h2 className="max-w-2xl font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
-            Programs and leagues are already on the wire.
+            Official partners across{" "}
+            <span className="italic">college and pro.</span>
           </h2>
           <a
             href="#/press"
             className="group shrink-0 font-sans text-sm tracking-[0.04em] text-white/55 transition-colors hover:text-white"
           >
-            Read the newsroom{" "}
+            See the newsroom{" "}
             <span className="transition-colors group-hover:text-[#dfff00]">
               →
             </span>
           </a>
         </div>
+      </div>
 
-        {/* Latest releases as compact wire rows */}
-        <div>
-          {featured.map((r, i) => (
+      {/* Auto-scrolling graphics strip */}
+      <div className="press-marquee relative">
+        {/* Edge fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black to-transparent md:w-32" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black to-transparent md:w-32" />
+
+        <div className="press-marquee-track flex w-max gap-5">
+          {strip.map((r, i) => (
             <a
-              key={r.id}
+              key={`${r.id}-${i}`}
               href="#/press"
-              className="group relative block overflow-hidden border-b border-white/10"
+              aria-label={`${r.partner} announcement`}
+              className="group relative block h-[260px] shrink-0 overflow-hidden rounded-2xl border border-white/10 md:h-[320px]"
             >
-              {/* Lime wipe on hover */}
-              <span
-                className="absolute inset-0 origin-left scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100"
-                style={{ background: LIME }}
+              <img
+                src={r.graphic}
+                alt={`JABA partners with ${r.partner}`}
+                className="h-full w-auto object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
-              <div className="relative grid grid-cols-12 items-center gap-4 py-7 md:py-8">
-                <span
-                  className="col-span-3 font-sans text-3xl font-extrabold tracking-tight text-white/20 transition-colors duration-300 group-hover:text-black md:col-span-2 md:text-4xl"
-                  style={{ fontVariantNumeric: "tabular-nums" }}
-                >
-                  {pressIndexNo(i)}
-                </span>
-                <span
-                  className="col-span-9 font-sans text-[11px] uppercase leading-relaxed tracking-[0.14em] text-white/45 transition-colors duration-300 group-hover:text-black/70 md:col-span-2"
-                  style={{ fontVariantNumeric: "tabular-nums" }}
-                >
-                  {r.plateDate}
-                </span>
-                <h3 className="col-span-12 font-display text-xl leading-snug transition-colors duration-300 group-hover:text-black md:col-span-6 md:text-2xl">
-                  {r.headline}
-                </h3>
-                <span className="col-span-12 font-sans text-[11px] uppercase tracking-[0.14em] text-white/40 transition-colors duration-300 group-hover:text-black/70 md:col-span-2 md:text-right">
-                  {r.tag}
-                </span>
+              {/* Partner label */}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/80">
+                  {r.partner}
+                </p>
               </div>
             </a>
           ))}
         </div>
+      </div>
 
-        {/* Partner logo wall */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mt-12 flex flex-wrap items-center gap-x-12 gap-y-8 md:mt-16"
-        >
-          {pressReleases
-            .filter((r) => r.logo)
-            .map((r) => (
-              <img
-                key={r.id}
-                src={r.logo}
-                alt={r.partner}
-                title={r.partner}
-                className="h-10 w-auto opacity-55 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-12"
-              />
-            ))}
-        </motion.div>
+      {/* Partner logo wall */}
+      <div className="relative mx-auto mt-14 flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-8 px-6 md:mt-16 md:px-10 lg:px-12">
+        {graphics.map((r) => (
+          <img
+            key={r.id}
+            src={r.logo}
+            alt={r.partner}
+            title={r.partner}
+            className="h-9 w-auto opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-11"
+          />
+        ))}
       </div>
     </section>
   );

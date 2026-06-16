@@ -143,6 +143,27 @@
     padding-top: 0.04em;
   }
 
+  /* Press graphics marquee: auto-scrolling film strip, pauses on hover. */
+  .press-marquee-track {
+    animation: press-marquee 48s linear infinite;
+  }
+  .press-marquee:hover .press-marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes press-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .press-marquee-track {
+      animation: none;
+    }
+  }
+
   /* Footer info bar: same liquid-glass recipe as the nav rail. */
   .footer-glass {
     background: rgba(22, 24, 30, 0.32);
