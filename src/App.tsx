@@ -5,6 +5,7 @@ import SocialProofSection from "@/components/sections/social-proof-section";
 import AiProjectManagerSection from "@/components/AiProjectManagerSection";
 import RosterSection from "@/components/RosterSection";
 import HowItWorksSection from "@/components/sections/how-it-works-section";
+import PressPreviewSection from "@/components/sections/press-preview-section";
 import CtaSection from "@/components/sections/cta-section";
 import FooterSection from "@/components/sections/footer-section";
 import ProblemScrollStory from "@/components/ProblemScrollStory";
@@ -96,6 +97,7 @@ export default function App() {
       <AiProjectManagerSection />
       <RosterSection />
       {/* <HowItWorksSection /> */}
+      <PressPreviewSection />
       <CtaSection />
       <FooterSection />
     </main>
