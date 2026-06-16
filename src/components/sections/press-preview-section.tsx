@@ -58,18 +58,6 @@ export default function PressPreviewSection() {
         </div>
       </div>
 
-      {/* Partner logo wall */}
-      <div className="relative mx-auto mt-14 flex max-w-7xl flex-wrap items-center justify-center gap-x-12 gap-y-8 px-6 md:mt-16 md:px-10 lg:px-12">
-        {graphics.map((r) => (
-          <img
-            key={r.id}
-            src={r.logo}
-            alt={r.partner}
-            title={r.partner}
-            className="h-9 w-auto opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-11"
-          />
-        ))}
-      </div>
     </section>
   );
 }
