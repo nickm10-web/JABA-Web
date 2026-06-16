@@ -7,12 +7,12 @@ import { useAdaptiveGlass } from "@/hooks/useAdaptiveGlass";
 
 const navItems = [
   { label: "Home", href: "#/" },
+  { label: "For Schools", href: "#/for-schools" },
+  { label: "For Agencies", href: "#/for-agencies" },
   { label: "Press", href: "#/press" },
-  // Temporarily hidden — pages still live at src/pages/{for-brands,for-schools,for-agencies}.tsx
-  // and remain routed in src/router.tsx. Re-add these entries to restore them to the nav.
+  // For Brands stays hidden for now; page lives at src/pages/for-brands.tsx
+  // and remains routed in src/router.tsx.
   // { label: "For Brands", href: "#/for-brands" },
-  // { label: "For Schools", href: "#/for-schools" },
-  // { label: "For Agencies", href: "#/for-agencies" },
 ];
 
 /**
