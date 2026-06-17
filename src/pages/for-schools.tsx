@@ -681,7 +681,6 @@ export default function ForSchoolsPage() {
       {/* Hero */}
       <section className="audience-page-hero" style={{ paddingTop: 0 }}>
         <div className="audience-page-hero-inner pt-32 md:pt-40">
-          <span className="audience-page-chip">For Schools &amp; Athletic Departments</span>
           <h1 className="audience-page-h1">
             NIL is evolving faster{" "}
             <span className="audience-page-h1-accent">than the systems built to support it.</span>
