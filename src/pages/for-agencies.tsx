@@ -125,7 +125,7 @@ function OutreachAssistant() {
           <Sparkles className="h-3 w-3" /> Drafted in your voice
         </p>
         <p className="mt-2 font-sans text-[12.5px] leading-relaxed text-white/80">
-          Hi Rachel — attaching Darius's media kit now. He over-indexes with
+          Hi Rachel, attaching Darius's media kit now. He over-indexes with
           your 18–24 audience. Proposing a three-post fall activation; rate
           card below.
         </p>

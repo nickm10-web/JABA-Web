@@ -93,13 +93,13 @@ const reportTemplates = [
 function ExecutionMockup() {
   // Text in (assign by message) flows into a tracked task list.
   const thread = [
-    { from: "me", text: "Add a task for Caleb — Gatorade reel, due Friday." },
-    { from: "jaba", text: "Done. Assigned to Caleb Downs, due Fri 5:00pm. I'll remind him." },
+    { from: "me", text: "Add a task for Maya: post the Gatorade reel by Friday." },
+    { from: "jaba", text: "Done. Assigned to Maya Ellison, due Fri 5:00pm. I'll remind her." },
   ];
   const tasks = [
-    { name: "Gatorade reel", who: "Caleb Downs", img: 12, due: "Fri", status: "New", color: LIME },
-    { name: "Meet & greet", who: "Zach Hayes", img: 33, due: "Overdue", status: "Overdue", color: "#ff6b6b" },
-    { name: "Photoshoot session", who: "T'yana Todd", img: 45, due: "Done", status: "Done", color: "rgba(255,255,255,0.5)" },
+    { name: "Gatorade reel", who: "Maya Ellison", img: 32, due: "Fri", status: "New", color: LIME },
+    { name: "Meet & greet", who: "Tyrell Banks", img: 15, due: "Overdue", status: "Overdue", color: "#ff6b6b" },
+    { name: "Photoshoot session", who: "Sofia Marin", img: 45, due: "Done", status: "Done", color: "rgba(255,255,255,0.5)" },
   ];
   return (
     <div className="mx-auto w-full max-w-[400px] space-y-3">
@@ -517,7 +517,7 @@ function MatchStudio() {
                 <Sparkles className="h-3.5 w-3.5" style={{ color: LIME }} /> AI Outreach
               </p>
               <p className="mt-4 rounded-lg border border-white/[0.08] bg-white/[0.03] p-3 font-sans text-[12.5px] leading-relaxed text-white/75">
-                Hi Rachel — three of our athletes over-index with Apex's core
+                Hi Rachel, three of our athletes over-index with Apex's core
                 18–24 audience. Open to a quick call on a fall activation?
               </p>
               <div className="mt-4 flex items-center gap-2">
