@@ -68,7 +68,7 @@ const athleteMetrics = [
   { label: "Brand Fit Score", value: "94", bar: 94 },
   { label: "Audience Reach", value: "1.2M" },
   { label: "Engagement", value: "7.8%" },
-  { label: "Content Style", value: "Hype" },
+  { label: "Content Style", value: "Lifestyle" },
   { label: "Alignment Score", value: "90", bar: 90 },
 ];
 
@@ -414,7 +414,7 @@ export default function ForAgenciesPage() {
         world={{ src: WORLD_IMG, type: "image" }}
       >
         <ReportBuilder title="Master Table" emv="$1.24M" roi="4.8x" bars={[42, 58, 51, 67, 74, 88]}>
-          <div className="overflow-hidden rounded-xl border border-white/10 bg-black/30">
+          <div className="overflow-hidden rounded-xl border border-white/10 bg-black/50">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[420px] border-collapse">
                 <thead>
@@ -451,7 +451,7 @@ export default function ForAgenciesPage() {
 
       {/* CTA */}
       <section className={`audience-page-cta ${SECTION}`}>
-        <div className="audience-page-cta-inner pt-12 md:pt-16">
+        <div className="audience-page-cta-inner pt-28 md:pt-36">
           <h2 className="audience-page-cta-h2">
             Ready to <span className="cta-headline-accent">close more?</span>
           </h2>
