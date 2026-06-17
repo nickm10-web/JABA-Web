@@ -6,12 +6,14 @@ import {
   useTransform,
 } from "motion/react";
 import {
-  ArrowDown,
   ArrowRight,
   Eye,
   FileText,
+  Filter,
   Heart,
   MessageCircle,
+  MessageSquare,
+  Plus,
   RefreshCw,
   Sparkles,
   Zap,
@@ -32,6 +34,8 @@ import {
 
 const LIME = "#dfff00";
 const WRAP = "mx-auto max-w-7xl px-6 md:px-10 lg:px-12";
+const SECTION = "scroll-mt-32 md:scroll-mt-40";
+const PADS = "pb-20 pt-28 md:pb-28 md:pt-36";
 const CLOUDS = "/videos/Video%20BG%20Web_02.mp4";
 const WORLD_IMG = "/header%20BG-%20V4-WithoutBalls_less.jpg";
 
@@ -89,80 +93,113 @@ const reportTemplates = [
   "Team Report",
 ];
 
-/* ── Pillar 1 visual: text JABA -> it creates and tracks the task ── */
-function ExecutionMockup() {
-  // Text in (assign by message) flows into a tracked task list.
-  const thread = [
-    { from: "me", text: "Add a task for Maya: post the Gatorade reel by Friday." },
-    { from: "jaba", text: "Done. Assigned to Maya Ellison, due Fri 5:00pm. I'll remind her." },
-  ];
-  const tasks = [
-    { name: "Gatorade reel", who: "Maya Ellison", img: 32, due: "Fri", status: "New", color: LIME },
-    { name: "Meet & greet", who: "Tyrell Banks", img: 15, due: "Overdue", status: "Overdue", color: "#ff6b6b" },
-    { name: "Photoshoot session", who: "Sofia Marin", img: 45, due: "Done", status: "Done", color: "rgba(255,255,255,0.5)" },
-  ];
+/* ── Pillar 1: the workspace. A Notion-like task table you run for every
+   athlete, with assignment by iMessage as one way in. ── */
+const workflowRows = [
+  { task: "Long-form promotional video", type: "Deliverable", who: "Maya Ellison", img: 32, campaign: "Apex Hydration", brand: true, status: "Overdue", color: "#ff6b6b", due: "Dec 7, 2025" },
+  { task: "Meet and greet", type: "Event", who: "Tyrell Banks", img: 15, campaign: "General task", brand: false, status: "Scheduled", color: "rgba(255,255,255,0.62)", due: "Feb 18, 2026" },
+  { task: "Send campaign results", type: "Task", who: "Devin Cross", img: 12, campaign: "General task", brand: false, status: "In review", color: "rgba(255,255,255,0.62)", due: "Feb 19, 2026" },
+  { task: "Instagram post", type: "Deliverable", who: "Maya Ellison", img: 32, campaign: "Apex Hydration", brand: true, status: "Scheduled", color: "rgba(255,255,255,0.62)", due: "Feb 19, 2026" },
+  { task: "Gatorade reel", type: "Deliverable", who: "Sofia Marin", img: 45, campaign: "Voltic Energy", brand: true, status: "New", color: LIME, due: "Mar 5, 2026" },
+  { task: "Photoshoot session", type: "Deliverable", who: "Jordan Pace", img: 5, campaign: "Northwind Apparel", brand: true, status: "Done", color: LIME, due: "Mar 5, 2026" },
+];
+
+function WorkflowSection() {
   return (
-    <div className="mx-auto w-full max-w-[400px] space-y-3">
-      {/* Text the assistant */}
-      <GlassPanel borderRadius="24px" className="p-3">
-        <div className="rounded-[18px] bg-black/45 p-4">
-          <div className="mb-3 flex items-center gap-2.5 border-b border-white/10 pb-3">
-            <img src="/jaba-face.png" alt="" aria-hidden className="h-8 w-8 rounded-full" />
-            <div>
-              <p className="font-sans text-sm font-semibold text-white">JABA</p>
-              <p className="font-sans text-[11px] text-white/45">iMessage</p>
-            </div>
-          </div>
-          <div className="space-y-2">
-            {thread.map((m, i) => {
-              const me = m.from === "me";
-              return (
-                <div key={i} className={`flex ${me ? "justify-end" : "justify-start"}`}>
-                  <p
-                    className={`max-w-[84%] rounded-2xl px-3.5 py-2 font-sans text-[13px] leading-snug ${
-                      me ? "rounded-br-md bg-[#007aff] text-white" : "rounded-bl-md bg-[#e9e9eb] text-black"
-                    }`}
-                  >
-                    {m.text}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </GlassPanel>
+    <section className={`${SECTION} bg-black`}>
+      <div className={`${WRAP} ${PADS}`}>
+        <FadeUp className="max-w-2xl">
+          <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Workflow</p>
+          <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            Every deliverable,{" "}
+            <span className="italic" style={{ color: LIME }}>handled.</span>
+          </h2>
+          <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
+            Every task, deadline, and deliverable for every athlete in one
+            place. Assign work to athletes or staff by iMessage or in the
+            dashboard, and JABA tracks it to done.
+          </p>
+        </FadeUp>
 
-      {/* Flow connector */}
-      <div className="flex justify-center">
-        <ArrowDown className="h-5 w-5" style={{ color: LIME }} />
-      </div>
-
-      {/* The tracked task list */}
-      <GlassPanel className="p-4">
-        <div className="mb-3 flex items-center justify-between">
-          <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/55">Tasks</p>
-          <span className="h-[6px] w-[6px] rounded-full" style={{ background: LIME }} />
-        </div>
-        <ul className="space-y-2">
-          {tasks.map((t) => (
-            <li key={t.name} className="flex items-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
-              <img src={`https://i.pravatar.cc/48?img=${t.img}`} alt="" aria-hidden className="h-7 w-7 rounded-full object-cover" />
-              <div className="min-w-0 flex-1">
-                <p className="truncate font-sans text-[13px] font-medium text-white">{t.name}</p>
-                <p className="truncate font-sans text-[11px] text-white/45">{t.who}</p>
+        <FadeUp delay={0.1} className="mt-10 md:mt-14">
+          <GlassPanel className="overflow-hidden">
+            {/* Toolbar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-3.5">
+              <div className="flex items-center gap-5">
+                <span className="flex items-center gap-2 border-b-2 pb-1 font-sans text-[13px] font-semibold text-white" style={{ borderColor: LIME }}>
+                  All Tasks
+                  <span className="rounded-full bg-white/10 px-1.5 text-[11px] text-white/60" style={{ fontVariantNumeric: "tabular-nums" }}>7</span>
+                </span>
+                <span className="flex items-center gap-2 pb-1 font-sans text-[13px] text-white/45">
+                  Overdue
+                  <span className="rounded-full bg-white/10 px-1.5 text-[11px] text-white/50" style={{ fontVariantNumeric: "tabular-nums" }}>3</span>
+                </span>
+                <span className="hidden items-center gap-1.5 rounded-lg border border-white/12 bg-white/[0.04] px-2.5 py-1 font-sans text-[12px] text-white/55 sm:flex">
+                  <Filter className="h-3 w-3" /> Filters
+                </span>
               </div>
-              <span
-                className="rounded-full border px-2 py-0.5 font-sans text-[10px] font-semibold uppercase tracking-[0.08em]"
-                style={{ color: t.color, borderColor: `${t.color}55`, background: `${t.color}1a` }}
-              >
-                {t.status}
-              </span>
-              <span className="w-12 shrink-0 text-right font-sans text-[11px] text-white/55" style={{ fontVariantNumeric: "tabular-nums" }}>{t.due}</span>
-            </li>
-          ))}
-        </ul>
-      </GlassPanel>
-    </div>
+              <div className="flex items-center gap-2">
+                <span className="hidden items-center gap-1.5 rounded-lg border border-white/12 bg-white/[0.04] px-2.5 py-1.5 font-sans text-[12px] font-medium text-white/70 md:flex">
+                  <MessageSquare className="h-3.5 w-3.5" /> Assign by iMessage
+                </span>
+                <span className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-sans text-[12px] font-semibold" style={{ background: LIME, color: "#000" }}>
+                  <Plus className="h-3.5 w-3.5" /> Add Task
+                </span>
+              </div>
+            </div>
+
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[860px] border-collapse">
+                <thead>
+                  <tr className="font-sans text-[10px] uppercase tracking-[0.12em] text-white/35">
+                    <th className="px-5 py-3 text-left font-medium">Task name</th>
+                    <th className="px-4 py-3 text-left font-medium">Type</th>
+                    <th className="px-4 py-3 text-left font-medium">Athlete</th>
+                    <th className="px-4 py-3 text-left font-medium">Campaign</th>
+                    <th className="px-4 py-3 text-left font-medium">Status</th>
+                    <th className="px-5 py-3 text-right font-medium">Due date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {workflowRows.map((r) => (
+                    <tr key={r.task} className="border-t border-white/[0.06]">
+                      <td className="px-5 py-3.5 font-sans text-[13.5px] font-medium text-white">{r.task}</td>
+                      <td className="px-4 py-3.5">
+                        <span className="flex items-center gap-1.5 font-sans text-[11px] uppercase tracking-[0.08em] text-white/45">
+                          <span className="h-1.5 w-1.5 rounded-full bg-white/30" />
+                          {r.type}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        <span className="flex items-center gap-2.5">
+                          <img src={`https://i.pravatar.cc/48?img=${r.img}`} alt="" aria-hidden className="h-7 w-7 rounded-full object-cover" />
+                          <span className="font-sans text-[13px] text-white/85">{r.who}</span>
+                        </span>
+                      </td>
+                      <td className="px-4 py-3.5">
+                        {r.brand ? (
+                          <span className="inline-block rounded-md border border-[#dfff00]/25 bg-[#dfff00]/[0.06] px-2 py-1 font-sans text-[12px] text-white/80">{r.campaign}</span>
+                        ) : (
+                          <span className="font-sans text-[12px] uppercase tracking-[0.06em] text-white/35">{r.campaign}</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3.5">
+                        <span className="flex items-center gap-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.08em]" style={{ color: r.color }}>
+                          <span className="h-1.5 w-1.5 rounded-full" style={{ background: r.color }} />
+                          {r.status}
+                        </span>
+                      </td>
+                      <td className="px-5 py-3.5 text-right font-sans text-[12.5px] text-white/65" style={{ fontVariantNumeric: "tabular-nums" }}>{r.due}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </GlassPanel>
+        </FadeUp>
+      </div>
+    </section>
   );
 }
 
@@ -666,22 +703,8 @@ export default function ForSchoolsPage() {
         </div>
       </section>
 
-      {/* Pillar 1 — Execution layer */}
-      <PillarSection
-        eyebrow="Workflow"
-        headline={<>Every deliverable, <span className="italic" style={{ color: LIME }}>handled.</span></>}
-        body="JABA manages every deliverable and sends reminders before anything slips."
-        bullets={[
-          "posting time",
-          "incorrect caption or missed collab tag",
-          "improper use of IP",
-          "athlete breaking exclusivity",
-          "missed deadlines or missing assets",
-          "payment status and posting windows",
-        ]}
-      >
-        <ExecutionMockup />
-      </PillarSection>
+      {/* Pillar 1 — Workflow / task table */}
+      <WorkflowSection />
 
       {/* Pillar 2 — Program dashboard */}
       <GlassDashboard />
