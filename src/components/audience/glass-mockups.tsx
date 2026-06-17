@@ -21,13 +21,15 @@ export function GlassPanel({
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & { depth?: boolean }) {
   return (
-    <div style={depth ? { filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.4))" } : undefined}>
+    <div style={depth ? { filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.45))" } : undefined}>
       <LiquidGlassCard
         borderRadius="18px"
         className={className}
         style={{
-          background: "rgba(255,255,255,0.14)",
-          border: "1px solid rgba(255,255,255,0.22)",
+          // More solid so the panel reads as glass over bright world art,
+          // not a transparent overlay.
+          background: "rgba(20,22,28,0.5)",
+          border: "1px solid rgba(255,255,255,0.18)",
           ...style,
         }}
         {...props}
@@ -53,10 +55,10 @@ export function ScrimCluster({
     <div className={cn("relative", className)}>
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 rounded-[44px] blur-2xl"
+        className="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-10 rounded-[48px] blur-2xl"
         style={{
           background:
-            "radial-gradient(60% 70% at 50% 45%, rgba(0,0,0,0.45), rgba(0,0,0,0.2) 70%, transparent 100%)",
+            "radial-gradient(62% 72% at 50% 45%, rgba(0,0,0,0.62), rgba(0,0,0,0.34) 70%, transparent 100%)",
         }}
       />
       {children}
@@ -120,8 +122,8 @@ export function PillarSection({
   reverse,
   children,
 }: PillarSectionProps) {
-  const copy = (
-    <FadeUp className={reverse ? "md:order-2" : undefined}>
+  const copyInner = (
+    <FadeUp>
       <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">
         {eyebrow}
       </p>
@@ -151,6 +153,13 @@ export function PillarSection({
     </FadeUp>
   );
 
+  // On world backgrounds, scrim the copy too so text/bullets stay legible.
+  const copy = (
+    <div className={reverse ? "md:order-2" : undefined}>
+      {world ? <ScrimCluster>{copyInner}</ScrimCluster> : copyInner}
+    </div>
+  );
+
   const visual = (
     <FadeUp delay={0.12} className={reverse ? "md:order-1" : undefined}>
       <ScrimCluster>{children}</ScrimCluster>
@@ -158,7 +167,7 @@ export function PillarSection({
   );
 
   const inner = (
-    <div className={`${WRAP} py-20 md:py-28`}>
+    <div className={`${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
       <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
         {copy}
         {visual}
@@ -168,10 +177,15 @@ export function PillarSection({
 
   if (world) {
     return (
-      <WorldBackdrop src={world.src} type={world.type ?? "image"} parallax>
+      <WorldBackdrop
+        src={world.src}
+        type={world.type ?? "image"}
+        parallax
+        className="scroll-mt-32 md:scroll-mt-40"
+      >
         {inner}
       </WorldBackdrop>
     );
   }
-  return <section className="bg-black">{inner}</section>;
+  return <section className="scroll-mt-32 bg-black md:scroll-mt-40">{inner}</section>;
 }

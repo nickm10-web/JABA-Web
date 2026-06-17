@@ -142,26 +142,29 @@ function ExecutionMockup() {
     "Heads up — your Apex Hydration post is due tomorrow at 5:00pm.",
     "Tag @apexhydration, add the #ad disclosure, and keep the code in your story.",
   ];
+  // Chips live in the top/bottom margins, staggered so they never sit over
+  // the message column. Solid dark glass so they read clearly.
   const floatPos = [
-    "-left-6 top-10",
-    "-right-5 top-28",
-    "-left-4 bottom-28",
-    "-right-6 bottom-12",
+    "top-0 left-0",
+    "top-10 right-0",
+    "bottom-10 left-0",
+    "bottom-0 right-0",
   ];
   return (
-    <div className="relative mx-auto w-full max-w-[330px]">
+    <div className="relative mx-auto w-full max-w-[360px] px-1 md:py-20">
       {chips.map((c, i) => (
-        <div key={c} className={`absolute z-20 hidden lg:block ${floatPos[i]}`}>
-          <GlassPanel className="px-3 py-1.5" depth={false}>
-            <span className="flex items-center gap-1.5 font-sans text-[11px] font-medium text-white">
-              <span style={{ color: LIME }}>✓</span> {c}
-            </span>
-          </GlassPanel>
+        <div
+          key={c}
+          className={`absolute z-20 hidden whitespace-nowrap rounded-full border border-[#dfff00]/30 bg-black/65 px-3 py-1.5 shadow-lg shadow-black/40 backdrop-blur-md md:block ${floatPos[i]}`}
+        >
+          <span className="flex items-center gap-1.5 font-sans text-[11px] font-medium text-white">
+            <span style={{ color: LIME }}>✓</span> {c}
+          </span>
         </div>
       ))}
 
-      <GlassPanel borderRadius="32px" className="p-3">
-        <div className="rounded-[24px] bg-black/45 p-4">
+      <GlassPanel borderRadius="32px" className="mx-auto max-w-[290px] p-3">
+        <div className="rounded-[24px] bg-black/55 p-4">
           <div className="mb-4 flex items-center gap-2.5 border-b border-white/10 pb-3">
             <img src="/jaba-face.png" alt="" aria-hidden className="h-8 w-8 rounded-full" />
             <div>
@@ -207,9 +210,10 @@ function GlassDashboard() {
   const depth = { filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.4))" };
 
   return (
-    <WorldBackdrop type="video" src={CLOUDS} parallax>
-      <div className={`${WRAP} py-20 md:py-28`}>
+    <WorldBackdrop type="video" src={CLOUDS} parallax className="scroll-mt-32 md:scroll-mt-40">
+      <div className={`${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
         <FadeUp className="max-w-2xl">
+          <ScrimCluster className="inline-block">
           <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">
             Dashboard
           </p>
@@ -223,6 +227,7 @@ function GlassDashboard() {
             Every athlete, post, and deal in one view, updated live. A look at
             what your department sees inside JABA.
           </p>
+          </ScrimCluster>
         </FadeUp>
 
         <div ref={ref} className="relative mt-12 md:mt-16">
@@ -326,8 +331,8 @@ function AthleteIntelligence() {
     { label: "Alignment Score", value: "91", bar: 91 },
   ];
   return (
-    <section className="bg-black">
-      <div className={`${WRAP} py-20 md:py-28`}>
+    <section className="scroll-mt-32 bg-black md:scroll-mt-40">
+      <div className={`${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
           <FadeUp>
             <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Athletes</p>
@@ -460,8 +465,8 @@ function PostGrid() {
 /* ── Pillar 5: brand matching + outreach (Match Studio flow) ── */
 function MatchStudio() {
   return (
-    <section className="bg-black">
-      <div className={`${WRAP} py-20 md:py-28`}>
+    <section className="scroll-mt-32 bg-black md:scroll-mt-40">
+      <div className={`${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
         <FadeUp className="max-w-2xl">
           <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Brands</p>
           <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
@@ -573,7 +578,7 @@ function ReportBuilder() {
             style={
               i === 0
                 ? { borderColor: "rgba(223,255,0,0.4)", background: "rgba(223,255,0,0.08)" }
-                : { borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)" }
+                : { borderColor: "rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.06)" }
             }
           >
             <FileText className="h-3.5 w-3.5 shrink-0" style={{ color: i === 0 ? LIME : "rgba(255,255,255,0.4)" }} />
@@ -583,7 +588,7 @@ function ReportBuilder() {
       </div>
 
       {/* IP Impact */}
-      <div className="mt-5 rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
+      <div className="mt-5 rounded-xl border border-white/10 bg-black/45 p-4">
         <div className="flex items-center justify-between">
           <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">IP Impact</p>
           <div className="flex gap-4 font-sans" style={{ fontVariantNumeric: "tabular-nums" }}>
@@ -598,9 +603,17 @@ function ReportBuilder() {
           </div>
         </div>
         <div className="mt-4 flex h-20 items-end gap-2">
-          {roi.map((v, i) => (
-            <span key={i} className="flex-1 rounded-t" style={{ height: `${v}%`, background: i === roi.length - 1 ? LIME : "rgba(255,255,255,0.18)" }} />
-          ))}
+          {roi.map((v, i) => {
+            const accent = i === roi.length - 1;
+            const fill = accent
+              ? LIME
+              : i % 2 === 0
+                ? "rgba(255,255,255,0.22)"
+                : "rgba(223,255,0,0.7)";
+            return (
+              <span key={i} className="flex-1 rounded-t" style={{ height: `${v}%`, background: fill }} />
+            );
+          })}
         </div>
       </div>
     </GlassPanel>
@@ -615,7 +628,7 @@ function AssistantThread() {
     { from: "jaba", text: "Sent. Tag @apexhydration and drop the code in your story. I'll remind you an hour before." },
   ];
   return (
-    <section className="bg-black py-16 md:py-20">
+    <section className="scroll-mt-32 bg-black pb-16 pt-28 md:scroll-mt-40 md:pb-20 md:pt-36">
       <div className={`${WRAP} grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16`}>
         <FadeUp>
           <h2 className="font-display text-4xl leading-[1.05] text-white md:text-5xl">
@@ -667,7 +680,7 @@ function AssistantThread() {
 function Proof() {
   const strip = [...pressReleases, ...pressReleases].filter((r) => r.graphic);
   return (
-    <section className="bg-black py-16 md:py-20">
+    <section className="scroll-mt-32 bg-black pb-16 pt-24 md:scroll-mt-40 md:pb-20 md:pt-28">
       <div className={WRAP}>
         <FadeUp>
           <p className="font-sans text-[13px] uppercase tracking-[0.16em] text-white/45">
@@ -782,8 +795,8 @@ export default function ForSchoolsPage() {
       <Proof />
 
       {/* CTA */}
-      <section className="audience-page-cta">
-        <div className="audience-page-cta-inner">
+      <section className="audience-page-cta scroll-mt-32 md:scroll-mt-40">
+        <div className="audience-page-cta-inner pt-12 md:pt-16">
           <h2 className="audience-page-cta-h2">
             Ready to stop <span className="cta-headline-accent">chasing?</span>
           </h2>
