@@ -64,36 +64,56 @@ function GlassDashboard() {
   const yMid = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [30, -40]);
   const yFront = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [10, -20]);
 
+  // Depth shadow shared by the floating layers so they read as real glass.
+  const depth = { filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.4))" };
+
   return (
-    <WorldBackdrop type="video" src="/videos/Video%20BG%20Web_02.mp4">
+    <WorldBackdrop type="video" src="/videos/Video%20BG%20Web_02.mp4" parallax>
       <div className={`${WRAP} py-20 md:py-28`}>
         <FadeUp className="max-w-2xl">
           <h2 className="font-display text-4xl leading-[1.05] text-white md:text-5xl lg:text-6xl">
-            Your whole program,{" "}
+            See your entire program{" "}
             <span className="italic" style={{ color: LIME }}>
-              one glass pane.
+              at a glance.
             </span>
           </h2>
           <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
-            Every athlete, post, and dollar of engagement, live. This is a
-            glimpse of what your department sees inside JABA.
+            Every athlete, post, and deal in one view, updated live. A look at
+            what your department sees inside JABA.
           </p>
         </FadeUp>
 
-        <div ref={ref} className="relative mt-12 grid grid-cols-1 gap-5 md:mt-16 md:grid-cols-12 md:gap-6">
-          {/* Performance tiles */}
-          <motion.div style={{ y: yMid }} className="md:col-span-7">
+        <div ref={ref} className="relative mt-12 md:mt-16">
+          {/* Soft dark scrim so the glass reads against the bright sky. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-x-6 -inset-y-8 -z-10 rounded-[44px] blur-2xl"
+            style={{
+              background:
+                "radial-gradient(60% 70% at 50% 45%, rgba(0,0,0,0.42), rgba(0,0,0,0.18) 70%, transparent 100%)",
+            }}
+          />
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:gap-6">
+          {/* Performance tiles — front layer */}
+          <motion.div style={{ y: yMid, scale: 1, ...depth }} className="md:col-span-7">
             <FadeUp className="grid grid-cols-1 gap-3 sm:grid-cols-3" delay={0.05}>
-              <GlassStatTile label="Posts This Month" value={564} delta="8.1%" deltaDir="up" />
-              <GlassStatTile label="Total Engagement" value={62.5} suffix="K" decimals={1} />
-              <GlassStatTile label="Avg Engagement Rate" value={24.3} suffix="%" decimals={1} delta="0.5%" deltaDir="up" />
+              <GlassStatTile label="Posts This Month" value={564} delta="8.1%" deltaDir="up" spark={[12, 18, 15, 22, 19, 27, 31]} />
+              <GlassStatTile label="Total Engagement" value={62.5} suffix="K" decimals={1} spark={[40, 44, 41, 48, 52, 58, 63]} />
+              <GlassStatTile label="Avg Engagement Rate" value={24.3} suffix="%" decimals={1} delta="0.5%" deltaDir="up" spark={[20, 21, 23, 22, 24, 23, 24]} />
             </FadeUp>
           </motion.div>
 
-          {/* Leaderboard */}
-          <motion.div style={{ y: yFront }} className="md:col-span-5">
+          {/* Leaderboard — front layer */}
+          <motion.div style={{ y: yFront, ...depth }} className="md:col-span-5">
             <FadeUp delay={0.15}>
-              <LiquidGlassCard borderRadius="18px" className="h-full">
+              <LiquidGlassCard
+                borderRadius="18px"
+                className="h-full"
+                style={{
+                  background: "rgba(255,255,255,0.14)",
+                  border: "1px solid rgba(255,255,255,0.22)",
+                }}
+              >
                 <div className="px-5 py-4">
                   <div className="flex items-center justify-between">
                     <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">
@@ -136,10 +156,16 @@ function GlassDashboard() {
             </FadeUp>
           </motion.div>
 
-          {/* Athlete content feed */}
-          <motion.div style={{ y: yBack }} className="md:col-span-12">
+          {/* Athlete content feed — back layer, slightly recessed */}
+          <motion.div style={{ y: yBack, scale: 0.985, ...depth }} className="md:col-span-12">
             <FadeUp delay={0.2}>
-              <LiquidGlassCard borderRadius="18px">
+              <LiquidGlassCard
+                borderRadius="18px"
+                style={{
+                  background: "rgba(255,255,255,0.12)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                }}
+              >
                 <div className="px-5 py-4">
                   <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">
                     Athlete Content · Live
@@ -184,6 +210,7 @@ function GlassDashboard() {
               </LiquidGlassCard>
             </FadeUp>
           </motion.div>
+          </div>
         </div>
       </div>
     </WorldBackdrop>
@@ -193,7 +220,7 @@ function GlassDashboard() {
 /* ── Brand matching beat ── */
 function BrandMatching() {
   return (
-    <WorldBackdrop src="/header%20BG-%20V4-WithoutBalls_less.jpg">
+    <WorldBackdrop src="/header%20BG-%20V4-WithoutBalls_less.jpg" parallax>
       <div className={`${WRAP} py-20 md:py-28`}>
         <FadeUp className="max-w-2xl">
           <h2 className="font-display text-4xl leading-[1.05] text-white md:text-5xl">
@@ -210,8 +237,16 @@ function BrandMatching() {
 
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {brands.map((b, i) => (
-            <FadeUp key={b.name} delay={i * 0.08}>
-              <LiquidGlassCard borderRadius="18px" className="h-full">
+            <FadeUp key={b.name} delay={i * 0.08} className="h-full">
+              <LiquidGlassCard
+                borderRadius="18px"
+                className="group h-full transition-all duration-300 hover:-translate-y-1"
+                style={{
+                  background: "rgba(255,255,255,0.14)",
+                  border: "1px solid rgba(255,255,255,0.22)",
+                  boxShadow: "0 8px 36px rgba(0,0,0,0.32), 0 0 24px rgba(255,255,255,0.12), inset 0 1px 0 rgba(255,255,255,0.25)",
+                }}
+              >
                 <div className="flex h-full flex-col px-5 py-5">
                   <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/45">
                     {b.category}
@@ -223,7 +258,11 @@ function BrandMatching() {
                     Fits: {b.fit}
                   </p>
                   <div className="mt-5 flex-1" />
-                  <VoltButton size="sm" className="self-start" icon={<ArrowRight className="h-3.5 w-3.5" />}>
+                  <VoltButton
+                    size="sm"
+                    className="self-start transition-transform duration-300 group-hover:scale-105"
+                    icon={<ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />}
+                  >
                     Pitch
                   </VoltButton>
                 </div>
@@ -248,15 +287,15 @@ function AssistantThread() {
       <div className={`${WRAP} grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16`}>
         <FadeUp>
           <h2 className="font-display text-4xl leading-[1.05] text-white md:text-5xl">
-            Your athletes already live{" "}
+            Athletes respond to texts,{" "}
             <span className="italic" style={{ color: LIME }}>
-              in their texts.
+              not portals.
             </span>
           </h2>
           <p className="mt-4 max-w-md font-sans text-base leading-relaxed text-white/60 md:text-lg">
-            JABA texts every athlete directly with reminders, content ideas,
-            and deadlines. No app to download, no portal to log into. That is
-            why response rates run five to ten times higher.
+            JABA texts athletes directly, reminders, content ideas, deadlines.
+            Nothing to download, no portal to log into. Response rates run
+            5–10x higher than email.
           </p>
         </FadeUp>
 
@@ -341,8 +380,8 @@ export default function ForSchoolsPage() {
   return (
     <PageLayout>
       {/* Hero */}
-      <section className="audience-page-hero">
-        <div className="audience-page-hero-inner">
+      <section className="audience-page-hero" style={{ paddingTop: 0 }}>
+        <div className="audience-page-hero-inner pt-32 md:pt-40">
           <span className="audience-page-chip">For Schools &amp; Athletic Departments</span>
           <h1 className="audience-page-h1">
             NIL is evolving faster{" "}
@@ -385,7 +424,7 @@ export default function ForSchoolsPage() {
             Ready to stop <span className="cta-headline-accent">chasing?</span>
           </h2>
           <p className="audience-page-cta-sub">
-            See how JABA helps athletic departments manage NIL at scale, without the fire drills.
+            See how athletic departments run NIL at scale on JABA.
           </p>
           <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
         </div>

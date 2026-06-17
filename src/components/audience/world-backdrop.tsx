@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { cn } from "@/lib/utils";
 
 interface WorldBackdropProps {
@@ -7,25 +9,42 @@ interface WorldBackdropProps {
   type?: "image" | "video";
   /** Dark scrim so white text + glass read clearly over the world art. */
   scrim?: boolean;
+  /** Slow scroll-linked scale/drift on the media. Reduced-motion safe. */
+  parallax?: boolean;
   className?: string;
   children?: React.ReactNode;
 }
 
 /**
  * Full-bleed JABA-world background (image or video) with a dark gradient
- * scrim. Foreground content is rendered above the scrim.
+ * scrim. Foreground content is rendered above the scrim. Optional gentle
+ * scroll parallax on the media itself.
  */
 export function WorldBackdrop({
   src,
   type = "image",
   scrim = true,
+  parallax = false,
   className,
   children,
 }: WorldBackdropProps) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: rootRef,
+    offset: ["start end", "end start"],
+  });
+  const flat = !parallax || reduce;
+  // Slight overscan so the drift never reveals an edge.
+  const scale = useTransform(scrollYProgress, [0, 1], flat ? [1.06, 1.06] : [1.06, 1.16]);
+  const y = useTransform(scrollYProgress, [0, 1], flat ? ["0%", "0%"] : ["-3%", "3%"]);
+
+  const mediaClass = "absolute inset-0 h-full w-full object-cover";
+
   return (
-    <div className={cn("relative overflow-hidden bg-black", className)}>
+    <div ref={rootRef} className={cn("relative overflow-hidden bg-black", className)}>
       {type === "video" ? (
-        <video
+        <motion.video
           src={src}
           autoPlay
           muted
@@ -33,14 +52,16 @@ export function WorldBackdrop({
           playsInline
           preload="metadata"
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
+          className={mediaClass}
+          style={{ scale, y }}
         />
       ) : (
-        <img
+        <motion.img
           src={src}
           alt=""
           aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
+          className={mediaClass}
+          style={{ scale, y }}
         />
       )}
 
