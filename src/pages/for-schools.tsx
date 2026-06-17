@@ -6,19 +6,13 @@ import {
   useTransform,
 } from "motion/react";
 import {
-  Activity,
   ArrowRight,
-  BarChart3,
   Eye,
   FileText,
   Heart,
-  ListChecks,
   MessageCircle,
-  Radar,
   RefreshCw,
-  Search,
   Sparkles,
-  TrendingUp,
   Zap,
 } from "lucide-react";
 
@@ -34,22 +28,11 @@ import {
   ScrimCluster,
   StatusChip,
 } from "@/components/audience/glass-mockups";
-import { StepStrip } from "@/components/audience/product-mockups";
 
 const LIME = "#dfff00";
 const WRAP = "mx-auto max-w-7xl px-6 md:px-10 lg:px-12";
 const CLOUDS = "/videos/Video%20BG%20Web_02.mp4";
 const WORLD_IMG = "/header%20BG-%20V4-WithoutBalls_less.jpg";
-
-/* The six product steps, shown as a connected horizontal strip. */
-const pillarSteps = [
-  { verb: "Discover", label: "brand opportunities", Icon: Search },
-  { verb: "Analyze", label: "athlete content", Icon: BarChart3 },
-  { verb: "Measure", label: "school IP performance", Icon: Eye },
-  { verb: "Track", label: "campaign deliverables", Icon: ListChecks },
-  { verb: "Monitor", label: "sponsor activations", Icon: Radar },
-  { verb: "Benchmark", label: "performance", Icon: TrendingUp },
-];
 
 // Fictional athletes + stock avatars only. No real roster names or photos.
 const feed = [
@@ -670,9 +653,6 @@ export default function ForSchoolsPage() {
           </div>
         </div>
       </section>
-
-      {/* Pillar step strip */}
-      <StepStrip steps={pillarSteps} />
 
       {/* Pillar 1 — Execution layer */}
       <PillarSection

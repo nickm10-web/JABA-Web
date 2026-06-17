@@ -1,13 +1,10 @@
 import { useState } from "react";
 import {
   ArrowRight,
-  KanbanSquare,
   Mail,
   RefreshCw,
   Search,
-  Shuffle,
   Sparkles,
-  TrendingUp,
   Zap,
 } from "lucide-react";
 
@@ -26,7 +23,6 @@ import {
   PostGrid,
   ReportBuilder,
   RosterTable,
-  StepStrip,
   type PostTile,
   type RosterRow,
 } from "@/components/audience/product-mockups";
@@ -37,14 +33,6 @@ const SECTION = "scroll-mt-32 md:scroll-mt-40";
 const PADS = "pb-20 pt-28 md:pb-28 md:pt-36";
 const CLOUDS = "/videos/Video%20BG%20Web_02.mp4";
 const WORLD_IMG = "/header%20BG-%20V4-WithoutBalls_less.jpg";
-
-const steps = [
-  { verb: "Discover", label: "brands", Icon: Search },
-  { verb: "Match", label: "your roster", Icon: Shuffle },
-  { verb: "Pitch", label: "with AI", Icon: Sparkles },
-  { verb: "Track", label: "the pipeline", Icon: KanbanSquare },
-  { verb: "Showcase", label: "ROI", Icon: TrendingUp },
-];
 
 // Fictional brands, contacts, athletes. Real numbers OK.
 const directory = [
@@ -363,9 +351,6 @@ export default function ForAgenciesPage() {
           </div>
         </div>
       </section>
-
-      {/* Step strip */}
-      <StepStrip steps={steps} />
 
       {/* Brand Discovery */}
       <PillarSection
