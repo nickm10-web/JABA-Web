@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { useRef } from "react";
 import {
   motion,
   useReducedMotion,
@@ -9,7 +9,6 @@ import {
   Activity,
   ArrowRight,
   BarChart3,
-  ChevronRight,
   Eye,
   FileText,
   Heart,
@@ -35,6 +34,7 @@ import {
   ScrimCluster,
   StatusChip,
 } from "@/components/audience/glass-mockups";
+import { StepStrip } from "@/components/audience/product-mockups";
 
 const LIME = "#dfff00";
 const WRAP = "mx-auto max-w-7xl px-6 md:px-10 lg:px-12";
@@ -104,30 +104,6 @@ const reportTemplates = [
   "Social Report",
   "Team Report",
 ];
-
-/* ── Step strip (replaces the word marquee) ── */
-function StepStrip() {
-  return (
-    <section className="border-y border-white/5 bg-[#dfff00]/[0.02] py-5">
-      <div className={`${WRAP} flex items-center gap-3 overflow-x-auto md:gap-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}>
-        {pillarSteps.map((s, i) => (
-          <Fragment key={s.verb}>
-            <div className="flex shrink-0 items-center gap-2.5">
-              <s.Icon className="h-4 w-4" style={{ color: LIME }} />
-              <span className="whitespace-nowrap font-sans text-[13px]">
-                <span className="font-semibold text-white">{s.verb}</span>{" "}
-                <span className="text-white/55">{s.label}</span>
-              </span>
-            </div>
-            {i < pillarSteps.length - 1 ? (
-              <ChevronRight className="h-4 w-4 shrink-0 text-white/25" />
-            ) : null}
-          </Fragment>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 /* ── Pillar 1 visual: execution / compliance iMessage mockup ── */
 function ExecutionMockup() {
@@ -696,7 +672,7 @@ export default function ForSchoolsPage() {
       </section>
 
       {/* Pillar step strip */}
-      <StepStrip />
+      <StepStrip steps={pillarSteps} />
 
       {/* Pillar 1 — Execution layer */}
       <PillarSection

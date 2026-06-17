@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import type { LucideIcon } from "lucide-react";
 import { ChevronRight, Eye, Heart, MessageCircle } from "lucide-react";
 
@@ -17,23 +16,27 @@ export interface Step {
 }
 
 export function StepStrip({ steps }: { steps: Step[] }) {
+  // Duplicate the steps so the marquee loops seamlessly.
+  const loop = [...steps, ...steps];
   return (
-    <section className="border-y border-white/5 bg-[#dfff00]/[0.02] py-5">
-      <div className={`${WRAP} flex items-center gap-3 overflow-x-auto md:gap-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}>
-        {steps.map((s, i) => (
-          <Fragment key={s.verb + s.label}>
-            <div className="flex shrink-0 items-center gap-2.5">
-              <s.Icon className="h-4 w-4" style={{ color: LIME }} />
-              <span className="whitespace-nowrap font-sans text-[13px]">
-                <span className="font-semibold text-white">{s.verb}</span>{" "}
-                <span className="text-white/55">{s.label}</span>
-              </span>
+    <section className="border-y border-white/[0.07] bg-[#dfff00]/[0.025] py-7 md:py-8">
+      <div className="press-marquee relative">
+        <div className="press-marquee-track flex w-max items-center gap-9 md:gap-12">
+          {loop.map((s, i) => (
+            <div key={i} className="flex shrink-0 items-center gap-9 md:gap-12">
+              <div className="flex items-center gap-3.5">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#dfff00]/25 bg-[#dfff00]/[0.08]">
+                  <s.Icon className="h-[18px] w-[18px]" style={{ color: LIME }} />
+                </span>
+                <span className="whitespace-nowrap font-sans text-[15px] md:text-base">
+                  <span className="font-semibold text-white">{s.verb}</span>{" "}
+                  <span className="text-white/50">{s.label}</span>
+                </span>
+              </div>
+              <ChevronRight className="h-4 w-4 text-[#dfff00]/35" />
             </div>
-            {i < steps.length - 1 ? (
-              <ChevronRight className="h-4 w-4 shrink-0 text-white/25" />
-            ) : null}
-          </Fragment>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
