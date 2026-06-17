@@ -6,6 +6,7 @@ import {
   useTransform,
 } from "motion/react";
 import {
+  ArrowDown,
   ArrowRight,
   Eye,
   FileText,
@@ -88,42 +89,24 @@ const reportTemplates = [
   "Team Report",
 ];
 
-/* ── Pillar 1 visual: execution / compliance iMessage mockup ── */
+/* ── Pillar 1 visual: text JABA -> it creates and tracks the task ── */
 function ExecutionMockup() {
-  const chips = [
-    "Deliverable Reminder Sent",
-    "Collab Tag Verified",
-    "Post Scheduled",
-    "Payment Status Updated",
+  // Text in (assign by message) flows into a tracked task list.
+  const thread = [
+    { from: "me", text: "Add a task for Caleb — Gatorade reel, due Friday." },
+    { from: "jaba", text: "Done. Assigned to Caleb Downs, due Fri 5:00pm. I'll remind him." },
   ];
-  const msgs = [
-    "Heads up — your Apex Hydration post is due tomorrow at 5:00pm.",
-    "Tag @apexhydration, add the #ad disclosure, and keep the code in your story.",
-  ];
-  // Chips live in the top/bottom margins, staggered so they never sit over
-  // the message column. Solid dark glass so they read clearly.
-  const floatPos = [
-    "top-0 left-0",
-    "top-10 right-0",
-    "bottom-10 left-0",
-    "bottom-0 right-0",
+  const tasks = [
+    { name: "Gatorade reel", who: "Caleb Downs", img: 12, due: "Fri", status: "New", color: LIME },
+    { name: "Meet & greet", who: "Zach Hayes", img: 33, due: "Overdue", status: "Overdue", color: "#ff6b6b" },
+    { name: "Photoshoot session", who: "T'yana Todd", img: 45, due: "Done", status: "Done", color: "rgba(255,255,255,0.5)" },
   ];
   return (
-    <div className="relative mx-auto w-full max-w-[360px] px-1 md:py-20">
-      {chips.map((c, i) => (
-        <div
-          key={c}
-          className={`absolute z-20 hidden whitespace-nowrap rounded-full border border-[#dfff00]/30 bg-black/65 px-3 py-1.5 shadow-lg shadow-black/40 backdrop-blur-md md:block ${floatPos[i]}`}
-        >
-          <span className="flex items-center gap-1.5 font-sans text-[11px] font-medium text-white">
-            <span style={{ color: LIME }}>✓</span> {c}
-          </span>
-        </div>
-      ))}
-
-      <GlassPanel borderRadius="32px" className="mx-auto max-w-[290px] p-3">
-        <div className="rounded-[24px] bg-black/55 p-4">
-          <div className="mb-4 flex items-center gap-2.5 border-b border-white/10 pb-3">
+    <div className="mx-auto w-full max-w-[400px] space-y-3">
+      {/* Text the assistant */}
+      <GlassPanel borderRadius="24px" className="p-3">
+        <div className="rounded-[18px] bg-black/45 p-4">
+          <div className="mb-3 flex items-center gap-2.5 border-b border-white/10 pb-3">
             <img src="/jaba-face.png" alt="" aria-hidden className="h-8 w-8 rounded-full" />
             <div>
               <p className="font-sans text-sm font-semibold text-white">JABA</p>
@@ -131,25 +114,54 @@ function ExecutionMockup() {
             </div>
           </div>
           <div className="space-y-2">
-            {msgs.map((m) => (
-              <div key={m} className="flex justify-start">
-                <p className="max-w-[82%] rounded-2xl rounded-bl-md bg-[#e9e9eb] px-3.5 py-2 font-sans text-[13px] leading-snug text-black">
-                  {m}
-                </p>
-              </div>
-            ))}
+            {thread.map((m, i) => {
+              const me = m.from === "me";
+              return (
+                <div key={i} className={`flex ${me ? "justify-end" : "justify-start"}`}>
+                  <p
+                    className={`max-w-[84%] rounded-2xl px-3.5 py-2 font-sans text-[13px] leading-snug ${
+                      me ? "rounded-br-md bg-[#007aff] text-white" : "rounded-bl-md bg-[#e9e9eb] text-black"
+                    }`}
+                  >
+                    {m.text}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </GlassPanel>
 
-      {/* Mobile fallback so the exact chip terms still show. */}
-      <div className="mt-4 flex flex-wrap gap-2 lg:hidden">
-        {chips.map((c) => (
-          <StatusChip key={c} tone="lime">
-            {c}
-          </StatusChip>
-        ))}
+      {/* Flow connector */}
+      <div className="flex justify-center">
+        <ArrowDown className="h-5 w-5" style={{ color: LIME }} />
       </div>
+
+      {/* The tracked task list */}
+      <GlassPanel className="p-4">
+        <div className="mb-3 flex items-center justify-between">
+          <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/55">Tasks</p>
+          <span className="h-[6px] w-[6px] rounded-full" style={{ background: LIME }} />
+        </div>
+        <ul className="space-y-2">
+          {tasks.map((t) => (
+            <li key={t.name} className="flex items-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
+              <img src={`https://i.pravatar.cc/48?img=${t.img}`} alt="" aria-hidden className="h-7 w-7 rounded-full object-cover" />
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-sans text-[13px] font-medium text-white">{t.name}</p>
+                <p className="truncate font-sans text-[11px] text-white/45">{t.who}</p>
+              </div>
+              <span
+                className="rounded-full border px-2 py-0.5 font-sans text-[10px] font-semibold uppercase tracking-[0.08em]"
+                style={{ color: t.color, borderColor: `${t.color}55`, background: `${t.color}1a` }}
+              >
+                {t.status}
+              </span>
+              <span className="w-12 shrink-0 text-right font-sans text-[11px] text-white/55" style={{ fontVariantNumeric: "tabular-nums" }}>{t.due}</span>
+            </li>
+          ))}
+        </ul>
+      </GlassPanel>
     </div>
   );
 }
