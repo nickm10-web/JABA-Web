@@ -24,7 +24,6 @@ import {
 import {
   AthleteCard,
   PostGrid,
-  Proof,
   ReportBuilder,
   RosterTable,
   StepStrip,
@@ -445,9 +444,6 @@ export default function ForAgenciesPage() {
           </div>
         </ReportBuilder>
       </PillarSection>
-
-      {/* Proof */}
-      <Proof />
 
       {/* CTA */}
       <section className={`audience-page-cta ${SECTION}`}>

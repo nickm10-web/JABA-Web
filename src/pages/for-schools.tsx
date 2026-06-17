@@ -35,7 +35,6 @@ import {
   ScrimCluster,
   StatusChip,
 } from "@/components/audience/glass-mockups";
-import { pressReleases } from "@/data/press-releases";
 
 const LIME = "#dfff00";
 const WRAP = "mx-auto max-w-7xl px-6 md:px-10 lg:px-12";
@@ -676,41 +675,6 @@ function AssistantThread() {
   );
 }
 
-/* ── Proof: partner announcement marquee (kept) ── */
-function Proof() {
-  const strip = [...pressReleases, ...pressReleases].filter((r) => r.graphic);
-  return (
-    <section className="scroll-mt-32 bg-black pb-16 pt-24 md:scroll-mt-40 md:pb-20 md:pt-28">
-      <div className={WRAP}>
-        <FadeUp>
-          <p className="font-sans text-[13px] uppercase tracking-[0.16em] text-white/45">
-            Trusted across college and pro
-          </p>
-        </FadeUp>
-      </div>
-      <div className="press-marquee relative mt-10">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black to-transparent md:w-32" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black to-transparent md:w-32" />
-        <div className="press-marquee-track flex w-max gap-5">
-          {strip.map((r, i) => (
-            <a
-              key={`${r.id}-${i}`}
-              href="#/press"
-              aria-label={`${r.partner} announcement`}
-              className="group relative block h-[220px] shrink-0 overflow-hidden rounded-2xl border border-white/10 md:h-[280px]"
-            >
-              <img src={r.graphic} alt={`JABA partners with ${r.partner}`} className="h-full w-auto object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/80">{r.partner}</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function ForSchoolsPage() {
   return (
     <PageLayout>
@@ -790,9 +754,6 @@ export default function ForSchoolsPage() {
 
       {/* Athlete texting */}
       <AssistantThread />
-
-      {/* Proof */}
-      <Proof />
 
       {/* CTA */}
       <section className="audience-page-cta scroll-mt-32 md:scroll-mt-40">
