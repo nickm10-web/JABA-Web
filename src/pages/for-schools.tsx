@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useReducedMotion,
@@ -7,18 +7,27 @@ import {
 } from "motion/react";
 import {
   ArrowRight,
+  BarChart3,
+  Calendar,
   Eye,
   FileText,
   Filter,
+  GripVertical,
   Heart,
   LayoutGrid,
+  LineChart,
   List,
   MessageCircle,
-  Play,
   MessageSquare,
+  Play,
   Plus,
   RefreshCw,
+  Search,
+  Smartphone,
   Sparkles,
+  Star,
+  Target,
+  Users,
   Zap,
 } from "lucide-react";
 
@@ -82,13 +91,30 @@ const rosterRows = [
   { name: "Maya Ellison", img: 32, followers: "71K", eng: "6.1%", likes: "4.2K", comments: "188", posts: "143", growth: "+4.1%", deals: "2" },
 ];
 
-const posts = [
-  { seed: "jb1", likes: "12.1K", comments: "631", views: "88K", tag: "TOP 5", tone: "lime" as const },
-  { seed: "jb2", likes: "9.7K", comments: "402", views: "61K", tag: "VISIBLE", tone: "neutral" as const },
-  { seed: "jb3", likes: "4.2K", comments: "188", views: "40K", tag: "SPONSORED", tone: "lime" as const },
-  { seed: "jb4", likes: "6.8K", comments: "274", views: "52K", tag: "TOP 25", tone: "neutral" as const },
-  { seed: "jb5", likes: "3.5K", comments: "121", views: "28K", tag: "ORGANIC", tone: "muted" as const },
-  { seed: "jb6", likes: "15.4K", comments: "880", views: "120K", tag: "TOP 10", tone: "neutral" as const },
+type ContentPost = {
+  image: string;
+  avatar: number;
+  name: string;
+  sport: string;
+  status: "Visible" | "Sponsored" | "Organic";
+  rank: string;
+  likes: string;
+  comments: string;
+  views: string;
+};
+const contentPosts: ContentPost[] = [
+  { image: "/post1.png", avatar: 15, name: "Tyrell Banks", sport: "Football", status: "Sponsored", rank: "Top 5", likes: "12.1K", comments: "631", views: "88K" },
+  { image: "/post2.png", avatar: 12, name: "Devin Cross", sport: "Basketball", status: "Visible", rank: "Top 5", likes: "9.7K", comments: "402", views: "61K" },
+  { image: "/post3.png", avatar: 32, name: "Maya Ellison", sport: "Track & Field", status: "Visible", rank: "Top 10", likes: "4.2K", comments: "188", views: "40K" },
+  { image: "/post4.png", avatar: 45, name: "Sofia Marin", sport: "Soccer", status: "Organic", rank: "Top 25", likes: "6.8K", comments: "274", views: "52K" },
+  { image: "/post5.png", avatar: 5, name: "Jordan Pace", sport: "Volleyball", status: "Visible", rank: "Top 25", likes: "3.5K", comments: "121", views: "28K" },
+  { image: "/post6.png", avatar: 47, name: "Aria Cole", sport: "Dance", status: "Sponsored", rank: "Top 10", likes: "15.4K", comments: "880", views: "120K" },
+  { image: "/post7.png", avatar: 51, name: "Marcus Webb", sport: "Lacrosse", status: "Visible", rank: "Top 25", likes: "5.1K", comments: "203", views: "44K" },
+  { image: "/post8.png", avatar: 9, name: "Elena Ruiz", sport: "Cheer", status: "Organic", rank: "Ranked", likes: "2.8K", comments: "96", views: "21K" },
+  { image: "/post9.png", avatar: 60, name: "Jalen Foster", sport: "Football", status: "Sponsored", rank: "Top 5", likes: "18.2K", comments: "742", views: "151K" },
+  { image: "/post10.png", avatar: 23, name: "Nina Alvarez", sport: "Soccer", status: "Visible", rank: "Top 10", likes: "7.4K", comments: "311", views: "58K" },
+  { image: "/post11.png", avatar: 13, name: "Cole Hayes", sport: "Baseball", status: "Organic", rank: "Top 25", likes: "4.6K", comments: "158", views: "37K" },
+  { image: "/post12.png", avatar: 31, name: "Priya Shah", sport: "Tennis", status: "Visible", rank: "Top 10", likes: "6.1K", comments: "240", views: "49K" },
 ];
 
 const contacts = [
@@ -537,112 +563,131 @@ function GlassDashboard() {
   );
 }
 
-/* ── Pillar 3: athlete intelligence (trading card + roster table) ── */
+/* ── Pillar 3: athlete intelligence (profile card on the world backdrop) ── */
 function AthleteIntelligence() {
-  const metrics = [
-    { label: "Brand Fit Score", value: "88", bar: 88 },
-    { label: "Audience Reach", value: "512K" },
-    { label: "Engagement", value: "24.3%" },
-    { label: "Content Style", value: "Lifestyle" },
-    { label: "Alignment Score", value: "91", bar: 91 },
+  const tabs = ["Overview", "Performance", "Audience", "FMV", "Athlete Business"];
+  const voice = ["Game-day highlights", "Training & film", "Community & family"];
+  const interests = ["QB development", "Performance nutrition", "Lifestyle & fashion"];
+  const brandFits = [
+    { name: "Apex Hydration", fit: 94, reason: "Posts game-day hydration routines; audience skews performance-minded." },
+    { name: "Voltic Energy", fit: 88, reason: "High-energy highlight reels match the brand's tone." },
+    { name: "Northwind Apparel", fit: 81, reason: "Off-field fashion content fits their apparel drops." },
+  ];
+  const stats = [
+    { label: "Followers", value: "184K", sub: "↑ 12.4% · 30d", up: true },
+    { label: "Engagement", value: "9.7%", sub: "vs 6.2% cohort", up: true },
+    { label: "Avg Likes", value: "12.1K", sub: "per post" },
+    { label: "Avg Comments", value: "631", sub: "per post" },
   ];
   return (
     <WorldBackdrop type="image" src="/JW-sky1.png" parallax className="scroll-mt-32 md:scroll-mt-40">
-      <div className={`${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
-        <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
-          <FadeUp>
-            <ScrimCluster className="inline-block">
+      <div className={`${WRAP} pb-12 pt-24 md:pb-16 md:pt-28`}>
+        <FadeUp className="max-w-2xl">
+          <ScrimCluster className="inline-block">
             <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Athletes</p>
-            <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            <h2 className="mt-3 font-display text-4xl leading-[1.05] text-white md:text-5xl">
               Know every athlete's{" "}
               <span className="italic" style={{ color: LIME }}>brand.</span>
             </h2>
-            <p className="mt-4 max-w-md font-sans text-base leading-relaxed text-white/65 md:text-lg">
-              Understand each athlete's content, audience, and the partnerships
-              they naturally fit.
+            <p className="mt-3 max-w-xl font-sans text-base leading-relaxed text-white/65">
+              A living profile for every athlete: content, audience, value, and
+              the brands they naturally fit, with the reasoning behind each match.
             </p>
-            <p className="mt-4 max-w-md font-sans text-sm leading-relaxed text-white/45">
-              Roster analytics rank Followers, Eng %, Avg Likes, Avg Comments,
-              Posts, Growth, and Brand Deals, with a fair market value (FMV)
-              view one toggle away.
-            </p>
-            </ScrimCluster>
-          </FadeUp>
+          </ScrimCluster>
+        </FadeUp>
 
-          <FadeUp delay={0.12}>
-            <ScrimCluster className="mx-auto w-full max-w-sm">
-              <GlassPanel className="p-5">
-                <div className="flex items-center gap-3">
-                  <img src="https://i.pravatar.cc/96?img=32" alt="" aria-hidden className="h-12 w-12 rounded-full object-cover" />
-                  <div className="flex-1">
-                    <p className="font-sans text-[15px] font-semibold text-white">Maya Ellison</p>
-                    <p className="font-sans text-[12px] text-white/50">Track & Field</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-sans text-3xl font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>92</p>
-                    <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/45">Overall</p>
-                  </div>
+        <FadeUp delay={0.12} className="mt-7 md:mt-9">
+          <GlassPanel className="overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-12">
+              {/* Profile rail */}
+              <div className="flex flex-col border-b border-white/10 p-5 md:col-span-4 md:border-b-0 md:border-r">
+                <div
+                  className="min-h-[200px] flex-1 overflow-hidden rounded-2xl border border-white/10"
+                  style={{ background: "radial-gradient(120% 85% at 50% 6%, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 52%, rgba(255,255,255,0.01))" }}
+                >
+                  <img src="/athlete-cutout.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
                 </div>
-                <div className="mt-5 space-y-3">
-                  {metrics.map((m) => (
-                    <div key={m.label} className="flex items-center gap-3">
-                      <span className="w-32 shrink-0 font-sans text-[12px] text-white/55">{m.label}</span>
-                      {m.bar ? (
-                        <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/12">
-                          <span className="block h-full rounded-full" style={{ width: `${m.bar}%`, background: LIME }} />
-                        </span>
-                      ) : (
-                        <span className="flex-1" />
-                      )}
-                      <span className="w-16 text-right font-sans text-[13px] font-medium text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{m.value}</span>
+                <div className="mt-4 flex items-center gap-2">
+                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">Football</span>
+                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">QB</span>
+                </div>
+                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Jake Banks</h3>
+                <p className="mt-1.5 font-sans text-[12px] text-white/55">University of Jaba · Junior</p>
+                <div className="mt-1.5 flex items-center gap-1.5 font-sans text-[11px] text-white/55">
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: LIME }} />
+                  JABA Verified
+                </div>
+              </div>
+
+              {/* Detail panel */}
+              <div className="p-5 md:col-span-8">
+                {/* Tabs */}
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-white/10 pb-3">
+                  {tabs.map((t, i) => (
+                    <span
+                      key={t}
+                      className="font-sans text-[12px]"
+                      style={i === 0 ? { color: LIME, fontWeight: 600, borderBottom: `2px solid ${LIME}`, paddingBottom: "6px", marginBottom: "-15px" } : { color: "rgba(255,255,255,0.45)" }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Metrics */}
+                <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                  {stats.map((s) => (
+                    <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
+                      <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.12em] text-white/35">{s.label}</p>
+                      <p className="mt-1 font-sans text-[20px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{s.value}</p>
+                      <p className="mt-1 font-sans text-[10px]" style={{ color: s.up ? LIME : "rgba(255,255,255,0.4)" }}>{s.sub}</p>
                     </div>
                   ))}
                 </div>
-              </GlassPanel>
-            </ScrimCluster>
-          </FadeUp>
-        </div>
 
-        {/* Roster analytics table */}
-        <FadeUp delay={0.1} className="mt-10 md:mt-14">
-          <GlassPanel className="overflow-hidden">
-            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-              <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/55">Roster Analytics</p>
-              <div className="flex items-center gap-1 rounded-full border border-white/12 bg-white/[0.04] p-0.5">
-                <span className="rounded-full px-3 py-1 font-sans text-[11px] font-semibold" style={{ background: LIME, color: "#000" }}>Engagement</span>
-                <span className="rounded-full px-3 py-1 font-sans text-[11px] text-white/55">FMV</span>
-              </div>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[720px] border-collapse">
-                <thead>
-                  <tr className="font-sans text-[11px] uppercase tracking-[0.1em] text-white/40">
-                    <th className="px-5 py-3 text-left font-medium">Athlete</th>
-                    {["Followers", "Eng %", "Avg Likes", "Avg Comments", "Posts", "Growth", "Brand Deals"].map((h) => (
-                      <th key={h} className="px-4 py-3 text-right font-medium">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
-                  {rosterRows.map((r) => (
-                    <tr key={r.name} className="border-t border-white/[0.06] font-sans text-[13px] text-white/75">
-                      <td className="px-5 py-3">
-                        <span className="flex items-center gap-2.5">
-                          <img src={`https://i.pravatar.cc/64?img=${r.img}`} alt="" aria-hidden className="h-7 w-7 rounded-full object-cover" />
-                          <span className="font-medium text-white">{r.name}</span>
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-right">{r.followers}</td>
-                      <td className="px-4 py-3 text-right">{r.eng}</td>
-                      <td className="px-4 py-3 text-right">{r.likes}</td>
-                      <td className="px-4 py-3 text-right">{r.comments}</td>
-                      <td className="px-4 py-3 text-right">{r.posts}</td>
-                      <td className="px-4 py-3 text-right" style={{ color: LIME }}>{r.growth}</td>
-                      <td className="px-4 py-3 text-right">{r.deals}</td>
-                    </tr>
+                {/* Bio */}
+                <p className="mt-4 font-sans text-[13px] leading-relaxed text-white/70">
+                  Jake Banks is a dual-threat quarterback known for his arm
+                  talent, poise in the pocket, and a fast-growing, highly engaged
+                  following across Instagram and TikTok. A standout recruit out of
+                  high school, he has built a reputation for big-moment highlights
+                  and behind-the-scenes access fans rarely get. Off the field, his
+                  content spans training and film breakdowns, game-day routines,
+                  and lifestyle moments with friends and family. That mix of
+                  on-field performance and authentic personal storytelling makes
+                  him a natural fit for performance, apparel, and lifestyle brands.
+                </p>
+
+                {/* Voice + interests */}
+                <div className="mt-3.5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {[{ label: "Voice", items: voice }, { label: "Interests", items: interests }].map((g) => (
+                    <div key={g.label}>
+                      <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.14em] text-white/35">{g.label}</p>
+                      <div className="mt-1.5 flex flex-wrap gap-1.5">
+                        {g.items.map((it) => (
+                          <span key={it} className="rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 font-sans text-[10.5px] text-white/65">{it}</span>
+                        ))}
+                      </div>
+                    </div>
                   ))}
-                </tbody>
-              </table>
+                </div>
+
+                {/* Brand fits */}
+                <div className="mt-4">
+                  <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.14em] text-white/35">Brand Fits</p>
+                  <div className="mt-2 space-y-1.5">
+                    {brandFits.map((b) => (
+                      <div key={b.name} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
+                        <div className="min-w-0 flex-1">
+                          <p className="font-sans text-[12.5px] font-medium text-white">{b.name}</p>
+                          <p className="truncate font-sans text-[11px] text-white/45">{b.reason}</p>
+                        </div>
+                        <span className="shrink-0 font-sans text-[13px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{b.fit}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </GlassPanel>
         </FadeUp>
@@ -651,41 +696,143 @@ function AthleteIntelligence() {
   );
 }
 
-/* ── Pillar 4 visual: content grid ── */
-function PostGrid() {
+/* A single vertical post tile for the content grid. */
+function ContentPostCard({ p }: { p: ContentPost }) {
+  const statusDot =
+    p.status === "Sponsored" ? LIME : p.status === "Organic" ? "rgba(255,255,255,0.4)" : "#7cc4ff";
   return (
-    <GlassPanel className="p-4">
-      <div className="flex items-center justify-between px-1 pb-3">
-        <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/55">Content Analysis</p>
-        <StatusChip tone="lime">1M+ posts</StatusChip>
+    <div className="relative overflow-hidden rounded-xl border border-white/10">
+      <img src={p.image} alt="" aria-hidden className="aspect-[4/5] w-full object-cover" />
+      <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 28%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.85) 100%)" }} />
+      {/* Tags */}
+      <div className="absolute left-1.5 top-1.5 flex flex-col items-start gap-1">
+        <span className="flex items-center gap-1 rounded-md bg-black/55 px-1.5 py-0.5 font-sans text-[9px] font-medium uppercase tracking-[0.08em] text-white/85 backdrop-blur-sm">
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: statusDot }} />
+          {p.status}
+        </span>
+        <span className="flex items-center gap-1 rounded-md bg-black/55 px-1.5 py-0.5 font-sans text-[9px] font-semibold uppercase tracking-[0.08em] backdrop-blur-sm" style={{ color: LIME }}>
+          <Star className="h-2.5 w-2.5 fill-current" />
+          {p.rank}
+        </span>
       </div>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {posts.map((p) => (
-          <div key={p.seed} className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
-            <div className="relative">
-              <img src={`https://picsum.photos/seed/${p.seed}/240/180`} alt="" aria-hidden className="h-24 w-full object-cover" />
-              <div className="absolute right-1.5 top-1.5">
-                <StatusChip tone={p.tone}>{p.tag}</StatusChip>
-              </div>
+      {/* Footer */}
+      <div className="absolute inset-x-0 bottom-0 p-2">
+        <div className="flex items-center gap-1.5">
+          <img src={`https://i.pravatar.cc/64?img=${p.avatar}`} alt="" aria-hidden className="h-4 w-4 rounded-full object-cover" />
+          <span className="truncate font-sans text-[10.5px] font-medium text-white">{p.name}</span>
+        </div>
+        <div className="mt-1 flex items-center gap-2 font-sans text-[9.5px] text-white/75" style={{ fontVariantNumeric: "tabular-nums" }}>
+          <span className="flex items-center gap-0.5"><Heart className="h-2.5 w-2.5" /> {p.likes}</span>
+          <span className="flex items-center gap-0.5"><MessageCircle className="h-2.5 w-2.5" /> {p.comments}</span>
+          <span className="flex items-center gap-0.5"><Eye className="h-2.5 w-2.5" /> {p.views}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Pillar 4 visual: content analysis grid ── */
+function PostGrid() {
+  const reduce = useReducedMotion();
+  const tabs = ["All", "Posts", "Reels", "Videos"];
+  return (
+    <GlassPanel className="overflow-hidden">
+      {/* Tabs + count */}
+      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+        <div className="flex items-center gap-5">
+          {tabs.map((t, i) => (
+            <span
+              key={t}
+              className="font-sans text-[12.5px]"
+              style={i === 0 ? { color: LIME, fontWeight: 600, borderBottom: `2px solid ${LIME}`, paddingBottom: "10px", marginBottom: "-13px" } : { color: "rgba(255,255,255,0.45)" }}
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+        <span className="font-sans text-[12px] text-white/45" style={{ fontVariantNumeric: "tabular-nums" }}>24 posts</span>
+      </div>
+
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-white/10 px-4 py-3">
+        <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-sans text-[12px] text-white/40">
+          <Search className="h-3.5 w-3.5" /> Search posts, athletes, schools...
+        </div>
+        <div className="flex items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 font-sans text-[11px]">
+          <span className="rounded-full px-2.5 py-1 font-semibold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>My School</span>
+          <span className="px-2.5 py-1 text-white/45">NCAA</span>
+          <span className="px-2.5 py-1 text-white/45">Pro</span>
+        </div>
+        <div className="hidden items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 font-sans text-[11px] sm:flex">
+          <span className="rounded-full px-2.5 py-1 font-semibold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>All</span>
+          <span className="px-2.5 py-1 text-white/45">Sponsored</span>
+          <span className="px-2.5 py-1 text-white/45">Organic</span>
+        </div>
+        <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-sans text-[11px] text-white/55">
+          <Filter className="h-3 w-3" /> Filters
+        </span>
+      </div>
+
+      {/* Auto-scrolling marquee (seamless: posts duplicated, loop at -50%) */}
+      <div className="overflow-hidden p-4">
+        <motion.div
+          className="flex w-max"
+          animate={reduce ? undefined : { x: ["0%", "-50%"] }}
+          transition={reduce ? undefined : { duration: 55, repeat: Infinity, ease: "linear" }}
+        >
+          {[...contentPosts, ...contentPosts].map((p, i) => (
+            <div key={`${p.image}-${i}`} className="mr-3 w-[150px] shrink-0 sm:w-[164px]">
+              <ContentPostCard p={p} />
             </div>
-            <div className="flex items-center gap-2.5 px-2.5 py-2 font-sans text-[11px] text-white/55" style={{ fontVariantNumeric: "tabular-nums" }}>
-              <span className="flex items-center gap-1"><Heart className="h-3 w-3" /> {p.likes}</span>
-              <span className="flex items-center gap-1"><MessageCircle className="h-3 w-3" /> {p.comments}</span>
-              <span className="flex items-center gap-1"><Eye className="h-3 w-3" /> {p.views}</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </motion.div>
       </div>
     </GlassPanel>
+  );
+}
+
+/* ── Pillar 4: content intelligence (full-width grid + toolbar) ── */
+function ContentSection() {
+  return (
+    <section className={`${SECTION} bg-black`}>
+      <div className={`${WRAP} ${PADS}`}>
+        <FadeUp className="max-w-2xl">
+          <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Content</p>
+          <h2 className="mt-3 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            <span className="italic" style={{ color: LIME }}>1M+</span> posts analyzed.
+          </h2>
+          <p className="mt-3 max-w-xl font-sans text-base leading-relaxed text-white/65">
+            See what athlete content performs and why, across every platform.
+          </p>
+          <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
+            {[
+              "search every athlete post across your schools",
+              "track sponsor logo placement and school IP visibility",
+              "analyze hooks, pacing, and caption style",
+              "compare sponsor activations vs organic content",
+            ].map((b) => (
+              <li key={b} className="flex gap-3 font-sans text-[14px] leading-relaxed text-white/70">
+                <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0" style={{ background: LIME }} />
+                {b}
+              </li>
+            ))}
+          </ul>
+        </FadeUp>
+        <FadeUp delay={0.12} className="mt-10 md:mt-14">
+          <PostGrid />
+        </FadeUp>
+      </div>
+    </section>
   );
 }
 
 /* ── Pillar 5: brand matching + outreach (Match Studio flow) ── */
 function MatchStudio() {
   return (
-    <section className="scroll-mt-32 bg-black md:scroll-mt-40">
+    <WorldBackdrop type="image" src="/brandbg.png" parallax className="scroll-mt-32 md:scroll-mt-40">
       <div className={`${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
         <FadeUp className="max-w-2xl">
+          <ScrimCluster className="inline-block">
           <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Brands</p>
           <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
             JABA reads your roster and finds the{" "}
@@ -708,133 +855,278 @@ function MatchStudio() {
               </li>
             ))}
           </ul>
+          </ScrimCluster>
         </FadeUp>
 
-        {/* Three-step flow */}
-        <div className="mt-12 grid grid-cols-1 items-stretch gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:gap-2">
-          {/* Contact Discovery */}
-          <FadeUp delay={0.05} className="h-full">
-            <GlassPanel className="h-full p-5">
-              <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">Contact Discovery</p>
-              <ul className="mt-4 space-y-3">
-                {contacts.map((c) => (
-                  <li key={c.name} className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[0.06] font-sans text-[12px] font-semibold text-white/70">
-                      {c.name.split(" ").map((n) => n[0]).join("")}
-                    </span>
-                    <div className="min-w-0">
-                      <p className="truncate font-sans text-[13px] font-medium text-white">{c.name}</p>
-                      <p className="truncate font-sans text-[11px] text-white/45">{c.title} · {c.company}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </GlassPanel>
-          </FadeUp>
+        {/* Sales Agent: staged pitch flow */}
+        <FadeUp delay={0.1} className="mt-12">
+          <GlassPanel className="overflow-hidden">
+            {/* Stage bar */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-white/10 px-5 py-3.5">
+              {[
+                { label: "Find", count: 50 },
+                { label: "Enrich", count: 8 },
+                { label: "Pitch", count: 11 },
+                { label: "Compose", count: 14 },
+                { label: "Send", count: 7 },
+              ].map((s, i) => (
+                <span key={s.label} className="flex items-center gap-1.5 font-sans text-[12.5px]" style={i === 2 ? { color: LIME, fontWeight: 600 } : { color: "rgba(255,255,255,0.5)" }}>
+                  <span className="font-sans text-[11px]" style={{ color: i === 2 ? LIME : "rgba(255,255,255,0.3)", fontVariantNumeric: "tabular-nums" }}>0{i + 1}</span>
+                  {s.label}
+                  <span className="rounded-full bg-white/10 px-1.5 text-[10px] text-white/60" style={{ fontVariantNumeric: "tabular-nums" }}>{s.count}</span>
+                </span>
+              ))}
+            </div>
 
-          <div className="hidden items-center justify-center md:flex">
-            <ArrowRight className="h-5 w-5 text-white/25" />
-          </div>
-
-          {/* Brand Deal Database */}
-          <FadeUp delay={0.12} className="h-full">
-            <GlassPanel className="h-full p-5">
-              <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">Brand Deal Database</p>
-              <ul className="mt-4 space-y-2.5">
-                {brandsDB.map((b) => (
-                  <li key={b.name} className="flex items-center justify-between rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2">
-                    <div>
-                      <p className="font-sans text-[13px] font-medium text-white">{b.name}</p>
-                      <p className="font-sans text-[11px] text-white/45">{b.category}</p>
-                    </div>
-                    <span className="font-sans text-[13px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{b.match}%</span>
-                  </li>
-                ))}
-              </ul>
-            </GlassPanel>
-          </FadeUp>
-
-          <div className="hidden items-center justify-center md:flex">
-            <ArrowRight className="h-5 w-5 text-white/25" />
-          </div>
-
-          {/* AI Outreach */}
-          <FadeUp delay={0.19} className="h-full">
-            <GlassPanel className="h-full p-5">
-              <p className="flex items-center gap-1.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">
-                <Sparkles className="h-3.5 w-3.5" style={{ color: LIME }} /> AI Outreach
-              </p>
-              <p className="mt-4 rounded-lg border border-white/[0.08] bg-white/[0.03] p-3 font-sans text-[12.5px] leading-relaxed text-white/75">
-                Hi Rachel, three of our athletes over-index with Apex's core
-                18–24 audience. Open to a quick call on a fall activation?
-              </p>
-              <div className="mt-4 flex items-center gap-2">
-                <VoltButton size="sm" icon={<ArrowRight className="h-3.5 w-3.5" />}>Use Draft</VoltButton>
-                <button className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 font-sans text-[12px] font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white">
-                  <RefreshCw className="h-3.5 w-3.5" /> Regenerate
-                </button>
+            <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr]">
+              {/* Pitch queue */}
+              <div className="border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
+                <p className="font-sans text-[10px] font-medium uppercase tracking-[0.14em] text-white/40">Pitch Queue · 2 of 5 ready</p>
+                <ul className="mt-3 space-y-2">
+                  {[
+                    { handle: "@apexhydration", cat: "Beverage", status: "Ready", ready: true },
+                    { handle: "@northwind", cat: "Apparel", status: "Needs athletes" },
+                    { handle: "@voltic", cat: "Energy", status: "Needs ideas" },
+                    { handle: "@cedarco", cat: "Lifestyle", status: "Ready", ready: true },
+                  ].map((q, i) => (
+                    <li key={q.handle} className="rounded-xl border px-3 py-2" style={{ borderColor: i === 0 ? "rgba(223,255,0,0.35)" : "rgba(255,255,255,0.1)", background: i === 0 ? "rgba(223,255,0,0.05)" : "rgba(255,255,255,0.03)" }}>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="truncate font-sans text-[12.5px] font-medium text-white">{q.handle}</p>
+                        <span className="shrink-0 font-sans text-[9px] font-semibold uppercase tracking-[0.08em]" style={{ color: q.ready ? LIME : "rgba(255,255,255,0.4)" }}>{q.status}</span>
+                      </div>
+                      <p className="font-sans text-[10.5px] text-white/40">{q.cat}</p>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </GlassPanel>
-          </FadeUp>
-        </div>
+
+              {/* Drafted pitch */}
+              <div className="p-5">
+                <div className="space-y-2 border-b border-white/10 pb-3 font-sans text-[12.5px]">
+                  <p className="flex gap-2"><span className="w-14 shrink-0 text-white/35">To</span><span className="text-white/80">Rachel Doss <span className="text-white/40">&lt;rachel.doss@apexhydration.com&gt;</span></span></p>
+                  <p className="flex gap-2"><span className="w-14 shrink-0 text-white/35">Subject</span><span className="text-white">Maya Ellison × Apex Hydration: campaign concept</span></p>
+                </div>
+
+                <span className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.04] px-2.5 py-1 font-sans text-[10px] font-medium uppercase tracking-[0.12em] text-white/60">
+                  <Sparkles className="h-3 w-3" style={{ color: LIME }} /> JABA Draft
+                </span>
+
+                <p className="mt-3 font-sans text-[13px] leading-relaxed text-white/80">
+                  Hi Rachel, Maya Ellison brings 96K highly engaged followers in
+                  track and field, an audience that over-indexes on Apex&rsquo;s core
+                  18 to 24 demo and opens a college-sports lane the brand rarely occupies.
+                </p>
+
+                <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.03] p-3">
+                  <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.14em] text-white/40">Why this fits</p>
+                  <p className="mt-1.5 font-sans text-[12.5px] leading-relaxed text-white/70">
+                    Apex gets to be the brand that backed a rising track athlete before
+                    it was obvious, a story about supporting performance at every level.
+                  </p>
+                </div>
+
+                <div className="mt-2.5 flex flex-wrap items-center gap-x-5 gap-y-1.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 font-sans text-[12px] text-white/70" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  <span><span className="font-semibold text-white">96K</span> followers</span>
+                  <span><span className="font-semibold text-white">9.7%</span> engagement</span>
+                  <span><span className="font-semibold" style={{ color: LIME }}>91/100</span> fit score</span>
+                </div>
+
+                <div className="mt-4 flex items-center gap-2">
+                  <span className="flex items-center gap-1.5 rounded-full px-4 py-2 font-sans text-[12.5px] font-semibold" style={{ background: LIME, color: "#000" }}>
+                    Approve &amp; preview email <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-2 font-sans text-[12px] font-medium text-white/70">
+                    <RefreshCw className="h-3.5 w-3.5" /> Regenerate
+                  </span>
+                </div>
+              </div>
+            </div>
+          </GlassPanel>
+        </FadeUp>
       </div>
-    </section>
+    </WorldBackdrop>
   );
 }
 
-/* ── Pillar 6 visual: report builder ── */
+/* ── Pillar 6 visual: report picker (left) + rendered IP report (right) ── */
 function ReportBuilder() {
-  const roi = [42, 58, 51, 67, 74, 88];
+  const reports = [
+    { label: "Campaign Recap", icon: LayoutGrid },
+    { label: "Athlete Spotlight", icon: Users },
+    { label: "Brand Report", icon: Target },
+    { label: "IP Impact", icon: Eye, active: true },
+    { label: "Team Performance", icon: BarChart3 },
+    { label: "Conference", icon: LineChart },
+  ];
+  const signals = [
+    { n: "564", label: "School mentioned in caption", pct: "19.1%" },
+    { n: "709", label: "School logo in the post", pct: "24.1%" },
+    { n: "69", label: "Official school collaboration", pct: "2.3%" },
+  ];
+  const lifts = [
+    { n: "+26%", label: "Likes" },
+    { n: "+26%", label: "Video views" },
+    { n: "+75%", label: "Engagement rate" },
+  ];
+  const compare: Record<string, Record<string, { w: number; wo: number; suf: string }>> = {
+    "Any IP": { Engagement: { w: 9, wo: 5.2, suf: "%" }, Likes: { w: 12.1, wo: 9.6, suf: "K" }, Comments: { w: 631, wo: 470, suf: "" } },
+    Collaboration: { Engagement: { w: 16.1, wo: 5.2, suf: "%" }, Likes: { w: 40.2, wo: 9.6, suf: "K" }, Comments: { w: 980, wo: 470, suf: "" } },
+    Logo: { Engagement: { w: 9.8, wo: 5.2, suf: "%" }, Likes: { w: 11.6, wo: 9.6, suf: "K" }, Comments: { w: 540, wo: 470, suf: "" } },
+    Mention: { Engagement: { w: 8, wo: 5.2, suf: "%" }, Likes: { w: 12.4, wo: 9.6, suf: "K" }, Comments: { w: 615, wo: 470, suf: "" } },
+  };
+  const [signal, setSignal] = useState("Any IP");
+  const [metric, setMetric] = useState("Engagement");
+  const d = compare[signal][metric];
+  const lift = Math.round((d.w / d.wo - 1) * 100);
+  const fmt = (v: number) => `${v}${d.suf}`;
+  const woPct = Math.round((d.wo / d.w) * 100);
   return (
-    <GlassPanel className="p-5">
-      <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/55">Report Builder</p>
-      <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-        {reportTemplates.map((t, i) => (
-          <div
-            key={t}
-            className="flex items-center gap-2 rounded-lg border px-3 py-2.5"
-            style={
-              i === 0
-                ? { borderColor: "rgba(223,255,0,0.4)", background: "rgba(223,255,0,0.08)" }
-                : { borderColor: "rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.06)" }
-            }
-          >
-            <FileText className="h-3.5 w-3.5 shrink-0" style={{ color: i === 0 ? LIME : "rgba(255,255,255,0.4)" }} />
-            <span className="font-sans text-[12px] font-medium text-white/80">{t}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* IP Impact */}
-      <div className="mt-5 rounded-xl border border-white/10 bg-black/45 p-4">
-        <div className="flex items-center justify-between">
-          <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">IP Impact</p>
-          <div className="flex gap-4 font-sans" style={{ fontVariantNumeric: "tabular-nums" }}>
-            <span className="text-right">
-              <span className="block text-[10px] uppercase tracking-[0.12em] text-white/40">EMV</span>
-              <span className="text-base font-bold" style={{ color: LIME }}>$1.24M</span>
-            </span>
-            <span className="text-right">
-              <span className="block text-[10px] uppercase tracking-[0.12em] text-white/40">ROI</span>
-              <span className="text-base font-bold text-white">4.8x</span>
-            </span>
-          </div>
+    <GlassPanel className="overflow-hidden">
+      <div className="grid grid-cols-1 lg:grid-cols-[224px_1fr]">
+        {/* Report picker */}
+        <div className="border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
+          <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.14em] text-white/35">Reports</p>
+          <ul className="mt-3 space-y-1">
+            {reports.map((r) => {
+              const Icon = r.icon;
+              return (
+                <li
+                  key={r.label}
+                  className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 font-sans text-[12.5px]"
+                  style={r.active ? { background: "rgba(223,255,0,0.08)", border: "1px solid rgba(223,255,0,0.3)", color: LIME, fontWeight: 600 } : { color: "rgba(255,255,255,0.6)" }}
+                >
+                  <Icon className="h-3.5 w-3.5 shrink-0" /> {r.label}
+                </li>
+              );
+            })}
+          </ul>
         </div>
-        <div className="mt-4 flex h-20 items-end gap-2">
-          {roi.map((v, i) => {
-            const accent = i === roi.length - 1;
-            const fill = accent
-              ? LIME
-              : i % 2 === 0
-                ? "rgba(255,255,255,0.22)"
-                : "rgba(223,255,0,0.7)";
-            return (
-              <span key={i} className="flex-1 rounded-t" style={{ height: `${v}%`, background: fill }} />
-            );
-          })}
+
+        {/* Rendered IP report */}
+        <div className="p-5">
+          <div className="flex items-center justify-between">
+            <p className="font-sans text-[14px] font-extrabold uppercase tracking-[0.02em] text-white">IP Impact Report</p>
+            <span className="font-sans text-[11px] text-white/40">Last 90 days</span>
+          </div>
+
+          {/* What we measured */}
+          <div className="mt-3.5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+            <div className="flex items-baseline gap-3">
+              <span className="font-sans text-[34px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>2,947</span>
+              <span className="font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-white/70">Sponsored posts analyzed</span>
+            </div>
+            <div className="mt-3.5 flex h-2 overflow-hidden rounded-full">
+              <span style={{ width: "68%", background: "rgba(255,255,255,0.18)" }} />
+              <span style={{ width: "32%", background: LIME }} />
+            </div>
+            <div className="mt-2 flex justify-between font-sans text-[11px] text-white/55" style={{ fontVariantNumeric: "tabular-nums" }}>
+              <span><span className="font-bold text-white">2,006</span> no school IP · 68%</span>
+              <span><span className="font-bold" style={{ color: LIME }}>941</span> use school IP · 32%</span>
+            </div>
+          </div>
+
+          {/* Three ways school IP shows up */}
+          <p className="mt-4 font-sans text-[9.5px] font-bold uppercase tracking-[0.14em]" style={{ color: LIME }}>The three ways school IP shows up</p>
+          <div className="mt-2 grid grid-cols-3 gap-2.5">
+            {signals.map((s) => (
+              <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5">
+                <p className="font-sans text-[20px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{s.n}</p>
+                <p className="mt-1.5 font-sans text-[10.5px] font-semibold leading-tight text-white/75">{s.label}</p>
+                <p className="mt-0.5 font-sans text-[10px] text-white/40">{s.pct} of posts</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Posts with IP perform better */}
+          <p className="mt-4 font-sans text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/40">Posts with school IP perform better</p>
+          <div className="mt-2 grid grid-cols-3 gap-2.5">
+            {lifts.map((l) => (
+              <div key={l.label} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3">
+                <p className="font-sans text-[24px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{l.n}</p>
+                <p className="mt-1.5 font-sans text-[11px] font-bold uppercase tracking-[0.04em] text-white/75">{l.label}</p>
+                <p className="font-sans text-[10px] text-white/40">vs no school IP</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Interactive: with IP vs without IP */}
+          <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-4">
+            <p className="font-sans text-[12px] font-extrabold uppercase tracking-[0.04em] text-white">With IP vs without IP</p>
+            <p className="mt-0.5 font-sans text-[10px] uppercase tracking-[0.1em]" style={{ color: LIME }}>Pick a signal and a metric to compare the typical post</p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {Object.keys(compare).map((s) => (
+                <button
+                  key={s}
+                  onClick={() => setSignal(s)}
+                  className="rounded-full border px-3 py-1 font-sans text-[11px] font-medium uppercase tracking-[0.06em] transition-colors"
+                  style={signal === s ? { background: LIME, borderColor: LIME, color: "#000" } : { borderColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.55)" }}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {["Engagement", "Likes", "Comments"].map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setMetric(m)}
+                  className="rounded-full border px-3 py-1 font-sans text-[11px] font-medium uppercase tracking-[0.06em] transition-colors"
+                  style={metric === m ? { background: LIME, borderColor: LIME, color: "#000" } : { borderColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.55)" }}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-3.5 space-y-2" style={{ fontVariantNumeric: "tabular-nums" }}>
+              <div className="flex items-center gap-3">
+                <span className="w-16 shrink-0 font-sans text-[10px] uppercase tracking-[0.1em] text-white/50">With IP</span>
+                <span className="relative h-7 flex-1 overflow-hidden rounded-md">
+                  <span className="absolute inset-y-0 left-0 rounded-md" style={{ width: "100%", background: LIME }} />
+                  <span className="absolute inset-y-0 right-2 flex items-center font-sans text-[12px] font-extrabold text-black">{fmt(d.w)}</span>
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="w-16 shrink-0 font-sans text-[10px] uppercase tracking-[0.1em] text-white/50">Without</span>
+                <span className="relative h-7 flex-1 overflow-hidden rounded-md bg-white/[0.04]">
+                  <span className="absolute inset-y-0 left-0 rounded-md bg-white/15" style={{ width: `${woPct}%` }} />
+                  <span className="absolute inset-y-0 right-2 flex items-center font-sans text-[12px] font-bold text-white/70">{fmt(d.wo)}</span>
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-3 flex items-baseline gap-2 border-t border-white/10 pt-3">
+              <span className="font-sans text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/40">IP Lift</span>
+              <span className="font-sans text-[22px] font-extrabold leading-none" style={{ color: LIME }}>+{lift}%</span>
+              <span className="font-sans text-[11px] text-white/45">{metric} with {signal} vs without</span>
+            </div>
+          </div>
         </div>
       </div>
     </GlassPanel>
+  );
+}
+
+/* ── Pillar 6: reports (copy + full-width report picker/preview) ── */
+function ReportsSection() {
+  return (
+    <section className={`${SECTION} bg-black`}>
+      <div className={`${WRAP} ${PADS}`}>
+        <FadeUp className="max-w-2xl">
+          <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Reports</p>
+          <h2 className="mt-3 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            Report on <span className="italic" style={{ color: LIME }}>anything</span> you run.
+          </h2>
+          <p className="mt-3 max-w-xl font-sans text-base leading-relaxed text-white/65">
+            Campaigns, athletes, brands, teams, conferences, and school IP impact.
+            Pick a report and JABA builds it from your live data, ready to export.
+          </p>
+        </FadeUp>
+        <FadeUp delay={0.12} className="mt-10 md:mt-14">
+          <ReportBuilder />
+        </FadeUp>
+      </div>
+    </section>
   );
 }
 
@@ -921,37 +1213,13 @@ export default function ForSchoolsPage() {
       <AthleteIntelligence />
 
       {/* Pillar 4 — Content intelligence */}
-      <PillarSection
-        eyebrow="Content"
-        headline={<><span className="italic" style={{ color: LIME }}>1M+</span> posts analyzed.</>}
-        body="See what athlete content performs and why, across every platform."
-        bullets={[
-          "search every athlete post across your schools",
-          "track sponsor logo placement and school IP visibility",
-          "analyze hooks, pacing, and caption style",
-          "compare sponsor activations vs organic content",
-        ]}
-        world={{ src: WORLD_IMG, type: "image" }}
-        reverse
-      >
-        <PostGrid />
-      </PillarSection>
+      <ContentSection />
 
       {/* Pillar 5 — Brand matching + outreach */}
       <MatchStudio />
 
-      {/* Pillar 6 — Data and reporting */}
-      <PillarSection
-        eyebrow="Data"
-        headline={<>Every campaign, <span className="italic" style={{ color: LIME }}>measured.</span></>}
-        body="Pull the numbers on any campaign, athlete, brand, or team, and turn them into a report in minutes."
-        world={{ src: WORLD_IMG, type: "image" }}
-      >
-        <ReportBuilder />
-      </PillarSection>
-
-      {/* Athlete texting */}
-      <AssistantThread />
+      {/* Pillar 6 — Reports */}
+      <ReportsSection />
 
       {/* CTA */}
       <section className="audience-page-cta scroll-mt-32 md:scroll-mt-40">

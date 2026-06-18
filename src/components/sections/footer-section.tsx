@@ -39,7 +39,7 @@ export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionPro
             <img
               src="/JABA%20White%201%20(1).png"
               alt="JABA"
-              className="h-5 w-auto"
+              className="h-12 w-auto md:h-16"
             />
           </a>
 
