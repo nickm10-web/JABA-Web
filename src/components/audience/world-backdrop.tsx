@@ -66,12 +66,14 @@ export function WorldBackdrop({
       )}
 
       {scrim ? (
-        <div
+        <motion.div
           aria-hidden
           className="absolute inset-0"
           style={{
+            scale,
+            y,
             background:
-              "linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.62) 70%, rgba(0,0,0,0.9) 100%)",
+              "linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.52) 28%, rgba(0,0,0,0.62) 55%, rgba(0,0,0,0.9) 82%, rgba(0,0,0,1) 100%)",
           }}
         />
       ) : null}
