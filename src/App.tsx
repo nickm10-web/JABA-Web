@@ -11,7 +11,6 @@ import FooterSection from "@/components/sections/footer-section";
 import ProblemScrollStory from "@/components/ProblemScrollStory";
 import ScrollVideoHero from "@/components/ScrollVideoHero";
 import TextAssistantSection from "@/components/TextAssistantSection";
-import VideoPlayer from "@/components/ui/video-player";
 export default function App() {
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -23,15 +22,22 @@ export default function App() {
       <section className="bg-[#eeeeee] pt-4 pb-16 md:pt-6 md:pb-24">
         <div className="container mx-auto px-6">
           <div className="relative mx-auto w-full max-w-4xl">
-            <VideoPlayer
-              src="/videos/Damar%20Anchor%20Short%20(2).mp4"
-              poster="/DAMAR%20HAMLIN%20thumbnail.png"
-              attribution={{
-                kicker: "Hear from our Creative Director",
-                name: "Damar Hamlin",
-                role: "Buffalo Bills Safety · JABA Creative Director",
-              }}
-            />
+            <div className="relative overflow-hidden rounded-2xl">
+              <img
+                src="/DAMAR%20HAMLIN%20thumbnail.png"
+                alt="Damar Hamlin, JABA Creative Director"
+                className="w-full"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-6 md:p-8">
+                <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-white/70">
+                  Hear from our Creative Director
+                </p>
+                <p className="mt-1 font-display text-2xl leading-none text-white">Damar Hamlin</p>
+                <p className="mt-1 font-sans text-[13px] text-white/60">
+                  Buffalo Bills Safety · JABA Creative Director
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

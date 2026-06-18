@@ -127,30 +127,11 @@ function MonitorHero() {
             <span className={`${tick} -bottom-2 -right-2 border-b border-r`} />
 
             <div className="relative overflow-hidden rounded-sm border border-white/15">
-              <video
-                ref={videoRef}
-                src="/videos/Damar%20Anchor%20Short%20(2).mp4"
-                poster="/DAMAR%20HAMLIN%20thumbnail.png"
-                playsInline
-                onEnded={() => setPlaying(false)}
-                onClick={toggle}
-                className="aspect-video w-full cursor-pointer object-cover"
+              <img
+                src="/DAMAR%20HAMLIN%20thumbnail.png"
+                alt="JABA launch film, introduced by Damar Hamlin"
+                className="aspect-video w-full object-cover"
               />
-              {/* Centered liquid-glass play button */}
-              {!playing ? (
-                <button
-                  onClick={toggle}
-                  aria-label="Play the launch film"
-                  className="absolute inset-0 z-10 flex cursor-pointer flex-col items-center justify-center gap-3"
-                >
-                  <span className="liquid-email-glass flex !h-16 !w-16 items-center justify-center !rounded-full !p-0">
-                    <Play className="ml-0.5 h-6 w-6 fill-white text-white" />
-                  </span>
-                  <span className="font-sans text-[11px] font-semibold tracking-[0.22em] text-white/85 drop-shadow-[0_1px_8px_rgba(0,0,0,0.6)]">
-                    PRESS PLAY
-                  </span>
-                </button>
-              ) : null}
             </div>
           </div>
 
