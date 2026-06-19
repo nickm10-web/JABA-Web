@@ -1,12 +1,14 @@
 import { useState } from "react";
-import {
-  ArrowRight,
-  Mail,
-  RefreshCw,
-  Search,
-  Sparkles,
-  Zap,
-} from "lucide-react";
+import { ArrowRight, Instagram, Search, Sparkles, Zap } from "lucide-react";
+
+/* TikTok glyph (not in lucide). */
+function TiktokGlyph({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d="M16.5 3c.3 1.9 1.4 3.4 3.3 4 .4.1.8.2 1.2.2v3a8 8 0 0 1-4.5-1.4v6.3a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v3.1a2.6 2.6 0 1 0 1.8 2.5V3h2.9z" />
+    </svg>
+  );
+}
 
 import PageLayout from "@/components/layout/page-layout";
 import { VoltButton } from "@/components/ui/volt-button";
@@ -16,14 +18,10 @@ import {
   GlassPanel,
   PillarSection,
   ScrimCluster,
-  StatusChip,
 } from "@/components/audience/glass-mockups";
 import {
-  AthleteCard,
-  PostGrid,
   ReportBuilder,
   RosterTable,
-  type PostTile,
   type RosterRow,
 } from "@/components/audience/product-mockups";
 
@@ -35,11 +33,28 @@ const CLOUDS = "/videos/Video%20BG%20Web_02.mp4";
 const WORLD_IMG = "/header%20BG-%20V4-WithoutBalls_less.jpg";
 
 // Fictional brands, contacts, athletes. Real numbers OK.
-const directory = [
-  { name: "Apex Hydration", category: "Beverage", history: "24 deals", dm: "Rachel Doss · VP Marketing" },
-  { name: "Northwind Apparel", category: "Apparel", history: "18 deals", dm: "Marcus Hill · Brand Partnerships" },
-  { name: "Voltic Energy", category: "Energy", history: "31 deals", dm: "Elena Park · Head of Influencer" },
-  { name: "Cedar & Co.", category: "Lifestyle", history: "12 deals", dm: "Priya Nair · Marketing Lead" },
+// `logo` is an optional image path (drop /brand-*.png files in public and set it);
+// falls back to a monogram until a logo is provided.
+const directoryCategories = [
+  { name: "Apparel", n: "1,184" },
+  { name: "Beverage", n: "1,061", active: true },
+  { name: "Nutrition & Supplements", n: "804" },
+  { name: "Sports Equipment", n: "715" },
+  { name: "Skincare", n: "654" },
+  { name: "Footwear", n: "636" },
+  { name: "Lifestyle", n: "619" },
+  { name: "Automotive", n: "515" },
+  { name: "Financial Services", n: "425" },
+  { name: "Gaming & Esports", n: "282" },
+];
+
+const directoryBrands: { name: string; cat: string; posts: string; desc: string; logo?: string }[] = [
+  { name: "Apex Hydration", cat: "Beverage", posts: "24 posts", desc: "Performance hydration built for game day and recovery." },
+  { name: "Northwind Apparel", cat: "Apparel", posts: "18 posts", desc: "Technical outerwear and lifestyle basics for the active." },
+  { name: "Voltic Energy", cat: "Beverage", posts: "31 posts", desc: "Clean-energy drinks fueling the next generation of athletes." },
+  { name: "Cedar & Co.", cat: "Lifestyle", posts: "12 posts", desc: "Everyday essentials with a clean, modern aesthetic." },
+  { name: "Summit Gear", cat: "Sports Equipment", posts: "9 posts", desc: "Field-tested equipment for training and competition." },
+  { name: "Lumen Skincare", cat: "Skincare", posts: "15 posts", desc: "Dermatologist-backed skincare for high-performance skin." },
 ];
 
 const pipeline = [
@@ -51,28 +66,11 @@ const pipeline = [
 const rosterAthletes = ["Darius Vaughn", "Andre Solis", "Marcus Webb", "Tyson Reed"];
 const matchBrands = ["Apex Hydration", "Voltic Energy", "Northwind Apparel", "Cedar & Co."];
 
-const athleteMetrics = [
-  { label: "Brand Fit Score", value: "94", bar: 94 },
-  { label: "Audience Reach", value: "1.2M" },
-  { label: "Engagement", value: "7.8%" },
-  { label: "Content Style", value: "Lifestyle" },
-  { label: "Alignment Score", value: "90", bar: 90 },
-];
-
 const rosterRows: RosterRow[] = [
   { name: "Darius Vaughn", img: 13, followers: "1.2M", eng: "7.8%", likes: "88K", comments: "3.4K", posts: "246", growth: "+9.1%", deals: "11" },
   { name: "Andre Solis", img: 33, followers: "684K", eng: "6.2%", likes: "42K", comments: "1.9K", posts: "203", growth: "+5.7%", deals: "7" },
   { name: "Marcus Webb", img: 51, followers: "512K", eng: "8.4%", likes: "39K", comments: "2.1K", posts: "178", growth: "+6.3%", deals: "6" },
   { name: "Tyson Reed", img: 8, followers: "398K", eng: "5.9%", likes: "24K", comments: "1.2K", posts: "154", growth: "+4.4%", deals: "4" },
-];
-
-const posts: PostTile[] = [
-  { seed: "ag1", likes: "88K", comments: "3.4K", views: "540K", tag: "TOP 5", tone: "lime" },
-  { seed: "ag2", likes: "42K", comments: "1.9K", views: "310K", tag: "VISIBLE", tone: "neutral" },
-  { seed: "ag3", likes: "39K", comments: "2.1K", views: "280K", tag: "SPONSORED", tone: "lime" },
-  { seed: "ag4", likes: "24K", comments: "1.2K", views: "190K", tag: "TOP 25", tone: "neutral" },
-  { seed: "ag5", likes: "18K", comments: "900", views: "140K", tag: "ORGANIC", tone: "muted" },
-  { seed: "ag6", likes: "61K", comments: "2.8K", views: "420K", tag: "TOP 10", tone: "neutral" },
 ];
 
 const masterRows = [
@@ -81,65 +79,119 @@ const masterRows = [
   { name: "Marcus Webb", campaigns: "5", deals: "6", payments: "$198K" },
 ];
 
-/* ── Brand Directory mockup ── */
-function BrandDirectory() {
+/* ── Brand Directory: full search UI (sidebar + brand cards) ── */
+function BrandDirectorySection() {
   return (
-    <GlassPanel className="p-4">
-      <div className="flex items-center justify-between px-1 pb-3">
-        <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/55">Brand Directory</p>
-        <StatusChip tone="lime">300,000+</StatusChip>
-      </div>
-      <div className="mb-3 flex items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-3 py-2">
-        <Search className="h-3.5 w-3.5 text-white/40" />
-        <span className="font-sans text-[12.5px] text-white/45">Search brands by category…</span>
-      </div>
-      <div className="space-y-2">
-        {directory.map((b) => (
-          <div key={b.name} className="flex items-center gap-3 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
-            <div className="min-w-0 flex-1">
-              <p className="truncate font-sans text-[13px] font-medium text-white">{b.name}</p>
-              <p className="truncate font-sans text-[11px] text-white/45">{b.dm}</p>
+    <section className={`${SECTION} bg-black`}>
+      <div className={`${WRAP} ${PADS}`}>
+        <FadeUp className="max-w-2xl">
+          <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Brand Directory</p>
+          <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            Search <span className="italic" style={{ color: LIME }}>300,000+</span> brands.
+          </h2>
+          <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
+            Every brand JABA tracks, in one searchable directory, with deal
+            history and decision makers on each.
+          </p>
+        </FadeUp>
+
+        <FadeUp delay={0.12} className="mt-10 md:mt-14">
+          <GlassPanel className="overflow-hidden">
+            {/* Tabs + search */}
+            <div className="flex flex-wrap items-center gap-3 border-b border-white/10 p-4">
+              <div className="flex items-center rounded-full border border-white/12 bg-white/[0.04] p-0.5 font-sans text-[12px]">
+                <span className="rounded-full px-3 py-1 font-semibold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>Brands</span>
+                <span className="px-3 py-1 text-white/45">Contacts</span>
+                <span className="px-3 py-1 text-white/45">For an athlete</span>
+              </div>
+              <div className="flex min-w-[220px] flex-1 items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-2 font-sans text-[12.5px] text-white/40">
+                <Search className="h-3.5 w-3.5" /> Search brand, city, category, aesthetic…
+              </div>
             </div>
-            <StatusChip tone="neutral">{b.category}</StatusChip>
-            <span className="hidden shrink-0 font-sans text-[12px] text-white/55 sm:block" style={{ fontVariantNumeric: "tabular-nums" }}>{b.history}</span>
-          </div>
-        ))}
+
+            <div className="grid grid-cols-1 md:grid-cols-[210px_1fr]">
+              {/* Category sidebar */}
+              <div className="border-b border-white/10 p-4 md:border-b-0 md:border-r">
+                <p className="font-sans text-[10px] font-semibold uppercase tracking-[0.16em] text-white/40">Categories</p>
+                <ul className="mt-3 space-y-0.5">
+                  {directoryCategories.map((c) => (
+                    <li
+                      key={c.name}
+                      className="flex items-center justify-between rounded-lg px-2.5 py-1.5 font-sans text-[12.5px]"
+                      style={c.active ? { background: "rgba(223,255,0,0.08)", color: LIME, fontWeight: 600 } : { color: "rgba(255,255,255,0.6)" }}
+                    >
+                      <span className="truncate">{c.name}</span>
+                      <span className="shrink-0 font-sans text-[11px]" style={{ color: c.active ? LIME : "rgba(255,255,255,0.35)", fontVariantNumeric: "tabular-nums" }}>{c.n}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Results */}
+              <div className="p-4">
+                <div className="flex items-center justify-between">
+                  <p className="font-sans text-[12.5px] text-white/55"><span className="font-semibold text-white">1,061</span> results</p>
+                  <p className="font-sans text-[11.5px] text-white/40">Sort by <span className="text-white/70">Relevance</span></p>
+                </div>
+                <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
+                  {directoryBrands.map((b) => (
+                    <div key={b.name} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                      <div className="flex items-center gap-3">
+                        {b.logo ? (
+                          <img src={b.logo} alt="" aria-hidden className="h-9 w-9 rounded-full object-cover" />
+                        ) : (
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 font-sans text-[14px] font-bold text-white">{b.name[0]}</span>
+                        )}
+                        <div className="min-w-0">
+                          <p className="truncate font-sans text-[14px] font-semibold text-white">{b.name}</p>
+                          <p className="truncate font-sans text-[11px] text-white/45">{b.cat} · {b.posts}</p>
+                        </div>
+                      </div>
+                      <p className="mt-3 font-sans text-[12.5px] leading-relaxed text-white/60">{b.desc}</p>
+                      <div className="mt-3 flex items-center justify-between">
+                        <span className="font-sans text-[12px] font-medium text-white/70">View brand →</span>
+                        <span className="rounded-full px-3 py-1.5 font-sans text-[11.5px] font-semibold" style={{ background: LIME, color: "#000" }}>+ Add to pitch</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </GlassPanel>
+        </FadeUp>
       </div>
-    </GlassPanel>
+    </section>
   );
 }
 
-/* ── CRM + AI Outreach: assistant card + deal pipeline board ── */
+/* ── CRM inbox assistant: iMessage thread (mirrors For Schools) ── */
 function OutreachAssistant() {
   return (
-    <GlassPanel className="p-5">
-      <p className="flex items-center gap-1.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">
-        <Mail className="h-3.5 w-3.5" style={{ color: LIME }} /> Inbox Assistant
-      </p>
-      <div className="mt-4 rounded-lg border border-white/[0.08] bg-black/35 p-3">
-        <p className="font-sans text-[12px] text-white/45">Rachel Doss · Apex Hydration</p>
-        <p className="mt-1 font-sans text-[12.5px] text-white/75">"Can you send a media kit for Darius and a rate for a fall activation?"</p>
-      </div>
-      <div className="mt-3 rounded-lg border border-[#dfff00]/25 bg-[#dfff00]/[0.06] p-3">
-        <p className="flex items-center gap-1.5 font-sans text-[10px] uppercase tracking-[0.14em]" style={{ color: LIME }}>
-          <Sparkles className="h-3 w-3" /> Drafted in your voice
-        </p>
-        <p className="mt-2 font-sans text-[12.5px] leading-relaxed text-white/80">
-          Hi Rachel, attaching Darius's media kit now. He over-indexes with
-          your 18–24 audience. Proposing a three-post fall activation; rate
-          card below.
-        </p>
-        <div className="mt-3 flex items-center gap-2">
-          <VoltButton size="sm" icon={<ArrowRight className="h-3.5 w-3.5" />}>Use Draft</VoltButton>
-          <button className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 font-sans text-[12px] font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white">
-            <RefreshCw className="h-3.5 w-3.5" /> Regenerate
-          </button>
+    <GlassPanel borderRadius="22px" className="p-3.5">
+      <div className="mb-3 flex items-center gap-2.5 border-b border-white/10 pb-3">
+        <img src="/jaba-face.png" alt="" aria-hidden className="h-8 w-8 rounded-full" />
+        <div>
+          <p className="font-sans text-sm font-semibold text-white">JABA</p>
+          <p className="font-sans text-[11px] text-white/45">iMessage</p>
         </div>
       </div>
-      <p className="mt-3 flex items-center gap-2 font-sans text-[11px] text-white/45">
-        <span className="inline-flex h-5 items-center rounded border border-white/15 bg-white/[0.05] px-2 text-[10px] uppercase tracking-[0.1em] text-white/60">AI media kit</span>
-        Darius-Vaughn-2025.pdf attached automatically
-      </p>
+      <div className="space-y-2">
+        <div className="flex justify-start">
+          <p className="max-w-[88%] rounded-2xl rounded-bl-md bg-[#e9e9eb] px-3.5 py-2 font-sans text-[13px] leading-snug text-black">
+            Rachel at Apex replied, she wants a media kit for Darius and a fall rate.
+          </p>
+        </div>
+        <div className="flex justify-end">
+          <p className="max-w-[86%] rounded-2xl rounded-br-md bg-[#007aff] px-3.5 py-2 font-sans text-[13px] leading-snug text-white">
+            Draft the reply and send the kit.
+          </p>
+        </div>
+        <div className="flex justify-start">
+          <p className="max-w-[88%] rounded-2xl rounded-bl-md bg-[#e9e9eb] px-3.5 py-2 font-sans text-[13px] leading-snug text-black">
+            Done. Replied in your voice, attached Darius-Vaughn-2025.pdf, and moved Apex to Negotiating.
+          </p>
+        </div>
+      </div>
     </GlassPanel>
   );
 }
@@ -295,33 +347,126 @@ function MatchStudioSection() {
   );
 }
 
-/* ── Roster intelligence (reuses AthleteCard + RosterTable) ── */
+/* ── Roster intelligence: deep athlete profile + roster table ── */
 function RosterIntelligence() {
+  const tabs = ["Overview", "Performance", "Audience", "FMV", "Athlete Business"];
+  const voice = ["Game-day highlights", "Training & recovery", "Lifestyle & family"];
+  const interests = ["Performance gear", "Hydration & nutrition", "Community"];
+  const brandFits = [
+    { name: "Apex Hydration", fit: 94, reason: "Audience and content align; over-indexes with their 18 to 24 demo." },
+    { name: "Voltic Energy", fit: 88, reason: "High-energy game content matches the brand's tone." },
+    { name: "Northwind Apparel", fit: 82, reason: "Off-field lifestyle fits their apparel line." },
+  ];
+  const stats = [
+    { label: "Audience Reach", value: "1.2M", sub: "↑ 9.1% · 30d", up: true },
+    { label: "Engagement", value: "7.8%", sub: "vs 5.4% cohort", up: true },
+    { label: "Brand Fit", value: "94", sub: "score" },
+    { label: "Alignment", value: "90", sub: "score" },
+  ];
   return (
     <WorldBackdrop src={WORLD_IMG} parallax className={SECTION}>
-      <div className={`${WRAP} ${PADS}`}>
-        <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
-          <ScrimCluster>
-            <FadeUp>
-              <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Roster</p>
-              <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
-                Know every athlete's{" "}
-                <span className="italic" style={{ color: LIME }}>value.</span>
-              </h2>
-              <p className="mt-4 max-w-md font-sans text-base leading-relaxed text-white/65 md:text-lg">
-                Brand Fit Score, Audience Reach, Engagement, Content Style, and
-                Alignment Score on every athlete, with FMV one toggle away.
-              </p>
-            </FadeUp>
+      <div className={`${WRAP} pb-12 pt-24 md:pb-16 md:pt-28`}>
+        <FadeUp className="mx-auto max-w-3xl text-center">
+          <ScrimCluster className="inline-block">
+            <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Roster</p>
+            <h2 className="mt-3 font-display text-5xl leading-[1.02] text-white md:text-6xl lg:text-7xl">
+              Know every athlete's{" "}
+              <span className="italic" style={{ color: LIME }}>value.</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
+              A living profile for every athlete: audience, content, brand fit,
+              and the brands they naturally win, with FMV one toggle away.
+            </p>
           </ScrimCluster>
-          <FadeUp delay={0.12}>
-            <ScrimCluster className="mx-auto w-full max-w-sm">
-              <AthleteCard name="Darius Vaughn" sport="NFL · Wide Receiver" img={13} overall={92} metrics={athleteMetrics} />
-            </ScrimCluster>
-          </FadeUp>
-        </div>
+        </FadeUp>
 
-        <FadeUp delay={0.1} className="mt-10 md:mt-14">
+        <FadeUp delay={0.12} className="mt-7 md:mt-9">
+          <GlassPanel className="overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-12">
+              {/* Profile rail */}
+              <div className="flex flex-col border-b border-white/10 p-5 md:col-span-4 md:border-b-0 md:border-r">
+                <div className="min-h-[200px] flex-1 overflow-hidden rounded-2xl border border-white/10">
+                  <img src="https://i.pravatar.cc/520?img=13" alt="" aria-hidden className="h-full w-full object-cover object-top" />
+                </div>
+                <div className="mt-4 flex items-center gap-2">
+                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">NFL</span>
+                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">WR</span>
+                </div>
+                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Darius Vaughn</h3>
+                <div className="mt-2 flex items-center gap-1.5 font-sans text-[11px] text-white/55">
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: LIME }} />
+                  JABA · Verified
+                  <span className="text-white/30">·</span> Pro
+                </div>
+                <p className="mt-1.5 font-sans text-[11px] text-white/45" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  Overall <span className="font-semibold text-white/80">92</span> · Content style: Lifestyle
+                </p>
+              </div>
+
+              {/* Detail panel */}
+              <div className="p-5 md:col-span-8">
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-white/10 pb-3">
+                  {tabs.map((t, i) => (
+                    <span
+                      key={t}
+                      className="font-sans text-[12px]"
+                      style={i === 0 ? { color: LIME, fontWeight: 600, borderBottom: `2px solid ${LIME}`, paddingBottom: "6px", marginBottom: "-15px" } : { color: "rgba(255,255,255,0.45)" }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                  {stats.map((s) => (
+                    <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
+                      <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.12em] text-white/35">{s.label}</p>
+                      <p className="mt-1 font-sans text-[20px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{s.value}</p>
+                      <p className="mt-1 font-sans text-[10px]" style={{ color: s.up ? LIME : "rgba(255,255,255,0.4)" }}>{s.sub}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="mt-4 font-sans text-[13px] leading-relaxed text-white/70">
+                  Darius Vaughn is an NFL wide receiver with a fast-growing, highly
+                  engaged following. On and off the field his content spans game-day
+                  highlights, training, and lifestyle, the mix premium brands want
+                  to build campaigns around.
+                </p>
+
+                <div className="mt-3.5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {[{ label: "Voice", items: voice }, { label: "Interests", items: interests }].map((g) => (
+                    <div key={g.label}>
+                      <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.14em] text-white/35">{g.label}</p>
+                      <div className="mt-1.5 flex flex-wrap gap-1.5">
+                        {g.items.map((it) => (
+                          <span key={it} className="rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 font-sans text-[10.5px] text-white/65">{it}</span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4">
+                  <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.14em] text-white/35">Brand Fits</p>
+                  <div className="mt-2 space-y-1.5">
+                    {brandFits.map((b) => (
+                      <div key={b.name} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
+                        <div className="min-w-0 flex-1">
+                          <p className="font-sans text-[12.5px] font-medium text-white">{b.name}</p>
+                          <p className="truncate font-sans text-[11px] text-white/45">{b.reason}</p>
+                        </div>
+                        <span className="shrink-0 font-sans text-[13px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{b.fit}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </GlassPanel>
+        </FadeUp>
+
+        <FadeUp delay={0.1} className="mt-6 md:mt-8">
           <ScrimCluster>
             <RosterTable rows={rosterRows} />
           </ScrimCluster>
@@ -331,18 +476,150 @@ function RosterIntelligence() {
   );
 }
 
+/* ── Light interlude: centered statement + three-up world-image cards ── */
+function AgencyInterlude() {
+  const cards = [
+    { n: "01", label: "Pitch", body: "Find the brands that fit your roster and send outreach that sounds like you.", img: "/pitchimage2.png" },
+    { n: "02", label: "Manage", body: "Move every deal from first email to signed, in one pipeline.", img: "/manageimage2.png" },
+    { n: "03", label: "Track", body: "Turn campaigns, content, and deals into a report in minutes.", img: "/trackimage2.png" },
+  ];
+  return (
+    <section className={`${SECTION} bg-[#eeeeee]`}>
+      <div className={`${WRAP} ${PADS}`}>
+        <FadeUp>
+          <h2 className="mx-auto max-w-4xl text-center font-sans text-4xl font-extrabold tracking-tight leading-[1.45] [text-wrap:balance] text-[#0a0a0a] md:text-5xl lg:text-6xl">
+            Agencies lose deals to{" "}
+            <span
+              style={{
+                color: "#000",
+                padding: "0 0.12em",
+                background: `linear-gradient(180deg, transparent 0.22em, ${LIME} 0.22em, ${LIME} calc(100% - 0.16em), transparent calc(100% - 0.16em))`,
+                WebkitBoxDecorationBreak: "clone",
+                boxDecorationBreak: "clone",
+              }}
+            >
+              slow follow-up,
+            </span>{" "}
+            not bad rosters.
+          </h2>
+        </FadeUp>
+        <FadeUp delay={0.1} className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-3">
+          {cards.map((c) => (
+            <div key={c.n} className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "4 / 5" }}>
+              <img src={c.img} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+              <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.45) 45%, rgba(0,0,0,0.9) 100%)" }} />
+              <div className="absolute inset-0 flex flex-col justify-end p-6">
+                <span className="font-sans text-[12px] font-bold tracking-[0.2em]" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{c.n}</span>
+                <h3 className="mt-2 font-display text-[2rem] italic leading-none text-white">{c.label}</h3>
+                <p className="mt-2.5 max-w-[40ch] font-sans text-[13.5px] leading-relaxed text-white/75">{c.body}</p>
+              </div>
+            </div>
+          ))}
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+/* ── Light content beat: AI content search ── */
+const searchResults = [
+  { image: "/athleteglasses1.png", label: "Sponsored", proof: false, platform: "instagram", kind: "Post" },
+  { image: "/athleteglasses2.png", label: "Literal Proof", proof: true, platform: "instagram", kind: "Carousel" },
+  { image: "/athleteglasses3.png", label: "Sponsored", proof: false, platform: "tiktok", kind: "Video" },
+  { image: "/athleteglasses4.png", label: "Literal Proof", proof: true, platform: "instagram", kind: "Reel" },
+];
+
+function ContentSection() {
+  return (
+    <section className={`${SECTION} bg-[#eeeeee]`}>
+      <div className={`${WRAP} ${PADS}`}>
+        <FadeUp className="max-w-2xl">
+          <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-black/45">Content</p>
+          <h2 className="mt-3 font-display text-4xl leading-[1.05] text-[#0a0a0a] md:text-5xl">
+            Search content with{" "}
+            <span className="italic" style={{ color: "#0a0a0a", textDecoration: "underline", textDecorationColor: LIME, textDecorationThickness: "0.12em", textUnderlineOffset: "0.08em" }}>AI.</span>
+          </h2>
+          <p className="mt-3 max-w-xl font-sans text-base leading-relaxed text-black/60">
+            Find posts as proof, references, or comps. Brand-visible content is
+            enforced, and creative bridges are labeled, never sold as literal proof.
+          </p>
+        </FadeUp>
+
+        <FadeUp delay={0.12} className="mt-10 md:mt-14">
+          <div
+            className="overflow-hidden rounded-[18px] p-5"
+            style={{
+              background: "rgba(255,255,255,0.5)",
+              border: "1px solid rgba(255,255,255,0.65)",
+              boxShadow:
+                "0 16px 44px rgba(0,0,0,0.1), inset 2px 2px 1px -2px rgba(255,255,255,0.95), inset -2px -2px 1px -2px rgba(255,255,255,0.6), inset 1px 1px 1px -0.5px rgba(255,255,255,0.5), inset -1px -1px 1px -0.5px rgba(0,0,0,0.1)",
+              backdropFilter: "blur(16px) saturate(160%)",
+              WebkitBackdropFilter: "blur(16px) saturate(160%)",
+            }}
+          >
+            {/* Query bar */}
+            <div className="flex items-center gap-3 rounded-full border border-black/10 bg-white/60 py-1.5 pl-2 pr-1.5">
+              <span className="rounded-full px-2.5 py-1 font-sans text-[10px] font-bold uppercase tracking-[0.14em]" style={{ background: "rgba(223,255,0,0.25)", color: "#3d4a00" }}>Query</span>
+              <span className="flex-1 truncate font-sans text-[14px] font-medium text-[#0a0a0a]">athletes wearing glasses</span>
+              <span className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-sans text-[11px] font-bold uppercase tracking-[0.12em]" style={{ background: LIME, color: "#000" }}>
+                AI Search <ArrowRight className="h-3.5 w-3.5" />
+              </span>
+            </div>
+
+            {/* Toggle */}
+            <div className="mt-3 flex items-center gap-2 font-sans text-[12px] text-black/55">
+              <span className="flex h-4 w-4 items-center justify-center rounded-[4px] text-[10px] font-bold" style={{ background: LIME, color: "#000" }}>✓</span>
+              Include creative bridges (labeled, not literal proof)
+            </div>
+
+            {/* Summary + filter chips */}
+            <p className="mt-4 font-sans text-[10.5px] font-semibold uppercase tracking-[0.16em] text-black/40">3,412 posts returned</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {["Top Videos · 12", "Sponsored Proof · 540", "Recent Proof · 1,290"].map((c, i) => (
+                <span key={c} className="rounded-full border px-2.5 py-1 font-sans text-[11px]" style={i === 0 ? { borderColor: "rgba(0,0,0,0.18)", color: "#0a0a0a", fontWeight: 600 } : { borderColor: "rgba(0,0,0,0.12)", color: "rgba(0,0,0,0.5)" }}>{c}</span>
+              ))}
+            </div>
+
+            {/* Results grid */}
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {searchResults.map((r) => (
+                <div key={r.image} className="relative overflow-hidden rounded-xl" style={{ aspectRatio: "3 / 4" }}>
+                  <img src={r.image} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+                  <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.6) 100%)" }} />
+                  <div className="absolute inset-x-2 top-2 flex items-center justify-between">
+                    <span className="flex items-center gap-1 rounded-md bg-black/55 px-1.5 py-0.5 font-sans text-[8.5px] font-semibold uppercase tracking-[0.08em] text-white/90 backdrop-blur-sm">
+                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: r.proof ? "rgba(255,255,255,0.7)" : LIME }} />
+                      {r.label}
+                    </span>
+                    <span className="flex items-center gap-1 rounded-md bg-black/55 px-1.5 py-0.5 font-sans text-[8.5px] font-semibold uppercase tracking-[0.08em] text-white/85 backdrop-blur-sm">
+                      {r.platform === "tiktok" ? <TiktokGlyph className="h-2.5 w-2.5" /> : <Instagram className="h-2.5 w-2.5" />}
+                      {r.kind}
+                    </span>
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 px-2 py-1.5">
+                    <p className="truncate font-sans text-[8.5px] font-medium uppercase tracking-[0.06em] text-white/75">Glasses · Eyewear · Spectacles · Frames</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
 export default function ForAgenciesPage() {
   return (
     <PageLayout>
-      {/* Hero */}
-      <section className="audience-page-hero" style={{ paddingTop: 0 }}>
-        <div className="audience-page-hero-inner pt-32 md:pt-40">
-          <span className="audience-page-chip">For Agencies &amp; Representation</span>
+      {/* Hero — image backdrop that fades to black into the first section */}
+      <WorldBackdrop type="image" src="/for-agencies-hero.png" parallax>
+        <div className="audience-page-hero-inner px-6 pb-32 pt-44 text-center md:pb-44 md:pt-56">
           <h1 className="audience-page-h1">
             Turn your roster into{" "}
             <span className="italic" style={{ color: LIME }}>signed deals.</span>
           </h1>
-          <p className="audience-page-subtitle">
+          <p className="audience-page-subtitle" style={{ color: "rgba(255,255,255,0.66)" }}>
             Agencies juggle hundreds of brand conversations. JABA is the layer
             that finds the deals, writes the outreach, and tracks them to close.
           </p>
@@ -350,45 +627,29 @@ export default function ForAgenciesPage() {
             <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
           </div>
         </div>
-      </section>
+      </WorldBackdrop>
 
-      {/* Brand Discovery */}
-      <PillarSection
-        eyebrow="Brand Directory"
-        headline={<>Search <span className="italic" style={{ color: LIME }}>300,000+</span> brands.</>}
-        body="Every brand JABA tracks, in one searchable directory."
-        bullets={[
-          "search every brand by category",
-          "see deal history",
-          "surface decision makers",
-        ]}
-      >
-        <BrandDirectory />
-      </PillarSection>
+      {/* Brand Directory — full search UI */}
+      <BrandDirectorySection />
 
-      {/* CRM + AI Outreach */}
+      {/* CRM inbox assistant — iMessage beat */}
       <CrmSection />
 
-      {/* Match Studio */}
+      {/* Light interlude: centered statement + three-up cards */}
+      <div className="h-1.5 w-full bg-[#dfff00]" />
+      <AgencyInterlude />
+      <div className="h-1.5 w-full bg-[#dfff00]" />
+
+      {/* Match Studio — dark dashboard */}
       <MatchStudioSection />
 
-      {/* Roster intelligence */}
+      {/* Roster intelligence — deep profile on world backdrop */}
       <RosterIntelligence />
 
-      {/* Content intelligence */}
-      <PillarSection
-        eyebrow="Content"
-        headline={<>See what content <span className="italic" style={{ color: LIME }}>actually performs.</span></>}
-        body="Content analysis across every platform shows what works and why."
-        bullets={[
-          "search every athlete post",
-          "track sponsor visibility",
-          "compare sponsored vs organic content",
-        ]}
-        reverse
-      >
-        <PostGrid posts={posts} />
-      </PillarSection>
+      {/* Content — light beat (flipped visual-left / text-right) */}
+      <div className="h-1.5 w-full bg-[#dfff00]" />
+      <ContentSection />
+      <div className="h-1.5 w-full bg-[#dfff00]" />
 
       {/* Mission Control / Data */}
       <PillarSection

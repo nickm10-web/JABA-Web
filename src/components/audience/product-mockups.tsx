@@ -164,23 +164,26 @@ export interface PostTile {
   tone: "lime" | "neutral" | "muted";
 }
 
-export function PostGrid({ posts, badge = "1M+ posts" }: { posts: PostTile[]; badge?: string }) {
-  return (
-    <GlassPanel className="p-4">
+export function PostGrid({ posts, badge = "1M+ posts", light = false }: { posts: PostTile[]; badge?: string; light?: boolean }) {
+  const headText = light ? "text-black/55" : "text-white/55";
+  const tile = light ? "border-black/10 bg-black/[0.04]" : "border-white/10 bg-white/[0.04]";
+  const stats = light ? "text-black/55" : "text-white/55";
+  const inner = (
+    <>
       <div className="flex items-center justify-between px-1 pb-3">
-        <p className="font-sans text-[11px] uppercase tracking-[0.16em] text-white/55">Content Analysis</p>
+        <p className={`font-sans text-[11px] uppercase tracking-[0.16em] ${headText}`}>Content Analysis</p>
         <StatusChip tone="lime">{badge}</StatusChip>
       </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         {posts.map((p) => (
-          <div key={p.seed} className="overflow-hidden rounded-xl border border-white/10 bg-white/[0.04]">
+          <div key={p.seed} className={`overflow-hidden rounded-xl border ${tile}`}>
             <div className="relative">
               <img src={`https://picsum.photos/seed/${p.seed}/240/180`} alt="" aria-hidden className="h-24 w-full object-cover" />
               <div className="absolute right-1.5 top-1.5">
                 <StatusChip tone={p.tone}>{p.tag}</StatusChip>
               </div>
             </div>
-            <div className="flex items-center gap-2.5 px-2.5 py-2 font-sans text-[11px] text-white/55" style={{ fontVariantNumeric: "tabular-nums" }}>
+            <div className={`flex items-center gap-2.5 px-2.5 py-2 font-sans text-[11px] ${stats}`} style={{ fontVariantNumeric: "tabular-nums" }}>
               <span className="flex items-center gap-1"><Heart className="h-3 w-3" /> {p.likes}</span>
               <span className="flex items-center gap-1"><MessageCircle className="h-3 w-3" /> {p.comments}</span>
               <span className="flex items-center gap-1"><Eye className="h-3 w-3" /> {p.views}</span>
@@ -188,8 +191,26 @@ export function PostGrid({ posts, badge = "1M+ posts" }: { posts: PostTile[]; ba
           </div>
         ))}
       </div>
-    </GlassPanel>
+    </>
   );
+  if (light) {
+    return (
+      <div
+        className="overflow-hidden rounded-[18px] p-4"
+        style={{
+          background: "rgba(255,255,255,0.5)",
+          border: "1px solid rgba(255,255,255,0.65)",
+          boxShadow:
+            "0 16px 44px rgba(0,0,0,0.1), inset 2px 2px 1px -2px rgba(255,255,255,0.95), inset -2px -2px 1px -2px rgba(255,255,255,0.6), inset 1px 1px 1px -0.5px rgba(255,255,255,0.5), inset -1px -1px 1px -0.5px rgba(0,0,0,0.1)",
+          backdropFilter: "blur(16px) saturate(160%)",
+          WebkitBackdropFilter: "blur(16px) saturate(160%)",
+        }}
+      >
+        {inner}
+      </div>
+    );
+  }
+  return <GlassPanel className="p-4">{inner}</GlassPanel>;
 }
 
 /* ── Report builder: shared IP Impact chart + a page-specific top area ── */

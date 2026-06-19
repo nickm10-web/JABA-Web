@@ -54,7 +54,7 @@ const WORLD_IMG = "/header%20BG-%20V4-WithoutBalls_less.jpg";
 // Fictional athletes + stock avatars only. No real roster names or photos.
 // Live content tiles (stock thumbnails + fictional athletes).
 const contentCards = [
-  { name: "Tyrell Banks", sport: "Football", img: 15, seed: "jb-tb", likes: "23.5K", comments: "133" },
+  { name: "Jake Banks", sport: "Football", img: 15, seed: "jb-tb", likes: "23.5K", comments: "133" },
   { name: "Sofia Marin", sport: "Soccer", img: 45, seed: "jb-sm", likes: "12.3K", comments: "29" },
   { name: "Maya Ellison", sport: "Track & Field", img: 32, seed: "jb-me", likes: "10.5K", comments: "126" },
   { name: "Jordan Pace", sport: "Volleyball", img: 5, seed: "jb-jp", likes: "8.4K", comments: "34" },
@@ -63,7 +63,7 @@ const contentCards = [
 
 type LeaderRow = { name: string; sport: string; val: string; delta?: string; dir?: "up" | "down" | "flat" };
 const lbFollowers: LeaderRow[] = [
-  { name: "Tyrell Banks", sport: "Football", val: "184K", delta: "0.3%", dir: "up" },
+  { name: "Jake Banks", sport: "Football", val: "184K", delta: "0.3%", dir: "up" },
   { name: "Devin Cross", sport: "Basketball", val: "142K", delta: "0.0%", dir: "flat" },
   { name: "Maya Ellison", sport: "Track & Field", val: "96K", delta: "1.1%", dir: "up" },
   { name: "Sofia Marin", sport: "Soccer", val: "71K", delta: "0.2%", dir: "down" },
@@ -79,13 +79,13 @@ const lbEngagement: LeaderRow[] = [
 const lbViews: LeaderRow[] = [
   { name: "Maya Ellison", sport: "Track & Field", val: "401K" },
   { name: "Jordan Pace", sport: "Volleyball", val: "374K", delta: "0.4%", dir: "up" },
-  { name: "Tyrell Banks", sport: "Football", val: "288K", delta: "21.1%", dir: "up" },
+  { name: "Jake Banks", sport: "Football", val: "288K", delta: "21.1%", dir: "up" },
   { name: "Devin Cross", sport: "Basketball", val: "123K" },
   { name: "Elena Ruiz", sport: "Cheer", val: "116K", delta: "1.2%", dir: "up" },
 ];
 
 const rosterRows = [
-  { name: "Tyrell Banks", img: 15, followers: "184K", eng: "9.7%", likes: "12.1K", comments: "631", posts: "212", growth: "+8.4%", deals: "6" },
+  { name: "Jake Banks", img: 15, followers: "184K", eng: "9.7%", likes: "12.1K", comments: "631", posts: "212", growth: "+8.4%", deals: "6" },
   { name: "Devin Cross", img: 12, followers: "142K", eng: "8.1%", likes: "9.7K", comments: "402", posts: "188", growth: "+5.2%", deals: "4" },
   { name: "Sofia Marin", img: 45, followers: "96K", eng: "7.4%", likes: "6.8K", comments: "274", posts: "164", growth: "+6.9%", deals: "3" },
   { name: "Maya Ellison", img: 32, followers: "71K", eng: "6.1%", likes: "4.2K", comments: "188", posts: "143", growth: "+4.1%", deals: "2" },
@@ -103,18 +103,18 @@ type ContentPost = {
   views: string;
 };
 const contentPosts: ContentPost[] = [
-  { image: "/post1.png", avatar: 15, name: "Tyrell Banks", sport: "Football", status: "Sponsored", rank: "Top 5", likes: "12.1K", comments: "631", views: "88K" },
-  { image: "/post2.png", avatar: 12, name: "Devin Cross", sport: "Basketball", status: "Visible", rank: "Top 5", likes: "9.7K", comments: "402", views: "61K" },
-  { image: "/post3.png", avatar: 32, name: "Maya Ellison", sport: "Track & Field", status: "Visible", rank: "Top 10", likes: "4.2K", comments: "188", views: "40K" },
-  { image: "/post4.png", avatar: 45, name: "Sofia Marin", sport: "Soccer", status: "Organic", rank: "Top 25", likes: "6.8K", comments: "274", views: "52K" },
-  { image: "/post5.png", avatar: 5, name: "Jordan Pace", sport: "Volleyball", status: "Visible", rank: "Top 25", likes: "3.5K", comments: "121", views: "28K" },
-  { image: "/post6.png", avatar: 47, name: "Aria Cole", sport: "Dance", status: "Sponsored", rank: "Top 10", likes: "15.4K", comments: "880", views: "120K" },
-  { image: "/post7.png", avatar: 51, name: "Marcus Webb", sport: "Lacrosse", status: "Visible", rank: "Top 25", likes: "5.1K", comments: "203", views: "44K" },
-  { image: "/post8.png", avatar: 9, name: "Elena Ruiz", sport: "Cheer", status: "Organic", rank: "Ranked", likes: "2.8K", comments: "96", views: "21K" },
-  { image: "/post9.png", avatar: 60, name: "Jalen Foster", sport: "Football", status: "Sponsored", rank: "Top 5", likes: "18.2K", comments: "742", views: "151K" },
-  { image: "/post10.png", avatar: 23, name: "Nina Alvarez", sport: "Soccer", status: "Visible", rank: "Top 10", likes: "7.4K", comments: "311", views: "58K" },
-  { image: "/post11.png", avatar: 13, name: "Cole Hayes", sport: "Baseball", status: "Organic", rank: "Top 25", likes: "4.6K", comments: "158", views: "37K" },
-  { image: "/post12.png", avatar: 31, name: "Priya Shah", sport: "Tennis", status: "Visible", rank: "Top 10", likes: "6.1K", comments: "240", views: "49K" },
+  { image: "/post1.png", avatar: 5, name: "Jordan Pace", sport: "Volleyball", status: "Sponsored", rank: "Top 5", likes: "12.1K", comments: "631", views: "88K" },
+  { image: "/post2.png", avatar: 31, name: "Priya Shah", sport: "Tennis", status: "Visible", rank: "Top 5", likes: "9.7K", comments: "402", views: "61K" },
+  { image: "/post3.png", avatar: 15, name: "Jake Banks", sport: "Football", status: "Visible", rank: "Top 10", likes: "4.2K", comments: "188", views: "40K" },
+  { image: "/post4.png", avatar: 12, name: "Devin Cross", sport: "Basketball", status: "Organic", rank: "Top 25", likes: "6.8K", comments: "274", views: "52K" },
+  { image: "/post5.png", avatar: 45, name: "Sofia Marin", sport: "Soccer", status: "Visible", rank: "Top 25", likes: "3.5K", comments: "121", views: "28K" },
+  { image: "/post6.png", avatar: 51, name: "Marcus Webb", sport: "Track & Field", status: "Sponsored", rank: "Top 10", likes: "15.4K", comments: "880", views: "120K" },
+  { image: "/post7.png", avatar: 32, name: "Maya Ellison", sport: "Track & Field", status: "Visible", rank: "Top 25", likes: "5.1K", comments: "203", views: "44K" },
+  { image: "/post8.png", avatar: 13, name: "Cole Hayes", sport: "Baseball", status: "Organic", rank: "Ranked", likes: "2.8K", comments: "96", views: "21K" },
+  { image: "/post9.png", avatar: 47, name: "Nina Alvarez", sport: "Basketball", status: "Sponsored", rank: "Top 5", likes: "18.2K", comments: "742", views: "151K" },
+  { image: "/post10.png", avatar: 23, name: "Elena Ruiz", sport: "Swimming", status: "Visible", rank: "Top 10", likes: "7.4K", comments: "311", views: "58K" },
+  { image: "/post11.png", avatar: 60, name: "Jalen Foster", sport: "Tennis", status: "Organic", rank: "Top 25", likes: "4.6K", comments: "158", views: "37K" },
+  { image: "/post12.png", avatar: 9, name: "Theo Marsh", sport: "Soccer", status: "Visible", rank: "Top 10", likes: "6.1K", comments: "240", views: "49K" },
 ];
 
 const contacts = [
@@ -141,13 +141,13 @@ const reportTemplates = [
 /* ── Pillar 1: the workspace. A Notion-like task table you run for every
    athlete, with assignment by iMessage as one way in. ── */
 const workflowRows = [
-  { task: "Long-form promotional video", type: "Deliverable", who: "Maya Ellison", img: 32, campaign: "Apex Hydration", brand: true, platform: "YouTube", amount: "$4,000", status: "Overdue", color: "#ff6b6b", due: "Dec 7, 2025" },
-  { task: "Meet and greet", type: "Event", who: "Tyrell Banks", img: 15, campaign: "General task", brand: false, platform: "—", amount: "—", status: "Scheduled", color: "rgba(255,255,255,0.62)", due: "Feb 18, 2026" },
-  { task: "Send campaign results", type: "Task", who: "Devin Cross", img: 12, campaign: "General task", brand: false, platform: "—", amount: "—", status: "In review", color: "rgba(255,255,255,0.62)", due: "Feb 19, 2026" },
-  { task: "Instagram post", type: "Deliverable", who: "Maya Ellison", img: 32, campaign: "Apex Hydration", brand: true, platform: "Instagram", amount: "$1,500", status: "Scheduled", color: "rgba(255,255,255,0.62)", due: "Feb 19, 2026" },
-  { task: "Voltic reel", type: "Deliverable", who: "Sofia Marin", img: 45, campaign: "Voltic Energy", brand: true, platform: "Instagram", amount: "$2,500", status: "New", color: LIME, due: "Mar 5, 2026" },
-  { task: "Photoshoot session", type: "Deliverable", who: "Jordan Pace", img: 5, campaign: "Northwind Apparel", brand: true, platform: "—", amount: "$3,000", status: "Done", color: LIME, due: "Mar 5, 2026" },
-  { task: "In-person appearance", type: "Event", who: "Elena Ruiz", img: 47, campaign: "Apex Hydration", brand: true, platform: "—", amount: "$5,000", status: "Active", color: LIME, due: "Apr 20, 2026" },
+  { task: "Long-form promotional video", type: "Deliverable", who: "Maya Ellison", img: "/athletehs2.png", campaign: "Apex Hydration", brand: true, platform: "YouTube", amount: "$4,000", status: "Overdue", color: "#ff6b6b", due: "Dec 7, 2025" },
+  { task: "Meet and greet", type: "Event", who: "Jake Banks", img: "/athleteheadshot.png", campaign: "General task", brand: false, platform: "—", amount: "—", status: "Scheduled", color: "rgba(255,255,255,0.62)", due: "Feb 18, 2026" },
+  { task: "Send campaign results", type: "Task", who: "Devin Cross", img: "/athletehs1.png", campaign: "General task", brand: false, platform: "—", amount: "—", status: "In review", color: "rgba(255,255,255,0.62)", due: "Feb 19, 2026" },
+  { task: "Instagram post", type: "Deliverable", who: "Maya Ellison", img: "/athletehs2.png", campaign: "Apex Hydration", brand: true, platform: "Instagram", amount: "$1,500", status: "Scheduled", color: "rgba(255,255,255,0.62)", due: "Feb 19, 2026" },
+  { task: "Voltic reel", type: "Deliverable", who: "Sofia Marin", img: "/athletehs3.png", campaign: "Voltic Energy", brand: true, platform: "Instagram", amount: "$2,500", status: "New", color: LIME, due: "Mar 5, 2026" },
+  { task: "Photoshoot session", type: "Deliverable", who: "Jordan Pace", img: "/athletehs4.png", campaign: "Northwind Apparel", brand: true, platform: "—", amount: "$3,000", status: "Done", color: LIME, due: "Mar 5, 2026" },
+  { task: "In-person appearance", type: "Event", who: "Elena Ruiz", img: "/athletehs5.png", campaign: "Apex Hydration", brand: true, platform: "—", amount: "$5,000", status: "Active", color: LIME, due: "Apr 20, 2026" },
 ];
 
 const workflowOverdue = workflowRows.filter((r) => r.status === "Overdue").length;
@@ -352,7 +352,7 @@ function WorkflowSection() {
                       </td>
                       <td className="px-4 py-3.5">
                         <span className="flex items-center gap-2.5">
-                          <img src={`https://i.pravatar.cc/48?img=${r.img}`} alt="" aria-hidden className="h-7 w-7 rounded-full object-cover" />
+                          <img src={r.img} alt="" aria-hidden className="h-7 w-7 rounded-full object-cover object-top" />
                           <span className="font-sans text-[13px] text-white/85">{r.who}</span>
                         </span>
                       </td>
@@ -582,14 +582,14 @@ function AthleteIntelligence() {
   return (
     <WorldBackdrop type="image" src="/JW-sky1.png" parallax className="scroll-mt-32 md:scroll-mt-40">
       <div className={`${WRAP} pb-12 pt-24 md:pb-16 md:pt-28`}>
-        <FadeUp className="max-w-2xl">
+        <FadeUp className="mx-auto max-w-3xl text-center">
           <ScrimCluster className="inline-block">
             <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Athletes</p>
-            <h2 className="mt-3 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            <h2 className="mt-3 font-display text-5xl leading-[1.02] text-white md:text-6xl lg:text-7xl">
               Know every athlete's{" "}
               <span className="italic" style={{ color: LIME }}>brand.</span>
             </h2>
-            <p className="mt-3 max-w-xl font-sans text-base leading-relaxed text-white/65">
+            <p className="mx-auto mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
               A living profile for every athlete: content, audience, value, and
               the brands they naturally fit, with the reasoning behind each match.
             </p>
@@ -736,39 +736,49 @@ function PostGrid() {
   const reduce = useReducedMotion();
   const tabs = ["All", "Posts", "Reels", "Videos"];
   return (
-    <GlassPanel className="overflow-hidden">
+    <div
+      className="overflow-hidden rounded-[18px]"
+      style={{
+        background: "rgba(255,255,255,0.5)",
+        border: "1px solid rgba(255,255,255,0.65)",
+        boxShadow:
+          "0 16px 44px rgba(0,0,0,0.1), inset 2px 2px 1px -2px rgba(255,255,255,0.95), inset -2px -2px 1px -2px rgba(255,255,255,0.6), inset 1px 1px 1px -0.5px rgba(255,255,255,0.5), inset -1px -1px 1px -0.5px rgba(0,0,0,0.1)",
+        backdropFilter: "blur(16px) saturate(160%)",
+        WebkitBackdropFilter: "blur(16px) saturate(160%)",
+      }}
+    >
       {/* Tabs + count */}
-      <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+      <div className="flex items-center justify-between border-b border-black/10 px-4 py-3">
         <div className="flex items-center gap-5">
           {tabs.map((t, i) => (
             <span
               key={t}
               className="font-sans text-[12.5px]"
-              style={i === 0 ? { color: LIME, fontWeight: 600, borderBottom: `2px solid ${LIME}`, paddingBottom: "10px", marginBottom: "-13px" } : { color: "rgba(255,255,255,0.45)" }}
+              style={i === 0 ? { color: "#0a0a0a", fontWeight: 600, borderBottom: `2px solid ${LIME}`, paddingBottom: "10px", marginBottom: "-13px" } : { color: "rgba(0,0,0,0.45)" }}
             >
               {t}
             </span>
           ))}
         </div>
-        <span className="font-sans text-[12px] text-white/45" style={{ fontVariantNumeric: "tabular-nums" }}>24 posts</span>
+        <span className="font-sans text-[12px] text-black/45" style={{ fontVariantNumeric: "tabular-nums" }}>24 posts</span>
       </div>
 
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-white/10 px-4 py-3">
-        <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-sans text-[12px] text-white/40">
+      <div className="flex flex-wrap items-center gap-2 border-b border-black/10 px-4 py-3">
+        <div className="flex min-w-[200px] flex-1 items-center gap-2 rounded-full border border-black/10 bg-black/[0.03] px-3 py-1.5 font-sans text-[12px] text-black/45">
           <Search className="h-3.5 w-3.5" /> Search posts, athletes, schools...
         </div>
-        <div className="flex items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 font-sans text-[11px]">
-          <span className="rounded-full px-2.5 py-1 font-semibold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>My School</span>
-          <span className="px-2.5 py-1 text-white/45">NCAA</span>
-          <span className="px-2.5 py-1 text-white/45">Pro</span>
+        <div className="flex items-center rounded-full border border-black/10 bg-black/[0.03] p-0.5 font-sans text-[11px]">
+          <span className="rounded-full px-2.5 py-1 font-semibold text-[#0a0a0a]" style={{ background: "rgba(0,0,0,0.08)" }}>My School</span>
+          <span className="px-2.5 py-1 text-black/45">NCAA</span>
+          <span className="px-2.5 py-1 text-black/45">Pro</span>
         </div>
-        <div className="hidden items-center rounded-full border border-white/10 bg-white/[0.04] p-0.5 font-sans text-[11px] sm:flex">
-          <span className="rounded-full px-2.5 py-1 font-semibold text-white" style={{ background: "rgba(255,255,255,0.12)" }}>All</span>
-          <span className="px-2.5 py-1 text-white/45">Sponsored</span>
-          <span className="px-2.5 py-1 text-white/45">Organic</span>
+        <div className="hidden items-center rounded-full border border-black/10 bg-black/[0.03] p-0.5 font-sans text-[11px] sm:flex">
+          <span className="rounded-full px-2.5 py-1 font-semibold text-[#0a0a0a]" style={{ background: "rgba(0,0,0,0.08)" }}>All</span>
+          <span className="px-2.5 py-1 text-black/45">Sponsored</span>
+          <span className="px-2.5 py-1 text-black/45">Organic</span>
         </div>
-        <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 font-sans text-[11px] text-white/55">
+        <span className="flex items-center gap-1.5 rounded-full border border-black/10 bg-black/[0.03] px-3 py-1.5 font-sans text-[11px] text-black/55">
           <Filter className="h-3 w-3" /> Filters
         </span>
       </div>
@@ -787,21 +797,21 @@ function PostGrid() {
           ))}
         </motion.div>
       </div>
-    </GlassPanel>
+    </div>
   );
 }
 
 /* ── Pillar 4: content intelligence (full-width grid + toolbar) ── */
 function ContentSection() {
   return (
-    <section className={`${SECTION} bg-black`}>
+    <section className={`${SECTION} bg-[#eeeeee]`}>
       <div className={`${WRAP} ${PADS}`}>
         <FadeUp className="max-w-2xl">
-          <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Content</p>
-          <h2 className="mt-3 font-display text-4xl leading-[1.05] text-white md:text-5xl">
-            <span className="italic" style={{ color: LIME }}>1M+</span> posts analyzed.
+          <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-black/45">Content</p>
+          <h2 className="mt-3 font-display text-4xl leading-[1.05] text-[#0a0a0a] md:text-5xl">
+            <span className="italic" style={{ background: LIME, color: "#000", padding: "0 0.1em", borderRadius: "2px" }}>1M+</span> posts analyzed.
           </h2>
-          <p className="mt-3 max-w-xl font-sans text-base leading-relaxed text-white/65">
+          <p className="mt-3 max-w-xl font-sans text-base leading-relaxed text-black/60">
             See what athlete content performs and why, across every platform.
           </p>
           <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
@@ -811,8 +821,8 @@ function ContentSection() {
               "analyze hooks, pacing, and caption style",
               "compare sponsor activations vs organic content",
             ].map((b) => (
-              <li key={b} className="flex gap-3 font-sans text-[14px] leading-relaxed text-white/70">
-                <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0" style={{ background: LIME }} />
+              <li key={b} className="flex gap-3 font-sans text-[14px] leading-relaxed text-black/70">
+                <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0" style={{ background: "rgba(0,0,0,0.4)" }} />
                 {b}
               </li>
             ))}
@@ -820,6 +830,50 @@ function ContentSection() {
         </FadeUp>
         <FadeUp delay={0.12} className="mt-10 md:mt-14">
           <PostGrid />
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+/* ── Light interlude: centered NIL statement + three-up world-image cards ── */
+function NilInterlude() {
+  const cards = [
+    { n: "01", label: "Pitch", body: "Find the brands that fit your roster and send the outreach.", img: "/pitchimage2.png" },
+    { n: "02", label: "Manage", body: "Every task, deadline, and deliverable for every athlete, in one place.", img: "/manageimage2.png" },
+    { n: "03", label: "Track", body: "Turn campaigns, content, and school IP into a report in minutes.", img: "/trackimage2.png" },
+  ];
+  return (
+    <section className={`${SECTION} bg-[#eeeeee]`}>
+      <div className={`${WRAP} ${PADS}`}>
+        <FadeUp>
+          <h2 className="mx-auto max-w-4xl text-center font-sans text-4xl font-extrabold tracking-tight leading-[1.45] [text-wrap:balance] text-[#0a0a0a] md:text-5xl lg:text-6xl">
+            NIL runs on more deals, content, and deadlines{" "}
+            <span
+              style={{
+                color: "#000",
+                padding: "0 0.12em",
+                background: `linear-gradient(180deg, transparent 0.22em, ${LIME} 0.22em, ${LIME} calc(100% - 0.16em), transparent calc(100% - 0.16em))`,
+                WebkitBoxDecorationBreak: "clone",
+                boxDecorationBreak: "clone",
+              }}
+            >
+              than any staff can track by hand.
+            </span>
+          </h2>
+        </FadeUp>
+        <FadeUp delay={0.1} className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-3">
+          {cards.map((c) => (
+            <div key={c.n} className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "4 / 5" }}>
+              <img src={c.img} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+              <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.45) 45%, rgba(0,0,0,0.9) 100%)" }} />
+              <div className="absolute inset-0 flex flex-col justify-end p-6">
+                <span className="font-sans text-[12px] font-bold tracking-[0.2em]" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{c.n}</span>
+                <h3 className="mt-2 font-display text-[2rem] italic leading-none text-white">{c.label}</h3>
+                <p className="mt-2.5 max-w-[40ch] font-sans text-[13.5px] leading-relaxed text-white/75">{c.body}</p>
+              </div>
+            </div>
+          ))}
         </FadeUp>
       </div>
     </section>
@@ -1189,14 +1243,14 @@ function AssistantThread() {
 export default function ForSchoolsPage() {
   return (
     <PageLayout>
-      {/* Hero */}
-      <section className="audience-page-hero" style={{ paddingTop: 0 }}>
-        <div className="audience-page-hero-inner pt-32 md:pt-40">
+      {/* Hero — image backdrop that fades to black into the first section */}
+      <WorldBackdrop type="image" src="/for-schools-hero.png" parallax>
+        <div className="audience-page-hero-inner px-6 pb-32 pt-44 text-center md:pb-44 md:pt-56">
           <h1 className="audience-page-h1">
             NIL is evolving faster{" "}
-            <span className="audience-page-h1-accent">than the systems built to support it.</span>
+            <span className="italic" style={{ color: LIME }}>than the systems built to support it.</span>
           </h1>
-          <p className="audience-page-subtitle">
+          <p className="audience-page-subtitle" style={{ color: "rgba(255,255,255,0.66)" }}>
             Third-party NIL unlocks opportunity and thousands of deliverables
             to manage. JABA gives your department the operating layer to handle it all.
           </p>
@@ -1204,26 +1258,33 @@ export default function ForSchoolsPage() {
             <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
           </div>
         </div>
-      </section>
+      </WorldBackdrop>
 
-      {/* Pillar 1 — Workflow / task table */}
+      {/* Workflow task table — dark dashboard */}
       <WorkflowSection />
 
-      {/* Pillar 2 — Athlete intelligence (on the world backdrop) */}
+      {/* Lime divider into the light statement + three-up cards */}
+      <div className="h-1.5 w-full bg-[#dfff00]" />
+      <NilInterlude />
+      <div className="h-1.5 w-full bg-[#dfff00]" />
+
+      {/* Athlete intelligence — world backdrop, centered headline */}
       <AthleteIntelligence />
 
-      {/* Pillar 4 — Content intelligence */}
+      {/* Content — light dashboard beat */}
+      <div className="h-1.5 w-full bg-[#dfff00]" />
       <ContentSection />
+      <div className="h-1.5 w-full bg-[#dfff00]" />
 
-      {/* Pillar 5 — Brand matching + outreach */}
+      {/* Brand matching + outreach — world backdrop */}
       <MatchStudio />
 
-      {/* Pillar 6 — Reports */}
+      {/* Reports — dark dashboard */}
       <ReportsSection />
 
       {/* CTA */}
-      <section className="audience-page-cta scroll-mt-32 md:scroll-mt-40">
-        <div className="audience-page-cta-inner pt-12 md:pt-16">
+      <section className="audience-page-cta scroll-mt-40 md:scroll-mt-48">
+        <div className="audience-page-cta-inner pt-28 md:pt-36">
           <h2 className="audience-page-cta-h2">
             Ready to stop <span className="cta-headline-accent">chasing?</span>
           </h2>
