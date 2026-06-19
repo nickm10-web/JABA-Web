@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Instagram, Search, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Instagram, Paperclip, RotateCw, Search, Send, Sparkles, Zap } from "lucide-react";
 
 /* TikTok glyph (not in lucide). */
 function TiktokGlyph({ className }: { className?: string }) {
@@ -19,17 +19,12 @@ import {
   PillarSection,
   ScrimCluster,
 } from "@/components/audience/glass-mockups";
-import {
-  ReportBuilder,
-  RosterTable,
-  type RosterRow,
-} from "@/components/audience/product-mockups";
+import { ReportBuilder } from "@/components/audience/product-mockups";
 
 const LIME = "#dfff00";
 const WRAP = "mx-auto max-w-7xl px-6 md:px-10 lg:px-12";
 const SECTION = "scroll-mt-32 md:scroll-mt-40";
 const PADS = "pb-20 pt-28 md:pb-28 md:pt-36";
-const CLOUDS = "/videos/Video%20BG%20Web_02.mp4";
 const WORLD_IMG = "/header%20BG-%20V4-WithoutBalls_less.jpg";
 
 // Fictional brands, contacts, athletes. Real numbers OK.
@@ -57,21 +52,33 @@ const directoryBrands: { name: string; cat: string; posts: string; desc: string;
   { name: "Lumen Skincare", cat: "Skincare", posts: "15 posts", desc: "Dermatologist-backed skincare for high-performance skin." },
 ];
 
-const pipeline = [
-  { stage: "Outreach", deals: [{ brand: "Apex Hydration", val: "$45K" }, { brand: "Cedar & Co.", val: "$28K" }] },
-  { stage: "Negotiating", deals: [{ brand: "Northwind Apparel", val: "$60K" }] },
-  { stage: "Signed", deals: [{ brand: "Voltic Energy", val: "$85K" }], accent: true },
+// Inbox threads (fictional contacts/brands). Flags use real product vocabulary.
+const inboxThreads: {
+  from: string;
+  brand: string;
+  preview: string;
+  time: string;
+  flag: "Needs reply" | "Awaiting media kit" | "Follow-up due" | "Replied";
+  selected?: boolean;
+}[] = [
+  { from: "Rachel Doss", brand: "Apex Hydration", preview: "Can you send a media kit for Darius?", time: "9:24 AM", flag: "Needs reply", selected: true },
+  { from: "Marcus Hill", brand: "Northwind Apparel", preview: "Following up on the fall activation", time: "8:02 AM", flag: "Follow-up due" },
+  { from: "Tom Becker", brand: "Summit Gear", preview: "Sounds good, standing by for the kit", time: "Mon", flag: "Awaiting media kit" },
+  { from: "Priya Nair", brand: "Cedar & Co.", preview: "Rates for a 3-post deal?", time: "Mon", flag: "Needs reply" },
+  { from: "Elena Park", brand: "Voltic Energy", preview: "Contract sent, thanks!", time: "Fri", flag: "Replied" },
 ];
+
+// Functional status colors for the inbox flags, tuned for the light panel
+// (dot carries the hue, label stays dark for legibility on white).
+const flagColor: Record<string, { dot: string; text: string }> = {
+  "Needs reply": { dot: LIME, text: "#3d4a00" },
+  "Awaiting media kit": { dot: "#2563eb", text: "#1d4ed8" },
+  "Follow-up due": { dot: "#d97706", text: "#b45309" },
+  "Replied": { dot: "rgba(0,0,0,0.3)", text: "rgba(0,0,0,0.42)" },
+};
 
 const rosterAthletes = ["Darius Vaughn", "Andre Solis", "Marcus Webb", "Tyson Reed"];
 const matchBrands = ["Apex Hydration", "Voltic Energy", "Northwind Apparel", "Cedar & Co."];
-
-const rosterRows: RosterRow[] = [
-  { name: "Darius Vaughn", img: 13, followers: "1.2M", eng: "7.8%", likes: "88K", comments: "3.4K", posts: "246", growth: "+9.1%", deals: "11" },
-  { name: "Andre Solis", img: 33, followers: "684K", eng: "6.2%", likes: "42K", comments: "1.9K", posts: "203", growth: "+5.7%", deals: "7" },
-  { name: "Marcus Webb", img: 51, followers: "512K", eng: "8.4%", likes: "39K", comments: "2.1K", posts: "178", growth: "+6.3%", deals: "6" },
-  { name: "Tyson Reed", img: 8, followers: "398K", eng: "5.9%", likes: "24K", comments: "1.2K", posts: "154", growth: "+4.4%", deals: "4" },
-];
 
 const masterRows = [
   { name: "Darius Vaughn", campaigns: "9", deals: "11", payments: "$420K" },
@@ -164,104 +171,155 @@ function BrandDirectorySection() {
   );
 }
 
-/* ── CRM inbox assistant: iMessage thread (mirrors For Schools) ── */
+/* ── CRM inbox: thread list + opened email + AI draft reply ── */
 function OutreachAssistant() {
+  const selected = inboxThreads.find((t) => t.selected) ?? inboxThreads[0];
   return (
-    <GlassPanel borderRadius="22px" className="p-3.5">
-      <div className="mb-3 flex items-center gap-2.5 border-b border-white/10 pb-3">
-        <img src="/jaba-face.png" alt="" aria-hidden className="h-8 w-8 rounded-full" />
-        <div>
-          <p className="font-sans text-sm font-semibold text-white">JABA</p>
-          <p className="font-sans text-[11px] text-white/45">iMessage</p>
+    <div
+      className="overflow-hidden rounded-[22px]"
+      style={{
+        background: "rgba(255,255,255,0.5)",
+        border: "1px solid rgba(255,255,255,0.65)",
+        boxShadow:
+          "0 16px 44px rgba(0,0,0,0.1), inset 2px 2px 1px -2px rgba(255,255,255,0.95), inset -2px -2px 1px -2px rgba(255,255,255,0.6), inset 1px 1px 1px -0.5px rgba(255,255,255,0.5), inset -1px -1px 1px -0.5px rgba(0,0,0,0.1)",
+        backdropFilter: "blur(16px) saturate(160%)",
+        WebkitBackdropFilter: "blur(16px) saturate(160%)",
+      }}
+    >
+      {/* Mail client header */}
+      <div className="flex items-center justify-between border-b border-black/10 px-4 py-3">
+        <div className="flex items-center gap-2.5">
+          <img src="/jaba-face.png" alt="" aria-hidden className="h-6 w-6 rounded-full" />
+          <span className="font-sans text-[13px] font-semibold text-[#0a0a0a]">Inbox</span>
+          <span
+            className="rounded-full bg-black/[0.06] px-1.5 py-0.5 font-sans text-[10px] text-black/55"
+            style={{ fontVariantNumeric: "tabular-nums" }}
+          >
+            {inboxThreads.length}
+          </span>
         </div>
+        <span className="flex items-center gap-1.5 rounded-full px-2 py-0.5 font-sans text-[10px] font-bold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.25)", color: "#3d4a00" }}>
+          <Sparkles className="h-3 w-3" /> Assistant on
+        </span>
       </div>
-      <div className="space-y-2">
-        <div className="flex justify-start">
-          <p className="max-w-[88%] rounded-2xl rounded-bl-md bg-[#e9e9eb] px-3.5 py-2 font-sans text-[13px] leading-snug text-black">
-            Rachel at Apex replied, she wants a media kit for Darius and a fall rate.
-          </p>
-        </div>
-        <div className="flex justify-end">
-          <p className="max-w-[86%] rounded-2xl rounded-br-md bg-[#007aff] px-3.5 py-2 font-sans text-[13px] leading-snug text-white">
-            Draft the reply and send the kit.
-          </p>
-        </div>
-        <div className="flex justify-start">
-          <p className="max-w-[88%] rounded-2xl rounded-bl-md bg-[#e9e9eb] px-3.5 py-2 font-sans text-[13px] leading-snug text-black">
-            Done. Replied in your voice, attached Darius-Vaughn-2025.pdf, and moved Apex to Negotiating.
-          </p>
-        </div>
-      </div>
-    </GlassPanel>
-  );
-}
 
-function DealPipeline() {
-  return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-      {pipeline.map((col) => (
-        <GlassPanel key={col.stage} className="p-4">
-          <div className="flex items-center justify-between">
-            <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">{col.stage}</p>
-            <span className="h-[6px] w-[6px] rounded-full" style={{ background: col.accent ? LIME : "rgba(255,255,255,0.3)" }} />
-          </div>
-          <div className="mt-3 space-y-2">
-            {col.deals.map((d) => (
-              <div
-                key={d.brand}
-                className="flex items-center justify-between rounded-lg border bg-white/[0.04] px-3 py-2.5"
-                style={{ borderColor: col.accent ? "rgba(223,255,0,0.3)" : "rgba(255,255,255,0.08)" }}
+      <div className="grid grid-cols-1 lg:grid-cols-[176px_1fr]">
+        {/* Thread list rail */}
+        <ul className="border-b border-black/10 lg:border-b-0 lg:border-r">
+          {inboxThreads.map((t) => {
+            const active = t === selected;
+            return (
+              <li
+                key={t.from}
+                className="border-b border-black/[0.06] px-3 py-2.5 last:border-b-0"
+                style={
+                  active
+                    ? { background: "rgba(223,255,0,0.22)", boxShadow: `inset 3px 0 0 ${LIME}` }
+                    : undefined
+                }
               >
-                <span className="font-sans text-[12.5px] font-medium text-white">{d.brand}</span>
-                <span className="font-sans text-[12px] font-semibold" style={{ color: col.accent ? LIME : "rgba(255,255,255,0.7)", fontVariantNumeric: "tabular-nums" }}>{d.val}</span>
-              </div>
-            ))}
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="truncate font-sans text-[12.5px] font-semibold text-[#0a0a0a]">{t.from}</span>
+                  <span className="shrink-0 font-sans text-[10px] text-black/40" style={{ fontVariantNumeric: "tabular-nums" }}>{t.time}</span>
+                </div>
+                <p className="truncate font-sans text-[10.5px] text-black/45">{t.brand}</p>
+                <p className="mt-0.5 truncate font-sans text-[11.5px] text-black/55">{t.preview}</p>
+                <span className="mt-1.5 flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: flagColor[t.flag].dot }} />
+                  <span className="font-sans text-[9.5px] font-semibold uppercase tracking-[0.07em]" style={{ color: flagColor[t.flag].text }}>{t.flag}</span>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+
+        {/* Opened email + AI draft */}
+        <div className="p-4">
+          {/* Received email */}
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-black/[0.07] font-sans text-[13px] font-bold text-[#0a0a0a]">{selected.brand[0]}</span>
+            <div className="min-w-0">
+              <p className="truncate font-sans text-[13px] font-semibold text-[#0a0a0a]">{selected.from} <span className="font-normal text-black/45">· {selected.brand}</span></p>
+              <p className="truncate font-sans text-[11px] text-black/40">to you · {selected.time}</p>
+            </div>
           </div>
-        </GlassPanel>
-      ))}
+          <p className="mt-3 font-sans text-[12.5px] font-semibold text-[#0a0a0a]">Media kit for Darius + fall rate</p>
+          <p className="mt-1.5 font-sans text-[12.5px] leading-relaxed text-black/60">
+            Hi, we love what Darius is doing this season. Can you send his media kit and a fall campaign rate? Hoping to lock something in soon.
+          </p>
+
+          {/* AI draft reply (focal point) */}
+          <div
+            className="mt-4 rounded-xl p-3.5 ring-1 ring-black/[0.06]"
+            style={{ background: "rgba(223,255,0,0.12)", border: "1px solid rgba(223,255,0,0.55)" }}
+          >
+            <div className="flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5" style={{ color: "#3d4a00" }} />
+              <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.14em]" style={{ color: "#3d4a00" }}>JABA Draft · in your voice</span>
+            </div>
+            <p className="mt-2.5 font-sans text-[12.5px] leading-relaxed text-black/80">
+              Hi Rachel, thrilled Apex wants to work with Darius. I&rsquo;ve attached his 2025 media kit. For a fall activation we&rsquo;d start at $45K for a 3-post package, happy to tailor it to what you have in mind.
+            </p>
+
+            {/* Auto-attached media kit */}
+            <div className="mt-3 flex items-center gap-2.5 rounded-lg border border-black/12 bg-white/70 px-3 py-2">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-black/[0.06]">
+                <Paperclip className="h-3.5 w-3.5 text-black/60" />
+              </span>
+              <div className="min-w-0">
+                <p className="truncate font-sans text-[12px] font-medium text-[#0a0a0a]">Darius-Vaughn-2025.pdf</p>
+                <p className="truncate font-sans text-[10.5px] text-black/45">AI media kit</p>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="mt-3.5 flex flex-wrap items-center gap-2.5">
+              <button className="flex items-center gap-1.5 rounded-full px-4 py-2 font-sans text-[12.5px] font-semibold" style={{ background: LIME, color: "#000" }}>
+                <Send className="h-3.5 w-3.5" /> Approve &amp; send
+              </button>
+              <button className="flex items-center gap-1.5 rounded-full border border-black/15 bg-black/[0.03] px-3.5 py-2 font-sans text-[12.5px] font-medium text-black/70">
+                <RotateCw className="h-3.5 w-3.5" /> Regenerate
+              </button>
+            </div>
+            <p className="mt-3 flex items-center gap-1.5 font-sans text-[10.5px] text-black/45">
+              <ArrowRight className="h-3 w-3" style={{ color: "#3d4a00" }} /> Sending moves Apex Hydration to Negotiating
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 function CrmSection() {
   return (
-    <WorldBackdrop type="video" src={CLOUDS} parallax className={SECTION}>
+    <section className={`${SECTION} bg-[#eeeeee]`}>
       <div className={`${WRAP} ${PADS}`}>
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
-          <ScrimCluster>
-            <FadeUp>
-              <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">CRM</p>
-              <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
-                Your inbox, with{" "}
-                <span className="italic" style={{ color: LIME }}>an assistant.</span>
-              </h2>
-              <p className="mt-4 max-w-md font-sans text-base leading-relaxed text-white/65 md:text-lg">
-                JABA reads your inbox and keeps every brand conversation moving.
-              </p>
-              <ul className="mt-6 space-y-2.5">
-                {["drafts replies in your voice", "generates AI media kits per athlete", "moves deals through the pipeline"].map((b) => (
-                  <li key={b} className="flex gap-3 font-sans text-[14px] leading-relaxed text-white/70">
-                    <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0" style={{ background: LIME }} />
-                    {b}
-                  </li>
-                ))}
-              </ul>
-            </FadeUp>
-          </ScrimCluster>
+          <FadeUp>
+            <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-black/45">CRM</p>
+            <h2 className="mt-4 font-display text-4xl leading-[1.05] text-[#0a0a0a] md:text-5xl">
+              Your inbox, with{" "}
+              <span className="italic" style={{ color: "#0a0a0a", textDecoration: "underline", textDecorationColor: LIME, textDecorationThickness: "0.12em", textUnderlineOffset: "0.08em" }}>an assistant.</span>
+            </h2>
+            <p className="mt-4 max-w-md font-sans text-base leading-relaxed text-black/60 md:text-lg">
+              JABA reads your inbox and keeps every brand conversation moving.
+            </p>
+            <ul className="mt-6 space-y-2.5">
+              {["drafts replies in your voice", "generates AI media kits per athlete", "moves deals through the pipeline"].map((b) => (
+                <li key={b} className="flex gap-3 font-sans text-[14px] leading-relaxed text-black/70">
+                  <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0" style={{ background: "rgba(0,0,0,0.3)" }} />
+                  {b}
+                </li>
+              ))}
+            </ul>
+          </FadeUp>
           <FadeUp delay={0.12}>
-            <ScrimCluster>
-              <OutreachAssistant />
-            </ScrimCluster>
+            <OutreachAssistant />
           </FadeUp>
         </div>
-
-        <FadeUp delay={0.1} className="mt-10 md:mt-14">
-          <ScrimCluster>
-            <DealPipeline />
-          </ScrimCluster>
-        </FadeUp>
       </div>
-    </WorldBackdrop>
+    </section>
   );
 }
 
@@ -350,18 +408,18 @@ function MatchStudioSection() {
 /* ── Roster intelligence: deep athlete profile + roster table ── */
 function RosterIntelligence() {
   const tabs = ["Overview", "Performance", "Audience", "FMV", "Athlete Business"];
-  const voice = ["Game-day highlights", "Training & recovery", "Lifestyle & family"];
-  const interests = ["Performance gear", "Hydration & nutrition", "Community"];
+  const voice = ["Game-day highlights", "Training & film", "Community & family"];
+  const interests = ["QB development", "Performance nutrition", "Lifestyle & fashion"];
   const brandFits = [
-    { name: "Apex Hydration", fit: 94, reason: "Audience and content align; over-indexes with their 18 to 24 demo." },
-    { name: "Voltic Energy", fit: 88, reason: "High-energy game content matches the brand's tone." },
-    { name: "Northwind Apparel", fit: 82, reason: "Off-field lifestyle fits their apparel line." },
+    { name: "Apex Hydration", fit: 94, reason: "Posts game-day hydration routines; audience skews performance-minded." },
+    { name: "Voltic Energy", fit: 88, reason: "High-energy highlight reels match the brand's tone." },
+    { name: "Northwind Apparel", fit: 81, reason: "Off-field fashion content fits their apparel drops." },
   ];
   const stats = [
-    { label: "Audience Reach", value: "1.2M", sub: "↑ 9.1% · 30d", up: true },
-    { label: "Engagement", value: "7.8%", sub: "vs 5.4% cohort", up: true },
-    { label: "Brand Fit", value: "94", sub: "score" },
-    { label: "Alignment", value: "90", sub: "score" },
+    { label: "Followers", value: "184K", sub: "↑ 12.4% · 30d", up: true },
+    { label: "Engagement", value: "9.7%", sub: "vs 6.2% cohort", up: true },
+    { label: "Avg Likes", value: "12.1K", sub: "per post" },
+    { label: "Avg Comments", value: "631", sub: "per post" },
   ];
   return (
     <WorldBackdrop src={WORLD_IMG} parallax className={SECTION}>
@@ -385,26 +443,27 @@ function RosterIntelligence() {
             <div className="grid grid-cols-1 md:grid-cols-12">
               {/* Profile rail */}
               <div className="flex flex-col border-b border-white/10 p-5 md:col-span-4 md:border-b-0 md:border-r">
-                <div className="min-h-[200px] flex-1 overflow-hidden rounded-2xl border border-white/10">
-                  <img src="https://i.pravatar.cc/520?img=13" alt="" aria-hidden className="h-full w-full object-cover object-top" />
+                <div
+                  className="min-h-[200px] flex-1 overflow-hidden rounded-2xl border border-white/10"
+                  style={{ background: "radial-gradient(120% 85% at 50% 6%, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 52%, rgba(255,255,255,0.01))" }}
+                >
+                  <img src="/athlete-cutout.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
                 </div>
                 <div className="mt-4 flex items-center gap-2">
-                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">NFL</span>
-                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">WR</span>
+                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">Football</span>
+                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">QB</span>
                 </div>
-                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Darius Vaughn</h3>
-                <div className="mt-2 flex items-center gap-1.5 font-sans text-[11px] text-white/55">
+                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Jake Banks</h3>
+                <p className="mt-1.5 font-sans text-[12px] text-white/55">University of Jaba · Junior</p>
+                <div className="mt-1.5 flex items-center gap-1.5 font-sans text-[11px] text-white/55">
                   <span className="h-1.5 w-1.5 rounded-full" style={{ background: LIME }} />
-                  JABA · Verified
-                  <span className="text-white/30">·</span> Pro
+                  JABA Verified
                 </div>
-                <p className="mt-1.5 font-sans text-[11px] text-white/45" style={{ fontVariantNumeric: "tabular-nums" }}>
-                  Overall <span className="font-semibold text-white/80">92</span> · Content style: Lifestyle
-                </p>
               </div>
 
               {/* Detail panel */}
               <div className="p-5 md:col-span-8">
+                {/* Tabs */}
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-white/10 pb-3">
                   {tabs.map((t, i) => (
                     <span
@@ -417,6 +476,7 @@ function RosterIntelligence() {
                   ))}
                 </div>
 
+                {/* Metrics */}
                 <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
                   {stats.map((s) => (
                     <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
@@ -427,13 +487,20 @@ function RosterIntelligence() {
                   ))}
                 </div>
 
+                {/* Bio */}
                 <p className="mt-4 font-sans text-[13px] leading-relaxed text-white/70">
-                  Darius Vaughn is an NFL wide receiver with a fast-growing, highly
-                  engaged following. On and off the field his content spans game-day
-                  highlights, training, and lifestyle, the mix premium brands want
-                  to build campaigns around.
+                  Jake Banks is a dual-threat quarterback known for his arm
+                  talent, poise in the pocket, and a fast-growing, highly engaged
+                  following across Instagram and TikTok. A standout recruit out of
+                  high school, he has built a reputation for big-moment highlights
+                  and behind-the-scenes access fans rarely get. Off the field, his
+                  content spans training and film breakdowns, game-day routines,
+                  and lifestyle moments with friends and family. That mix of
+                  on-field performance and authentic personal storytelling makes
+                  him a natural fit for performance, apparel, and lifestyle brands.
                 </p>
 
+                {/* Voice + interests */}
                 <div className="mt-3.5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {[{ label: "Voice", items: voice }, { label: "Interests", items: interests }].map((g) => (
                     <div key={g.label}>
@@ -447,6 +514,7 @@ function RosterIntelligence() {
                   ))}
                 </div>
 
+                {/* Brand fits */}
                 <div className="mt-4">
                   <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.14em] text-white/35">Brand Fits</p>
                   <div className="mt-2 space-y-1.5">
@@ -456,7 +524,7 @@ function RosterIntelligence() {
                           <p className="font-sans text-[12.5px] font-medium text-white">{b.name}</p>
                           <p className="truncate font-sans text-[11px] text-white/45">{b.reason}</p>
                         </div>
-                        <span className="shrink-0 font-sans text-[13px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{b.fit}</span>
+                        <span className="shrink-0 font-sans text-[13px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{b.fit}%</span>
                       </div>
                     ))}
                   </div>
@@ -465,62 +533,12 @@ function RosterIntelligence() {
             </div>
           </GlassPanel>
         </FadeUp>
-
-        <FadeUp delay={0.1} className="mt-6 md:mt-8">
-          <ScrimCluster>
-            <RosterTable rows={rosterRows} />
-          </ScrimCluster>
-        </FadeUp>
       </div>
     </WorldBackdrop>
   );
 }
 
 /* ── Light interlude: centered statement + three-up world-image cards ── */
-function AgencyInterlude() {
-  const cards = [
-    { n: "01", label: "Pitch", body: "Find the brands that fit your roster and send outreach that sounds like you.", img: "/pitchimage2.png" },
-    { n: "02", label: "Manage", body: "Move every deal from first email to signed, in one pipeline.", img: "/manageimage2.png" },
-    { n: "03", label: "Track", body: "Turn campaigns, content, and deals into a report in minutes.", img: "/trackimage2.png" },
-  ];
-  return (
-    <section className={`${SECTION} bg-[#eeeeee]`}>
-      <div className={`${WRAP} ${PADS}`}>
-        <FadeUp>
-          <h2 className="mx-auto max-w-4xl text-center font-sans text-4xl font-extrabold tracking-tight leading-[1.45] [text-wrap:balance] text-[#0a0a0a] md:text-5xl lg:text-6xl">
-            Agencies lose deals to{" "}
-            <span
-              style={{
-                color: "#000",
-                padding: "0 0.12em",
-                background: `linear-gradient(180deg, transparent 0.22em, ${LIME} 0.22em, ${LIME} calc(100% - 0.16em), transparent calc(100% - 0.16em))`,
-                WebkitBoxDecorationBreak: "clone",
-                boxDecorationBreak: "clone",
-              }}
-            >
-              slow follow-up,
-            </span>{" "}
-            not bad rosters.
-          </h2>
-        </FadeUp>
-        <FadeUp delay={0.1} className="mt-12 grid grid-cols-1 gap-4 md:mt-16 md:grid-cols-3">
-          {cards.map((c) => (
-            <div key={c.n} className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "4 / 5" }}>
-              <img src={c.img} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
-              <div aria-hidden className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.45) 45%, rgba(0,0,0,0.9) 100%)" }} />
-              <div className="absolute inset-0 flex flex-col justify-end p-6">
-                <span className="font-sans text-[12px] font-bold tracking-[0.2em]" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{c.n}</span>
-                <h3 className="mt-2 font-display text-[2rem] italic leading-none text-white">{c.label}</h3>
-                <p className="mt-2.5 max-w-[40ch] font-sans text-[13.5px] leading-relaxed text-white/75">{c.body}</p>
-              </div>
-            </div>
-          ))}
-        </FadeUp>
-      </div>
-    </section>
-  );
-}
-
 /* ── Light content beat: AI content search ── */
 const searchResults = [
   { image: "/athleteglasses1.png", label: "Sponsored", proof: false, platform: "instagram", kind: "Post" },
@@ -632,12 +650,9 @@ export default function ForAgenciesPage() {
       {/* Brand Directory — full search UI */}
       <BrandDirectorySection />
 
-      {/* CRM inbox assistant — iMessage beat */}
-      <CrmSection />
-
-      {/* Light interlude: centered statement + three-up cards */}
+      {/* CRM inbox assistant — light beat */}
       <div className="h-1.5 w-full bg-[#dfff00]" />
-      <AgencyInterlude />
+      <CrmSection />
       <div className="h-1.5 w-full bg-[#dfff00]" />
 
       {/* Match Studio — dark dashboard */}
