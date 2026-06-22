@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, Instagram, Paperclip, RotateCw, Search, Send, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Instagram, MapPin, Paperclip, RotateCw, Search, Send, Sparkles, Zap } from "lucide-react";
 
 /* TikTok glyph (not in lucide). */
 function TiktokGlyph({ className }: { className?: string }) {
@@ -43,13 +43,13 @@ const directoryCategories = [
   { name: "Gaming & Esports", n: "282" },
 ];
 
-const directoryBrands: { name: string; cat: string; posts: string; desc: string; logo?: string; logoBg?: string }[] = [
-  { name: "Apex Hydration", cat: "Beverage", posts: "24 posts", desc: "Performance hydration built for game day and recovery.", logo: "/brand-apex.png", logoBg: "#e6eefb" },
-  { name: "Northwind Apparel", cat: "Apparel", posts: "18 posts", desc: "Technical outerwear and lifestyle basics for the active.", logo: "/brand-northwind.png", logoBg: "#e8eaed" },
-  { name: "Voltic Energy", cat: "Beverage", posts: "31 posts", desc: "Clean-energy drinks fueling the next generation of athletes.", logo: "/brand-voltic.png", logoBg: "#eef2d6" },
-  { name: "Cedar & Co.", cat: "Lifestyle", posts: "12 posts", desc: "Everyday essentials with a clean, modern aesthetic.", logo: "/brand-cedar.png", logoBg: "#f1e9dc" },
-  { name: "Summit Gear", cat: "Sports Equipment", posts: "9 posts", desc: "Field-tested equipment for training and competition.", logo: "/brand-summit.png", logoBg: "#e4ecf1" },
-  { name: "Lumen Skincare", cat: "Skincare", posts: "15 posts", desc: "Dermatologist-backed skincare for high-performance skin.", logo: "/brand-lumen.png", logoBg: "#efe9f4" },
+const directoryBrands: { name: string; cat: string; posts: string; hq: string; desc: string; logo?: string; logoBg?: string }[] = [
+  { name: "Apex Hydration", cat: "Beverage", posts: "24 posts", hq: "Austin, TX", desc: "Electrolyte hydration mixes and bottles built for game-day performance and faster recovery, stocked in gyms and grocery nationwide.", logo: "/brand-apex.png", logoBg: "#e6eefb" },
+  { name: "Northwind Apparel", cat: "Apparel", posts: "18 posts", hq: "Portland, OR", desc: "Technical outerwear and everyday basics for athletes who train outdoors, from waterproof shells to recycled-fleece layers.", logo: "/brand-northwind.png", logoBg: "#e8eaed" },
+  { name: "Voltic Energy", cat: "Beverage", posts: "31 posts", hq: "Los Angeles, CA", desc: "Zero-sugar energy drinks with clean caffeine and B-vitamins, built for esports, endurance, and late-game focus.", logo: "/brand-voltic.png", logoBg: "#eef2d6" },
+  { name: "Cedar & Co.", cat: "Lifestyle", posts: "12 posts", hq: "Brooklyn, NY", desc: "Minimalist home and lifestyle goods, candles, ceramics, and linens, designed for a calm and modern everyday.", logo: "/brand-cedar.png", logoBg: "#f1e9dc" },
+  { name: "Summit Gear", cat: "Sports Equipment", posts: "9 posts", hq: "Denver, CO", desc: "Field-tested training and climbing equipment, from resistance systems to packs, trusted by collegiate and pro programs.", logo: "/brand-summit.png", logoBg: "#e4ecf1" },
+  { name: "Lumen Skincare", cat: "Skincare", posts: "15 posts", hq: "Miami, FL", desc: "Dermatologist-backed, sweat-resistant skincare, SPF, recovery balms, and cleansers formulated for high-performance skin.", logo: "/brand-lumen.png", logoBg: "#efe9f4" },
 ];
 
 // Inbox threads (fictional contacts/brands). Flags use real product vocabulary.
@@ -154,6 +154,9 @@ function BrandDirectorySection() {
                         <div className="min-w-0">
                           <p className="truncate font-sans text-[14px] font-semibold text-white">{b.name}</p>
                           <p className="truncate font-sans text-[11px] text-white/45">{b.cat} · {b.posts}</p>
+                          <p className="mt-0.5 flex items-center gap-1 truncate font-sans text-[11px] text-white/40">
+                            <MapPin className="h-3 w-3 shrink-0" /> {b.hq}
+                          </p>
                         </div>
                       </div>
                       <p className="mt-3 font-sans text-[12.5px] leading-relaxed text-white/60">{b.desc}</p>
