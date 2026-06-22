@@ -1,4 +1,4 @@
-import { ArrowLeftRight, ArrowRight, Instagram, MapPin, Paperclip, RotateCw, Search, Send, Sparkles, Zap } from "lucide-react";
+import { ArrowLeftRight, ArrowRight, Check, Download, Instagram, MapPin, Paperclip, RotateCw, Search, Send, Sparkles, TrendingUp, Zap } from "lucide-react";
 
 /* TikTok glyph (not in lucide). */
 function TiktokGlyph({ className }: { className?: string }) {
@@ -15,10 +15,8 @@ import { FadeUp } from "@/components/audience/fade-up";
 import { WorldBackdrop } from "@/components/audience/world-backdrop";
 import {
   GlassPanel,
-  PillarSection,
   ScrimCluster,
 } from "@/components/audience/glass-mockups";
-import { ReportBuilder } from "@/components/audience/product-mockups";
 
 const LIME = "#dfff00";
 const WRAP = "mx-auto max-w-7xl px-6 md:px-10 lg:px-12";
@@ -76,12 +74,6 @@ const flagColor: Record<string, { dot: string; text: string }> = {
   "Replied": { dot: "rgba(0,0,0,0.3)", text: "rgba(0,0,0,0.42)" },
 };
 
-
-const masterRows = [
-  { name: "Darius Vaughn", campaigns: "9", deals: "11", payments: "$420K" },
-  { name: "Andre Solis", campaigns: "6", deals: "7", payments: "$255K" },
-  { name: "Marcus Webb", campaigns: "5", deals: "6", payments: "$198K" },
-];
 
 /* ── Brand Directory: full search UI (sidebar + brand cards) ── */
 function BrandDirectorySection() {
@@ -700,6 +692,153 @@ function ContentSection() {
   );
 }
 
+/* ── Campaign report: results + benchmarks ── */
+function BenchBar({ label, value, lime }: { label: string; value: number; lime?: boolean }) {
+  return (
+    <div>
+      <div className="flex items-center justify-between font-sans text-[11px]">
+        <span className="text-white/55">{label}</span>
+        <span className="font-semibold" style={{ color: lime ? LIME : "rgba(255,255,255,0.7)", fontVariantNumeric: "tabular-nums" }}>{value}%</span>
+      </div>
+      <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+        <div className="h-full rounded-full" style={{ width: `${(value / 10) * 100}%`, background: lime ? LIME : "rgba(255,255,255,0.4)" }} />
+      </div>
+    </div>
+  );
+}
+
+function CampaignReportSection() {
+  const kpis = [
+    { label: "Audience Reach", value: "1.2M", delta: "+18% vs goal" },
+    { label: "Engagement", value: "8.9%", delta: "Top quartile" },
+    { label: "EMV", value: "$74K", delta: "2.4x spend" },
+    { label: "ROI", value: "2.4x", delta: "+0.6x vs avg" },
+  ];
+  const brandBench = [
+    { label: "This campaign", value: 8.9, lime: true },
+    { label: "Summit average", value: 5.4 },
+    { label: "Summit best", value: 9.1 },
+  ];
+  const athleteBench = [
+    { label: "Sponsored (this)", value: 8.9, lime: true },
+    { label: "Non-sponsored avg", value: 9.7 },
+  ];
+  const deliverables = [
+    { name: "Launch Reel", kind: "Reel", reach: "420K", eng: "9.4%" },
+    { name: "Training carousel", kind: "Carousel", reach: "310K", eng: "8.1%" },
+    { name: "Behind-the-scenes story", kind: "Story", reach: "180K", eng: "7.6%" },
+  ];
+  return (
+    <WorldBackdrop type="image" src={WORLD_IMG} parallax className={SECTION}>
+      <div className={`${WRAP} ${PADS}`}>
+        <FadeUp className="max-w-2xl">
+          <ScrimCluster>
+            <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Mission Control</p>
+            <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+              Every deal, <span className="italic" style={{ color: LIME }}>measured.</span>
+            </h2>
+            <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
+              Every campaign tracked and benchmarked, against the brand's other
+              deals, the athlete's organic posts, and the targets you set.
+            </p>
+          </ScrimCluster>
+        </FadeUp>
+
+        <FadeUp delay={0.12} className="mt-10 md:mt-14">
+          <ScrimCluster>
+            <GlassPanel className="overflow-hidden">
+              {/* Report header */}
+              <div className="flex flex-wrap items-start justify-between gap-3 border-b border-white/10 p-4 md:p-5">
+                <div>
+                  <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/45">Campaign Report</p>
+                  <h3 className="mt-1 font-display text-2xl italic leading-none text-white">Summit Gear <span className="text-white/35">×</span> Jake Banks</h3>
+                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">Training Season · Sep to Nov · 3 deliverables</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="rounded-full px-2.5 py-1 font-sans text-[10px] font-bold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Completed</span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 font-sans text-[11px] font-medium text-white/70">
+                    <Download className="h-3.5 w-3.5" /> Export CSV
+                  </span>
+                </div>
+              </div>
+
+              {/* KPI row */}
+              <div className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4">
+                {kpis.map((k) => (
+                  <div key={k.label} className="bg-[#0c0d11] p-4">
+                    <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.12em] text-white/40">{k.label}</p>
+                    <p className="mt-1 font-sans text-[26px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{k.value}</p>
+                    <p className="mt-1.5 font-sans text-[10.5px] font-medium" style={{ color: LIME }}>{k.delta}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Benchmarks */}
+              <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 md:p-5">
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                  <p className="flex items-center gap-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">
+                    <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> vs Summit Gear's campaigns
+                  </p>
+                  <div className="mt-3 space-y-2.5">
+                    {brandBench.map((b) => <BenchBar key={b.label} {...b} />)}
+                  </div>
+                  <p className="mt-3 font-sans text-[11.5px] leading-relaxed text-white/55">
+                    65% above Summit's campaign average, second best of their last 14 deals.
+                  </p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                  <p className="flex items-center gap-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">
+                    <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> vs Jake's non-sponsored posts
+                  </p>
+                  <div className="mt-3 space-y-2.5">
+                    {athleteBench.map((b) => <BenchBar key={b.label} {...b} />)}
+                  </div>
+                  <p className="mt-3 font-sans text-[11.5px] leading-relaxed text-white/55">
+                    Held 92% of Jake's organic engagement, the audience stayed with the ad.
+                  </p>
+                </div>
+              </div>
+
+              {/* Deliverables */}
+              <div className="border-t border-white/10 p-4 md:p-5">
+                <p className="font-sans text-[10px] uppercase tracking-[0.14em] text-white/40">Deliverables</p>
+                <div className="mt-3 space-y-1.5">
+                  {deliverables.map((d) => (
+                    <div key={d.name} className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2.5">
+                      <Instagram className="h-4 w-4 shrink-0 text-white/45" />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate font-sans text-[12.5px] font-medium text-white">{d.name}</p>
+                        <p className="font-sans text-[10.5px] text-white/40">Instagram · {d.kind}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-sans text-[9px] uppercase tracking-[0.1em] text-white/35">Reach</p>
+                        <p className="font-sans text-[12.5px] font-semibold text-white/85" style={{ fontVariantNumeric: "tabular-nums" }}>{d.reach}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-sans text-[9px] uppercase tracking-[0.1em] text-white/35">Eng</p>
+                        <p className="font-sans text-[12.5px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{d.eng}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Verdict */}
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 p-4 md:p-5" style={{ background: "rgba(223,255,0,0.05)" }}>
+                <p className="flex items-start gap-2 font-sans text-[12.5px] leading-relaxed text-white/80">
+                  <Check className="mt-[1px] h-4 w-4 shrink-0" style={{ color: LIME }} />
+                  <span><span className="font-semibold text-white">Verdict:</span> top-quartile campaign for Summit Gear. Recommend renewing Jake Banks for the spring drop.</span>
+                </p>
+                <span className="shrink-0 rounded-full px-3.5 py-1.5 font-sans text-[11.5px] font-semibold" style={{ background: LIME, color: "#000" }}>Renew deal</span>
+              </div>
+            </GlassPanel>
+          </ScrimCluster>
+        </FadeUp>
+      </div>
+    </WorldBackdrop>
+  );
+}
+
 export default function ForAgenciesPage() {
   return (
     <PageLayout>
@@ -739,45 +878,8 @@ export default function ForAgenciesPage() {
       <ContentSection />
       <div className="h-1.5 w-full bg-[#dfff00]" />
 
-      {/* Mission Control / Data */}
-      <PillarSection
-        eyebrow="Mission Control"
-        headline={<>Every deal, <span className="italic" style={{ color: LIME }}>measured.</span></>}
-        body="Athletes, campaigns, deals, and payments in one master table, with EMV, ROI, and CSV export."
-        world={{ src: WORLD_IMG, type: "image" }}
-      >
-        <ReportBuilder title="Master Table" emv="$1.24M" roi="4.8x" bars={[42, 58, 51, 67, 74, 88]}>
-          <div className="overflow-hidden rounded-xl border border-white/10 bg-black/50">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[420px] border-collapse">
-                <thead>
-                  <tr className="font-sans text-[10px] uppercase tracking-[0.1em] text-white/40">
-                    <th className="px-3 py-2 text-left font-medium">Athlete</th>
-                    <th className="px-3 py-2 text-right font-medium">Campaigns</th>
-                    <th className="px-3 py-2 text-right font-medium">Deals</th>
-                    <th className="px-3 py-2 text-right font-medium">Payments</th>
-                  </tr>
-                </thead>
-                <tbody style={{ fontVariantNumeric: "tabular-nums" }}>
-                  {masterRows.map((r) => (
-                    <tr key={r.name} className="border-t border-white/[0.06] font-sans text-[12.5px] text-white/75">
-                      <td className="px-3 py-2 font-medium text-white">{r.name}</td>
-                      <td className="px-3 py-2 text-right">{r.campaigns}</td>
-                      <td className="px-3 py-2 text-right">{r.deals}</td>
-                      <td className="px-3 py-2 text-right" style={{ color: LIME }}>{r.payments}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="flex justify-end border-t border-white/10 px-3 py-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1 font-sans text-[11px] font-medium text-white/70">
-                Export CSV
-              </span>
-            </div>
-          </div>
-        </ReportBuilder>
-      </PillarSection>
+      {/* Mission Control — campaign report + benchmarks */}
+      <CampaignReportSection />
 
       {/* CTA */}
       <section className={`audience-page-cta ${SECTION}`}>
