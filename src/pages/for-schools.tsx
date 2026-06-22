@@ -1246,7 +1246,7 @@ export default function ForSchoolsPage() {
       {/* Hero — image backdrop that fades to black into the first section */}
       <WorldBackdrop type="image" src="/for-schools-hero.png" parallax>
         <div className="audience-page-hero-inner px-6 pb-32 pt-44 text-center md:pb-44 md:pt-56">
-          <h1 className="audience-page-h1">
+          <h1 className="audience-page-h1 [text-wrap:balance]" style={{ maxWidth: "24ch", marginLeft: "auto", marginRight: "auto", marginBottom: "2.25rem" }}>
             NIL is evolving faster{" "}
             <span className="italic" style={{ color: LIME }}>than the systems built to support it.</span>
           </h1>

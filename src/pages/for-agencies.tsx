@@ -367,8 +367,8 @@ function MatchStudioSection() {
                   <img src="/athlete-cutout.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-display text-2xl italic leading-none text-white">Jake Banks</h3>
-                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">Football · Quarterback · University of Jaba</p>
+                  <h3 className="font-display text-2xl italic leading-none text-white">Darius Vaughn</h3>
+                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">NFL · Wide Receiver</p>
                   <div className="mt-3 grid grid-cols-2 gap-2">
                     {athleteSignals.map((s) => (
                       <div key={s.label} className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2">
@@ -393,7 +393,7 @@ function MatchStudioSection() {
                     <ArrowLeftRight className="h-4 w-4" />
                   </span>
                   <p className="mt-3 font-display text-xl italic leading-none text-white">Find Overlap</p>
-                  <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.14em] text-white/40">Jake Banks <span className="text-white/25">×</span> Summit Gear</p>
+                  <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.14em] text-white/40">Darius Vaughn <span className="text-white/25">×</span> Summit Gear</p>
                 </div>
 
                 <div className="mt-4 rounded-xl border border-[#dfff00]/25 bg-[#dfff00]/[0.05] p-4">
@@ -403,7 +403,7 @@ function MatchStudioSection() {
                   </div>
                   <p className="mt-1 font-sans text-[44px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>92</p>
                   <p className="mt-2 font-sans text-[12px] leading-relaxed text-white/70">
-                    Jake films weekly training and film-room content, and his audience
+                    Darius posts weekly training and recovery content, and his audience
                     over-indexes on performance-minded 18 to 24 men across the Mountain
                     West, the exact demo and region Summit Gear is scaling into. A
                     training-season activation lands low-risk and on-brand for both.
@@ -473,18 +473,18 @@ function MatchStudioSection() {
 /* ── Roster intelligence: deep athlete profile + roster table ── */
 function RosterIntelligence() {
   const tabs = ["Overview", "Performance", "Audience", "FMV", "Athlete Business"];
-  const voice = ["Game-day highlights", "Training & film", "Community & family"];
-  const interests = ["QB development", "Performance nutrition", "Lifestyle & fashion"];
+  const voice = ["Game-day highlights", "Training & recovery", "Lifestyle & family"];
+  const interests = ["Performance gear", "Hydration & nutrition", "Community"];
   const brandFits = [
-    { name: "Apex Hydration", fit: 94, reason: "Posts game-day hydration routines; audience skews performance-minded." },
-    { name: "Voltic Energy", fit: 88, reason: "High-energy highlight reels match the brand's tone." },
-    { name: "Northwind Apparel", fit: 81, reason: "Off-field fashion content fits their apparel drops." },
+    { name: "Apex Hydration", fit: 94, reason: "Audience and content align, over-indexes with their 18 to 24 demo." },
+    { name: "Voltic Energy", fit: 88, reason: "High-energy game content matches the brand's tone." },
+    { name: "Northwind Apparel", fit: 82, reason: "Off-field lifestyle fits their apparel line." },
   ];
   const stats = [
-    { label: "Followers", value: "184K", sub: "↑ 12.4% · 30d", up: true },
-    { label: "Engagement", value: "9.7%", sub: "vs 6.2% cohort", up: true },
-    { label: "Avg Likes", value: "12.1K", sub: "per post" },
-    { label: "Avg Comments", value: "631", sub: "per post" },
+    { label: "Audience Reach", value: "1.2M", sub: "↑ 9.1% · 30d", up: true },
+    { label: "Engagement", value: "7.8%", sub: "vs 5.4% cohort", up: true },
+    { label: "Brand Fit", value: "94", sub: "score" },
+    { label: "Alignment", value: "90", sub: "score" },
   ];
   return (
     <WorldBackdrop src={WORLD_IMG} parallax className={SECTION}>
@@ -515,15 +515,18 @@ function RosterIntelligence() {
                   <img src="/athlete-cutout.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
                 </div>
                 <div className="mt-4 flex items-center gap-2">
-                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">Football</span>
-                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">QB</span>
+                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">NFL</span>
+                  <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">WR</span>
                 </div>
-                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Jake Banks</h3>
-                <p className="mt-1.5 font-sans text-[12px] text-white/55">University of Jaba · Junior</p>
+                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Darius Vaughn</h3>
                 <div className="mt-1.5 flex items-center gap-1.5 font-sans text-[11px] text-white/55">
                   <span className="h-1.5 w-1.5 rounded-full" style={{ background: LIME }} />
-                  JABA Verified
+                  JABA · Verified
+                  <span className="text-white/30">·</span> Pro
                 </div>
+                <p className="mt-1.5 font-sans text-[11px] text-white/45" style={{ fontVariantNumeric: "tabular-nums" }}>
+                  Overall <span className="font-semibold text-white/80">92</span> · Content style: Lifestyle
+                </p>
               </div>
 
               {/* Detail panel */}
@@ -554,15 +557,13 @@ function RosterIntelligence() {
 
                 {/* Bio */}
                 <p className="mt-4 font-sans text-[13px] leading-relaxed text-white/70">
-                  Jake Banks is a dual-threat quarterback known for his arm
-                  talent, poise in the pocket, and a fast-growing, highly engaged
-                  following across Instagram and TikTok. A standout recruit out of
-                  high school, he has built a reputation for big-moment highlights
-                  and behind-the-scenes access fans rarely get. Off the field, his
-                  content spans training and film breakdowns, game-day routines,
-                  and lifestyle moments with friends and family. That mix of
-                  on-field performance and authentic personal storytelling makes
-                  him a natural fit for performance, apparel, and lifestyle brands.
+                  Darius Vaughn is an NFL wide receiver with a fast-growing,
+                  highly engaged following across Instagram and TikTok. Known for
+                  clutch catches and breakaway speed, he pairs game-day highlights
+                  with off-field training, recovery, and lifestyle content that
+                  fans rarely get from a pro. That mix of elite on-field
+                  performance and authentic personal storytelling makes him a
+                  natural fit for performance, apparel, and lifestyle brands.
                 </p>
 
                 {/* Voice + interests */}
@@ -786,7 +787,7 @@ function CampaignReportSection() {
               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-3 md:px-5">
                 <div>
                   <p className="font-sans text-[9.5px] uppercase tracking-[0.16em] text-white/45">Campaign Report</p>
-                  <h3 className="mt-0.5 font-display text-xl italic leading-none text-white">Summit Gear <span className="text-white/35">×</span> Jake Banks</h3>
+                  <h3 className="mt-0.5 font-display text-xl italic leading-none text-white">Summit Gear <span className="text-white/35">×</span> Darius Vaughn</h3>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="font-sans text-[10.5px] text-white/40">Training Season · Sep to Nov</span>
@@ -829,7 +830,7 @@ function CampaignReportSection() {
                     <p className="mt-2.5 font-sans text-[11px] leading-snug text-white/55">65% above Summit's average, second best of their last 14 deals.</p>
                   </div>
                   <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
-                    <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">vs Jake's organic posts</p>
+                    <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">vs Darius's organic posts</p>
                     <div className="mt-2.5 space-y-2">
                       {athleteBench.map((b) => <BenchBar key={b.label} {...b} />)}
                     </div>
@@ -889,7 +890,7 @@ function CampaignReportSection() {
               <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-4 py-3 md:px-5" style={{ background: "rgba(223,255,0,0.05)" }}>
                 <p className="flex items-center gap-2 font-sans text-[12px] leading-snug text-white/80">
                   <Check className="h-4 w-4 shrink-0" style={{ color: LIME }} />
-                  <span><span className="font-semibold text-white">Verdict:</span> top-quartile campaign for Summit Gear. Renew Jake Banks for the spring drop.</span>
+                  <span><span className="font-semibold text-white">Verdict:</span> top-quartile campaign for Summit Gear. Renew Darius Vaughn for the spring drop.</span>
                 </p>
                 <span className="shrink-0 rounded-full px-3.5 py-1.5 font-sans text-[11.5px] font-semibold" style={{ background: LIME, color: "#000" }}>Renew deal</span>
               </div>
@@ -906,8 +907,8 @@ export default function ForAgenciesPage() {
     <PageLayout>
       {/* Hero — image backdrop that fades to black into the first section */}
       <WorldBackdrop type="image" src="/for-agencies-hero.png" parallax>
-        <div className="audience-page-hero-inner px-6 pb-32 pt-44 text-center md:pb-44 md:pt-56">
-          <h1 className="audience-page-h1">
+        <div className="audience-page-hero-inner px-6 pb-32 pt-52 text-center md:pb-44 md:pt-64">
+          <h1 className="audience-page-h1 [text-wrap:balance]" style={{ maxWidth: "24ch", marginLeft: "auto", marginRight: "auto" }}>
             Turn your roster into{" "}
             <span className="italic" style={{ color: LIME }}>signed deals.</span>
           </h1>
