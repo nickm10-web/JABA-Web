@@ -361,7 +361,7 @@ function MatchStudioSection() {
 
         <FadeUp delay={0.1} className="mt-10 md:mt-14">
           <GlassPanel className="p-4 md:p-6">
-            <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-[1fr_1.4fr_1fr] md:gap-5">
+            <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-[1fr_1.4fr_1fr] md:gap-5">
               {/* Athlete source card */}
               <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
                 <div className="flex items-center justify-between border-b border-white/10 px-3.5 py-2.5">
@@ -369,7 +369,7 @@ function MatchStudioSection() {
                   <span className="rounded-full bg-white/10 px-2 py-0.5 font-sans text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60">Athlete</span>
                 </div>
                 <div
-                  className="aspect-[4/5] w-full overflow-hidden"
+                  className="aspect-[4/5] w-full flex-1 overflow-hidden"
                   style={{ background: "radial-gradient(120% 85% at 50% 6%, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 52%, rgba(255,255,255,0.01))" }}
                 >
                   <img src="/athlete-cutout.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
@@ -446,7 +446,7 @@ function MatchStudioSection() {
                   <span className="font-sans text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/45">Sports Equipment · Match</span>
                   <span className="rounded-full px-2 py-0.5 font-sans text-[9px] font-semibold uppercase tracking-[0.14em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Brand</span>
                 </div>
-                <div className="flex items-center justify-center p-7" style={{ background: "#e4ecf1" }}>
+                <div className="flex flex-1 items-center justify-center p-7" style={{ background: "#e4ecf1" }}>
                   <img src="/brand-summit.png" alt="" aria-hidden className="max-h-16 max-w-[78%] object-contain" />
                 </div>
                 <div className="p-4">
