@@ -45,10 +45,10 @@ const config: Config = {
           "0 18px 52px rgba(73, 104, 131, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.56), inset 0 -1px 0 rgba(255, 255, 255, 0.14)",
       },
       fontFamily: {
-        heading: ["'Instrument Serif'", "serif"],
+        heading: ["'Perfectly Nineties'", "serif"],
         body: ["'Barlow'", "sans-serif"],
         sans: ["Manrope", "system-ui", "sans-serif"],
-        display: ['"Instrument Serif"', "serif"],
+        display: ['"Perfectly Nineties"', "serif"],
       },
       keyframes: {
         "fade-lift": {

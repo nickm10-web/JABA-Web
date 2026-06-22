@@ -1,4 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+/* Self-hosted display serif (replaces Instrument Serif). Only a Regular
+   weight is available, so italic usages fall back to a synthesized slant. */
+@font-face {
+  font-family: "Perfectly Nineties";
+  src: url("/fonts/PerfectlyNineties-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;
@@ -119,13 +129,14 @@
     /* Liquid glass: refract the backdrop (displacement) instead of just frosting it,
        with a beveled rim and no outer white glow. */
     box-shadow:
-      0 6px 24px rgba(0, 0, 0, 0.16),
+      0 8px 30px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.08),
       inset 2px 2px 1px -2px rgba(255, 255, 255, 0.9),
       inset -2px -2px 1px -2px rgba(255, 255, 255, 0.55),
       inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.4),
       inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.35);
-    backdrop-filter: url("#nav-liquid-glass") blur(2px) saturate(170%);
-    -webkit-backdrop-filter: blur(3px) saturate(170%);
+    backdrop-filter: url("#nav-liquid-glass") blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
     transition:
       background 0.45s ease,
       border-color 0.45s ease;
@@ -134,7 +145,7 @@
   /* Press plates: FT-style drop cap on the first paragraph. Black, not
      lime — volt has no contrast on the off-white print side. */
   .plate-copy > p:first-of-type::first-letter {
-    font-family: "Instrument Serif", serif;
+    font-family: "Perfectly Nineties", serif;
     color: #000;
     float: left;
     font-size: 3.4em;
@@ -210,13 +221,13 @@
 
   /* Adaptive tint: stays glassy but tracks the content scrolling behind it. */
   .hero-nav-rail[data-glass="on-light"] {
-    background: rgba(255, 255, 255, 0.4);
-    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.72);
+    border-color: rgba(255, 255, 255, 0.5);
   }
 
   .hero-nav-rail[data-glass="on-dark"] {
-    background: rgba(22, 24, 30, 0.32);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(22, 24, 30, 0.7);
+    border-color: rgba(255, 255, 255, 0.16);
   }
 
   .hero-nav-rail::before {
@@ -478,7 +489,7 @@
 
   .story-headline {
     margin: 0;
-    font-family: "Instrument Serif", serif;
+    font-family: "Perfectly Nineties", serif;
     width: min(980px, 72vw);
     font-size: clamp(4.75rem, 8.8vw, 7.5rem);
     line-height: 0.88;
@@ -691,7 +702,7 @@
 }
 
 .problem-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.8rem, 6vw, 5rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
@@ -801,7 +812,7 @@
 }
 
 .showcase-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.8rem, 6vw, 5rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
@@ -1033,7 +1044,7 @@
 }
 
 .hiw-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.8rem, 6vw, 5rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
@@ -1176,7 +1187,7 @@
 }
 
 .audience-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.8rem, 6vw, 5rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
@@ -1262,7 +1273,7 @@
 }
 
 .audience-card-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   line-height: 1;
   letter-spacing: -0.03em;
@@ -1323,7 +1334,7 @@
 }
 
 .traction-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.8rem, 6vw, 5rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
@@ -1364,7 +1375,7 @@
 }
 
 .traction-stat-value {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.8rem, 5vw, 4rem);
   line-height: 1;
   letter-spacing: -0.04em;
@@ -1407,7 +1418,7 @@
 }
 
 .traction-quote-body {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: 1.15rem;
   line-height: 1.55;
   color: rgba(255, 255, 255, 0.72);
@@ -1460,7 +1471,7 @@
 }
 
 .press-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.8rem, 6vw, 5rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
@@ -1543,7 +1554,7 @@
 }
 
 .press-card-partner {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: 1.5rem;
   line-height: 1.15;
   letter-spacing: -0.03em;
@@ -1624,7 +1635,7 @@
 }
 
 .press-card-quote-text {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: 1rem;
   line-height: 1.6;
   font-style: italic;
@@ -1726,7 +1737,7 @@
 }
 
 .cta-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.6rem, 5.5vw, 4.5rem);
   line-height: 0.94;
   letter-spacing: -0.05em;
@@ -2064,7 +2075,7 @@
 }
 
 .audience-page-h1 {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(3rem, 7vw, 5.5rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
@@ -2112,7 +2123,7 @@
 }
 
 .audience-page-h2 {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.4rem, 5vw, 4rem);
   line-height: 0.94;
   letter-spacing: -0.04em;
@@ -2225,7 +2236,7 @@
 }
 
 .audience-page-cta-h2 {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.4rem, 5vw, 4rem);
   line-height: 0.94;
   letter-spacing: -0.04em;
@@ -2271,7 +2282,7 @@
 }
 
 .lifecycle-marquee-label {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: 1.35rem;
   letter-spacing: -0.02em;
   color: #dfff00;
@@ -2337,7 +2348,7 @@
 }
 
 .audience-page-transition-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(3rem, 7vw, 5rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
@@ -2462,7 +2473,7 @@
 }
 
 .press-article-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(1.4rem, 2.8vw, 1.9rem);
   line-height: 1.15;
   color: #fff;
@@ -2507,13 +2518,13 @@
   left: 2rem;
   font-size: 4rem;
   line-height: 1;
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   color: #dfff00;
   opacity: 0.35;
 }
 
 .press-article-quote-text {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: 1.1rem;
   line-height: 1.65;
   color: rgba(255,255,255,0.9);
@@ -2645,7 +2656,7 @@
 }
 
 .press-featured-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(1.6rem, 3.5vw, 2.4rem);
   line-height: 1.15;
   color: #fff;
@@ -2737,7 +2748,7 @@
 }
 
 .press-thumb-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: 1.05rem;
   line-height: 1.35;
   color: #fff;
@@ -2814,7 +2825,7 @@
 }
 
 .press-modal-headline {
-  font-family: "Instrument Serif", serif;
+  font-family: "Perfectly Nineties", serif;
   font-size: clamp(1.4rem, 3vw, 2rem);
   line-height: 1.2;
   color: #fff;
