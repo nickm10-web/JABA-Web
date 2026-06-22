@@ -707,6 +707,30 @@ function BenchBar({ label, value, lime }: { label: string; value: number; lime?:
   );
 }
 
+function WeekChart({ data }: { data: number[] }) {
+  const W = 300, H = 84, pad = 8;
+  const lo = 4, hi = 10;
+  const xs = (i: number) => pad + (i / (data.length - 1)) * (W - 2 * pad);
+  const ys = (v: number) => H - pad - ((v - lo) / (hi - lo)) * (H - 2 * pad);
+  const pts = data.map((v, i) => [xs(i), ys(v)] as const);
+  const line = pts.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
+  const area = `${line} L ${xs(data.length - 1).toFixed(1)} ${H - pad} L ${xs(0).toFixed(1)} ${H - pad} Z`;
+  const peak = data.indexOf(Math.max(...data));
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="mt-2.5 w-full" aria-hidden>
+      <defs>
+        <linearGradient id="weekfill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={LIME} stopOpacity="0.35" />
+          <stop offset="100%" stopColor={LIME} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={area} fill="url(#weekfill)" />
+      <path d={line} fill="none" stroke={LIME} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+      <circle cx={pts[peak][0]} cy={pts[peak][1]} r="3.5" fill={LIME} />
+    </svg>
+  );
+}
+
 function CampaignReportSection() {
   const kpis = [
     { label: "Audience Reach", value: "1.2M", delta: "+18% vs goal" },
@@ -714,6 +738,7 @@ function CampaignReportSection() {
     { label: "EMV", value: "$74K", delta: "2.4x spend" },
     { label: "ROI", value: "2.4x", delta: "+0.6x vs avg" },
   ];
+  const weekly = [5.2, 6.0, 7.3, 8.0, 9.4, 8.5, 9.1, 8.9];
   const brandBench = [
     { label: "This campaign", value: 8.9, lime: true },
     { label: "Summit average", value: 5.4 },
@@ -723,10 +748,21 @@ function CampaignReportSection() {
     { label: "Sponsored (this)", value: 8.9, lime: true },
     { label: "Non-sponsored avg", value: 9.7 },
   ];
+  const demographics = [
+    { label: "Ages 18-24", value: 62 },
+    { label: "Male", value: 71 },
+    { label: "Mountain West", value: 38 },
+  ];
+  const quality = [
+    { label: "Saves", value: "12.4K" },
+    { label: "Shares", value: "6.1K" },
+    { label: "Comments", value: "3.2K" },
+    { label: "Positive", value: "94%" },
+  ];
   const deliverables = [
-    { name: "Launch Reel", kind: "Reel", reach: "420K", eng: "9.4%" },
-    { name: "Training carousel", kind: "Carousel", reach: "310K", eng: "8.1%" },
-    { name: "Behind-the-scenes story", kind: "Story", reach: "180K", eng: "7.6%" },
+    { name: "Launch Reel", eng: "9.4%", emv: "$31K" },
+    { name: "Training carousel", eng: "8.1%", emv: "$24K" },
+    { name: "Story series", eng: "7.6%", emv: "$19K" },
   ];
   return (
     <WorldBackdrop type="image" src={WORLD_IMG} parallax className={SECTION}>
@@ -773,43 +809,79 @@ function CampaignReportSection() {
                 ))}
               </div>
 
-              {/* Benchmarks + deliverables side by side */}
-              <div className="grid grid-cols-1 gap-3.5 p-4 md:grid-cols-3 md:p-5">
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
-                  <p className="flex items-center gap-1.5 font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">
-                    <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> vs Summit's campaigns
-                  </p>
-                  <div className="mt-2.5 space-y-2">
-                    {brandBench.map((b) => <BenchBar key={b.label} {...b} />)}
+              {/* Dashboard grid */}
+              <div className="space-y-3.5 p-4 md:p-5">
+                {/* Row 1: performance over time + benchmarks */}
+                <div className="grid grid-cols-1 items-stretch gap-3.5 md:grid-cols-3">
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                    <p className="flex items-center gap-1.5 font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">
+                      <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> Engagement by week
+                    </p>
+                    <WeekChart data={weekly} />
+                    <p className="mt-2 font-sans text-[11px] leading-snug text-white/55">
+                      Climbed through the campaign, peaked week 5 at the launch reel.
+                    </p>
                   </div>
-                  <p className="mt-2.5 font-sans text-[11px] leading-snug text-white/55">
-                    65% above Summit's average, second best of their last 14 deals.
-                  </p>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
-                  <p className="flex items-center gap-1.5 font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">
-                    <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> vs Jake's organic posts
-                  </p>
-                  <div className="mt-2.5 space-y-2">
-                    {athleteBench.map((b) => <BenchBar key={b.label} {...b} />)}
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                    <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">vs Summit's campaigns</p>
+                    <div className="mt-2.5 space-y-2">
+                      {brandBench.map((b) => <BenchBar key={b.label} {...b} />)}
+                    </div>
+                    <p className="mt-2.5 font-sans text-[11px] leading-snug text-white/55">65% above Summit's average, second best of their last 14 deals.</p>
                   </div>
-                  <p className="mt-2.5 font-sans text-[11px] leading-snug text-white/55">
-                    Held 92% of Jake's organic engagement, the audience stayed with the ad.
-                  </p>
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                    <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">vs Jake's organic posts</p>
+                    <div className="mt-2.5 space-y-2">
+                      {athleteBench.map((b) => <BenchBar key={b.label} {...b} />)}
+                    </div>
+                    <p className="mt-2.5 font-sans text-[11px] leading-snug text-white/55">Held 92% of his organic engagement, the audience stayed with the ad.</p>
+                  </div>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
-                  <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">Deliverables</p>
-                  <div className="mt-2.5 space-y-2">
-                    {deliverables.map((d) => (
-                      <div key={d.name} className="flex items-center gap-2.5">
-                        <Instagram className="h-3.5 w-3.5 shrink-0 text-white/40" />
-                        <div className="min-w-0 flex-1">
-                          <p className="truncate font-sans text-[12px] font-medium text-white">{d.name}</p>
-                          <p className="font-sans text-[9.5px] text-white/40">{d.reach} reach</p>
+
+                {/* Row 2: audience + engagement quality + deliverables */}
+                <div className="grid grid-cols-1 items-stretch gap-3.5 md:grid-cols-3">
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                    <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">Audience reached</p>
+                    <div className="mt-2.5 space-y-2">
+                      {demographics.map((d) => (
+                        <div key={d.label}>
+                          <div className="flex items-center justify-between font-sans text-[11px]">
+                            <span className="text-white/55">{d.label}</span>
+                            <span className="font-semibold text-white/80" style={{ fontVariantNumeric: "tabular-nums" }}>{d.value}%</span>
+                          </div>
+                          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+                            <div className="h-full rounded-full" style={{ width: `${d.value}%`, background: LIME }} />
+                          </div>
                         </div>
-                        <span className="shrink-0 font-sans text-[12.5px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{d.eng}</span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                    <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">Engagement quality</p>
+                    <div className="mt-2.5 grid grid-cols-2 gap-2">
+                      {quality.map((q) => (
+                        <div key={q.label} className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2">
+                          <p className="font-sans text-[9px] uppercase tracking-[0.1em] text-white/40">{q.label}</p>
+                          <p className="mt-0.5 font-sans text-[16px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{q.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                    <div className="flex items-center justify-between">
+                      <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">Deliverables</p>
+                      <p className="font-sans text-[9px] uppercase tracking-[0.1em] text-white/35">Eng · EMV</p>
+                    </div>
+                    <div className="mt-2.5 space-y-2">
+                      {deliverables.map((d) => (
+                        <div key={d.name} className="flex items-center gap-2.5">
+                          <Instagram className="h-3.5 w-3.5 shrink-0 text-white/40" />
+                          <p className="min-w-0 flex-1 truncate font-sans text-[12px] font-medium text-white">{d.name}</p>
+                          <span className="shrink-0 font-sans text-[12px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{d.eng}</span>
+                          <span className="shrink-0 font-sans text-[11px] text-white/45" style={{ fontVariantNumeric: "tabular-nums" }}>{d.emv}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
