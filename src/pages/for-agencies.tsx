@@ -356,12 +356,15 @@ function MatchStudioSection() {
                   <span className="font-sans text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/45">Source · Football</span>
                   <span className="rounded-full bg-white/10 px-2 py-0.5 font-sans text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60">Athlete</span>
                 </div>
-                <div className="aspect-[4/5] w-full overflow-hidden bg-white/[0.04]">
-                  <img src="https://i.pravatar.cc/640?img=13" alt="" aria-hidden className="h-full w-full object-cover object-top" />
+                <div
+                  className="aspect-[4/5] w-full overflow-hidden"
+                  style={{ background: "radial-gradient(120% 85% at 50% 6%, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 52%, rgba(255,255,255,0.01))" }}
+                >
+                  <img src="/athlete-cutout.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-display text-2xl italic leading-none text-white">Darius Vaughn</h3>
-                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">NFL · Wide Receiver</p>
+                  <h3 className="font-display text-2xl italic leading-none text-white">Jake Banks</h3>
+                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">Football · Quarterback</p>
                   <span className="mt-3 inline-flex rounded-md px-2 py-0.5 font-sans text-[9.5px] font-semibold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Football</span>
                 </div>
               </div>
@@ -373,7 +376,7 @@ function MatchStudioSection() {
                 </span>
                 <p className="mt-3 font-display text-xl italic leading-none text-white">Find Overlap</p>
                 <p className="mx-auto mt-2 max-w-[34ch] font-sans text-[11.5px] leading-relaxed text-white/50">
-                  Analyze match between Darius Vaughn and Apex Hydration.
+                  Analyze match between Jake Banks and Apex Hydration.
                 </p>
                 <button className="mx-auto mt-3.5 flex items-center gap-1.5 rounded-full px-4 py-2 font-sans text-[12px] font-semibold" style={{ background: LIME, color: "#000" }}>
                   <Sparkles className="h-3.5 w-3.5" /> Find Overlap
@@ -381,9 +384,9 @@ function MatchStudioSection() {
 
                 <div className="mt-5 rounded-xl border border-[#dfff00]/25 bg-[#dfff00]/[0.05] p-4">
                   <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/55">Brand Fit Score</p>
-                  <p className="mt-1 font-sans text-[44px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>91</p>
+                  <p className="mt-1 font-sans text-[44px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>94</p>
                   <p className="mx-auto mt-2 max-w-[36ch] font-sans text-[12px] leading-relaxed text-white/65">
-                    Audience overlap and content style match. Darius Vaughn fits Apex Hydration.
+                    Audience overlap and content style match. Jake Banks fits Apex Hydration.
                   </p>
                   <div className="mt-3.5 space-y-1.5 border-t border-white/10 pt-3 text-left">
                     {overlap.map((m) => (
