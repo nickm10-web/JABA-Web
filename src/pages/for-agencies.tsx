@@ -512,13 +512,13 @@ function RosterIntelligence() {
                   className="min-h-[200px] flex-1 overflow-hidden rounded-2xl border border-white/10"
                   style={{ background: "radial-gradient(120% 85% at 50% 6%, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 52%, rgba(255,255,255,0.01))" }}
                 >
-                  <img src="/athlete-cutout.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
+                  <img src="/athlete-roster.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
                 </div>
                 <div className="mt-4 flex items-center gap-2">
                   <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">NFL</span>
                   <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">WR</span>
                 </div>
-                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Darius Vaughn</h3>
+                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Andre Solis</h3>
                 <div className="mt-1.5 flex items-center gap-1.5 font-sans text-[11px] text-white/55">
                   <span className="h-1.5 w-1.5 rounded-full" style={{ background: LIME }} />
                   JABA · Verified
@@ -557,7 +557,7 @@ function RosterIntelligence() {
 
                 {/* Bio */}
                 <p className="mt-4 font-sans text-[13px] leading-relaxed text-white/70">
-                  Darius Vaughn is an NFL wide receiver with a fast-growing,
+                  Andre Solis is an NFL wide receiver with a fast-growing,
                   highly engaged following across Instagram and TikTok. Known for
                   clutch catches and breakaway speed, he pairs game-day highlights
                   with off-field training, recovery, and lifestyle content that
