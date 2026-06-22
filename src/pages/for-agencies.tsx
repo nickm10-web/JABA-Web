@@ -43,13 +43,13 @@ const directoryCategories = [
   { name: "Gaming & Esports", n: "282" },
 ];
 
-const directoryBrands: { name: string; cat: string; posts: string; desc: string; logo?: string }[] = [
-  { name: "Apex Hydration", cat: "Beverage", posts: "24 posts", desc: "Performance hydration built for game day and recovery." },
-  { name: "Northwind Apparel", cat: "Apparel", posts: "18 posts", desc: "Technical outerwear and lifestyle basics for the active." },
-  { name: "Voltic Energy", cat: "Beverage", posts: "31 posts", desc: "Clean-energy drinks fueling the next generation of athletes." },
-  { name: "Cedar & Co.", cat: "Lifestyle", posts: "12 posts", desc: "Everyday essentials with a clean, modern aesthetic." },
-  { name: "Summit Gear", cat: "Sports Equipment", posts: "9 posts", desc: "Field-tested equipment for training and competition." },
-  { name: "Lumen Skincare", cat: "Skincare", posts: "15 posts", desc: "Dermatologist-backed skincare for high-performance skin." },
+const directoryBrands: { name: string; cat: string; posts: string; desc: string; logo?: string; logoBg?: string }[] = [
+  { name: "Apex Hydration", cat: "Beverage", posts: "24 posts", desc: "Performance hydration built for game day and recovery.", logo: "/brand-apex.png", logoBg: "#e6eefb" },
+  { name: "Northwind Apparel", cat: "Apparel", posts: "18 posts", desc: "Technical outerwear and lifestyle basics for the active.", logo: "/brand-northwind.png", logoBg: "#e8eaed" },
+  { name: "Voltic Energy", cat: "Beverage", posts: "31 posts", desc: "Clean-energy drinks fueling the next generation of athletes.", logo: "/brand-voltic.png", logoBg: "#eef2d6" },
+  { name: "Cedar & Co.", cat: "Lifestyle", posts: "12 posts", desc: "Everyday essentials with a clean, modern aesthetic.", logo: "/brand-cedar.png", logoBg: "#f1e9dc" },
+  { name: "Summit Gear", cat: "Sports Equipment", posts: "9 posts", desc: "Field-tested equipment for training and competition.", logo: "/brand-summit.png", logoBg: "#e4ecf1" },
+  { name: "Lumen Skincare", cat: "Skincare", posts: "15 posts", desc: "Dermatologist-backed skincare for high-performance skin.", logo: "/brand-lumen.png", logoBg: "#efe9f4" },
 ];
 
 // Inbox threads (fictional contacts/brands). Flags use real product vocabulary.
@@ -145,9 +145,11 @@ function BrandDirectorySection() {
                     <div key={b.name} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
                       <div className="flex items-center gap-3">
                         {b.logo ? (
-                          <img src={b.logo} alt="" aria-hidden className="h-9 w-9 rounded-full object-cover" />
+                          <span className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl px-1.5 py-1.5" style={{ background: b.logoBg ?? "#ffffff" }}>
+                            <img src={b.logo} alt="" aria-hidden className="max-h-full max-w-full object-contain" />
+                          </span>
                         ) : (
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 font-sans text-[14px] font-bold text-white">{b.name[0]}</span>
+                          <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/10 font-sans text-[18px] font-bold text-white">{b.name[0]}</span>
                         )}
                         <div className="min-w-0">
                           <p className="truncate font-sans text-[14px] font-semibold text-white">{b.name}</p>
