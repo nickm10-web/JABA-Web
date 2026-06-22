@@ -735,7 +735,6 @@ function CampaignReportSection() {
   const kpis = [
     { label: "Audience Reach", value: "1.2M", delta: "+18% vs goal" },
     { label: "Engagement", value: "8.9%", delta: "Top quartile" },
-    { label: "EMV", value: "$74K", delta: "2.4x spend" },
     { label: "ROI", value: "2.4x", delta: "+0.6x vs avg" },
   ];
   const weekly = [5.2, 6.0, 7.3, 8.0, 9.4, 8.5, 9.1, 8.9];
@@ -760,9 +759,9 @@ function CampaignReportSection() {
     { label: "Positive", value: "94%" },
   ];
   const deliverables = [
-    { name: "Launch Reel", eng: "9.4%", emv: "$31K" },
-    { name: "Training carousel", eng: "8.1%", emv: "$24K" },
-    { name: "Story series", eng: "7.6%", emv: "$19K" },
+    { name: "Launch Reel", eng: "9.4%", reach: "420K" },
+    { name: "Training carousel", eng: "8.1%", reach: "310K" },
+    { name: "Story series", eng: "7.6%", reach: "180K" },
   ];
   return (
     <WorldBackdrop type="image" src={WORLD_IMG} parallax className={SECTION}>
@@ -799,7 +798,7 @@ function CampaignReportSection() {
               </div>
 
               {/* KPI row */}
-              <div className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4">
+              <div className="grid grid-cols-3 gap-px bg-white/10">
                 {kpis.map((k) => (
                   <div key={k.label} className="bg-[#0c0d11] px-4 py-3">
                     <p className="font-sans text-[9px] font-medium uppercase tracking-[0.12em] text-white/40">{k.label}</p>
@@ -870,7 +869,7 @@ function CampaignReportSection() {
                   <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
                     <div className="flex items-center justify-between">
                       <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">Deliverables</p>
-                      <p className="font-sans text-[9px] uppercase tracking-[0.1em] text-white/35">Eng · EMV</p>
+                      <p className="font-sans text-[9px] uppercase tracking-[0.1em] text-white/35">Eng · Reach</p>
                     </div>
                     <div className="mt-2.5 space-y-2">
                       {deliverables.map((d) => (
@@ -878,7 +877,7 @@ function CampaignReportSection() {
                           <Instagram className="h-3.5 w-3.5 shrink-0 text-white/40" />
                           <p className="min-w-0 flex-1 truncate font-sans text-[12px] font-medium text-white">{d.name}</p>
                           <span className="shrink-0 font-sans text-[12px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{d.eng}</span>
-                          <span className="shrink-0 font-sans text-[11px] text-white/45" style={{ fontVariantNumeric: "tabular-nums" }}>{d.emv}</span>
+                          <span className="shrink-0 font-sans text-[11px] text-white/45" style={{ fontVariantNumeric: "tabular-nums" }}>{d.reach}</span>
                         </div>
                       ))}
                     </div>
