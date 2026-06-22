@@ -107,7 +107,7 @@ export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionPro
         </div>
 
         {/* Meta row */}
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
+        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pb-16 pt-6 md:mt-20 md:flex-row md:items-center md:justify-between">
           <p
             className="font-sans text-[12px] text-white/45"
             style={{ fontVariantNumeric: "tabular-nums" }}
@@ -117,21 +117,6 @@ export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionPro
           <p className="font-sans text-[12px] text-white/45">
             Built for the people who move the game.
           </p>
-        </div>
-
-        {/* Giant wordmark, clipped at the bottom. */}
-        <div aria-hidden className="pointer-events-none mt-12 select-none text-center">
-          <span
-            className="block font-sans font-extrabold tracking-tighter"
-            style={{
-              fontSize: "clamp(7rem, 30vw, 26rem)",
-              lineHeight: 0.78,
-              color: "rgba(255,255,255,0.14)",
-              marginBottom: "-0.16em",
-            }}
-          >
-            JABA
-          </span>
         </div>
       </div>
     </footer>
