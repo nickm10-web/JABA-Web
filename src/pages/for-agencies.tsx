@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { ArrowRight, Instagram, MapPin, Paperclip, RotateCw, Search, Send, Sparkles, Zap } from "lucide-react";
+import { ArrowLeftRight, ArrowRight, Instagram, MapPin, Paperclip, RotateCw, Search, Send, Sparkles, Zap } from "lucide-react";
 
 /* TikTok glyph (not in lucide). */
 function TiktokGlyph({ className }: { className?: string }) {
@@ -77,8 +76,6 @@ const flagColor: Record<string, { dot: string; text: string }> = {
   "Replied": { dot: "rgba(0,0,0,0.3)", text: "rgba(0,0,0,0.42)" },
 };
 
-const rosterAthletes = ["Darius Vaughn", "Andre Solis", "Marcus Webb", "Tyson Reed"];
-const matchBrands = ["Apex Hydration", "Voltic Energy", "Northwind Apparel", "Cedar & Co."];
 
 const masterRows = [
   { name: "Darius Vaughn", campaigns: "9", deals: "11", payments: "$420K" },
@@ -330,7 +327,11 @@ function CrmSection() {
 
 /* ── Match Studio overlap engine ── */
 function MatchStudioSection() {
-  const [dir, setDir] = useState<"a2b" | "b2a">("a2b");
+  const overlap = [
+    { label: "Audience overlap", value: "92%" },
+    { label: "Content style", value: "Aligned" },
+    { label: "Alignment Score", value: "90" },
+  ];
   return (
     <section className={`${SECTION} bg-black`}>
       <div className={`${WRAP} ${PADS}`}>
@@ -347,60 +348,70 @@ function MatchStudioSection() {
         </FadeUp>
 
         <FadeUp delay={0.1} className="mt-10 md:mt-14">
-          <GlassPanel className="p-5">
-            <div className="mb-5 flex items-center gap-1 rounded-full border border-white/12 bg-white/[0.04] p-0.5 text-center">
-              <button onClick={() => setDir("a2b")} className="flex-1 rounded-full px-3 py-1.5 font-sans text-[12px] font-semibold transition-colors" style={dir === "a2b" ? { background: LIME, color: "#000" } : { color: "rgba(255,255,255,0.55)" }}>
-                Athlete → Brand
-              </button>
-              <button onClick={() => setDir("b2a")} className="flex-1 rounded-full px-3 py-1.5 font-sans text-[12px] font-semibold transition-colors" style={dir === "b2a" ? { background: LIME, color: "#000" } : { color: "rgba(255,255,255,0.55)" }}>
-                Brand → Athlete
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 items-center gap-4 md:grid-cols-[1fr_auto_1.2fr_auto_1fr]">
-              {/* Roster */}
-              <div>
-                <p className="mb-2 font-sans text-[10px] uppercase tracking-[0.14em] text-white/40">Roster</p>
-                <ul className="space-y-2">
-                  {rosterAthletes.map((a, i) => (
-                    <li key={a} className="flex items-center gap-2.5 rounded-lg border bg-white/[0.04] px-3 py-2" style={{ borderColor: i === 0 ? "rgba(223,255,0,0.35)" : "rgba(255,255,255,0.08)" }}>
-                      <img src={`https://i.pravatar.cc/48?img=${[13, 33, 51, 8][i]}`} alt="" aria-hidden className="h-6 w-6 rounded-full object-cover" />
-                      <span className="font-sans text-[12.5px] text-white/80">{a}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="hidden items-center justify-center md:flex"><ArrowRight className="h-5 w-5 text-white/25" /></div>
-
-              {/* Find Overlap result */}
-              <div>
-                <button className="mx-auto mb-3 flex items-center gap-1.5 rounded-full px-4 py-1.5 font-sans text-[12px] font-semibold" style={{ background: LIME, color: "#000" }}>
-                  <Sparkles className="h-3.5 w-3.5" /> Find Overlap
-                </button>
-                <div className="rounded-xl border border-[#dfff00]/25 bg-[#dfff00]/[0.05] p-4 text-center">
-                  <p className="font-sans text-[11px] uppercase tracking-[0.14em] text-white/55">Brand Fit Score</p>
-                  <p className="mt-1 font-sans text-4xl font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>91</p>
-                  <p className="mt-2 font-sans text-[12px] leading-relaxed text-white/65">
-                    Audience overlap and content style match. Darius Vaughn fits
-                    Apex Hydration.
-                  </p>
+          <GlassPanel className="p-4 md:p-6">
+            <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-[1fr_1.15fr_1fr] md:gap-5">
+              {/* Athlete source card */}
+              <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+                <div className="flex items-center justify-between border-b border-white/10 px-3.5 py-2.5">
+                  <span className="font-sans text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/45">Source · Football</span>
+                  <span className="rounded-full bg-white/10 px-2 py-0.5 font-sans text-[9px] font-semibold uppercase tracking-[0.14em] text-white/60">Athlete</span>
+                </div>
+                <div className="aspect-[4/5] w-full overflow-hidden bg-white/[0.04]">
+                  <img src="https://i.pravatar.cc/640?img=13" alt="" aria-hidden className="h-full w-full object-cover object-top" />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-display text-2xl italic leading-none text-white">Darius Vaughn</h3>
+                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">NFL · Wide Receiver</p>
+                  <span className="mt-3 inline-flex rounded-md px-2 py-0.5 font-sans text-[9.5px] font-semibold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Football</span>
                 </div>
               </div>
 
-              <div className="hidden items-center justify-center md:flex"><ArrowRight className="h-5 w-5 text-white/25" /></div>
+              {/* Find Overlap engine */}
+              <div className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-center">
+                <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/55">
+                  <ArrowLeftRight className="h-4 w-4" />
+                </span>
+                <p className="mt-3 font-display text-xl italic leading-none text-white">Find Overlap</p>
+                <p className="mx-auto mt-2 max-w-[34ch] font-sans text-[11.5px] leading-relaxed text-white/50">
+                  Analyze match between Darius Vaughn and Apex Hydration.
+                </p>
+                <button className="mx-auto mt-3.5 flex items-center gap-1.5 rounded-full px-4 py-2 font-sans text-[12px] font-semibold" style={{ background: LIME, color: "#000" }}>
+                  <Sparkles className="h-3.5 w-3.5" /> Find Overlap
+                </button>
 
-              {/* Brands */}
-              <div>
-                <p className="mb-2 font-sans text-[10px] uppercase tracking-[0.14em] text-white/40">Brands</p>
-                <ul className="space-y-2">
-                  {matchBrands.map((b, i) => (
-                    <li key={b} className="flex items-center justify-between rounded-lg border bg-white/[0.04] px-3 py-2" style={{ borderColor: i === 0 ? "rgba(223,255,0,0.35)" : "rgba(255,255,255,0.08)" }}>
-                      <span className="font-sans text-[12.5px] text-white/80">{b}</span>
-                      <span className="font-sans text-[11px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{[94, 88, 82, 78][i]}%</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-5 rounded-xl border border-[#dfff00]/25 bg-[#dfff00]/[0.05] p-4">
+                  <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/55">Brand Fit Score</p>
+                  <p className="mt-1 font-sans text-[44px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>91</p>
+                  <p className="mx-auto mt-2 max-w-[36ch] font-sans text-[12px] leading-relaxed text-white/65">
+                    Audience overlap and content style match. Darius Vaughn fits Apex Hydration.
+                  </p>
+                  <div className="mt-3.5 space-y-1.5 border-t border-white/10 pt-3 text-left">
+                    {overlap.map((m) => (
+                      <div key={m.label} className="flex items-center justify-between">
+                        <span className="font-sans text-[11px] text-white/55">{m.label}</span>
+                        <span className="font-sans text-[11.5px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{m.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Brand match card */}
+              <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
+                <div className="flex items-center justify-between border-b border-white/10 px-3.5 py-2.5">
+                  <span className="font-sans text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/45">Beverage · Match</span>
+                  <span className="rounded-full px-2 py-0.5 font-sans text-[9px] font-semibold uppercase tracking-[0.14em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Brand</span>
+                </div>
+                <div className="flex flex-1 items-center justify-center p-8" style={{ background: "#e6eefb" }}>
+                  <img src="/brand-apex.png" alt="" aria-hidden className="max-h-20 max-w-[78%] object-contain" />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-display text-2xl italic leading-none text-white">Apex Hydration</h3>
+                  <p className="mt-1.5 flex items-center gap-1 font-sans text-[11.5px] text-white/45">
+                    <MapPin className="h-3 w-3 shrink-0" /> Beverage · Austin, TX
+                  </p>
+                  <span className="mt-3 inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-sans text-[9.5px] font-semibold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Brand Fit 94</span>
+                </div>
               </div>
             </div>
           </GlassPanel>
