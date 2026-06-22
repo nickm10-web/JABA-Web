@@ -797,19 +797,19 @@ function CampaignReportSection() {
                 </div>
               </div>
 
-              {/* KPI row */}
-              <div className="grid grid-cols-3 gap-px bg-white/10">
-                {kpis.map((k) => (
-                  <div key={k.label} className="bg-[#0c0d11] px-4 py-3">
-                    <p className="font-sans text-[9px] font-medium uppercase tracking-[0.12em] text-white/40">{k.label}</p>
-                    <p className="mt-1 font-sans text-[23px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{k.value}</p>
-                    <p className="mt-1 font-sans text-[10px] font-medium" style={{ color: LIME }}>{k.delta}</p>
-                  </div>
-                ))}
-              </div>
-
               {/* Dashboard grid */}
               <div className="space-y-3.5 p-4 md:p-5">
+                {/* KPIs */}
+                <div className="grid grid-cols-3 gap-3.5">
+                  {kpis.map((k) => (
+                    <div key={k.label} className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                      <p className="font-sans text-[9px] font-medium uppercase tracking-[0.12em] text-white/40">{k.label}</p>
+                      <p className="mt-1 font-sans text-[23px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{k.value}</p>
+                      <p className="mt-1 font-sans text-[10px] font-medium" style={{ color: LIME }}>{k.delta}</p>
+                    </div>
+                  ))}
+                </div>
+
                 {/* Row 1: performance over time + benchmarks */}
                 <div className="grid grid-cols-1 items-stretch gap-3.5 md:grid-cols-3">
                   <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
