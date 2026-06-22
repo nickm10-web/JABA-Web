@@ -327,11 +327,23 @@ function CrmSection() {
 
 /* ── Match Studio overlap engine ── */
 function MatchStudioSection() {
-  const overlap = [
-    { label: "Audience overlap", value: "92%" },
-    { label: "Content style", value: "Aligned" },
-    { label: "Alignment Score", value: "90" },
+  const athleteSignals = [
+    { label: "Audience Reach", value: "184K" },
+    { label: "Engagement", value: "9.7%" },
   ];
+  const athleteThemes = ["Training", "Film room", "Recovery", "Gear reviews"];
+  const matchMetrics = [
+    { label: "Audience overlap", value: "88%" },
+    { label: "Content style", value: "Aligned" },
+    { label: "Audience demo", value: "18-24 · M" },
+    { label: "Alignment Score", value: "91" },
+  ];
+  const bridges = [
+    "Weekly resistance-band and mobility work he already films",
+    "Off-field gear reviews mirror how Summit's athletes post",
+    "Mountain-West audience maps to Summit's expansion markets",
+  ];
+  const brandWants = ["Collegiate athletes", "Training-first content", "Mountain West"];
   return (
     <section className={`${SECTION} bg-black`}>
       <div className={`${WRAP} ${PADS}`}>
@@ -342,14 +354,14 @@ function MatchStudioSection() {
             <span className="italic" style={{ color: LIME }}>the right brand.</span>
           </h2>
           <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
-            The overlap engine ranks fit by audience and content, in both
-            directions, so you always lead with the strongest pairing.
+            The overlap engine reads each athlete and brand in depth, audience,
+            content, and intent, then explains why a pairing works before you pitch it.
           </p>
         </FadeUp>
 
         <FadeUp delay={0.1} className="mt-10 md:mt-14">
           <GlassPanel className="p-4 md:p-6">
-            <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-[1fr_1.15fr_1fr] md:gap-5">
+            <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-[1fr_1.4fr_1fr] md:gap-5">
               {/* Athlete source card */}
               <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
                 <div className="flex items-center justify-between border-b border-white/10 px-3.5 py-2.5">
@@ -364,56 +376,98 @@ function MatchStudioSection() {
                 </div>
                 <div className="p-4">
                   <h3 className="font-display text-2xl italic leading-none text-white">Jake Banks</h3>
-                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">Football · Quarterback</p>
-                  <span className="mt-3 inline-flex rounded-md px-2 py-0.5 font-sans text-[9.5px] font-semibold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Football</span>
+                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">Football · Quarterback · University of Jaba</p>
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    {athleteSignals.map((s) => (
+                      <div key={s.label} className="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-2">
+                        <p className="font-sans text-[9px] font-medium uppercase tracking-[0.1em] text-white/35">{s.label}</p>
+                        <p className="mt-0.5 font-sans text-[15px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{s.value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-3 font-sans text-[9px] font-medium uppercase tracking-[0.12em] text-white/35">Top content themes</p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {athleteThemes.map((t) => (
+                      <span key={t} className="rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 font-sans text-[10px] text-white/65">{t}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
               {/* Find Overlap engine */}
-              <div className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-center">
-                <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/55">
-                  <ArrowLeftRight className="h-4 w-4" />
-                </span>
-                <p className="mt-3 font-display text-xl italic leading-none text-white">Find Overlap</p>
-                <p className="mx-auto mt-2 max-w-[34ch] font-sans text-[11.5px] leading-relaxed text-white/50">
-                  Analyze match between Jake Banks and Apex Hydration.
-                </p>
-                <button className="mx-auto mt-3.5 flex items-center gap-1.5 rounded-full px-4 py-2 font-sans text-[12px] font-semibold" style={{ background: LIME, color: "#000" }}>
-                  <Sparkles className="h-3.5 w-3.5" /> Find Overlap
-                </button>
+              <div className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                <div className="text-center">
+                  <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white/55">
+                    <ArrowLeftRight className="h-4 w-4" />
+                  </span>
+                  <p className="mt-3 font-display text-xl italic leading-none text-white">Find Overlap</p>
+                  <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.14em] text-white/40">Jake Banks <span className="text-white/25">×</span> Summit Gear</p>
+                </div>
 
-                <div className="mt-5 rounded-xl border border-[#dfff00]/25 bg-[#dfff00]/[0.05] p-4">
-                  <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/55">Brand Fit Score</p>
-                  <p className="mt-1 font-sans text-[44px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>94</p>
-                  <p className="mx-auto mt-2 max-w-[36ch] font-sans text-[12px] leading-relaxed text-white/65">
-                    Audience overlap and content style match. Jake Banks fits Apex Hydration.
+                <div className="mt-4 rounded-xl border border-[#dfff00]/25 bg-[#dfff00]/[0.05] p-4">
+                  <div className="flex items-center justify-between">
+                    <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/55">Brand Fit Score</p>
+                    <span className="rounded-full px-2 py-0.5 font-sans text-[9px] font-bold uppercase tracking-[0.12em]" style={{ background: LIME, color: "#000" }}>Strong match</span>
+                  </div>
+                  <p className="mt-1 font-sans text-[44px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>92</p>
+                  <p className="mt-2 font-sans text-[12px] leading-relaxed text-white/70">
+                    Jake films weekly training and film-room content, and his audience
+                    over-indexes on performance-minded 18 to 24 men across the Mountain
+                    West, the exact demo and region Summit Gear is scaling into. A
+                    training-season activation lands low-risk and on-brand for both.
                   </p>
-                  <div className="mt-3.5 space-y-1.5 border-t border-white/10 pt-3 text-left">
-                    {overlap.map((m) => (
-                      <div key={m.label} className="flex items-center justify-between">
-                        <span className="font-sans text-[11px] text-white/55">{m.label}</span>
-                        <span className="font-sans text-[11.5px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{m.value}</span>
+
+                  <div className="mt-3.5 grid grid-cols-2 gap-2 border-t border-white/10 pt-3">
+                    {matchMetrics.map((m) => (
+                      <div key={m.label}>
+                        <p className="font-sans text-[9px] font-medium uppercase tracking-[0.1em] text-white/40">{m.label}</p>
+                        <p className="mt-0.5 font-sans text-[13px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{m.value}</p>
                       </div>
                     ))}
                   </div>
+                </div>
+
+                <div className="mt-3.5">
+                  <p className="font-sans text-[9.5px] font-semibold uppercase tracking-[0.14em] text-white/40">Creative bridges</p>
+                  <ul className="mt-2 space-y-1.5">
+                    {bridges.map((b) => (
+                      <li key={b} className="flex gap-2 font-sans text-[11.5px] leading-snug text-white/70">
+                        <Sparkles className="mt-[1px] h-3 w-3 shrink-0" style={{ color: LIME }} />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
               {/* Brand match card */}
               <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
                 <div className="flex items-center justify-between border-b border-white/10 px-3.5 py-2.5">
-                  <span className="font-sans text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/45">Beverage · Match</span>
+                  <span className="font-sans text-[9.5px] font-semibold uppercase tracking-[0.16em] text-white/45">Sports Equipment · Match</span>
                   <span className="rounded-full px-2 py-0.5 font-sans text-[9px] font-semibold uppercase tracking-[0.14em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Brand</span>
                 </div>
-                <div className="flex flex-1 items-center justify-center p-8" style={{ background: "#e6eefb" }}>
-                  <img src="/brand-apex.png" alt="" aria-hidden className="max-h-20 max-w-[78%] object-contain" />
+                <div className="flex items-center justify-center p-7" style={{ background: "#e4ecf1" }}>
+                  <img src="/brand-summit.png" alt="" aria-hidden className="max-h-16 max-w-[78%] object-contain" />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-display text-2xl italic leading-none text-white">Apex Hydration</h3>
+                  <h3 className="font-display text-2xl italic leading-none text-white">Summit Gear</h3>
                   <p className="mt-1.5 flex items-center gap-1 font-sans text-[11.5px] text-white/45">
-                    <MapPin className="h-3 w-3 shrink-0" /> Beverage · Austin, TX
+                    <MapPin className="h-3 w-3 shrink-0" /> Sports Equipment · Denver, CO
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-sans text-[9.5px] font-semibold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Brand Fit 94</span>
+                  <p className="mt-3.5 font-sans text-[12px] leading-relaxed text-white/60">
+                    Field-tested training and climbing equipment, trusted by collegiate
+                    and pro programs and expanding into NIL.
+                  </p>
+                  <p className="mt-3 font-sans text-[9px] font-medium uppercase tracking-[0.12em] text-white/35">Actively looking for</p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {brandWants.map((w) => (
+                      <span key={w} className="rounded-full border border-white/10 bg-white/[0.05] px-2 py-0.5 font-sans text-[10px] text-white/65">{w}</span>
+                    ))}
+                  </div>
+                  <div className="mt-3.5 flex items-center justify-between border-t border-white/10 pt-3">
+                    <span className="font-sans text-[10px] uppercase tracking-[0.12em] text-white/40">Est. deal value</span>
+                    <span className="font-sans text-[13px] font-semibold text-white" style={{ fontVariantNumeric: "tabular-nums" }}>$30K to $45K</span>
+                  </div>
                 </div>
               </div>
             </div>
