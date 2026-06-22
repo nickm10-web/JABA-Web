@@ -66,14 +66,16 @@ export function WorldBackdrop({
       )}
 
       {scrim ? (
-        <motion.div
+        // Static (no parallax transform) so the gradient's pure-black bottom
+        // lines up exactly with the section's clipped bottom edge. Scaling the
+        // scrim with the image pushed the 100% black point below the visible
+        // area, leaving a faint image seam against the next section.
+        <div
           aria-hidden
           className="absolute inset-0"
           style={{
-            scale,
-            y,
             background:
-              "linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.52) 28%, rgba(0,0,0,0.62) 55%, rgba(0,0,0,0.9) 82%, rgba(0,0,0,1) 100%)",
+              "linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.52) 28%, rgba(0,0,0,0.62) 52%, rgba(0,0,0,0.92) 78%, rgba(0,0,0,1) 92%, rgba(0,0,0,1) 100%)",
           }}
         />
       ) : null}
