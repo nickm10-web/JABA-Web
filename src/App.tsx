@@ -21,7 +21,7 @@ export default function App() {
 
       <section className="bg-[#eeeeee] pt-4 pb-16 md:pt-6 md:pb-24">
         <div className="container mx-auto px-6">
-          <div className="relative mx-auto w-full max-w-4xl">
+          <div className="relative mx-auto w-full max-w-6xl">
             <div className="relative overflow-hidden rounded-2xl">
               <img
                 src="/DAMAR%20HAMLIN%20thumbnail.png"
