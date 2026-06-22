@@ -730,33 +730,33 @@ function CampaignReportSection() {
   ];
   return (
     <WorldBackdrop type="image" src={WORLD_IMG} parallax className={SECTION}>
-      <div className={`${WRAP} ${PADS}`}>
+      <div className={`${WRAP} pb-14 pt-20 md:pb-16 md:pt-24`}>
         <FadeUp className="max-w-2xl">
           <ScrimCluster>
             <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Mission Control</p>
-            <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            <h2 className="mt-3 font-display text-4xl leading-[1.05] text-white md:text-5xl">
               Every deal, <span className="italic" style={{ color: LIME }}>measured.</span>
             </h2>
-            <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
+            <p className="mt-3 max-w-xl font-sans text-[15px] leading-relaxed text-white/65">
               Every campaign tracked and benchmarked, against the brand's other
               deals, the athlete's organic posts, and the targets you set.
             </p>
           </ScrimCluster>
         </FadeUp>
 
-        <FadeUp delay={0.12} className="mt-10 md:mt-14">
+        <FadeUp delay={0.12} className="mt-6 md:mt-8">
           <ScrimCluster>
             <GlassPanel className="overflow-hidden">
               {/* Report header */}
-              <div className="flex flex-wrap items-start justify-between gap-3 border-b border-white/10 p-4 md:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 px-4 py-3 md:px-5">
                 <div>
-                  <p className="font-sans text-[10px] uppercase tracking-[0.16em] text-white/45">Campaign Report</p>
-                  <h3 className="mt-1 font-display text-2xl italic leading-none text-white">Summit Gear <span className="text-white/35">×</span> Jake Banks</h3>
-                  <p className="mt-1.5 font-sans text-[11.5px] text-white/45">Training Season · Sep to Nov · 3 deliverables</p>
+                  <p className="font-sans text-[9.5px] uppercase tracking-[0.16em] text-white/45">Campaign Report</p>
+                  <h3 className="mt-0.5 font-display text-xl italic leading-none text-white">Summit Gear <span className="text-white/35">×</span> Jake Banks</h3>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="rounded-full px-2.5 py-1 font-sans text-[10px] font-bold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Completed</span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 font-sans text-[11px] font-medium text-white/70">
+                  <span className="font-sans text-[10.5px] text-white/40">Training Season · Sep to Nov</span>
+                  <span className="rounded-full px-2.5 py-1 font-sans text-[9.5px] font-bold uppercase tracking-[0.12em]" style={{ background: "rgba(223,255,0,0.16)", color: LIME }}>Completed</span>
+                  <span className="hidden items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-3 py-1.5 font-sans text-[11px] font-medium text-white/70 sm:inline-flex">
                     <Download className="h-3.5 w-3.5" /> Export CSV
                   </span>
                 </div>
@@ -765,69 +765,60 @@ function CampaignReportSection() {
               {/* KPI row */}
               <div className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4">
                 {kpis.map((k) => (
-                  <div key={k.label} className="bg-[#0c0d11] p-4">
-                    <p className="font-sans text-[9.5px] font-medium uppercase tracking-[0.12em] text-white/40">{k.label}</p>
-                    <p className="mt-1 font-sans text-[26px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{k.value}</p>
-                    <p className="mt-1.5 font-sans text-[10.5px] font-medium" style={{ color: LIME }}>{k.delta}</p>
+                  <div key={k.label} className="bg-[#0c0d11] px-4 py-3">
+                    <p className="font-sans text-[9px] font-medium uppercase tracking-[0.12em] text-white/40">{k.label}</p>
+                    <p className="mt-1 font-sans text-[23px] font-semibold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{k.value}</p>
+                    <p className="mt-1 font-sans text-[10px] font-medium" style={{ color: LIME }}>{k.delta}</p>
                   </div>
                 ))}
               </div>
 
-              {/* Benchmarks */}
-              <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 md:p-5">
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                  <p className="flex items-center gap-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">
-                    <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> vs Summit Gear's campaigns
+              {/* Benchmarks + deliverables side by side */}
+              <div className="grid grid-cols-1 gap-3.5 p-4 md:grid-cols-3 md:p-5">
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                  <p className="flex items-center gap-1.5 font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">
+                    <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> vs Summit's campaigns
                   </p>
-                  <div className="mt-3 space-y-2.5">
+                  <div className="mt-2.5 space-y-2">
                     {brandBench.map((b) => <BenchBar key={b.label} {...b} />)}
                   </div>
-                  <p className="mt-3 font-sans text-[11.5px] leading-relaxed text-white/55">
-                    65% above Summit's campaign average, second best of their last 14 deals.
+                  <p className="mt-2.5 font-sans text-[11px] leading-snug text-white/55">
+                    65% above Summit's average, second best of their last 14 deals.
                   </p>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                  <p className="flex items-center gap-1.5 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-white/55">
-                    <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> vs Jake's non-sponsored posts
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                  <p className="flex items-center gap-1.5 font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">
+                    <TrendingUp className="h-3.5 w-3.5" style={{ color: LIME }} /> vs Jake's organic posts
                   </p>
-                  <div className="mt-3 space-y-2.5">
+                  <div className="mt-2.5 space-y-2">
                     {athleteBench.map((b) => <BenchBar key={b.label} {...b} />)}
                   </div>
-                  <p className="mt-3 font-sans text-[11.5px] leading-relaxed text-white/55">
+                  <p className="mt-2.5 font-sans text-[11px] leading-snug text-white/55">
                     Held 92% of Jake's organic engagement, the audience stayed with the ad.
                   </p>
                 </div>
-              </div>
-
-              {/* Deliverables */}
-              <div className="border-t border-white/10 p-4 md:p-5">
-                <p className="font-sans text-[10px] uppercase tracking-[0.14em] text-white/40">Deliverables</p>
-                <div className="mt-3 space-y-1.5">
-                  {deliverables.map((d) => (
-                    <div key={d.name} className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2.5">
-                      <Instagram className="h-4 w-4 shrink-0 text-white/45" />
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate font-sans text-[12.5px] font-medium text-white">{d.name}</p>
-                        <p className="font-sans text-[10.5px] text-white/40">Instagram · {d.kind}</p>
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+                  <p className="font-sans text-[10.5px] font-semibold uppercase tracking-[0.08em] text-white/55">Deliverables</p>
+                  <div className="mt-2.5 space-y-2">
+                    {deliverables.map((d) => (
+                      <div key={d.name} className="flex items-center gap-2.5">
+                        <Instagram className="h-3.5 w-3.5 shrink-0 text-white/40" />
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate font-sans text-[12px] font-medium text-white">{d.name}</p>
+                          <p className="font-sans text-[9.5px] text-white/40">{d.reach} reach</p>
+                        </div>
+                        <span className="shrink-0 font-sans text-[12.5px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{d.eng}</span>
                       </div>
-                      <div className="text-right">
-                        <p className="font-sans text-[9px] uppercase tracking-[0.1em] text-white/35">Reach</p>
-                        <p className="font-sans text-[12.5px] font-semibold text-white/85" style={{ fontVariantNumeric: "tabular-nums" }}>{d.reach}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-sans text-[9px] uppercase tracking-[0.1em] text-white/35">Eng</p>
-                        <p className="font-sans text-[12.5px] font-semibold" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{d.eng}</p>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
 
               {/* Verdict */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 p-4 md:p-5" style={{ background: "rgba(223,255,0,0.05)" }}>
-                <p className="flex items-start gap-2 font-sans text-[12.5px] leading-relaxed text-white/80">
-                  <Check className="mt-[1px] h-4 w-4 shrink-0" style={{ color: LIME }} />
-                  <span><span className="font-semibold text-white">Verdict:</span> top-quartile campaign for Summit Gear. Recommend renewing Jake Banks for the spring drop.</span>
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-4 py-3 md:px-5" style={{ background: "rgba(223,255,0,0.05)" }}>
+                <p className="flex items-center gap-2 font-sans text-[12px] leading-snug text-white/80">
+                  <Check className="h-4 w-4 shrink-0" style={{ color: LIME }} />
+                  <span><span className="font-semibold text-white">Verdict:</span> top-quartile campaign for Summit Gear. Renew Jake Banks for the spring drop.</span>
                 </p>
                 <span className="shrink-0 rounded-full px-3.5 py-1.5 font-sans text-[11.5px] font-semibold" style={{ background: LIME, color: "#000" }}>Renew deal</span>
               </div>
