@@ -5,12 +5,13 @@ interface ScrollVideoHeroProps {
 }
 
 export default function ScrollVideoHero({
-  idleVideoSrc = "/videos/Video%20BG%20Web_02-3.mp4",
+  idleVideoSrc = "/videos/hero-idle.mp4",
 }: ScrollVideoHeroProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-black">
       <video
         src={idleVideoSrc}
+        poster="/videos/hero-idle-poster.jpg"
         muted
         playsInline
         loop
