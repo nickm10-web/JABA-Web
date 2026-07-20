@@ -22,8 +22,6 @@ export default function App() {
         <ScrollVideoHero />
       </div>
 
-      <SocialProofSection />
-
       <section className="bg-[#eeeeee] pb-24 md:pb-40">
         <FadeUp className="mx-auto max-w-6xl px-6 pb-8 pt-28 md:pb-12 md:pt-40">
           <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
@@ -86,6 +84,9 @@ export default function App() {
           </div>
         </FadeUp>
       </section>
+
+      <SocialProofSection />
+
       <ProblemScrollStory />
 
       {/* Volt divider */}

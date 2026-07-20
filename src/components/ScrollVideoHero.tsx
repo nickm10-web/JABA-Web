@@ -13,7 +13,7 @@ export default function ScrollVideoHero({
   bgSrc = "/hero2.png",
 }: ScrollVideoHeroProps) {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#f7f8fa]">
+    <section className="relative min-h-screen w-full overflow-hidden bg-[#eeeeee]">
       <img
         src={bgSrc}
         alt=""
