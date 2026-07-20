@@ -21,19 +21,23 @@ export default function ScrollVideoHero({
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* Soft haze behind the headline zone so ink text reads over clouds. */}
+      {/* Light haze behind the headline zone so dark ink reads over the busy
+          sky + mountains. Feathers out before the mascot so the scene stays vivid. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "linear-gradient(180deg, rgba(238,244,249,0.55) 0%, rgba(238,244,249,0.25) 30%, rgba(238,244,249,0) 55%)",
+            "linear-gradient(180deg, rgba(240,245,250,0.82) 0%, rgba(240,245,250,0.66) 26%, rgba(240,245,250,0.34) 46%, rgba(240,245,250,0) 64%)",
         }}
       />
 
       <div className="relative z-10 flex min-h-screen w-full flex-col items-center px-6 pb-24 pt-24 text-center md:pt-28">
         <div className="max-w-4xl">
-          <h1 className="font-display text-5xl leading-[0.95] tracking-[-0.03em] text-[#101010] [text-wrap:balance] md:text-7xl lg:text-8xl">
+          <h1
+            className="font-display text-5xl leading-[0.95] tracking-[-0.03em] text-[#101010] [text-wrap:balance] md:text-7xl lg:text-8xl"
+            style={{ textShadow: "0 1px 26px rgba(255,255,255,0.75), 0 1px 4px rgba(255,255,255,0.6)" }}
+          >
             <span className="block">
               Athletes aren't <span className="italic pr-[0.12em]">hard</span> to work with.
             </span>
@@ -41,7 +45,10 @@ export default function ScrollVideoHero({
           </h1>
         </div>
 
-        <p className="mt-5 max-w-xl font-sans text-base font-medium leading-7 text-black/70 [text-wrap:balance] md:text-lg">
+        <p
+          className="mt-5 max-w-xl font-sans text-base font-semibold leading-7 text-black/75 [text-wrap:balance] md:text-lg"
+          style={{ textShadow: "0 1px 16px rgba(255,255,255,0.85)" }}
+        >
           JABA is AI that manages deliverables, deadlines, and follow-ups
           across every athlete partnership, so you never have to chase again.
         </p>
