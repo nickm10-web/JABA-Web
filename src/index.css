@@ -602,10 +602,9 @@
 
 .social-proof-section {
   position: relative;
-  background: #000;
-  border-top: 1px solid rgba(223, 255, 0, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  padding: 2.5rem 0 2rem;
+  background: #f7f8fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 3.25rem 0 3rem;
   overflow: hidden;
 }
 
@@ -615,8 +614,8 @@
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.32);
-  margin: 0 0 1.75rem;
+  color: rgba(0, 0, 0, 0.4);
+  margin: 0 0 2rem;
 }
 
 .social-proof-track-wrapper {
@@ -636,12 +635,12 @@
 
 .social-proof-fade-left {
   left: 0;
-  background: linear-gradient(90deg, #000, transparent);
+  background: linear-gradient(90deg, #f7f8fa, transparent);
 }
 
 .social-proof-fade-right {
   right: 0;
-  background: linear-gradient(-90deg, #000, transparent);
+  background: linear-gradient(-90deg, #f7f8fa, transparent);
 }
 
 @keyframes marquee {
@@ -669,20 +668,18 @@
 .social-proof-logo-img {
   display: block;
   object-fit: contain;
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
-}
-
-.social-proof-logo-invert {
-  filter: brightness(0) invert(1);
+  opacity: 0.62;
+  filter: grayscale(1);
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
 .social-proof-track:hover {
   animation-play-state: paused;
 }
 
-.social-proof-track:hover .social-proof-logo-img {
+.social-proof-logo-item:hover .social-proof-logo-img {
   opacity: 1;
+  filter: grayscale(0);
 }
 
 /* ───────────────────────────────────────────────

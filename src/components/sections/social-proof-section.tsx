@@ -8,83 +8,73 @@ type Logo = {
 const logos: Logo[] = [
   {
     name: "Baylor",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/239.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/239.png",
     height: 52,
   },
   {
     name: "Cincinnati",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/2132.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/2132.png",
     height: 52,
   },
   {
     name: "DePaul",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/305.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/305.png",
     height: 50,
   },
   {
     name: "Arizona State",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/9.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/9.png",
     height: 52,
   },
   {
     name: "Purdue",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/2509.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/2509.png",
     height: 52,
   },
   {
     name: "RMU",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/2523.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/2523.png",
     height: 48,
   },
   {
     name: "Wisconsin",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/275.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/275.png",
     height: 52,
   },
   {
     name: "Mizzou",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/142.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/142.png",
     height: 52,
   },
   {
     name: "Notre Dame",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/87.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/87.png",
     height: 52,
   },
   {
     name: "LSU",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/99.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/99.png",
     height: 52,
   },
   {
     name: "Michigan State",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/127.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/127.png",
     height: 52,
   },
   {
     name: "San Diego",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/301.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/301.png",
     height: 50,
   },
   {
     name: "Washington",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/264.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/264.png",
     height: 52,
   },
   {
     name: "California",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/25.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/25.png",
     height: 52,
-  },
-  {
-    name: "Athletes Unlimited",
-    src: "https://auprosports.com/wp-content/themes/au/assets/img/logo-athletes-unlimited-white.svg",
-    height: 34,
-  },
-  {
-    name: "Big3",
-    src: "https://big3.com/wp-content/themes/big3/assets/dist/images/logo@2x.png",
-    height: 30,
   },
 ];
 
