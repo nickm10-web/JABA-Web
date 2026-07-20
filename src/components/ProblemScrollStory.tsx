@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
 
 const LIME = "#dfff00";
 
@@ -11,7 +11,6 @@ export default function ProblemScrollStory() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const inView = useInView(sectionRef, { once: true, margin: "-25%" });
   const [climax, setClimax] = useState(false);
-  const reduce = useReducedMotion();
 
   useEffect(() => {
     if (!inView) return;
@@ -24,32 +23,18 @@ export default function ProblemScrollStory() {
       ref={sectionRef}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-24 text-white"
     >
-      {/* Ambient depth so the panel reads intentional, not flat black. */}
+      {/* Subtle checker texture so the black reads as a material, not flat. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          background:
-            "radial-gradient(80% 60% at 50% 30%, rgba(255,255,255,0.07), transparent 66%)",
-        }}
-      />
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[-8%] h-[42rem] w-[56rem] max-w-[96vw] -translate-x-1/2 rounded-full"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(223,255,0,0.06), transparent)",
-          filter: "blur(70px)",
-        }}
-        animate={reduce ? undefined : { opacity: [0.45, 0.8, 0.45], scale: [1, 1.05, 1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(100% 80% at 50% 40%, transparent 55%, rgba(0,0,0,0.6))",
+          backgroundImage:
+            "conic-gradient(rgba(255,255,255,0.03) 25%, transparent 0 50%, rgba(255,255,255,0.03) 0 75%, transparent 0)",
+          backgroundSize: "56px 56px",
+          maskImage:
+            "radial-gradient(72% 62% at 50% 42%, #000 0%, transparent 82%)",
+          WebkitMaskImage:
+            "radial-gradient(72% 62% at 50% 42%, #000 0%, transparent 82%)",
         }}
       />
 
