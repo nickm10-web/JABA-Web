@@ -10,7 +10,7 @@ interface ScrollVideoHeroProps {
  * light-section rules.)
  */
 export default function ScrollVideoHero({
-  bgSrc = "/hero.webp",
+  bgSrc = "/hero2.png",
 }: ScrollVideoHeroProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-[#dfe9f2]">
@@ -31,7 +31,7 @@ export default function ScrollVideoHero({
         }}
       />
 
-      <div className="relative z-10 flex min-h-screen w-full flex-col items-center px-6 pb-24 pt-36 text-center md:pt-44">
+      <div className="relative z-10 flex min-h-screen w-full flex-col items-center px-6 pb-24 pt-24 text-center md:pt-28">
         <div className="max-w-4xl">
           <h1 className="font-display text-5xl leading-[0.95] tracking-[-0.03em] text-[#101010] [text-wrap:balance] md:text-7xl lg:text-8xl">
             <span className="block">
@@ -41,12 +41,12 @@ export default function ScrollVideoHero({
           </h1>
         </div>
 
-        <p className="mt-6 max-w-xl font-sans text-base font-medium leading-7 text-black/70 [text-wrap:balance] md:text-lg">
+        <p className="mt-5 max-w-xl font-sans text-base font-medium leading-7 text-black/70 [text-wrap:balance] md:text-lg">
           JABA is AI that manages deliverables, deadlines, and follow-ups
           across every athlete partnership, so you never have to chase again.
         </p>
 
-        <div className="mt-8 flex w-full max-w-xl items-center justify-center gap-3">
+        <div className="mt-6 flex w-full max-w-xl items-center justify-center gap-3">
           <EmailCaptureGlass className="on-light" cta="Get early access" />
         </div>
       </div>
