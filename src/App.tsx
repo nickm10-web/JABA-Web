@@ -11,6 +11,9 @@ import FooterSection from "@/components/sections/footer-section";
 import ProblemScrollStory from "@/components/ProblemScrollStory";
 import ScrollVideoHero from "@/components/ScrollVideoHero";
 import TextAssistantSection from "@/components/TextAssistantSection";
+import { Play } from "lucide-react";
+import { FadeUp } from "@/components/audience/fade-up";
+
 export default function App() {
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -21,12 +24,12 @@ export default function App() {
 
       <SocialProofSection />
 
-      <section className="bg-[#eeeeee] pb-16 md:pb-24">
-        <div className="mx-auto max-w-3xl px-6 pb-10 pt-24 text-center md:pb-14 md:pt-32">
+      <section className="bg-[#eeeeee] pb-24 md:pb-40">
+        <FadeUp className="mx-auto max-w-3xl px-6 pb-14 pt-28 text-center md:pb-24 md:pt-44">
           <p className="font-display text-lg italic text-black/45">
             Built with athletes
           </p>
-          <h2 className="mt-4 font-display text-4xl leading-[1.05] text-[#0a0a0a] md:text-5xl">
+          <h2 className="mt-4 font-display text-4xl leading-[1.04] text-[#0a0a0a] md:text-5xl lg:text-6xl">
             Built by the people who{" "}
             <span
               className="italic"
@@ -40,31 +43,47 @@ export default function App() {
               live it.
             </span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl font-sans text-base leading-relaxed text-black/60">
+          <p className="mx-auto mt-5 max-w-xl font-sans text-base leading-relaxed text-black/55 md:text-lg">
             From our Creative Director to every athlete on the platform, JABA is
             shaped by people who know what the business actually takes.
           </p>
-        </div>
-        <div className="container mx-auto px-6">
-          <div className="relative mx-auto w-full max-w-6xl">
-            <div className="relative overflow-hidden rounded-2xl">
-              <img
-                src="/DAMAR%20HAMLIN%20thumbnail.png"
-                alt="Damar Hamlin, JABA Creative Director"
-                className="w-full"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-6 md:p-8">
-                <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-white/70">
+        </FadeUp>
+
+        <FadeUp delay={0.12} y={44} className="mx-auto w-full max-w-6xl px-6">
+          <div
+            className="group relative overflow-hidden rounded-[28px]"
+            style={{ boxShadow: "0 50px 130px -40px rgba(0,0,0,0.5)" }}
+          >
+            <img
+              src="/DAMAR%20HAMLIN%20thumbnail.png"
+              alt="Damar Hamlin, JABA Creative Director"
+              className="damar-kenburns w-full"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"
+            />
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 p-7 md:p-12">
+              <div>
+                <p className="font-display text-base italic text-white/70 md:text-lg">
                   Hear from our Creative Director
                 </p>
-                <p className="mt-1 font-display text-2xl leading-none text-white">Damar Hamlin</p>
-                <p className="mt-1 font-sans text-[13px] text-white/60">
+                <p className="mt-1.5 font-display text-3xl leading-none text-white md:text-4xl">
+                  Damar Hamlin
+                </p>
+                <p className="mt-2.5 font-sans text-[12.5px] tracking-wide text-white/60">
                   Buffalo Bills Safety · JABA Creative Director
                 </p>
               </div>
+              <span
+                aria-hidden
+                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white backdrop-blur-md transition-transform duration-300 group-hover:scale-105 md:h-16 md:w-16"
+              >
+                <Play className="h-5 w-5 translate-x-0.5" fill="currentColor" />
+              </span>
             </div>
           </div>
-        </div>
+        </FadeUp>
       </section>
       <ProblemScrollStory />
 

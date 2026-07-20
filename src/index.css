@@ -219,6 +219,19 @@
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
   }
 
+  /* Slow Ken Burns drift so the Damar still reads as a living moment. */
+  @keyframes damar-kenburns {
+    0% { transform: scale(1.02); }
+    100% { transform: scale(1.09); }
+  }
+  .damar-kenburns {
+    animation: damar-kenburns 22s ease-in-out infinite alternate;
+    transform-origin: center 42%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .damar-kenburns { animation: none; }
+  }
+
   /* On-light variant: dark ink text for glass sitting on a bright backdrop. */
   .liquid-email-glass.on-light {
     background: rgba(255, 255, 255, 0.55);
