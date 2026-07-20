@@ -7,12 +7,14 @@ export default function CtaSection() {
       <div className="cta-glow" aria-hidden="true" />
       <div className="cta-inner">
         <h2 className="cta-headline">
-          Imagine knowing what a campaign will do{" "}
-          <span className="cta-headline-accent">before you spend a dollar.</span>
+          What if you could manage every athlete's deliverables, tasks,
+          calendars, and obligations through{" "}
+          <span className="cta-headline-accent">one text thread?</span>
         </h2>
         <p className="cta-subtext">
-          Proprietary scoring. Campaign forecasting. An AI assistant that texts
-          athletes directly. See why Purdue, Baylor, and Athletes Unlimited chose JABA.
+          JABA's assistant drafts the replies, fires the reminders, verifies the
+          posts, and keeps every deal moving, so nothing slips. Trusted by
+          Purdue, Baylor, and Athletes Unlimited.
         </p>
 
         <div className="mt-6 flex justify-center">
