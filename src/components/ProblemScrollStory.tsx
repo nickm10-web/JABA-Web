@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 
 const LIME = "#dfff00";
 
@@ -11,6 +11,7 @@ export default function ProblemScrollStory() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const inView = useInView(sectionRef, { once: true, margin: "-25%" });
   const [climax, setClimax] = useState(false);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
     if (!inView) return;
@@ -23,19 +24,52 @@ export default function ProblemScrollStory() {
       ref={sectionRef}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-24 text-white"
     >
-      {/* Subtle checker texture so the black reads as a material, not flat. */}
+      {/* Living grid: faint lines with soft lights drifting over them so the
+          panel subtly shifts and breathes instead of sitting flat black. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            "conic-gradient(rgba(255,255,255,0.03) 25%, transparent 0 50%, rgba(255,255,255,0.03) 0 75%, transparent 0)",
-          backgroundSize: "56px 56px",
+            "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+          backgroundSize: "58px 58px",
           maskImage:
-            "radial-gradient(72% 62% at 50% 42%, #000 0%, transparent 82%)",
+            "radial-gradient(82% 72% at 50% 44%, #000 0%, transparent 86%)",
           WebkitMaskImage:
-            "radial-gradient(72% 62% at 50% 42%, #000 0%, transparent 82%)",
+            "radial-gradient(82% 72% at 50% 44%, #000 0%, transparent 86%)",
         }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute left-[6%] top-[6%] h-[36rem] w-[36rem] rounded-full"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(255,255,255,0.10), transparent)",
+          filter: "blur(28px)",
+          mixBlendMode: "screen",
+        }}
+        animate={
+          reduce
+            ? undefined
+            : { x: ["-8%", "46%", "12%", "-8%"], y: ["0%", "26%", "48%", "0%"] }
+        }
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute bottom-0 right-[4%] h-[28rem] w-[28rem] rounded-full"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgba(223,255,0,0.07), transparent)",
+          filter: "blur(30px)",
+          mixBlendMode: "screen",
+        }}
+        animate={
+          reduce
+            ? undefined
+            : { x: ["8%", "-34%", "-6%", "8%"], y: ["10%", "-18%", "-40%", "10%"] }
+        }
+        transition={{ duration: 23, repeat: Infinity, ease: "easeInOut" }}
       />
 
       {/* Film grain over the whole section. */}
