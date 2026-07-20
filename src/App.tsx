@@ -87,6 +87,17 @@ export default function App() {
 
       <SocialProofSection />
 
+      {/* Soft curved edge into the dark problem section */}
+      <div aria-hidden className="relative bg-[#eeeeee] leading-[0]">
+        <svg
+          viewBox="0 0 1440 70"
+          preserveAspectRatio="none"
+          className="block h-10 w-full md:h-[70px]"
+        >
+          <path d="M0,0 C 420,66 1020,66 1440,0 L1440,70 L0,70 Z" fill="#000" />
+        </svg>
+      </div>
+
       <ProblemScrollStory />
 
       {/* Volt divider */}
