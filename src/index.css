@@ -219,6 +219,28 @@
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
   }
 
+  /* On-light variant: dark ink text for glass sitting on a bright backdrop. */
+  .liquid-email-glass.on-light {
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 10px 30px rgba(0, 0, 0, 0.1),
+      inset 2px 2px 1px -2px rgba(255, 255, 255, 0.95),
+      inset -2px -2px 1px -2px rgba(255, 255, 255, 0.6),
+      inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.5),
+      inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.1);
+  }
+
+  .liquid-email-glass.on-light .liquid-email-input {
+    color: #0a0a0a;
+    text-shadow: none;
+  }
+
+  .liquid-email-glass.on-light .liquid-email-input::placeholder {
+    color: rgba(0, 0, 0, 0.45);
+    text-shadow: none;
+  }
+
   /* Adaptive tint: stays glassy but tracks the content scrolling behind it. */
   .hero-nav-rail[data-glass="on-light"] {
     background: rgba(255, 255, 255, 0.72);

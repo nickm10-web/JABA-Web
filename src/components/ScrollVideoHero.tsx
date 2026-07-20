@@ -1,53 +1,53 @@
 import { EmailCaptureGlass } from "@/components/ui/email-capture-glass";
 
 interface ScrollVideoHeroProps {
-  idleVideoSrc?: string;
+  bgSrc?: string;
 }
 
+/**
+ * Static hero: the JABA-world colonnade vista with centered ink copy in the
+ * open sky band. (The image is bright, so the copy runs dark, mirroring the
+ * light-section rules.)
+ */
 export default function ScrollVideoHero({
-  idleVideoSrc = "/videos/hero-idle.mp4",
+  bgSrc = "/hero.webp",
 }: ScrollVideoHeroProps) {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-black">
-      <video
-        src={idleVideoSrc}
-        poster="/videos/hero-idle-poster.jpg"
-        muted
-        playsInline
-        loop
-        autoPlay
-        preload="auto"
+    <section className="relative min-h-screen w-full overflow-hidden bg-[#dfe9f2]">
+      <img
+        src={bgSrc}
+        alt=""
+        aria-hidden
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      {/* Dark vignette so the headline stays legible over the video. */}
+      {/* Soft haze behind the headline zone so ink text reads over clouds. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[2]"
+        className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "radial-gradient(ellipse 80% 70% at 20% 30%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0) 75%)",
+            "linear-gradient(180deg, rgba(238,244,249,0.55) 0%, rgba(238,244,249,0.25) 30%, rgba(238,244,249,0) 55%)",
         }}
       />
 
-      <div className="relative z-10 flex min-h-screen w-full flex-col items-start justify-start pb-24 pl-12 pr-6 pt-32 text-left md:pl-20 md:pt-40 lg:pl-24">
-        <div className="max-w-3xl">
-          <h1 className="font-display text-5xl leading-[0.92] tracking-[-0.04em] text-white drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)] md:text-7xl lg:text-8xl">
+      <div className="relative z-10 flex min-h-screen w-full flex-col items-center px-6 pb-24 pt-36 text-center md:pt-44">
+        <div className="max-w-4xl">
+          <h1 className="font-display text-5xl leading-[0.95] tracking-[-0.03em] text-[#101010] [text-wrap:balance] md:text-7xl lg:text-8xl">
             <span className="block">
-              Athletes aren't <span className="italic">hard</span>
+              Athletes aren't <span className="italic pr-[0.12em]">hard</span> to work with.
             </span>
-            <span className="block">to work with.</span>
             <span className="block">Your systems are.</span>
           </h1>
         </div>
 
-        <p className="mt-6 max-w-xl text-base leading-7 text-white/85 drop-shadow-[0_1px_12px_rgba(0,0,0,0.5)] [text-wrap:balance] md:text-lg">
+        <p className="mt-6 max-w-xl font-sans text-base font-medium leading-7 text-black/70 [text-wrap:balance] md:text-lg">
           JABA is AI that manages deliverables, deadlines, and follow-ups
           across every athlete partnership, so you never have to chase again.
         </p>
 
-        <div className="mt-8 flex w-full items-center gap-3">
-          <EmailCaptureGlass cta="Get early access" />
+        <div className="mt-8 flex w-full max-w-xl items-center justify-center gap-3">
+          <EmailCaptureGlass className="on-light" cta="Get early access" />
         </div>
       </div>
     </section>
