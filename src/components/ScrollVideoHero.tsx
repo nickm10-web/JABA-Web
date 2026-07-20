@@ -32,7 +32,7 @@ export default function ScrollVideoHero({
         }}
       />
 
-      <div className="relative z-10 flex min-h-screen w-full flex-col items-center px-6 pb-24 pt-28 text-center md:pt-36">
+      <div className="relative z-10 flex min-h-screen w-full flex-col items-center px-6 pb-24 pt-36 text-center md:pt-44">
         <div className="max-w-4xl">
           <h1
             className="font-display text-4xl leading-[0.98] tracking-[-0.03em] text-[#101010] [text-wrap:balance] md:text-6xl lg:text-7xl"
