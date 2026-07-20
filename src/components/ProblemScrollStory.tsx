@@ -24,53 +24,55 @@ export default function ProblemScrollStory() {
       ref={sectionRef}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-24 text-white"
     >
-      {/* Living grid: faint lines with soft lights drifting over them so the
-          panel subtly shifts and breathes instead of sitting flat black. */}
+      {/* A blueprint grid revealed unevenly by slow-drifting fractal noise, so
+          it reads as an irregular, shifting technical grid, not a flat one. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-          backgroundSize: "58px 58px",
           maskImage:
-            "radial-gradient(82% 72% at 50% 44%, #000 0%, transparent 86%)",
+            "radial-gradient(92% 82% at 50% 44%, #000 0%, transparent 94%)",
           WebkitMaskImage:
-            "radial-gradient(82% 72% at 50% 44%, #000 0%, transparent 86%)",
+            "radial-gradient(92% 82% at 50% 44%, #000 0%, transparent 94%)",
         }}
-      />
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute left-[6%] top-[6%] h-[36rem] w-[36rem] rounded-full"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(255,255,255,0.10), transparent)",
-          filter: "blur(28px)",
-          mixBlendMode: "screen",
-        }}
-        animate={
-          reduce
-            ? undefined
-            : { x: ["-8%", "46%", "12%", "-8%"], y: ["0%", "26%", "48%", "0%"] }
-        }
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 right-[4%] h-[28rem] w-[28rem] rounded-full"
-        style={{
-          background:
-            "radial-gradient(closest-side, rgba(223,255,0,0.07), transparent)",
-          filter: "blur(30px)",
-          mixBlendMode: "screen",
-        }}
-        animate={
-          reduce
-            ? undefined
-            : { x: ["8%", "-34%", "-6%", "8%"], y: ["10%", "-18%", "-40%", "10%"] }
-        }
-        transition={{ duration: 23, repeat: Infinity, ease: "easeInOut" }}
-      />
+      >
+        <svg viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" className="h-full w-full">
+          <defs>
+            <pattern id="jgrid" width="50" height="50" patternUnits="userSpaceOnUse">
+              <path d="M50 0H0V50" fill="none" stroke="#fff" strokeWidth="1" strokeOpacity="0.5" />
+              <circle cx="0" cy="0" r="1.1" fill="#fff" fillOpacity="0.7" />
+            </pattern>
+            <filter id="jnoise" x="0" y="0" width="100%" height="100%">
+              <feTurbulence
+                type="fractalNoise"
+                baseFrequency="0.02"
+                numOctaves="2"
+                seed="9"
+                stitchTiles="stitch"
+                result="n"
+              >
+                {reduce ? null : (
+                  <animate
+                    attributeName="baseFrequency"
+                    dur="26s"
+                    values="0.018;0.03;0.015;0.018"
+                    repeatCount="indefinite"
+                  />
+                )}
+              </feTurbulence>
+              <feColorMatrix
+                in="n"
+                type="matrix"
+                values="1.25 0 0 0 -0.42  1.25 0 0 0 -0.42  1.25 0 0 0 -0.42  0 0 0 0 1"
+              />
+            </filter>
+            <mask id="jmask">
+              <rect width="1200" height="760" fill="#fff" filter="url(#jnoise)" />
+            </mask>
+          </defs>
+          <rect width="1200" height="760" fill="url(#jgrid)" mask="url(#jmask)" opacity="0.65" />
+        </svg>
+      </div>
 
       {/* Film grain over the whole section. */}
       <div className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]" />
