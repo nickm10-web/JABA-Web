@@ -615,8 +615,7 @@
 
 .social-proof-section {
   position: relative;
-  background: #f7f8fa;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: #eeeeee;
   padding: 3.25rem 0 3rem;
   overflow: hidden;
 }
@@ -650,12 +649,12 @@
 
 .social-proof-fade-left {
   left: 0;
-  background: linear-gradient(90deg, #f7f8fa, transparent);
+  background: linear-gradient(90deg, #eeeeee, transparent);
 }
 
 .social-proof-fade-right {
   right: 0;
-  background: linear-gradient(-90deg, #f7f8fa, transparent);
+  background: linear-gradient(-90deg, #eeeeee, transparent);
 }
 
 @keyframes marquee {
