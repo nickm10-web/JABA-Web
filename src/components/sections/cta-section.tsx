@@ -12,9 +12,8 @@ export default function CtaSection() {
           <span className="cta-headline-accent">one text thread?</span>
         </h2>
         <p className="cta-subtext">
-          JABA's assistant drafts the replies, fires the reminders, verifies the
-          posts, and keeps every deal moving, so nothing slips. Trusted by
-          Purdue, Baylor, and Athletes Unlimited.
+          JABA's AI drafts the replies, fires the reminders, verifies the posts,
+          and keeps every deal moving, so nothing slips.
         </p>
 
         <div className="mt-6 flex justify-center">
