@@ -13,12 +13,20 @@ export default function ScrollVideoHero({
   bgSrc = "/hero2.png",
 }: ScrollVideoHeroProps) {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#dfe9f2]">
+    <section className="relative min-h-screen w-full overflow-hidden bg-[#f7f8fa]">
       <img
         src={bgSrc}
         alt=""
         aria-hidden
         className="absolute inset-0 h-full w-full object-cover"
+        style={{
+          // Feather just the bottom edge so the foreground grass stays visible
+          // but the hard cut into the next section softens away.
+          maskImage:
+            "linear-gradient(to bottom, #000 90%, rgba(0,0,0,0.35) 97%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, #000 90%, rgba(0,0,0,0.35) 97%, transparent 100%)",
+        }}
       />
 
       {/* Light haze behind the headline zone so dark ink reads over the busy
@@ -29,17 +37,6 @@ export default function ScrollVideoHero({
         style={{
           background:
             "linear-gradient(180deg, rgba(240,245,250,0.82) 0%, rgba(240,245,250,0.66) 26%, rgba(240,245,250,0.34) 46%, rgba(240,245,250,0) 64%)",
-        }}
-      />
-
-      {/* Dissolve the bottom of the scene into the trusted-by band color so the
-          hero doesn't hard-cut into the next section. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-40 md:h-56"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(247,248,250,0) 0%, rgba(247,248,250,0.55) 55%, #f7f8fa 100%)",
         }}
       />
 
