@@ -23,7 +23,7 @@ export default function App() {
 
       <section className="bg-[#eeeeee] pb-16 md:pb-24">
         <div className="mx-auto max-w-3xl px-6 pb-10 pt-24 text-center md:pb-14 md:pt-32">
-          <p className="font-sans text-[11px] font-medium uppercase tracking-[0.2em] text-black/40">
+          <p className="font-display text-lg italic text-black/45">
             Built with athletes
           </p>
           <h2 className="mt-4 font-display text-4xl leading-[1.05] text-[#0a0a0a] md:text-5xl">

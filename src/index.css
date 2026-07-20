@@ -610,12 +610,14 @@
 
 .social-proof-label {
   text-align: center;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.4);
-  margin: 0 0 2rem;
+  font-family: "Perfectly Nineties", serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0 auto 2rem;
+  max-width: 34rem;
+  line-height: 1.35;
 }
 
 .social-proof-track-wrapper {
@@ -668,9 +670,8 @@
 .social-proof-logo-img {
   display: block;
   object-fit: contain;
-  opacity: 0.62;
-  filter: grayscale(1);
-  transition: opacity 0.3s ease, filter 0.3s ease;
+  opacity: 0.92;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .social-proof-track:hover {
@@ -679,7 +680,7 @@
 
 .social-proof-logo-item:hover .social-proof-logo-img {
   opacity: 1;
-  filter: grayscale(0);
+  transform: scale(1.07);
 }
 
 /* ───────────────────────────────────────────────
