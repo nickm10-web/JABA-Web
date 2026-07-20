@@ -32,6 +32,17 @@ export default function ScrollVideoHero({
         }}
       />
 
+      {/* Dissolve the bottom of the scene into the trusted-by band color so the
+          hero doesn't hard-cut into the next section. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-40 md:h-56"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(247,248,250,0) 0%, rgba(247,248,250,0.55) 55%, #f7f8fa 100%)",
+        }}
+      />
+
       <div className="relative z-10 flex min-h-screen w-full flex-col items-center px-6 pb-24 pt-36 text-center md:pt-44">
         <div className="max-w-4xl">
           <h1
