@@ -41,7 +41,7 @@ export default function ProblemScrollStory() {
           initial={{ opacity: 0, y: 22 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.55, ease: "easeOut" }}
-          className="mt-9 max-w-2xl font-sans text-lg leading-relaxed text-white/55 [text-wrap:balance] md:mt-12 md:text-xl"
+          className="mt-9 max-w-2xl font-sans text-lg leading-relaxed text-white/80 [text-wrap:balance] md:mt-12 md:text-xl"
         >
           In one decade it grew 40x, from a $1.7B afterthought to a $68B
           industry. Seventy-three marketplaces tried to tame the chaos of DMs
