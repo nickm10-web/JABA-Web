@@ -90,11 +90,14 @@ export default function App() {
       {/* Soft curved edge into the dark problem section */}
       <div aria-hidden className="relative bg-[#eeeeee] leading-[0]">
         <svg
-          viewBox="0 0 1440 70"
+          viewBox="0 0 1440 48"
           preserveAspectRatio="none"
-          className="block h-10 w-full md:h-[70px]"
+          className="block h-8 w-full md:h-11"
         >
-          <path d="M0,0 C 420,66 1020,66 1440,0 L1440,70 L0,70 Z" fill="#000" />
+          <path
+            d="M0,0 C 360,0 470,26 680,26 L760,26 C 970,26 1080,0 1440,0 L1440,48 L0,48 Z"
+            fill="#000"
+          />
         </svg>
       </div>
 
