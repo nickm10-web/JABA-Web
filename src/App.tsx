@@ -25,28 +25,35 @@ export default function App() {
       <SocialProofSection />
 
       <section className="bg-[#eeeeee] pb-24 md:pb-40">
-        <FadeUp className="mx-auto max-w-3xl px-6 pb-14 pt-28 text-center md:pb-24 md:pt-44">
-          <p className="font-display text-lg italic text-black/45">
-            Built with athletes
-          </p>
-          <h2 className="mt-4 font-display text-4xl leading-[1.04] text-[#0a0a0a] md:text-5xl lg:text-6xl">
-            Built by the people who{" "}
-            <span
-              className="italic"
-              style={{
-                textDecoration: "underline",
-                textDecorationColor: "#dfff00",
-                textDecorationThickness: "0.12em",
-                textUnderlineOffset: "0.1em",
-              }}
+        <FadeUp className="mx-auto max-w-6xl px-6 pb-8 pt-28 md:pb-12 md:pt-40">
+          <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
+            <h2 className="max-w-2xl font-display text-4xl leading-[1.03] text-[#0a0a0a] md:text-5xl lg:text-6xl">
+              Built by the people who{" "}
+              <span
+                className="italic"
+                style={{
+                  textDecoration: "underline",
+                  textDecorationColor: "#dfff00",
+                  textDecorationThickness: "0.12em",
+                  textUnderlineOffset: "0.1em",
+                }}
+              >
+                live it.
+              </span>
+            </h2>
+            <button
+              type="button"
+              className="group inline-flex shrink-0 items-center gap-2.5 font-sans text-[15px] font-medium text-[#0a0a0a] transition-opacity hover:opacity-70 md:pb-2"
             >
-              live it.
-            </span>
-          </h2>
-          <p className="mx-auto mt-5 max-w-xl font-sans text-base leading-relaxed text-black/55 md:text-lg">
-            From our Creative Director to every athlete on the platform, JABA is
-            shaped by people who know what the business actually takes.
-          </p>
+              Watch the film
+              <span
+                className="flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110"
+                style={{ background: "#dfff00" }}
+              >
+                <Play className="h-3 w-3 translate-x-px text-black" fill="currentColor" />
+              </span>
+            </button>
+          </div>
         </FadeUp>
 
         <FadeUp delay={0.12} y={44} className="mx-auto w-full max-w-6xl px-6">
@@ -75,12 +82,6 @@ export default function App() {
                   Buffalo Bills Safety · JABA Creative Director
                 </p>
               </div>
-              <span
-                aria-hidden
-                className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/15 text-white backdrop-blur-md transition-transform duration-300 group-hover:scale-105 md:h-16 md:w-16"
-              >
-                <Play className="h-5 w-5 translate-x-0.5" fill="currentColor" />
-              </span>
             </div>
           </div>
         </FadeUp>
