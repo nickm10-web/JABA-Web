@@ -95,7 +95,7 @@ export default function App() {
           className="block h-7 w-full md:h-10"
         >
           <path
-            d="M0,0 L520,0 C 630,0 650,24 720,24 C 790,24 810,0 920,0 L1440,0 L1440,44 L0,44 Z"
+            d="M0,0 L430,0 C 570,0 590,24 720,24 C 850,24 870,0 1010,0 L1440,0 L1440,44 L0,44 Z"
             fill="#000"
           />
         </svg>
