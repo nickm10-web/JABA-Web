@@ -35,7 +35,7 @@ export default function ScrollVideoHero({
       <div className="relative z-10 flex min-h-screen w-full flex-col items-center px-6 pb-24 pt-24 text-center md:pt-28">
         <div className="max-w-4xl">
           <h1
-            className="font-display text-5xl leading-[0.95] tracking-[-0.03em] text-[#101010] [text-wrap:balance] md:text-7xl lg:text-8xl"
+            className="font-display text-4xl leading-[0.98] tracking-[-0.03em] text-[#101010] [text-wrap:balance] md:text-6xl lg:text-7xl"
             style={{ textShadow: "0 1px 26px rgba(255,255,255,0.75), 0 1px 4px rgba(255,255,255,0.6)" }}
           >
             <span className="block">
