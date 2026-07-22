@@ -22,11 +22,6 @@ const logos: Logo[] = [
     height: 50,
   },
   {
-    name: "Arizona State",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/9.png",
-    height: 52,
-  },
-  {
     name: "Purdue",
     src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/2509.png",
     height: 52,
@@ -47,29 +42,9 @@ const logos: Logo[] = [
     height: 52,
   },
   {
-    name: "Notre Dame",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/87.png",
-    height: 52,
-  },
-  {
-    name: "LSU",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/99.png",
-    height: 52,
-  },
-  {
-    name: "Michigan State",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/127.png",
-    height: 52,
-  },
-  {
     name: "San Diego",
     src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/301.png",
     height: 50,
-  },
-  {
-    name: "Washington",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/264.png",
-    height: 52,
   },
   {
     name: "California",

@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 
 import PageLayout from "@/components/layout/page-layout";
+import SocialProofSection from "@/components/sections/social-proof-section";
 import { VoltButton } from "@/components/ui/volt-button";
 import { LiquidGlassCard } from "@/components/ui/liquid-glass";
 import { FadeUp } from "@/components/audience/fade-up";
@@ -46,6 +47,7 @@ import {
 
 const LIME = "#dfff00";
 const WRAP = "mx-auto max-w-7xl px-6 md:px-10 lg:px-12";
+const BOOKING_URL = "https://calendly.com/jordon-jaba/jaba";
 const SECTION = "scroll-mt-32 md:scroll-mt-40";
 const PADS = "pb-20 pt-28 md:pb-28 md:pt-36";
 const CLOUDS = "/videos/Video%20BG%20Web_02.mp4";
@@ -883,8 +885,13 @@ function NilInterlude() {
 /* ── Pillar 5: brand matching + outreach (Match Studio flow) ── */
 function MatchStudio() {
   return (
-    <WorldBackdrop type="image" src="/brandbg.png" parallax className="scroll-mt-32 md:scroll-mt-40">
-      <div className={`${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
+    <section className="relative overflow-hidden bg-black scroll-mt-32 md:scroll-mt-40">
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ background: "radial-gradient(120% 85% at 50% 0%, #16160f 0%, #0a0a0a 48%, #000 100%)" }}
+      />
+      <div className={`relative ${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
         <FadeUp className="max-w-2xl">
           <ScrimCluster className="inline-block">
           <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Brands</p>
@@ -998,7 +1005,7 @@ function MatchStudio() {
           </GlassPanel>
         </FadeUp>
       </div>
-    </WorldBackdrop>
+    </section>
   );
 }
 
@@ -1066,7 +1073,7 @@ function ReportBuilder() {
           {/* What we measured */}
           <div className="mt-3.5 rounded-xl border border-white/10 bg-white/[0.03] p-4">
             <div className="flex items-baseline gap-3">
-              <span className="font-sans text-[34px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>2,947</span>
+              <span className="font-sans text-[34px] font-extrabold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>2,947</span>
               <span className="font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-white/70">Sponsored posts analyzed</span>
             </div>
             <div className="mt-3.5 flex h-2 overflow-hidden rounded-full">
@@ -1080,11 +1087,11 @@ function ReportBuilder() {
           </div>
 
           {/* Three ways school IP shows up */}
-          <p className="mt-4 font-sans text-[9.5px] font-bold uppercase tracking-[0.14em]" style={{ color: LIME }}>The three ways school IP shows up</p>
+          <p className="mt-4 font-sans text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/40">The three ways school IP shows up</p>
           <div className="mt-2 grid grid-cols-3 gap-2.5">
             {signals.map((s) => (
               <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5">
-                <p className="font-sans text-[20px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{s.n}</p>
+                <p className="font-sans text-[20px] font-extrabold leading-none text-white" style={{ fontVariantNumeric: "tabular-nums" }}>{s.n}</p>
                 <p className="mt-1.5 font-sans text-[10.5px] font-semibold leading-tight text-white/75">{s.label}</p>
                 <p className="mt-0.5 font-sans text-[10px] text-white/40">{s.pct} of posts</p>
               </div>
@@ -1095,10 +1102,14 @@ function ReportBuilder() {
           <p className="mt-4 font-sans text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/40">Posts with school IP perform better</p>
           <div className="mt-2 grid grid-cols-3 gap-2.5">
             {lifts.map((l) => (
-              <div key={l.label} className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3">
-                <p className="font-sans text-[24px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{l.n}</p>
-                <p className="mt-1.5 font-sans text-[11px] font-bold uppercase tracking-[0.04em] text-white/75">{l.label}</p>
-                <p className="font-sans text-[10px] text-white/40">vs no school IP</p>
+              <div
+                key={l.label}
+                className="rounded-xl border px-3.5 py-3.5"
+                style={{ borderColor: "rgba(223,255,0,0.22)", background: "rgba(223,255,0,0.05)" }}
+              >
+                <p className="font-sans text-[28px] font-extrabold leading-none" style={{ color: LIME, fontVariantNumeric: "tabular-nums" }}>{l.n}</p>
+                <p className="mt-2 font-sans text-[11px] font-bold uppercase tracking-[0.04em] text-white/80">{l.label}</p>
+                <p className="mt-0.5 font-sans text-[10px] text-white/40">vs no school IP</p>
               </div>
             ))}
           </div>
@@ -1240,9 +1251,9 @@ function AssistantThread() {
   );
 }
 
-export default function ForSchoolsPage() {
+export default function ForSchoolsPage({ bare, hideBrands }: { bare?: boolean; hideBrands?: boolean } = {}) {
   return (
-    <PageLayout>
+    <PageLayout bare={bare}>
       {/* Hero — image backdrop that fades to black into the first section */}
       <WorldBackdrop type="image" src="/for-schools-hero.png" parallax>
         <div className="audience-page-hero-inner px-6 pb-32 pt-44 text-center md:pb-44 md:pt-56">
@@ -1250,15 +1261,31 @@ export default function ForSchoolsPage() {
             NIL is evolving faster{" "}
             <span className="italic" style={{ color: LIME }}>than the systems built to support it.</span>
           </h1>
-          <p className="audience-page-subtitle" style={{ color: "rgba(255,255,255,0.66)" }}>
+          <p
+            className="audience-page-subtitle"
+            style={{
+              color: "rgba(255,255,255,0.72)",
+              ...(bare
+                ? { fontSize: "clamp(1.2rem, 1.7vw, 1.65rem)", lineHeight: 1.6, maxWidth: "720px" }
+                : {}),
+            }}
+          >
             Third-party NIL unlocks opportunity and thousands of deliverables
             to manage. JABA gives your department the operating layer to handle it all.
           </p>
-          <div className="audience-page-hero-cta">
-            <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
-          </div>
+          {!bare && (
+            <div className="audience-page-hero-cta">
+              <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
+            </div>
+          )}
         </div>
       </WorldBackdrop>
+
+      {/* School logo strip — scrolling marquee */}
+      <SocialProofSection />
+
+      {/* Brand matching + outreach — clean dark */}
+      {!hideBrands && <MatchStudio />}
 
       {/* Workflow task table — dark dashboard */}
       <WorkflowSection />
@@ -1276,9 +1303,6 @@ export default function ForSchoolsPage() {
       <ContentSection />
       <div className="h-1.5 w-full bg-[#dfff00]" />
 
-      {/* Brand matching + outreach — world backdrop */}
-      <MatchStudio />
-
       {/* Reports — dark dashboard */}
       <ReportsSection />
 
@@ -1286,12 +1310,20 @@ export default function ForSchoolsPage() {
       <section className="audience-page-cta scroll-mt-40 md:scroll-mt-48">
         <div className="audience-page-cta-inner pt-28 md:pt-36">
           <h2 className="audience-page-cta-h2">
-            Ready to stop <span className="cta-headline-accent">chasing?</span>
+            Never send a follow-up or set a reminder{" "}
+            <span className="cta-headline-accent">ever again.</span>
           </h2>
           <p className="audience-page-cta-sub">
             See how athletic departments run NIL at scale on JABA.
           </p>
-          <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
+          <div className="audience-page-hero-cta">
+            <VoltButton
+              icon={<Zap className="h-4 w-4" />}
+              onClick={() => window.open(BOOKING_URL, "_blank", "noopener,noreferrer")}
+            >
+              Book a demo
+            </VoltButton>
+          </div>
         </div>
       </section>
     </PageLayout>
