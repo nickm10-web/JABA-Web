@@ -32,10 +32,12 @@ export default function SiteNav() {
         <div className="pointer-events-auto mx-auto w-full max-w-[1440px] px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
           <header className="hero-nav-split animate-fade-lift">
             <a href="#/" className="hero-brand" aria-label="JABA home">
+              {/* White wordmark; invert to ink when the nav sits on bright content. */}
               <img
                 src="/JABA%20White%201%20(1).png"
                 alt="JABA"
-                className="hero-brand-logo"
+                className="hero-brand-logo transition-[filter] duration-300"
+                style={{ filter: glassTheme === "on-light" ? "invert(1)" : "none" }}
               />
             </a>
 

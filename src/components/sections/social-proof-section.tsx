@@ -8,37 +8,37 @@ type Logo = {
 const logos: Logo[] = [
   {
     name: "Baylor",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/239.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/239.png",
     height: 52,
   },
   {
     name: "Cincinnati",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/2132.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/2132.png",
     height: 52,
   },
   {
     name: "DePaul",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/305.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/305.png",
     height: 50,
   },
   {
     name: "Purdue",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/2509.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/2509.png",
     height: 52,
   },
   {
     name: "Alabama",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/333.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/333.png",
     height: 52,
   },
   {
     name: "Mizzou",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/142.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/142.png",
     height: 52,
   },
   {
     name: "Ohio State",
-    src: "https://a.espncdn.com/i/teamlogos/ncaa/500-dark/194.png",
+    src: "https://a.espncdn.com/i/teamlogos/ncaa/500/194.png",
     height: 52,
   },
   {
@@ -65,14 +65,13 @@ export default function SocialProofSection({ light }: { light?: boolean } = {}) 
         <div className="social-proof-fade social-proof-fade-left" />
         <div className="social-proof-track">
           {doubled.map((logo, i) => {
-            // On the light strip: use ESPN's light-background logo variants and
-            // invert white wordmarks so they stay visible.
-            const src = light ? logo.src.replace("/500-dark/", "/500/") : logo.src;
-            const invertOnLight = light && logo.src.endsWith(".svg");
+            // The band is light in every context now, so white wordmark
+            // assets (SVGs) get inverted to stay visible.
+            const invertOnLight = logo.src.endsWith(".svg");
             return (
               <div key={`${logo.name}-${i}`} className="social-proof-logo-item">
                 <img
-                  src={src}
+                  src={logo.src}
                   alt={logo.name}
                   className={`social-proof-logo-img${logo.invert ? " social-proof-logo-invert" : ""}`}
                   style={{ height: logo.height, ...(invertOnLight ? { filter: "invert(1)" } : {}) }}

@@ -11,6 +11,9 @@ import FooterSection from "@/components/sections/footer-section";
 import ProblemScrollStory from "@/components/ProblemScrollStory";
 import ScrollVideoHero from "@/components/ScrollVideoHero";
 import TextAssistantSection from "@/components/TextAssistantSection";
+import { Play } from "lucide-react";
+import { FadeUp } from "@/components/audience/fade-up";
+
 export default function App() {
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -19,29 +22,85 @@ export default function App() {
         <ScrollVideoHero />
       </div>
 
-      <section className="bg-[#eeeeee] pt-4 pb-16 md:pt-6 md:pb-24">
-        <div className="container mx-auto px-6">
-          <div className="relative mx-auto w-full max-w-6xl">
-            <div className="relative overflow-hidden rounded-2xl">
-              <img
-                src="/DAMAR%20HAMLIN%20thumbnail.png"
-                alt="Damar Hamlin, JABA Creative Director"
-                className="w-full"
-              />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-6 md:p-8">
-                <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-white/70">
+      <section className="bg-[#eeeeee] pb-24 md:pb-40">
+        <FadeUp className="mx-auto max-w-6xl px-6 pb-8 pt-28 md:pb-12 md:pt-40">
+          <div className="flex flex-col items-start gap-5 md:flex-row md:items-end md:justify-between">
+            <h2 className="max-w-2xl font-display text-4xl leading-[1.03] text-[#0a0a0a] md:text-5xl lg:text-6xl">
+              Built by the people who{" "}
+              <span
+                className="italic"
+                style={{
+                  textDecoration: "underline",
+                  textDecorationColor: "#dfff00",
+                  textDecorationThickness: "0.12em",
+                  textUnderlineOffset: "0.1em",
+                }}
+              >
+                live it.
+              </span>
+            </h2>
+            <button
+              type="button"
+              className="group inline-flex shrink-0 items-center gap-2.5 font-sans text-[15px] font-medium text-[#0a0a0a] transition-opacity hover:opacity-70 md:pb-2"
+            >
+              Watch the film
+              <span
+                className="flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110"
+                style={{ background: "#dfff00" }}
+              >
+                <Play className="h-3 w-3 translate-x-px text-black" fill="currentColor" />
+              </span>
+            </button>
+          </div>
+        </FadeUp>
+
+        <FadeUp delay={0.12} y={44} className="mx-auto w-full max-w-6xl px-6">
+          <div
+            className="group relative overflow-hidden rounded-[28px]"
+            style={{ boxShadow: "0 50px 130px -40px rgba(0,0,0,0.5)" }}
+          >
+            <img
+              src="/DAMAR%20HAMLIN%20thumbnail.png"
+              alt="Damar Hamlin, JABA Creative Director"
+              className="damar-kenburns w-full"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"
+            />
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 p-7 md:p-12">
+              <div>
+                <p className="font-display text-base italic text-white/70 md:text-lg">
                   Hear from our Creative Director
                 </p>
-                <p className="mt-1 font-display text-2xl leading-none text-white">Damar Hamlin</p>
-                <p className="mt-1 font-sans text-[13px] text-white/60">
+                <p className="mt-1.5 font-display text-3xl leading-none text-white md:text-4xl">
+                  Damar Hamlin
+                </p>
+                <p className="mt-2.5 font-sans text-[12.5px] tracking-wide text-white/60">
                   Buffalo Bills Safety · JABA Creative Director
                 </p>
               </div>
             </div>
           </div>
-        </div>
+        </FadeUp>
       </section>
+
       <SocialProofSection />
+
+      {/* Soft curved edge into the dark problem section */}
+      <div aria-hidden className="relative bg-[#eeeeee] leading-[0]">
+        <svg
+          viewBox="0 0 1440 44"
+          preserveAspectRatio="none"
+          className="block h-7 w-full md:h-10"
+        >
+          <path
+            d="M0,0 L300,0 C 368,0 378,24 440,24 L1000,24 C 1062,24 1072,0 1140,0 L1440,0 L1440,44 L0,44 Z"
+            fill="#000"
+          />
+        </svg>
+      </div>
+
       <ProblemScrollStory />
 
       {/* Volt divider */}
