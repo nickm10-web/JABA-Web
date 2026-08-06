@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 160">
+  <defs>
+    <linearGradient id="fp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#33465A"/>
+      <stop offset="0.46" stop-color="#1E5233"/>
+      <stop offset="1" stop-color="#123D24"/>
+    </linearGradient>
+  </defs>
+  <rect width="90" height="160" fill="url(#fp)"/>
+  <rect x="0" y="34" width="90" height="34" fill="#000" fill-opacity="0.16"/>
+  <g stroke="#ffffff" stroke-opacity="0.16" stroke-width="1.1" fill="none">
+    <path d="M0 112 L90 102"/><path d="M0 132 L90 120"/><path d="M0 152 L90 138"/>
+    <path d="M45 100 L45 160"/>
+  </g>
+  <circle cx="45" cy="82" r="16" fill="#ffffff" fill-opacity="0.92"/>
+  <path d="M41 74 L55 82 L41 90 Z" fill="#12331f"/>
+  <rect x="8" y="10" width="63" height="13" rx="6.5" fill="#000" fill-opacity="0.42"/>
+  <circle cx="16" cy="16.5" r="2.4" fill="#E2F500"/>
+  <text x="22" y="19.6" font-family="'DM Sans',sans-serif" font-size="7" font-weight="700" fill="#ffffff">Paid partnership</text>
+</svg>

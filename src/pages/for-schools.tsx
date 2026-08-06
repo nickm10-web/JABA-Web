@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
+  AnimatePresence,
   motion,
   useReducedMotion,
   useScroll,
@@ -7,8 +8,10 @@ import {
 } from "motion/react";
 import {
   ArrowRight,
+  ArrowUpRight,
   BarChart3,
   Calendar,
+  Check,
   Eye,
   FileText,
   Filter,
@@ -96,6 +99,8 @@ const rosterRows = [
 type ContentPost = {
   image: string;
   avatar: number;
+  /** Real headshot URL; overrides the stock pravatar when present. */
+  avatarSrc?: string;
   name: string;
   sport: string;
   status: "Visible" | "Sponsored" | "Organic";
@@ -195,35 +200,38 @@ function AssistantPop({
   );
 }
 
-function WorkflowSection() {
+function WorkflowSection({ ucla }: { ucla?: boolean } = {}) {
+  const rows = ucla ? uclaWorkflowRows : workflowRows;
+  const overdue = rows.filter((r) => r.status === "Overdue").length;
   return (
     <section className={`${SECTION} bg-black`}>
       <div className={`${WRAP} ${PADS}`}>
         {/* Copy + the text-to-task flow, side by side */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center lg:gap-12">
           <FadeUp>
-            <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Workflow</p>
-            <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            <h2 className="font-deck mt-4 text-4xl leading-[1.05] text-white md:text-5xl">
               Every deliverable,{" "}
-              <span className="italic" style={{ color: LIME }}>handled.</span>
+              <span style={{ color: LIME }}>handled.</span>
             </h2>
             <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
               Every task, deadline, and deliverable for every athlete in one
               place. Assign work to athletes or staff by iMessage or in the
               dashboard, and JABA tracks it to done.
             </p>
-            <ul className="mt-8 space-y-3">
-              {[
-                "Text it in plain English, or add it in the dashboard",
-                "Assign to any athlete or teammate",
-                "AI reminders follow up until it's done",
-              ].map((line) => (
-                <li key={line} className="flex items-center gap-3 font-sans text-[15px] text-white/75">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: LIME }} />
-                  {line}
-                </li>
-              ))}
-            </ul>
+            {!ucla && (
+              <ul className="mt-8 space-y-3">
+                {[
+                  "Text it in plain English, or add it in the dashboard",
+                  "Assign to any athlete or teammate",
+                  "AI reminders follow up until it's done",
+                ].map((line) => (
+                  <li key={line} className="flex items-center gap-3 font-sans text-[15px] text-white/75">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: LIME }} />
+                    {line}
+                  </li>
+                ))}
+              </ul>
+            )}
           </FadeUp>
 
           {/* One contained message card: your text in, structured task back */}
@@ -240,22 +248,22 @@ function WorkflowSection() {
               <div className="space-y-2">
                 <div className="flex justify-end">
                   <p className="max-w-[86%] rounded-2xl rounded-br-md bg-[#007aff] px-3.5 py-2 font-sans text-[13px] leading-snug text-white">
-                    Add a task for Sofia: post the Voltic reel by Friday.
+                    {ucla ? "Add a task for Nico: post the Vuori reel by Friday." : "Add a task for Sofia: post the Voltic reel by Friday."}
                   </p>
                 </div>
                 <div className="flex justify-start">
                   <p className="max-w-[88%] rounded-2xl rounded-bl-md bg-[#e9e9eb] px-3.5 py-2 font-sans text-[13px] leading-snug text-black">
-                    Done. Added to Sofia Marin&rsquo;s tasks, due Fri 5:00pm.
+                    {ucla ? <>Done. Added to Nico Iamaleava&rsquo;s tasks, due Fri 5:00pm.</> : <>Done. Added to Sofia Marin&rsquo;s tasks, due Fri 5:00pm.</>}
                   </p>
                 </div>
                 <div className="flex justify-end">
                   <p className="max-w-[86%] rounded-2xl rounded-br-md bg-[#007aff] px-3.5 py-2 font-sans text-[13px] leading-snug text-white">
-                    Remind her the day before.
+                    {ucla ? "Remind them the day before." : "Remind her the day before."}
                   </p>
                 </div>
                 <div className="flex justify-start">
                   <p className="max-w-[88%] rounded-2xl rounded-bl-md bg-[#e9e9eb] px-3.5 py-2 font-sans text-[13px] leading-snug text-black">
-                    Will do. I&rsquo;ll nudge Sofia Thursday and follow up until it&rsquo;s posted.
+                    {ucla ? <>Will do. I&rsquo;ll nudge Nico Thursday and follow up until it&rsquo;s posted.</> : <>Will do. I&rsquo;ll nudge Sofia Thursday and follow up until it&rsquo;s posted.</>}
                   </p>
                 </div>
               </div>
@@ -271,21 +279,21 @@ function WorkflowSection() {
             bobY={-7}
             bobDur={6}
             className="absolute right-6 top-[88px] z-20 hidden lg:block"
-            message={<>Maya&rsquo;s Apex Hydration video is due Friday. Want me to text her a reminder?</>}
+            message={ucla ? <>Roch&rsquo;s MLB The Show promo is due Friday. Want me to text a reminder?</> : <>Maya&rsquo;s Apex Hydration video is due Friday. Want me to text her a reminder?</>}
           />
           <AssistantPop
             delay={0.5}
             bobY={8}
             bobDur={7.5}
             className="absolute -bottom-10 left-6 z-20 hidden lg:block"
-            message={<>Just a reminder: the Voltic reel is due in 2 days.</>}
+            message={ucla ? <>Just a reminder: the Vuori reel is due in 2 days.</> : <>Just a reminder: the Voltic reel is due in 2 days.</>}
           />
           <AssistantPop
             delay={0.7}
             bobY={-6}
             bobDur={5.5}
             className="absolute -bottom-8 right-10 z-20 hidden lg:block"
-            message={<>Sent Elena the address and parking details for the appearance.</>}
+            message={ucla ? <>Sent Kiki the address and parking details for the appearance.</> : <>Sent Elena the address and parking details for the appearance.</>}
           />
 
           <GlassPanel className="overflow-hidden">
@@ -294,11 +302,11 @@ function WorkflowSection() {
               <div className="flex items-center gap-5">
                 <span className="flex items-center gap-2 border-b-2 pb-1 font-sans text-[13px] font-semibold text-white" style={{ borderColor: LIME }}>
                   All Tasks
-                  <span className="rounded-full bg-white/10 px-1.5 text-[11px] text-white/60" style={{ fontVariantNumeric: "tabular-nums" }}>{workflowRows.length}</span>
+                  <span className="rounded-full bg-white/10 px-1.5 text-[11px] text-white/60" style={{ fontVariantNumeric: "tabular-nums" }}>{rows.length}</span>
                 </span>
                 <span className="flex items-center gap-2 pb-1 font-sans text-[13px] text-white/45">
                   Overdue
-                  <span className="rounded-full bg-white/10 px-1.5 text-[11px] text-white/50" style={{ fontVariantNumeric: "tabular-nums" }}>{workflowOverdue}</span>
+                  <span className="rounded-full bg-white/10 px-1.5 text-[11px] text-white/50" style={{ fontVariantNumeric: "tabular-nums" }}>{overdue}</span>
                 </span>
                 <span
                   className="hidden items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1.5 font-sans text-[12px] text-white/60 backdrop-blur-md sm:flex"
@@ -343,7 +351,7 @@ function WorkflowSection() {
                   </tr>
                 </thead>
                 <tbody>
-                  {workflowRows.map((r) => (
+                  {rows.map((r) => (
                     <tr key={r.task} className="border-t border-white/[0.06]">
                       <td className="px-5 py-3.5 font-sans text-[13.5px] font-medium text-white">{r.task}</td>
                       <td className="px-4 py-3.5">
@@ -566,17 +574,36 @@ function GlassDashboard() {
 }
 
 /* ── Pillar 3: athlete intelligence (profile card on the world backdrop) ── */
-function AthleteIntelligence() {
+function AthleteIntelligence({ ucla }: { ucla?: boolean } = {}) {
   const tabs = ["Overview", "Performance", "Audience", "FMV", "Athlete Business"];
   const voice = ["Game-day highlights", "Training & film", "Community & family"];
   const interests = ["QB development", "Performance nutrition", "Lifestyle & fashion"];
-  const brandFits = [
-    { name: "Apex Hydration", fit: 94, reason: "Posts game-day hydration routines; audience skews performance-minded." },
-    { name: "Voltic Energy", fit: 88, reason: "High-energy highlight reels match the brand's tone." },
-    { name: "Northwind Apparel", fit: 81, reason: "Off-field fashion content fits their apparel drops." },
-  ];
+  const profile = ucla
+    ? {
+        img: UCLA_HS.nico,
+        name: "Nico Iamaleava",
+        meta: "UCLA Bruins · @nico_iamaleava8",
+        bio: "Nico Iamaleava is one of the most-followed quarterbacks in college football, with a large, highly engaged Instagram audience. His content spans game-day moments, training, and off-field lifestyle, a mix that fits performance, apparel, and lifestyle brands.",
+      }
+    : {
+        img: "/athlete-cutout.png",
+        name: "Jake Banks",
+        meta: "University of Jaba · Junior",
+        bio: "Jake Banks is a dual-threat quarterback known for his arm talent, poise in the pocket, and a fast-growing, highly engaged following across Instagram and TikTok. A standout recruit out of high school, he has built a reputation for big-moment highlights and behind-the-scenes access fans rarely get. Off the field, his content spans training and film breakdowns, game-day routines, and lifestyle moments with friends and family. That mix of on-field performance and authentic personal storytelling makes him a natural fit for performance, apparel, and lifestyle brands.",
+      };
+  const brandFits = ucla
+    ? [
+        { name: "Vuori", fit: 92, reason: "Active partner; off-field lifestyle content matches the brand." },
+        { name: "Gatorade", fit: 88, reason: "Game-day and training content fits performance hydration." },
+        { name: "Beats by Dre", fit: 84, reason: "Pre-game and lifestyle moments suit audio and lifestyle drops." },
+      ]
+    : [
+        { name: "Apex Hydration", fit: 94, reason: "Posts game-day hydration routines; audience skews performance-minded." },
+        { name: "Voltic Energy", fit: 88, reason: "High-energy highlight reels match the brand's tone." },
+        { name: "Northwind Apparel", fit: 81, reason: "Off-field fashion content fits their apparel drops." },
+      ];
   const stats = [
-    { label: "Followers", value: "184K", sub: "↑ 12.4% · 30d", up: true },
+    { label: "Followers", value: ucla ? "181K" : "184K", sub: "↑ 12.4% · 30d", up: true },
     { label: "Engagement", value: "9.7%", sub: "vs 6.2% cohort", up: true },
     { label: "Avg Likes", value: "12.1K", sub: "per post" },
     { label: "Avg Comments", value: "631", sub: "per post" },
@@ -586,10 +613,9 @@ function AthleteIntelligence() {
       <div className={`${WRAP} pb-12 pt-24 md:pb-16 md:pt-28`}>
         <FadeUp className="mx-auto max-w-3xl text-center">
           <ScrimCluster className="inline-block">
-            <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Athletes</p>
-            <h2 className="mt-3 font-display text-5xl leading-[1.02] text-white md:text-6xl lg:text-7xl">
+            <h2 className="font-deck mt-3 text-5xl leading-[1.05] text-white md:text-6xl">
               Know every athlete's{" "}
-              <span className="italic" style={{ color: LIME }}>brand.</span>
+              <span style={{ color: LIME }}>brand.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
               A living profile for every athlete: content, audience, value, and
@@ -607,14 +633,14 @@ function AthleteIntelligence() {
                   className="min-h-[200px] flex-1 overflow-hidden rounded-2xl border border-white/10"
                   style={{ background: "radial-gradient(120% 85% at 50% 6%, rgba(255,255,255,0.16), rgba(255,255,255,0.04) 52%, rgba(255,255,255,0.01))" }}
                 >
-                  <img src="/athlete-cutout.png" alt="" aria-hidden className="h-full w-full object-cover object-top" />
+                  <img src={profile.img} alt={ucla ? profile.name : ""} aria-hidden={!ucla} className="h-full w-full object-cover object-top" />
                 </div>
                 <div className="mt-4 flex items-center gap-2">
                   <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">Football</span>
                   <span className="rounded-md bg-white/10 px-2 py-0.5 font-sans text-[10px] uppercase tracking-[0.1em] text-white/70">QB</span>
                 </div>
-                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">Jake Banks</h3>
-                <p className="mt-1.5 font-sans text-[12px] text-white/55">University of Jaba · Junior</p>
+                <h3 className="mt-2.5 font-display text-3xl italic leading-none text-white">{profile.name}</h3>
+                <p className="mt-1.5 font-sans text-[12px] text-white/55">{profile.meta}</p>
                 <div className="mt-1.5 flex items-center gap-1.5 font-sans text-[11px] text-white/55">
                   <span className="h-1.5 w-1.5 rounded-full" style={{ background: LIME }} />
                   JABA Verified
@@ -649,15 +675,7 @@ function AthleteIntelligence() {
 
                 {/* Bio */}
                 <p className="mt-4 font-sans text-[13px] leading-relaxed text-white/70">
-                  Jake Banks is a dual-threat quarterback known for his arm
-                  talent, poise in the pocket, and a fast-growing, highly engaged
-                  following across Instagram and TikTok. A standout recruit out of
-                  high school, he has built a reputation for big-moment highlights
-                  and behind-the-scenes access fans rarely get. Off the field, his
-                  content spans training and film breakdowns, game-day routines,
-                  and lifestyle moments with friends and family. That mix of
-                  on-field performance and authentic personal storytelling makes
-                  him a natural fit for performance, apparel, and lifestyle brands.
+                  {profile.bio}
                 </p>
 
                 {/* Voice + interests */}
@@ -720,7 +738,7 @@ function ContentPostCard({ p }: { p: ContentPost }) {
       {/* Footer */}
       <div className="absolute inset-x-0 bottom-0 p-2">
         <div className="flex items-center gap-1.5">
-          <img src={`https://i.pravatar.cc/64?img=${p.avatar}`} alt="" aria-hidden className="h-4 w-4 rounded-full object-cover" />
+          <img src={p.avatarSrc ?? `https://i.pravatar.cc/64?img=${p.avatar}`} alt="" aria-hidden className="h-4 w-4 rounded-full object-cover object-top" />
           <span className="truncate font-sans text-[10.5px] font-medium text-white">{p.name}</span>
         </div>
         <div className="mt-1 flex items-center gap-2 font-sans text-[9.5px] text-white/75" style={{ fontVariantNumeric: "tabular-nums" }}>
@@ -736,6 +754,7 @@ function ContentPostCard({ p }: { p: ContentPost }) {
 /* ── Pillar 4 visual: content analysis grid ── */
 function PostGrid() {
   const reduce = useReducedMotion();
+  const posts = contentPosts;
   const tabs = ["All", "Posts", "Reels", "Videos"];
   return (
     <div
@@ -792,7 +811,7 @@ function PostGrid() {
           animate={reduce ? undefined : { x: ["0%", "-50%"] }}
           transition={reduce ? undefined : { duration: 55, repeat: Infinity, ease: "linear" }}
         >
-          {[...contentPosts, ...contentPosts].map((p, i) => (
+          {[...posts, ...posts].map((p, i) => (
             <div key={`${p.image}-${i}`} className="mr-3 w-[150px] shrink-0 sm:w-[164px]">
               <ContentPostCard p={p} />
             </div>
@@ -804,31 +823,40 @@ function PostGrid() {
 }
 
 /* ── Pillar 4: content intelligence (full-width grid + toolbar) ── */
-function ContentSection() {
+function ContentSection({ ucla }: { ucla?: boolean } = {}) {
   return (
     <section className={`${SECTION} bg-[#eeeeee]`}>
       <div className={`${WRAP} ${PADS}`}>
         <FadeUp className="max-w-2xl">
           <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-black/45">Content</p>
-          <h2 className="mt-3 font-display text-4xl leading-[1.05] text-[#0a0a0a] md:text-5xl">
-            <span className="italic" style={{ background: LIME, color: "#000", padding: "0 0.1em", borderRadius: "2px" }}>1M+</span> posts analyzed.
-          </h2>
+          {ucla ? (
+            <h2 className="font-deck mt-3 text-4xl leading-[1.08] text-[#0a0a0a] md:text-5xl">
+              JABA watches the{" "}
+              <span style={{ background: LIME, color: "#000", padding: "0 0.12em", borderRadius: "2px" }}>entire athlete internet.</span>
+            </h2>
+          ) : (
+            <h2 className="mt-3 font-display text-4xl leading-[1.05] text-[#0a0a0a] md:text-5xl">
+              <span className="italic" style={{ background: LIME, color: "#000", padding: "0 0.1em", borderRadius: "2px" }}>1M+</span> posts analyzed.
+            </h2>
+          )}
           <p className="mt-3 max-w-xl font-sans text-base leading-relaxed text-black/60">
             See what athlete content performs and why, across every platform.
           </p>
-          <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
-            {[
-              "search every athlete post across your schools",
-              "track sponsor logo placement and school IP visibility",
-              "analyze hooks, pacing, and caption style",
-              "compare sponsor activations vs organic content",
-            ].map((b) => (
-              <li key={b} className="flex gap-3 font-sans text-[14px] leading-relaxed text-black/70">
-                <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0" style={{ background: "rgba(0,0,0,0.4)" }} />
-                {b}
-              </li>
-            ))}
-          </ul>
+          {!ucla && (
+            <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
+              {[
+                "search every athlete post across your schools",
+                "track sponsor logo placement and school IP visibility",
+                "analyze hooks, pacing, and caption style",
+                "compare sponsor activations vs organic content",
+              ].map((b) => (
+                <li key={b} className="flex gap-3 font-sans text-[14px] leading-relaxed text-black/70">
+                  <span aria-hidden className="mt-[0.7em] h-px w-3 shrink-0" style={{ background: "rgba(0,0,0,0.4)" }} />
+                  {b}
+                </li>
+              ))}
+            </ul>
+          )}
         </FadeUp>
         <FadeUp delay={0.12} className="mt-10 md:mt-14">
           <PostGrid />
@@ -883,13 +911,13 @@ function NilInterlude() {
 }
 
 /* ── Pillar 5: brand matching + outreach (Match Studio flow) ── */
-function MatchStudio() {
+function MatchStudio({ ucla }: { ucla?: boolean } = {}) {
   return (
     <section className="relative overflow-hidden bg-black scroll-mt-32 md:scroll-mt-40">
       <div
         aria-hidden
         className="absolute inset-0"
-        style={{ background: "radial-gradient(120% 85% at 50% 0%, #16160f 0%, #0a0a0a 48%, #000 100%)" }}
+        style={{ background: "#000" }}
       />
       <div className={`relative ${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
         <FadeUp className="max-w-2xl">
@@ -903,6 +931,7 @@ function MatchStudio() {
             Match your roster to brands, find the right person, and send
             outreach that sounds like you.
           </p>
+          {!ucla && (
           <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
             {[
               "find verified brand and agency contacts",
@@ -916,6 +945,7 @@ function MatchStudio() {
               </li>
             ))}
           </ul>
+          )}
           </ScrimCluster>
         </FadeUp>
 
@@ -928,7 +958,6 @@ function MatchStudio() {
                 { label: "Find", count: 50 },
                 { label: "Enrich", count: 8 },
                 { label: "Pitch", count: 11 },
-                { label: "Compose", count: 14 },
                 { label: "Send", count: 7 },
               ].map((s, i) => (
                 <span key={s.label} className="flex items-center gap-1.5 font-sans text-[12.5px]" style={i === 2 ? { color: LIME, fontWeight: 600 } : { color: "rgba(255,255,255,0.5)" }}>
@@ -1251,81 +1280,1067 @@ function AssistantThread() {
   );
 }
 
-export default function ForSchoolsPage({ bare, hideBrands }: { bare?: boolean; hideBrands?: boolean } = {}) {
+/* ── UCLA live data (real athletes + content, pulled from JABA's database).
+   Names, headshots, handles, follower counts, post images and engagement are
+   real. Task statuses/dates are illustrative workspace states; deal amounts
+   are left blank rather than fabricated. Scoped to the `ucla` variant only. ── */
+const HS = "https://storage.googleapis.com/jaba-profile-pictures-bucket-prod/profile-pictures/";
+const UCLA_HS = {
+  chiles: `${HS}1765897229904-Jordan_Chiles_68f878d77fcc92b86eee7f0e_ProfilePicture.jpg`,
+  nico: `${HS}1770926967187-Nico_Iamaleava_68f878d77fcc92b86eee7dbf_ProfilePicture.jpg`,
+  kiki: `${HS}1765897154917-Kiki_Rice_68f878d77fcc92b86eee7ee2_ProfilePicture.jpg`,
+  roch: `${HS}1765896553837-Roch_Cholowsky_68f878d77fcc92b86eee7d6c_ProfilePicture.jpg`,
+  mikey: `${HS}1770926968745-Mikey_Matthews_68f878d77fcc92b86eee7dbd_ProfilePicture.jpg`,
+};
+
+const uclaWorkflowRows = [
+  { task: "Nike Player Edition post", type: "Deliverable", who: "Jordan Chiles", img: UCLA_HS.chiles, campaign: "Nike", brand: true, platform: "Instagram", amount: "—", status: "Overdue", color: "#ff6b6b", due: "Jul 12, 2026" },
+  { task: "MLB The Show promo", type: "Deliverable", who: "Roch Cholowsky", img: UCLA_HS.roch, campaign: "MLB The Show", brand: true, platform: "Instagram", amount: "—", status: "Scheduled", color: "rgba(255,255,255,0.62)", due: "Jul 15, 2026" },
+  { task: "Vuori partner reel", type: "Deliverable", who: "Nico Iamaleava", img: UCLA_HS.nico, campaign: "Vuori", brand: true, platform: "Instagram", amount: "—", status: "In review", color: "rgba(255,255,255,0.62)", due: "Jul 16, 2026" },
+  { task: "Degree World Cup reel", type: "Deliverable", who: "Jordan Chiles", img: UCLA_HS.chiles, campaign: "Degree", brand: true, platform: "Instagram", amount: "—", status: "Done", color: LIME, due: "Jul 18, 2026" },
+  { task: "Meet and greet", type: "Event", who: "Kiki Rice", img: UCLA_HS.kiki, campaign: "General task", brand: false, platform: "—", amount: "—", status: "Scheduled", color: "rgba(255,255,255,0.62)", due: "Jul 20, 2026" },
+  { task: "Peacock series promo", type: "Deliverable", who: "Roch Cholowsky", img: UCLA_HS.roch, campaign: "Peacock", brand: true, platform: "Instagram", amount: "—", status: "Done", color: LIME, due: "Jul 13, 2026" },
+  { task: "Send campaign recap", type: "Task", who: "Mikey Matthews", img: UCLA_HS.mikey, campaign: "General task", brand: false, platform: "—", amount: "—", status: "New", color: LIME, due: "Jul 22, 2026" },
+];
+
+const uclaContentPosts: ContentPost[] = [
+  { image: "/ucla-content/post1.jpg", avatar: 0, avatarSrc: UCLA_HS.chiles, name: "Jordan Chiles", sport: "Gymnastics", status: "Sponsored", rank: "Top 5", likes: "34.1K", comments: "458", views: "—" },
+  { image: "/ucla-content/post2.jpg", avatar: 0, avatarSrc: UCLA_HS.roch, name: "Roch Cholowsky", sport: "Baseball", status: "Organic", rank: "Top 5", likes: "27.8K", comments: "149", views: "454K" },
+  { image: "/ucla-content/post3.jpg", avatar: 0, avatarSrc: UCLA_HS.roch, name: "Roch Cholowsky", sport: "Baseball", status: "Sponsored", rank: "Top 10", likes: "15.7K", comments: "161", views: "—" },
+  { image: "/ucla-content/post4.jpg", avatar: 0, avatarSrc: UCLA_HS.chiles, name: "Jordan Chiles", sport: "Gymnastics", status: "Organic", rank: "Top 10", likes: "11.7K", comments: "145", views: "—" },
+  { image: "/ucla-content/post5.jpg", avatar: 0, avatarSrc: UCLA_HS.nico, name: "Nico Iamaleava", sport: "Football", status: "Organic", rank: "Top 10", likes: "8.7K", comments: "117", views: "—" },
+  { image: "/ucla-content/post6.jpg", avatar: 0, avatarSrc: UCLA_HS.roch, name: "Roch Cholowsky", sport: "Baseball", status: "Sponsored", rank: "Top 25", likes: "3.4K", comments: "12", views: "—" },
+  { image: "/ucla-content/post7.jpg", avatar: 0, avatarSrc: UCLA_HS.chiles, name: "Jordan Chiles", sport: "Gymnastics", status: "Sponsored", rank: "Top 25", likes: "1.5K", comments: "26", views: "51.7K" },
+  { image: "/ucla-content/post8.jpg", avatar: 0, avatarSrc: UCLA_HS.nico, name: "Nico Iamaleava", sport: "Football", status: "Sponsored", rank: "Ranked", likes: "721", comments: "24", views: "—" },
+];
+
+/* ── Real-app-style icons for the lock-screen notifications ── */
+function AppIcon({ app }: { app: string }) {
+  const base = "mt-0.5 h-7 w-7 shrink-0 rounded-[8px]";
+  if (app === "JABA") {
+    return <img src="/jaba-face.png" alt="" aria-hidden className={`${base} object-cover`} />;
+  }
+  if (app === "Messages") {
+    return (
+      <span className={`${base} flex items-center justify-center`} style={{ background: "linear-gradient(180deg,#67e26b,#25b53c)" }}>
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="#fff" aria-hidden>
+          <path d="M12 4.2c-5.2 0-9.4 3.3-9.4 7.4 0 2.4 1.4 4.5 3.6 5.8-.1.9-.5 2-1.4 2.9 0 0 2-.1 3.9-1.4.7.2 1.8.2 3.3.2 5.2 0 9.4-3.3 9.4-7.5S17.2 4.2 12 4.2z" />
+        </svg>
+      </span>
+    );
+  }
+  if (app === "Phone") {
+    return (
+      <span className={`${base} flex items-center justify-center`} style={{ background: "linear-gradient(180deg,#5cd669,#12a63e)" }}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="#fff" aria-hidden>
+          <path d="M6.8 10.6c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.3 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1v3.6c0 .6-.4 1-1 1C10.9 20.9 3.1 13.1 3.1 3.8c0-.6.5-1 1-1h3.6c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1.1l-2.2 2.2z" />
+        </svg>
+      </span>
+    );
+  }
+  if (app === "Instagram") {
+    return (
+      <span className={`${base} flex items-center justify-center`} style={{ background: "linear-gradient(135deg,#7C3AED 0%,#E1306C 55%,#F58529 100%)" }}>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" strokeWidth="2" aria-hidden>
+          <rect x="4" y="4" width="16" height="16" rx="4.5" />
+          <circle cx="12" cy="12" r="3.6" />
+          <circle cx="16.8" cy="7.2" r="1.1" fill="#fff" stroke="none" />
+        </svg>
+      </span>
+    );
+  }
+  if (app === "Gmail") {
+    return (
+      <span className={`${base} flex items-center justify-center bg-white`} style={{ boxShadow: "inset 0 0 0 1px rgba(0,0,0,.07)" }}>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden>
+          <rect x="3.5" y="6.5" width="3" height="11" rx="1" fill="#4285F4" />
+          <rect x="17.5" y="6.5" width="3" height="11" rx="1" fill="#34A853" />
+          <path d="M3.5 7.6 12 13.9l8.5-6.3v3.4L12 17.3 3.5 11z" fill="#EA4335" />
+          <path d="M3.5 11.2l3 2.2v4.1h-2c-.6 0-1-.4-1-1z" fill="#FBBC04" />
+        </svg>
+      </span>
+    );
+  }
+  if (app === "Calendar") {
+    return (
+      <span className={`${base} flex flex-col items-center justify-center bg-white`} style={{ boxShadow: "inset 0 0 0 1px rgba(0,0,0,.07)" }}>
+        <span style={{ fontSize: 5, fontWeight: 800, letterSpacing: "0.08em", color: "#ff453a", lineHeight: 1.4 }}>FRI</span>
+        <span className="font-sans" style={{ fontSize: 12, fontWeight: 600, color: "#111", lineHeight: 1 }}>24</span>
+      </span>
+    );
+  }
+  return <span className={`${base}`} style={{ background: "#c7cdd6" }} />;
+}
+
+/* ── Lock-screen phone: an endless stream of notifications keeps pouring in ── */
+function NotificationCard({ n }: { n: { app: string; tone: string; dark?: boolean; title: string; body: string; time: string } }) {
+  return (
+    <div
+      className="flex items-start gap-2.5 rounded-2xl px-3 py-2.5"
+      style={{
+        background: "rgba(255,255,255,0.5)",
+        border: "1px solid rgba(255,255,255,0.65)",
+        boxShadow:
+          "0 8px 22px rgba(0,0,0,0.08), inset 2px 2px 1px -2px rgba(255,255,255,0.95), inset -2px -2px 1px -2px rgba(255,255,255,0.6), inset 1px 1px 1px -0.5px rgba(255,255,255,0.5), inset -1px -1px 1px -0.5px rgba(0,0,0,0.1)",
+        backdropFilter: "blur(16px) saturate(160%)",
+        WebkitBackdropFilter: "blur(16px) saturate(160%)",
+      }}
+    >
+      <AppIcon app={n.app} />
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-2">
+          <p className="truncate font-sans text-[12.5px] font-semibold text-[#0a0a0a]">{n.title}</p>
+          <span className="shrink-0 font-sans text-[10px] text-black/45">{n.time}</span>
+        </div>
+        <p className="truncate font-sans text-[11.5px] text-black/60">{n.body}</p>
+      </div>
+    </div>
+  );
+}
+
+const PHONE_NOTES = [
+  { app: "JABA", tone: LIME, dark: true, title: "New deal to approve", body: "Nike × Jordan Chiles" },
+  { app: "Instagram", tone: "#e1306c", title: "New post is live", body: "Nico Iamaleava tagged @vuoriclothing" },
+  { app: "JABA", tone: LIME, dark: true, title: "Reminder", body: "Roch's MLB The Show promo due Friday" },
+  { app: "Gmail", tone: "#1a8cff", title: "Agent request", body: "Loop me in on the Degree deal" },
+  { app: "Calendar", tone: "#ff453a", title: "Meet & greet in 1 hour", body: "Kiki Rice" },
+  { app: "JABA", tone: "#ff6b6b", dark: true, title: "Overdue", body: "Nike Player Edition post" },
+  { app: "Phone", tone: "#12a63e", title: "Missed call (2)", body: "Voltic team" },
+  { app: "JABA", tone: LIME, dark: true, title: "Compliance cleared", body: "Peacock promo approved by UCLA" },
+  { app: "Messages", tone: "#34c759", title: "Athlete replied", body: "Roch: got it, posting tonight" },
+  { app: "JABA", tone: "#ff6b6b", dark: true, title: "Deadline today", body: "Degree World Cup reel" },
+  { app: "Gmail", tone: "#1a8cff", title: "Brand inquiry", body: "Partnership request for Sienna Betts" },
+  { app: "Calendar", tone: "#ff453a", title: "Content shoot", body: "Jordan Chiles, 3:00 PM" },
+];
+const PHONE_TIMES = ["now", "1m", "2m", "4m", "6m", "9m", "14m"];
+
+function NotificationPhone() {
+  const reduce = useReducedMotion();
+  const WINDOW = 6;
+  const [visible, setVisible] = useState(() =>
+    Array.from({ length: WINDOW }, (_, i) => ({ ...PHONE_NOTES[i % PHONE_NOTES.length], id: i })),
+  );
+
+  useEffect(() => {
+    if (reduce) return;
+    let noteIdx = WINDOW;
+    let uid = 1000;
+    const t = setInterval(() => {
+      const n = PHONE_NOTES[noteIdx % PHONE_NOTES.length];
+      noteIdx += 1;
+      const id = uid++;
+      // new one drops in at the top; the rest shift down, the last slides off
+      setVisible((prev) => [{ ...n, id }, ...prev].slice(0, WINDOW + 1));
+    }, 1900);
+    return () => clearInterval(t);
+  }, [reduce]);
+
+  return (
+    <div className="relative mx-auto w-[300px] max-w-full">
+      <div
+        className="relative overflow-hidden rounded-[46px] border border-black/10 bg-[#eef0f3] p-3"
+        style={{
+          aspectRatio: "9 / 19",
+          boxShadow: "0 0 0 6px #17181b, 0 0 0 7px rgba(0,0,0,0.18), 0 40px 90px rgba(0,0,0,0.28)",
+        }}
+      >
+        <div aria-hidden className="absolute inset-0" style={{ background: "radial-gradient(120% 80% at 50% 0%, #ffffff, #e8ebef 62%)" }} />
+        {/* dynamic island */}
+        <div className="relative mx-auto mt-1 h-7 w-24 rounded-full bg-black" />
+        {/* time */}
+        <div className="relative mt-4 text-center">
+          <p className="font-sans text-[13px] font-medium text-black/60">Friday, July 24</p>
+          <p className="font-sans text-[62px] font-semibold leading-none text-[#0a0a0a]" style={{ letterSpacing: "-0.02em" }}>9:41</p>
+        </div>
+        {/* notifications: newest drops in on top, the stack shifts down */}
+        <div className="absolute inset-x-3 bottom-3" style={{ top: "196px", overflow: "hidden" }}>
+          <div className="space-y-2 px-1">
+            <AnimatePresence initial={false}>
+              {visible.map((n, idx) => (
+                <motion.div
+                  key={n.id}
+                  layout
+                  initial={{ opacity: 0, y: -28, scale: 0.94 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 24, transition: { duration: 0.3 } }}
+                  transition={{ type: "spring", stiffness: 460, damping: 34 }}
+                >
+                  <NotificationCard n={{ ...n, time: PHONE_TIMES[idx] ?? "" }} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+          {/* soft slide-off at the very bottom only */}
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-24" style={{ background: "linear-gradient(0deg, #e9ecf0 35%, transparent)" }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ── Problem framing: text + an iPhone that fills with notifications ── */
+function MovingPieces() {
+  const reduce = useReducedMotion();
+  const pieces = ["Athletes", "Agents", "Deliverables", "Posts", "Reminders", "Approvals", "Things going wrong"];
+  return (
+    <section className="relative flex min-h-screen items-center bg-white">
+      <div className={`${WRAP} w-full py-16`}>
+        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          {/* Copy */}
+          <div className="text-center lg:text-left">
+            <FadeUp>
+              <h2 className="font-deck text-3xl leading-[1.1] text-[#0a0a0a] md:text-5xl">
+                Athlete brand deals increased.{" "}
+                <span className="text-black/55">Managing athletes didn&rsquo;t get easier.</span>
+              </h2>
+              <p className="mt-6 font-sans text-lg text-black/50">
+                More deals means more moving pieces:
+              </p>
+            </FadeUp>
+
+            <motion.ul
+              className="mt-6 flex max-w-xl flex-wrap items-baseline justify-center gap-x-3 gap-y-2 lg:justify-start"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-12%" }}
+              variants={{ show: { transition: { staggerChildren: 0.14 } } }}
+            >
+              {pieces.map((p, i) => {
+                const last = i === pieces.length - 1;
+                return (
+                  <motion.li
+                    key={p}
+                    variants={{ hidden: { opacity: 0, y: reduce ? 0 : 12 }, show: { opacity: 1, y: 0 } }}
+                    transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                    className={`flex items-baseline gap-x-3 font-sans text-lg leading-snug md:text-xl ${last ? "text-black/40" : "text-black/80"}`}
+                  >
+                    {p}
+                    {!last && <span aria-hidden className="text-black/25">·</span>}
+                  </motion.li>
+                );
+              })}
+            </motion.ul>
+            <FadeUp delay={0.15}>
+              <p className="font-deck mt-8 text-2xl leading-[1.15] text-[#0a0a0a] md:text-4xl">
+                And now <span style={{ background: LIME, color: "#000", padding: "0 0.12em", borderRadius: "2px" }}>NIL Go</span> adds another layer to manage.
+              </p>
+            </FadeUp>
+          </div>
+
+          {/* Phone */}
+          <FadeUp delay={0.1} className="flex justify-center lg:justify-end">
+            <NotificationPhone />
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Deck port §01b: "Meet JABA" — black card on a white section, with the
+   walking-mascot video masked into the corner. ── */
+function MeetJabaSection() {
+  return (
+    <section className="meets deck scroll-mt-32 md:scroll-mt-40" style={{ background: "#fff" }}>
+      <div className={`${WRAP} py-16 md:py-24`}>
+        <FadeUp>
+          <div className="meetbox">
+            <video className="walkvid" autoPlay muted loop playsInline aria-label="JABA character walking in">
+              <source src="/deck/jaba-walk.mp4" type="video/mp4" />
+            </video>
+            <div className="meettext">
+              <h2 className="font-deck text-4xl leading-[1.06] text-white md:text-6xl">Meet JABA.</h2>
+              <p className="mt-5 font-sans text-xl font-semibold text-white/85 md:mt-7 md:text-2xl">
+                AI that manages the
+              </p>
+              <ul className="mt-4 space-y-2.5 md:mt-5">
+                {["Tasks", "Deliverables", "Follow-ups", "Reminders"].map((item) => (
+                  <li key={item} className="flex items-center gap-4 font-deck text-2xl text-white md:text-[2.1rem]">
+                    <span className="h-2 w-2 flex-shrink-0 rounded-full md:h-2.5 md:w-2.5" style={{ background: LIME }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="em font-deck mt-5 text-2xl md:mt-6 md:text-[2.1rem]">around athletes.</p>
+            </div>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+/* ── The campaign-lifecycle rail, ported verbatim from the Playfly GM deck
+   (slide 2): icon + ghost number + connector dots + railfoot. ── */
+function Lifecycle() {
+  const steps = [
+    { n: "01", icon: "/deck/ic-understand.png", title: "Understand", body: "A deep read on every athlete and brand: audience, content, sponsored history, and value." },
+    { n: "02", icon: "/deck/ic-enrich.png", title: "Match and pitch", body: "Where athletes and brands overlap, with contact enrichment and the pitch." },
+    { n: "03", icon: "/deck/ic-manage.png", title: "Manage and deliver", body: "Contracts, deliverables, due dates, and approvals, with athletes and agents coordinated over text." },
+    { n: "04", icon: "/deck/ic-measure.png", title: "Measure and report", body: "Campaign results, IP impact, and reporting back to the brand." },
+  ];
+  return (
+    <section className="deck relative bg-black">
+      <div className={`${WRAP} py-24 md:py-32`}>
+        <FadeUp>
+          <h2 className="font-deck text-center text-4xl leading-[1.08] text-white md:text-5xl">
+            JABA manages the entire <span className="em">campaign lifecycle.</span>
+          </h2>
+        </FadeUp>
+        <FadeUp delay={0.1}>
+          <div className="rail">
+            {steps.map((s) => (
+              <div className="rs" key={s.n}>
+                <div className="rshead">
+                  <span className="rghost">{s.n}</span>
+                  <img className="rsi" src={s.icon} alt="" />
+                  <span className="rdot" />
+                </div>
+                <div className="rst">{s.title}</div>
+                <div className="rsd">{s.body}</div>
+              </div>
+            ))}
+          </div>
+        </FadeUp>
+        <FadeUp delay={0.2}>
+          <div className="railfoot">
+            <span className="rflayers">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke={LIME} strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" style={{ filter: "drop-shadow(0 0 6px rgba(223,255,0,.55))" }}>
+                <path d="M12 3 20.5 8 12 13 3.5 8Z" />
+                <path d="M3.5 12 12 17 20.5 12" />
+                <path d="M3.5 16 12 21 20.5 16" />
+              </svg>
+            </span>
+            <span className="rfdiv" />
+            <span className="rftext">Your data, campaigns, conversations, and workflows <b>in one place.</b></span>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+/* ── The radial "everything around the athlete" diagram, ported from the deck
+   (spokes drawn core-to-node by layoutArch). Real UCLA athlete + real post. ── */
+function ConsolidatedCard() {
+  const archRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const arch = archRef.current;
+    if (!arch) return;
+    const layout = () => {
+      const svg = arch.querySelector("svg");
+      const core = arch.querySelector<HTMLElement>(".archcore");
+      if (!svg || !core) return;
+      const r = arch.getBoundingClientRect();
+      if (r.width < 20) return;
+      svg.setAttribute("viewBox", `0 0 ${r.width} ${r.height}`);
+      const cr = core.getBoundingClientRect();
+      const cx = cr.left + cr.width / 2 - r.left;
+      const cy = cr.top + cr.height / 2 - r.top;
+      const coreR = cr.width / 2;
+      const lines = svg.querySelectorAll("line");
+      const cards = arch.querySelectorAll<HTMLElement>(".nd");
+      cards.forEach((card, i) => {
+        const ln = lines[i];
+        if (!ln) return;
+        const b = card.getBoundingClientRect();
+        const mx = b.left + b.width / 2 - r.left;
+        const my = b.top + b.height / 2 - r.top;
+        const vx = cx - mx;
+        const vy = cy - my;
+        const hw = b.width / 2 - 2;
+        const hh = b.height / 2 - 2;
+        const s = Math.min(hw / Math.abs(vx || 1e-6), hh / Math.abs(vy || 1e-6));
+        const ex = mx + vx * s;
+        const ey = my + vy * s;
+        const d = Math.hypot(ex - cx, ey - cy) || 1;
+        const sx = cx + ((ex - cx) / d) * (coreR + 4);
+        const sy = cy + ((ey - cy) / d) * (coreR + 4);
+        ln.setAttribute("x1", sx.toFixed(1));
+        ln.setAttribute("y1", sy.toFixed(1));
+        ln.setAttribute("x2", ex.toFixed(1));
+        ln.setAttribute("y2", ey.toFixed(1));
+      });
+    };
+    layout();
+    const t1 = setTimeout(layout, 300);
+    const t2 = setTimeout(layout, 900);
+    window.addEventListener("resize", layout);
+    arch.querySelectorAll("img").forEach((im) => {
+      if (!im.complete) im.addEventListener("load", layout);
+    });
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener("resize", layout);
+    };
+  }, []);
+  return (
+    <section className="deck relative bg-black">
+      <div className={`${WRAP} py-20 md:py-28`}>
+        <FadeUp className="mx-auto max-w-2xl text-center">
+          <h2 className="font-deck text-3xl leading-[1.1] text-white md:text-[2.7rem]">
+            Everything around the athlete, <span className="em">and what it takes to manage them.</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl font-sans text-lg leading-relaxed text-white/65 md:text-xl">
+            JABA sees the campaign, tracks what is due, picks up action items from
+            emails, watches when posts go out, and flags what needs attention.
+          </p>
+        </FadeUp>
+
+        <FadeUp delay={0.2}>
+          <div className="arch" ref={archRef}>
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <line className="main" x1="50" y1="50" x2="27" y2="50" />
+              <line className="main" x1="50" y1="50" x2="73" y2="50" />
+              <line className="rev" x1="50" y1="50" x2="34" y2="28" />
+              <line className="rev" x1="50" y1="50" x2="50" y2="19" />
+              <line className="rev" x1="50" y1="50" x2="66" y2="28" />
+              <line x1="50" y1="50" x2="31" y2="73" />
+              <line x1="50" y1="50" x2="48" y2="79" />
+              <line x1="50" y1="50" x2="66" y2="74" />
+              <line className="rev" x1="50" y1="50" x2="80" y2="71" />
+            </svg>
+            <div className="archcore"><img src="/deck/jaba-avatar.png" alt="JABA" /></div>
+
+            <div className="nd big" style={{ left: "12%", top: "50%" }}>
+              <div className="nk">Athlete</div>
+              <div className="ndrow"><img className="ndav" src="/athletehs2.png" alt="" /><div><div className="ndt">Maya Ellison</div><div className="ndm">Track &amp; Field</div></div></div>
+            </div>
+            <div className="nd big" style={{ left: "88%", top: "50%" }}>
+              <div className="nk">Campaign</div>
+              <div className="ndrow"><span className="ndmono" style={{ background: "linear-gradient(160deg,#2c3a1e,#131a0d)" }}>V</span><div><div className="ndt">Voltic Energy</div><div className="ndm">Game week</div></div></div>
+            </div>
+            <div className="nd" style={{ left: "27%", top: "18%" }}>
+              <div className="nk">Deliverable</div>
+              <div className="ndrow"><span className="ndico" style={{ background: "linear-gradient(160deg,#E8306E,#B4184D)" }}>&#9654;</span><div><div className="ndt">In-feed post</div><div className="ndm">Due Fri</div></div></div>
+            </div>
+            <div className="nd" style={{ left: "50%", top: "11%" }}>
+              <div className="nk">Tasks</div>
+              <div className="ndchk"><i>&#10003;</i>Confirm assets</div>
+              <div className="ndchk"><i>&#10003;</i>Send brief</div>
+            </div>
+            <div className="nd" style={{ left: "73%", top: "18%" }}>
+              <div className="nk">Reminder</div>
+              <div className="ndrow"><span className="ndico" style={{ background: "linear-gradient(160deg,#7C5BE0,#5B39C4)" }}>&#128276;</span><div><div className="ndt">Draft due</div><div className="ndm">Fri 9:00 AM</div></div></div>
+            </div>
+            <div className="nd" style={{ left: "20%", top: "85%" }}>
+              <div className="nk">Agent</div>
+              <div className="ndrow"><span className="ndinit" style={{ background: "linear-gradient(160deg,#D98CAE,#C05E86)" }}>AG</span><div><div className="ndt">Talent agent</div><div className="ndm">looped in</div></div></div>
+            </div>
+            <div className="nd" style={{ left: "40%", top: "85%" }}>
+              <div className="nk">Email</div>
+              <div className="ndrow"><span className="ndico" style={{ background: "linear-gradient(160deg,#3B9BF0,#2168C4)" }}>&#9993;</span><div><div className="ndt">Contract redline</div><div className="ndm">from Voltic &middot; 2m ago</div></div></div>
+            </div>
+            <div className="nd" style={{ left: "60%", top: "85%" }}>
+              <div className="nk">Post</div>
+              <div className="ndrow"><img className="ndthumb" src="/post7.png" alt="" /><div><div className="ndt">@maya.ell</div><div className="ndm">&#10084; 5.1K &middot; went live</div></div></div>
+            </div>
+            <div className="nd nilv" style={{ left: "80%", top: "85%" }}>
+              <div className="nk">NIL Go</div>
+              <div className="ndt">Disclosure ready</div>
+              <div className="ndm">cleared to run</div>
+            </div>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+/* ── Deck port §01d: "JABA keeps the work moving" — numbered operating loop
+   + the NIL Team iMessage card. Chat adapted to the real UCLA deal. ── */
+function WorkMovingSection() {
+  const steps = [
+    { n: 1, t: "Campaign created" },
+    { n: 2, t: "Deliverables and dates added" },
+    { n: 3, t: "Tasks and reminders assigned" },
+    { n: 4, t: "An email arrives, or a post goes out" },
+    { n: 5, t: "JABA picks up the action item", hero: true },
+    { n: 6, t: "The right person gets nudged, or escalated" },
+  ];
+  return (
+    <section className="loops deck relative overflow-hidden bg-black scroll-mt-32 md:scroll-mt-40">
+      <div className={`${WRAP} py-24 md:py-32`}>
+        <div className="loopwrap">
+          <FadeUp className="loopside">
+            <h2 className="font-deck text-4xl leading-[1.05] text-white md:text-5xl">
+              JABA keeps the <span className="em">work moving.</span>
+            </h2>
+            <p className="mt-4 max-w-md font-sans text-lg font-medium text-white/70 md:text-xl">
+              Never worry about sending a follow-up again.
+            </p>
+            <div className="flow">
+              <div className="fsteps live">
+                <div className="fspine on" />
+                {steps.map((s) => (
+                  <div key={s.n} className={`fstep${s.hero ? " hero" : ""}`}>
+                    <span className="fn">{s.n}</span>
+                    <span className="ft">{s.t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="looptag">
+              Not just where the deal lives. <b>Where the follow-up happens.</b>
+            </div>
+          </FadeUp>
+
+          <FadeUp delay={0.15} className="msgcard">
+            <div className="msgnav">
+              <div className="msgavs">
+                <span className="mav c">C</span>
+                <span className="mav s">S</span>
+                <img src="/jaba-face.png" alt="" />
+              </div>
+              <span className="nm">NIL Team</span>
+            </div>
+            <div className="msgthread">
+              <div className="msgdate">Today 2:14 PM</div>
+              <div className="msgsender">Coach Davis</div>
+              <div className="msgrow"><span className="mav c">C</span><div className="msgbub">Did the Vuori reel go up today?</div></div>
+              <div className="msgsender jb">JABA</div>
+              <div className="msgrow"><img src="/jaba-face.png" alt="" /><div className="msgbub">&#9888;&#65039; Not yet, it missed the deadline. Nudging Nico now, and I&rsquo;ll flag you if it slips again.</div></div>
+              <div className="msgsender jb">JABA</div>
+              <div className="msgrow"><img src="/jaba-face.png" alt="" /><div className="msgbub">&#128232; The brand also emailed the redline. Flagged it and set the countersign reminder.</div></div>
+              <div className="msgbub me">appreciate it &#128588;</div>
+            </div>
+            <div className="msgbar"><span className="msgfield">iMessage</span><span className="msgsend">&#8593;</span></div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Deck port §07: "JABA finds the overlap" — replaces the pitch-flow
+   dashboard on the UCLA variant. Athlete data is real (Nico Iamaleava);
+   the brand card is labeled an example target, matching the deck. ── */
+function OverlapSection() {
+  const ref = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const o = new IntersectionObserver(
+      (es) => {
+        for (const e of es) {
+          if (e.isIntersecting) {
+            el.classList.add("play");
+            o.disconnect();
+          }
+        }
+      },
+      { threshold: 0.45 },
+    );
+    o.observe(el);
+    return () => o.disconnect();
+  }, []);
+  return (
+    <section ref={ref} className="ovs deck relative overflow-hidden bg-black scroll-mt-32 md:scroll-mt-40">
+      <div className={`${WRAP} py-24 md:py-32`}>
+        <h2 className="font-deck text-4xl leading-[1.08] text-white md:text-5xl">
+          JABA finds <span className="em">the overlap.</span>
+        </h2>
+        <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
+          Pick an athlete. JABA researches the brand, matches it against the
+          athlete, enriches the contacts, and drafts the pitch with the
+          evidence attached.
+        </p>
+
+        <div className="pick">
+          <span className="pklab">Select an athlete</span>
+          <img className="pk dim" src="/athletehs1.png" alt="" />
+          <img className="pk sel" src="/athleteheadshot.png" alt="Jake Banks" />
+          <img className="pk dim" src="/athletehs3.png" alt="" />
+          <img className="pk dim" src="/athletehs4.png" alt="" />
+          <img className="pk dim" src="/athletehs5.png" alt="" />
+        </div>
+
+        <div className="ov">
+          <div className="ovcard">
+            <span className="ovpill">The athlete</span>
+            <div className="ovhead">
+              <img src="/athleteheadshot.png" alt="" />
+              <div>
+                <div className="ovname">Jake Banks</div>
+                <div className="ovmeta">QB &middot; Football &middot; 184K followers</div>
+              </div>
+            </div>
+            <div className="ovrow"><div className="ovk">Proven categories</div><div className="ovv">Game-day hydration routines already run through his content</div></div>
+            <div className="ovrow"><div className="ovk">Content mix</div><div className="ovv">Training, film breakdowns, and game-day routines</div></div>
+            <div className="ovrow"><div className="ovk">Sponsored performance</div><div className="ovv">9.7% engagement, well above his cohort&rsquo;s 6.2%</div></div>
+            <div className="ovrow"><div className="ovk">Brand fit, ranked</div><div className="ovv">Performance &amp; hydration &middot; Energy &middot; Apparel</div></div>
+          </div>
+
+          <div className="ovmid">
+            <div className="ovmidtitle">THE <span>OVERLAP</span></div>
+            <div className="ovscan">MATCHING</div>
+            <div className="ovhit"><div className="ovhk">Proven category</div><div className="ovhv">Hydration content is already live in his feed</div></div>
+            <div className="ovhit"><div className="ovhk">Audience match</div><div className="ovhv">His performance-minded audience over-indexes on Apex&rsquo;s core demo</div></div>
+            <div className="ovhit"><div className="ovhk">Campaign angle</div><div className="ovhv">Game-day hydration ritual, in his voice rather than a script read</div></div>
+          </div>
+
+          <div className="ovcard light">
+            <span className="ovpill onlight">The brand &middot; example target</span>
+            <div className="ovhead">
+              <div>
+                <div className="ovname">Apex Hydration</div>
+                <div className="ovmeta">Beverage &middot; Performance hydration</div>
+              </div>
+            </div>
+            <div className="ovrow"><div className="ovk">Why it surfaced</div><div className="ovv">Performance &amp; hydration is his top JABA brand-fit</div></div>
+            <div className="ovrow"><div className="ovk">Contacts found</div><div className="ovv">3 decision makers, titles and emails enriched</div></div>
+            <div className="ovrow"><div className="ovk">Pitch drafted</div><div className="ovv">Concept, deliverables, and pricing, in your sender&rsquo;s voice</div></div>
+            <div className="ovrow"><div className="ovk">Next action</div><div className="ovv">Sequence queued, follow-up set for day 4</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Deck port §9: "Deliverables, due dates, and reminders in one calendar"
+   — month grid + New-reminder panel. Fictional people, matching the deck. ── */
+function CalendarSection() {
+  const week1 = [
+    { n: 27, out: true }, { n: 28, out: true }, { n: 29, out: true }, { n: 30, out: true },
+    { n: 1 }, { n: 2 }, { n: 3 },
+  ];
+  return (
+    <section className="cals deck relative overflow-hidden bg-black scroll-mt-32 md:scroll-mt-40">
+      <div className={`${WRAP} py-24 md:py-32`}>
+        <FadeUp>
+          <h2 className="font-deck text-4xl leading-[1.08] text-white md:text-5xl" style={{ maxWidth: "38ch" }}>
+            Deliverables, due dates, and reminders <span className="em">in one calendar.</span>
+          </h2>
+          <p className="mt-4 max-w-2xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
+            Every deliverable carries its own due date, owner, and reminder.
+            Reschedule one and everything attached to it moves with it.
+          </p>
+        </FadeUp>
+        <div className="calwrap">
+          <FadeUp delay={0.1} className="cal">
+            <div className="caldrag">Drag a reminder to reschedule it</div>
+            <div className="calhead">
+              <div className="calnav"><i>&lsaquo;</i><i>&rsaquo;</i></div>
+              <div className="calmo">October 2026</div>
+              <div className="seg"><span className="on">Month</span><span>Week</span><span>Day</span></div>
+              <div className="everyone"><span className="str">&#9733;</span>Everyone</div>
+            </div>
+            <div className="cgrid">
+              {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((d) => (
+                <div key={d} className="cdow">{d}</div>
+              ))}
+              {week1.map((d) => (
+                <div key={`w1-${d.n}`} className={`cday${d.out ? " out" : ""}`}><span className="cdn">{d.n}</span></div>
+              ))}
+              <div className="cday"><span className="cdn">4</span></div>
+              <div className="cday"><span className="cdn today">5</span></div>
+              <div className="cday"><span className="cdn">6</span><div className="ev rem">REMINDER<span className="av">JB</span></div><div className="ev bill">APPROVAL<span className="av">YO</span></div></div>
+              <div className="cday"><span className="cdn">7</span></div>
+              <div className="cday"><span className="cdn">8</span></div>
+              <div className="cday"><span className="cdn">9</span><div className="ev bill">APPROVAL<span className="av">YO</span></div></div>
+              <div className="cday"><span className="cdn">10</span><div className="ev post">POST<span className="av">JB</span></div></div>
+              <div className="cday"><span className="cdn">11</span><div className="ev story">STORY<span className="av">JB</span></div></div>
+              <div className="cday"><span className="cdn">12</span><div className="ev story">STORY<span className="av">JB</span></div><div className="ev event">EVENT<span className="av">JB</span></div></div>
+              <div className="cday"><span className="cdn">13</span></div>
+              <div className="cday"><span className="cdn">14</span><div className="ev rem">REMINDER<span className="av">AT</span></div></div>
+              <div className="cday"><span className="cdn">15</span></div>
+              <div className="cday"><span className="cdn">16</span></div>
+              <div className="cday"><span className="cdn">17</span></div>
+              {[18, 19, 20, 21, 22, 23, 24].map((n) => (
+                <div key={`w4-${n}`} className="cday"><span className="cdn">{n}</span></div>
+              ))}
+              <div className="cday"><span className="cdn">25</span></div>
+              <div className="cday"><span className="cdn">26</span></div>
+              <div className="cday"><span className="cdn">27</span></div>
+              <div className="cday"><span className="cdn">28</span></div>
+              <div className="cday"><span className="cdn">29</span></div>
+              <div className="cday"><span className="cdn">30</span><div className="ev event2">INVOICE<span className="av">YO</span></div></div>
+              <div className="cday"><span className="cdn">31</span></div>
+            </div>
+          </FadeUp>
+          <FadeUp delay={0.2} className="rpanel">
+            <div className="rph"><span className="rpic">&#128276;</span><span className="rpt">New reminder</span><span className="rpx">&times;</span></div>
+            <div className="rlab">WHO TO REMIND</div>
+            <div className="rsel">Brooks, Apex</div>
+            <div className="rdrop">
+              <div className="rgl">JUST ME</div>
+              <div className="rp"><span className="rcb" /><span className="rav" style={{ background: "#8A8F98" }}>YO</span><span className="rpn">You</span><span className="rpr">GM</span></div>
+              <div className="rgl">ATHLETES</div>
+              <div className="rp"><span className="rcb on">&#10003;</span><span className="rav"><img src="/deck/athlete-fake.svg" alt="" /></span><span className="rpn">Jalen Brooks</span><span className="rpr">Assigned to</span></div>
+              <div className="rgl">AGENTS</div>
+              <div className="rp"><span className="rcb on">&#10003;</span><span className="rav" style={{ background: "#6642CE" }}>AT</span><span className="rpn">Apex Talent Group</span><span className="rpr">Jalen&rsquo;s agency</span></div>
+            </div>
+            <div className="rlab">ABOUT</div>
+            <div className="rsel">Deliverable &middot; In-feed Reel</div>
+            <div className="rlab">MESSAGE</div>
+            <div className="rsel ghost">Reel draft due Monday</div>
+            <div className="rvia"><span className="rlab" style={{ margin: 0 }}>NOTIFY VIA</span><div className="seg"><span className="on">Text</span><span>Email</span></div></div>
+            <div className="rbtn">Schedule reminder</div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── "Weekly reports. Own your success." — numbered list + a mock of the real
+   weekly report. Universal: fictional athletes and a generic program, no school
+   named. ── */
+function ReportBrandSection() {
+  return (
+    <section className="reps deck relative overflow-hidden bg-black scroll-mt-32 md:scroll-mt-40">
+      <div className={`${WRAP} py-24 md:py-32`}>
+        <FadeUp>
+          <h2 className="font-deck text-4xl leading-[1.08] text-white md:text-5xl">
+            Weekly reports. <span className="em">Own your success.</span>
+          </h2>
+        </FadeUp>
+        <div className="repwrap">
+          <FadeUp delay={0.1} className="repside">
+            <div className="replist">
+              <div className="rli"><span className="rlin">01</span><div><div className="rlit">Top movers</div><div className="rlid">Who grew this week: follower gains ranked against each athlete&rsquo;s own baseline, with the story behind the spike.</div></div></div>
+              <div className="rli"><span className="rlin">02</span><div><div className="rlit">Where you stand</div><div className="rlid">Per-athlete averages benchmarked against your conference, plus your rank in the conference and the NCAA.</div>
+                <div className="ipbars">
+                  <div className="ipb"><span className="iplab">Conference avg</span><span className="iptrack"><i style={{ width: "58%", background: "rgba(247,247,238,.24)" }} /></span></div>
+                  <div className="ipb"><span className="iplab">Your roster</span><span className="iptrack"><i style={{ width: "100%", background: "var(--lime)" }} /></span><b className="iplift">+26%</b></div>
+                </div></div></div>
+              <div className="rli"><span className="rlin">03</span><div><div className="rlit">Milestones</div><div className="rlid">Most followers gained, most talked about, engagement outliers, called out automatically every week.</div></div></div>
+              <div className="rli"><span className="rlin">04</span><div><div className="rlit">Sponsored this week</div><div className="rlid">Every paid partnership caught, counted, and ranked against the rest of your conference.</div></div></div>
+            </div>
+          </FadeUp>
+          <FadeUp delay={0.2} className="repcard">
+            <div className="reph">
+              <img
+                src="/deck/jaba-avatar.png"
+                alt=""
+                aria-hidden
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: "50%",
+                  flexShrink: 0,
+                  objectFit: "cover",
+                  border: "2px solid rgba(226,245,0,.55)",
+                  background: "#131a0d",
+                }}
+              />
+              <div><div className="rl">Weekly report</div></div>
+            </div>
+            <div className="mvk">This week&rsquo;s top movers</div>
+            <div className="movers">
+              <div className="mvcard mv-blue">
+                <img className="mvav" src="/athletehs3.png" alt="" />
+                <div className="mvname">Maya Ellison</div>
+                <div className="mvsport">Gymnastics (W)</div>
+                <div className="mvpct">+2.7%</div>
+              </div>
+              <div className="mvcard mv-dark">
+                <img className="mvav" src="/athletehs1.png" alt="" />
+                <div className="mvname">Jaylen Cole</div>
+                <div className="mvsport">Track and Field</div>
+                <div className="mvpct">+14.3%</div>
+              </div>
+              <div className="mvcard mv-red">
+                <img className="mvav" src="/athletehs4.png" alt="" />
+                <div className="mvname">Sofia Marsh</div>
+                <div className="mvsport">Soccer (W)</div>
+                <div className="mvpct">+2.6%</div>
+              </div>
+            </div>
+            <div className="mvk">Conference leaderboard &middot; sponsored posts</div>
+            <div className="lb">
+              <div className="lbrow"><span className="lbrank">1</span><span className="lbname">Arlington St.</span><span className="lbval">866</span></div>
+              <div className="lbrow you"><span className="lbrank">2</span><span className="lbname">Your program</span><span className="lbval">574</span></div>
+              <div className="lbrow"><span className="lbrank">3</span><span className="lbname">Ridgemont</span><span className="lbval">557</span></div>
+              <div className="lbrow"><span className="lbrank">4</span><span className="lbname">Carver State</span><span className="lbval">535</span></div>
+              <div className="lbrow"><span className="lbrank">5</span><span className="lbname">Westbrook</span><span className="lbval">445</span></div>
+            </div>
+            <div className="lbfoot">You rank 2 of 16 in your conference &middot; 17 of 264 in the NCAA</div>
+          </FadeUp>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Simple annual pricing (centered closing beat) ── */
+function PricingSection() {
+  return (
+    <section className="audience-page-cta scroll-mt-40 md:scroll-mt-48">
+      <div className="audience-page-cta-inner pt-28 md:pt-36">
+        <FadeUp>
+          <p
+            className="font-sans text-[11px] font-bold uppercase tracking-[0.24em] text-white/40"
+            style={{ margin: "0 0 1.75rem" }}
+          >
+            Simple annual pricing
+          </p>
+          <h2 className="audience-page-cta-h2">Run your NIL program on JABA.</h2>
+          <p
+            className="font-sans font-extrabold leading-none"
+            style={{
+              color: LIME,
+              fontSize: "clamp(4.5rem, 11vw, 8.5rem)",
+              fontVariantNumeric: "tabular-nums",
+              margin: "0.25rem 0 0",
+            }}
+          >
+            $2,500
+          </p>
+          <p
+            className="font-sans text-[11px] font-bold uppercase tracking-[0.24em] text-white/40"
+            style={{ margin: "0.75rem 0 0" }}
+          >
+            Per year
+          </p>
+          <p className="audience-page-cta-sub" style={{ margin: "1.5rem 0 2.5rem" }}>
+            Full access to JABA for your athletic department.
+          </p>
+          <div className="audience-page-hero-cta">
+            <VoltButton
+              icon={<ArrowUpRight className="h-4 w-4" />}
+              onClick={() => window.open(BOOKING_URL, "_blank", "noopener,noreferrer")}
+            >
+              Get started
+            </VoltButton>
+          </div>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+/* ── Athlete + agent coordination (UCLA) — clean dark ── */
+function CoordinationSection() {
+  const parties = [
+    { role: "Athlete", name: "Jordan Chiles", status: "Approved", ready: true },
+    { role: "Agent", name: "Talent agent", status: "Approved", ready: true },
+    { role: "Compliance", name: "UCLA Athletics", status: "In review", ready: false },
+  ];
+  const thread = [
+    { who: "JABA", lime: true, text: "Nike deal is drafted. Looping in the agent and UCLA compliance for sign-off." },
+    { who: "Agent", lime: false, text: "Approved on our side. Deliverables and usage rights look right." },
+    { who: "Athlete", lime: false, text: "Good to go." },
+    { who: "JABA", lime: true, text: "Both approved. Sent to UCLA compliance for final review, I'll nudge if it stalls." },
+  ];
+  return (
+    <section className="relative overflow-hidden bg-black scroll-mt-32 md:scroll-mt-40">
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ background: "#000" }}
+      />
+      <div className={`relative ${WRAP} pb-20 pt-28 md:pb-28 md:pt-36`}>
+        <FadeUp className="max-w-2xl">
+          <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-white/40">Athletes + Agents</p>
+          <h2 className="mt-4 font-display text-4xl leading-[1.05] text-white md:text-5xl">
+            Keep every athlete and their agent{" "}
+            <span className="italic" style={{ color: LIME }}>on the same page.</span>
+          </h2>
+          <p className="mt-4 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
+            UCLA athletes bring their own agents and reps. JABA loops them in
+            automatically, so deals, deliverables, and approvals move without your
+            staff playing middleman.
+          </p>
+        </FadeUp>
+
+        <FadeUp delay={0.1} className="mt-12">
+          <GlassPanel className="overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr]">
+              {/* Parties + approvals */}
+              <div className="border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
+                <p className="font-sans text-[10px] font-medium uppercase tracking-[0.14em] text-white/40">
+                  Deal · Nike
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {parties.map((p) => (
+                    <li
+                      key={p.role}
+                      className="rounded-xl border px-3 py-2"
+                      style={{
+                        borderColor: p.ready ? "rgba(223,255,0,0.3)" : "rgba(255,255,255,0.1)",
+                        background: p.ready ? "rgba(223,255,0,0.05)" : "rgba(255,255,255,0.03)",
+                      }}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="truncate font-sans text-[12.5px] font-medium text-white">{p.name}</p>
+                        <span
+                          className="flex shrink-0 items-center gap-1 font-sans text-[9px] font-semibold uppercase tracking-[0.08em]"
+                          style={{ color: p.ready ? LIME : "rgba(255,255,255,0.4)" }}
+                        >
+                          {p.ready && <Check className="h-3 w-3" />}
+                          {p.status}
+                        </span>
+                      </div>
+                      <p className="font-sans text-[10.5px] text-white/40">{p.role}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Coordination thread */}
+              <div className="p-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <p className="font-sans text-[13px] font-extrabold uppercase tracking-[0.04em] text-white">Coordination</p>
+                  <span className="font-sans text-[11px] text-white/40" style={{ fontVariantNumeric: "tabular-nums" }}>2 of 3 approved</span>
+                </div>
+                <ul className="mt-4 space-y-2.5">
+                  {thread.map((m, i) => (
+                    <li key={i} className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
+                      <span
+                        className="font-sans text-[11px] font-semibold"
+                        style={{ color: m.lime ? LIME : "rgba(255,255,255,0.85)" }}
+                      >
+                        {m.who}
+                      </span>
+                      <p className="mt-1 font-sans text-[12.5px] leading-relaxed text-white/70">{m.text}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </GlassPanel>
+        </FadeUp>
+      </div>
+    </section>
+  );
+}
+
+export default function ForSchoolsPage({
+  bare,
+  hideBrands,
+  pricing,
+  ucla,
+}: { bare?: boolean; hideBrands?: boolean; pricing?: boolean; ucla?: boolean } = {}) {
   return (
     <PageLayout bare={bare}>
       {/* Hero — image backdrop that fades to black into the first section */}
       <WorldBackdrop type="image" src="/for-schools-hero.png" parallax>
-        <div className="audience-page-hero-inner px-6 pb-32 pt-44 text-center md:pb-44 md:pt-56">
-          <h1 className="audience-page-h1 [text-wrap:balance]" style={{ maxWidth: "24ch", marginLeft: "auto", marginRight: "auto", marginBottom: "2.25rem" }}>
-            NIL is evolving faster{" "}
-            <span className="italic" style={{ color: LIME }}>than the systems built to support it.</span>
-          </h1>
-          <p
-            className="audience-page-subtitle"
-            style={{
-              color: "rgba(255,255,255,0.72)",
-              ...(bare
-                ? { fontSize: "clamp(1.2rem, 1.7vw, 1.65rem)", lineHeight: 1.6, maxWidth: "720px" }
-                : {}),
-            }}
-          >
-            Third-party NIL unlocks opportunity and thousands of deliverables
-            to manage. JABA gives your department the operating layer to handle it all.
-          </p>
-          {!bare && (
-            <div className="audience-page-hero-cta">
-              <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
-            </div>
-          )}
-        </div>
+        {ucla ? (
+          <div className="px-6 pb-0 pt-48 text-center md:pt-56">
+            <img
+              src="/deck/jaba-wordmark.png"
+              alt="JABA"
+              className="mx-auto block"
+              style={{ width: "min(440px, 80vw)", filter: "drop-shadow(0 20px 44px rgba(0,0,0,.5))" }}
+            />
+            <p className="mx-auto mt-6 font-sans font-bold" style={{ fontSize: "clamp(19px,2.4vw,32px)", color: "#f7f7ee" }}>
+              AI that helps athletic departments run NIL at scale.
+            </p>
+            <img
+              src="/deck/mascot.png"
+              alt=""
+              aria-hidden
+              className="mx-auto mt-10 block"
+              style={{ width: "min(280px, 62vw)", marginBottom: "0", filter: "drop-shadow(0 18px 40px rgba(0,0,0,.35))" }}
+            />
+          </div>
+        ) : (
+          <div className="audience-page-hero-inner px-6 pb-32 pt-44 text-center md:pb-44 md:pt-56">
+            <h1 className="audience-page-h1 [text-wrap:balance]" style={{ maxWidth: "24ch", marginLeft: "auto", marginRight: "auto", marginBottom: "2.25rem" }}>
+              NIL is evolving faster{" "}
+              <span className="italic" style={{ color: LIME }}>than the systems built to support it.</span>
+            </h1>
+            <p
+              className="audience-page-subtitle"
+              style={{
+                color: "rgba(255,255,255,0.72)",
+                ...(bare
+                  ? { fontSize: "clamp(1.2rem, 1.7vw, 1.65rem)", lineHeight: 1.6, maxWidth: "720px" }
+                  : {}),
+              }}
+            >
+              Third-party NIL unlocks opportunity and thousands of deliverables
+              to manage. JABA gives your department the operating layer to handle it all.
+            </p>
+            {!bare && (
+              <div className="audience-page-hero-cta">
+                <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
+              </div>
+            )}
+          </div>
+        )}
       </WorldBackdrop>
 
-      {/* School logo strip — scrolling marquee */}
-      <SocialProofSection />
+      {/* School logo strip — scrolling marquee (white band on UCLA, framed in volt) */}
+      {ucla && <div className="h-1.5 w-full bg-[#dfff00]" />}
+      <SocialProofSection light={ucla} />
 
-      {/* Brand matching + outreach — clean dark */}
-      {!hideBrands && <MatchStudio />}
+      {/* Problem framing — text-only, animated */}
+      {ucla && <MovingPieces />}
+      {ucla && <MeetJabaSection />}
+      {ucla && <div className="h-1.5 w-full bg-[#dfff00]" />}
+      {ucla && <ConsolidatedCard />}
 
-      {/* Workflow task table — dark dashboard */}
-      <WorkflowSection />
+      {/* Content intelligence (UCLA order: before the overlap) */}
+      {ucla && (
+        <>
+          <div className="h-1.5 w-full bg-[#dfff00]" />
+          <ContentSection ucla />
+          <div className="h-1.5 w-full bg-[#dfff00]" />
+        </>
+      )}
+
+      {/* Athlete intelligence — UCLA order: before the overlap (fictional athlete) */}
+      {ucla && <AthleteIntelligence />}
+
+      {!hideBrands && (ucla ? <OverlapSection /> : <MatchStudio />)}
+
+      {/* Operating loop, then deliverables: deck calendar on UCLA */}
+      {ucla && <WorkMovingSection />}
+      {ucla ? <CalendarSection /> : <WorkflowSection />}
 
       {/* Lime divider into the light statement + three-up cards */}
-      <div className="h-1.5 w-full bg-[#dfff00]" />
-      <NilInterlude />
-      <div className="h-1.5 w-full bg-[#dfff00]" />
+      {!ucla && (
+        <>
+          <div className="h-1.5 w-full bg-[#dfff00]" />
+          <NilInterlude />
+          <div className="h-1.5 w-full bg-[#dfff00]" />
+        </>
+      )}
 
-      {/* Athlete intelligence — world backdrop, centered headline */}
-      <AthleteIntelligence />
+      {/* Athlete intelligence — world backdrop, centered headline (non-UCLA position) */}
+      {!ucla && <AthleteIntelligence />}
 
-      {/* Content — light dashboard beat */}
-      <div className="h-1.5 w-full bg-[#dfff00]" />
-      <ContentSection />
-      <div className="h-1.5 w-full bg-[#dfff00]" />
+
+      {/* Content — light dashboard beat (non-UCLA position) */}
+      {!ucla && (
+        <>
+          <div className="h-1.5 w-full bg-[#dfff00]" />
+          <ContentSection />
+          <div className="h-1.5 w-full bg-[#dfff00]" />
+        </>
+      )}
 
       {/* Reports — dark dashboard */}
-      <ReportsSection />
+      {ucla ? <ReportBrandSection /> : <ReportsSection />}
 
-      {/* CTA */}
-      <section className="audience-page-cta scroll-mt-40 md:scroll-mt-48">
-        <div className="audience-page-cta-inner pt-28 md:pt-36">
-          <h2 className="audience-page-cta-h2">
-            Never send a follow-up or set a reminder{" "}
-            <span className="cta-headline-accent">ever again.</span>
-          </h2>
-          <p className="audience-page-cta-sub">
-            See how athletic departments run NIL at scale on JABA.
-          </p>
-          <div className="audience-page-hero-cta">
-            <VoltButton
-              icon={<Zap className="h-4 w-4" />}
-              onClick={() => window.open(BOOKING_URL, "_blank", "noopener,noreferrer")}
-            >
-              Book a demo
-            </VoltButton>
+      {/* Closing beat — pricing block or CTA */}
+      {pricing ? (
+        <PricingSection />
+      ) : (
+        <section className="audience-page-cta scroll-mt-40 md:scroll-mt-48">
+          <div className="audience-page-cta-inner pt-28 md:pt-36">
+            <h2 className="audience-page-cta-h2">
+              JABA helps athletic departments{" "}
+              <span className="cta-headline-accent">run NIL at scale.</span>
+            </h2>
+            <p className="audience-page-cta-sub">
+              Never worry about following up with an athlete or their agent again.
+            </p>
+            <div className="audience-page-hero-cta">
+              <VoltButton
+                icon={<Zap className="h-4 w-4" />}
+                onClick={() => window.open(BOOKING_URL, "_blank", "noopener,noreferrer")}
+              >
+                Book a demo
+              </VoltButton>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </PageLayout>
   );
 }

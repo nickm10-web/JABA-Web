@@ -3,9 +3,7 @@ dist
 .vite
 
 # Standalone deploy build folders (regenerate with `vite build`)
-deploy-slim
-deploy-ops
-deploy-schools
+deploy-*
 
 # Large media files (exceed GitHub 100MB limit)
 public/jaba-wave-original.mp4
