@@ -21,6 +21,7 @@ export function EmailCaptureGlass({
   onSubmit,
 }: EmailCaptureGlassProps) {
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -28,15 +29,10 @@ export function EmailCaptureGlass({
     if (!email || status === "sending") return;
     setStatus("sending");
     try {
-      // Relays the signup to jordon@jaba.ai (FormSubmit AJAX endpoint).
-      const res = await fetch("https://formsubmit.co/ajax/jordon@jaba.ai", {
+      const res = await fetch("/api/lead", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          email,
-          _subject: "New early-access signup - jaba.ai",
-          _template: "table",
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "hero", company_website: honeypot }),
       });
       if (!res.ok) throw new Error("relay failed");
       onSubmit?.(email);
@@ -60,6 +56,17 @@ export function EmailCaptureGlass({
         placeholder={placeholder}
         aria-label="Email address"
         className="liquid-email-input"
+      />
+      {/* Honeypot: offscreen and skipped by tab order, so only bots fill it. */}
+      <input
+        type="text"
+        name="company_website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
       />
       <VoltButton size="sm">
         {status === "done"

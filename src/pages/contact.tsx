@@ -25,22 +25,27 @@ export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
 
-  // No backend on this site yet, so the form composes the message in the
-  // sender's own mail client rather than posting into a void. Swap this for a
-  // real endpoint when one exists — see the note in the README.
-  const send = (e: React.FormEvent) => {
+  const send = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = "JABA enquiry";
-    const body = [
-      name && `Name: ${name}`,
-      email && `Email: ${email}`,
-      "",
-      message,
-    ]
-      .filter(Boolean)
-      .join("\n");
-    window.location.href = `mailto:${INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if (status === "sending") return;
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message, source: "contact", company_website: honeypot }),
+      });
+      if (!res.ok) throw new Error("send failed");
+      setName("");
+      setEmail("");
+      setMessage("");
+      setStatus("done");
+    } catch {
+      setStatus("error");
+    }
   };
 
   const field =
@@ -94,8 +99,27 @@ export default function ContactPage() {
                 onChange={(e) => setMessage(e.target.value)}
                 required
               />
-              <div className="pt-1">
-                <VoltButton>Send</VoltButton>
+              {/* Honeypot: offscreen and skipped by tab order, so only bots fill it. */}
+              <input
+                type="text"
+                name="company_website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+              />
+              <div className="flex items-center gap-3 pt-1">
+                <VoltButton>
+                  {status === "sending" ? "Sending…" : status === "done" ? "Sent ✓" : "Send"}
+                </VoltButton>
+                {status === "error" && (
+                  <p className="font-sans text-[13px] text-[#b4231f]">
+                    Something went wrong. Email us at{" "}
+                    <a className="underline" href={`mailto:${INBOX}`}>{INBOX}</a>.
+                  </p>
+                )}
               </div>
               <p className="pt-1 font-sans text-[12.5px] text-black/45">
                 This opens your email app with the message ready to send.
