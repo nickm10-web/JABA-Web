@@ -37,7 +37,7 @@ const socials: Array<{ label: string; href: string; path?: string; node?: React.
   },
   {
     label: "YouTube",
-    href: "https://www.youtube.com/@jaba-ai",
+    href: "https://www.youtube.com/@GETJABA",
     path: "M23.5 6.9a3 3 0 0 0-2.1-2.13C19.5 4.25 12 4.25 12 4.25s-7.5 0-9.4.52A3 3 0 0 0 .5 6.9C0 8.8 0 12 0 12s0 3.2.5 5.1a3 3 0 0 0 2.1 2.13c1.9.52 9.4.52 9.4.52s7.5 0 9.4-.52a3 3 0 0 0 2.1-2.13C24 15.2 24 12 24 12s0-3.2-.5-5.1ZM9.6 15.6V8.4l6.25 3.6-6.25 3.6Z",
   },
   {
