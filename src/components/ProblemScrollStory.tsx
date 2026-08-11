@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
+import KineticGrid from "@/components/KineticGrid";
 
 const LIME = "#dfff00";
 
@@ -24,55 +25,14 @@ export default function ProblemScrollStory() {
       ref={sectionRef}
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-black px-6 py-24 text-white"
     >
-      {/* A blueprint grid revealed unevenly by slow-drifting fractal noise, so
-          it reads as an irregular, shifting technical grid, not a flat one. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
+      {/* Kinetic lattice: idles almost invisible, warps violet toward the cursor. */}
+      <KineticGrid
+        className="pointer-events-none absolute inset-0 h-full w-full"
         style={{
-          maskImage:
-            "radial-gradient(92% 82% at 50% 44%, #000 0%, transparent 94%)",
-          WebkitMaskImage:
-            "radial-gradient(92% 82% at 50% 44%, #000 0%, transparent 94%)",
+          maskImage: "radial-gradient(92% 82% at 50% 44%, #000 0%, transparent 94%)",
+          WebkitMaskImage: "radial-gradient(92% 82% at 50% 44%, #000 0%, transparent 94%)",
         }}
-      >
-        <svg viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" className="h-full w-full">
-          <defs>
-            <pattern id="jgrid" width="50" height="50" patternUnits="userSpaceOnUse">
-              <path d="M50 0H0V50" fill="none" stroke="#fff" strokeWidth="1" strokeOpacity="0.5" />
-              <circle cx="0" cy="0" r="1.1" fill="#fff" fillOpacity="0.7" />
-            </pattern>
-            <filter id="jnoise" x="0" y="0" width="100%" height="100%">
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.02"
-                numOctaves="2"
-                seed="9"
-                stitchTiles="stitch"
-                result="n"
-              >
-                {reduce ? null : (
-                  <animate
-                    attributeName="baseFrequency"
-                    dur="26s"
-                    values="0.018;0.03;0.015;0.018"
-                    repeatCount="indefinite"
-                  />
-                )}
-              </feTurbulence>
-              <feColorMatrix
-                in="n"
-                type="matrix"
-                values="1.25 0 0 0 -0.42  1.25 0 0 0 -0.42  1.25 0 0 0 -0.42  0 0 0 0 1"
-              />
-            </filter>
-            <mask id="jmask">
-              <rect width="1200" height="760" fill="#fff" filter="url(#jnoise)" />
-            </mask>
-          </defs>
-          <rect width="1200" height="760" fill="url(#jgrid)" mask="url(#jmask)" opacity="0.65" />
-        </svg>
-      </div>
+      />
 
       {/* Film grain over the whole section. */}
       <div className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]" />
@@ -82,21 +42,20 @@ export default function ProblemScrollStory() {
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-display text-4xl font-light leading-[1.08] [text-wrap:balance] md:text-5xl lg:text-6xl"
+          className="font-deck text-4xl leading-[1.08] [text-wrap:balance] md:text-5xl lg:text-6xl"
         >
           Athlete marketing became the most valuable media on earth.{" "}
-          <span className="text-white/40">The tools never caught up.</span>
+          <span className="deck-italic text-white/40">The tools never caught up.</span>
         </motion.h2>
 
         <motion.p
           initial={{ opacity: 0, y: 22 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.55, ease: "easeOut" }}
-          className="mt-9 max-w-2xl font-sans text-lg leading-relaxed text-white/80 [text-wrap:balance] md:mt-12 md:text-xl"
+          className="mt-9 max-w-2xl font-sans text-xl leading-relaxed text-white/80 [text-wrap:balance] md:mt-12 md:text-2xl"
         >
-          In one decade it grew 40x, from a $1.7B afterthought to a $68B
-          industry. Seventy-three marketplaces tried to tame the chaos of DMs
-          and spreadsheets, and every one of them failed.
+          76 marketplaces tried to fix it. All failed because they ignored the
+          workflow.
         </motion.p>
 
         <div className="relative mt-12 md:mt-16">
@@ -117,10 +76,20 @@ export default function ProblemScrollStory() {
             initial={{ opacity: 0, y: 26, scale: 0.97 }}
             animate={climax ? { opacity: 1, y: 0, scale: 1 } : {}}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            className="relative font-display text-5xl font-bold leading-none md:text-6xl lg:text-7xl"
-            style={{ color: LIME }}
+            className="relative"
           >
-            So we fixed it.
+            {/* One line on desktop; stacked on phones so the punchline
+                doesn't shrink to smaller than the copy above it. */}
+            <img
+              src="/so-we-fixed-it.png"
+              alt="So we fixed it."
+              className="mx-auto hidden w-[min(88vw,760px)] md:block"
+            />
+            <img
+              src="/so-we-fixed-it-stacked.png"
+              alt="So we fixed it."
+              className="mx-auto w-[86vw] max-w-[380px] md:hidden"
+            />
           </motion.p>
         </div>
       </div>

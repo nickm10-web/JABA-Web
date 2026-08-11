@@ -21,8 +21,8 @@ function relativeLuminance(r: number, g: number, b: number): number {
  * the first opaque computed background-color found beneath the sample point.
  */
 export function useAdaptiveGlass(
-  sampleRef: RefObject<HTMLElement>,
-  excludeRef: RefObject<HTMLElement>,
+  sampleRef: RefObject<HTMLElement | null>,
+  excludeRef: RefObject<HTMLElement | null>,
 ): GlassTheme {
   const [theme, setTheme] = useState<GlassTheme>("on-light");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -70,6 +70,36 @@ export function useAdaptiveGlass(
             return count ? sum / count : null;
           } catch {
             continue; // tainted/unsupported — fall through to next element
+          }
+        }
+
+        // Same-origin image backdrops (e.g. the hero photo): sample the pixels
+        // under the rail the same way as video.
+        if (node instanceof HTMLImageElement) {
+          if (!node.naturalWidth || getComputedStyle(node).opacity === "0") continue;
+          try {
+            const canvas = canvasRef.current!;
+            canvas.width = 8;
+            canvas.height = 8;
+            const ctx = canvas.getContext("2d", { willReadFrequently: true });
+            if (!ctx) continue;
+            const ir = node.getBoundingClientRect();
+            const fx = Math.min(Math.max((x - ir.left) / ir.width, 0), 1);
+            const fy = Math.min(Math.max((y - ir.top) / ir.height, 0), 1);
+            const box = node.naturalWidth * 0.15;
+            const sx = Math.min(Math.max(fx * node.naturalWidth - box / 2, 0), node.naturalWidth - box);
+            const sy = Math.min(Math.max(fy * node.naturalHeight - box / 2, 0), node.naturalHeight - box);
+            ctx.drawImage(node, sx, sy, box, box, 0, 0, 8, 8);
+            const { data } = ctx.getImageData(0, 0, 8, 8);
+            let sum = 0;
+            let count = 0;
+            for (let i = 0; i < data.length; i += 4) {
+              sum += relativeLuminance(data[i], data[i + 1], data[i + 2]);
+              count += 1;
+            }
+            return count ? sum / count : null;
+          } catch {
+            continue; // cross-origin/tainted — fall through to next element
           }
         }
 

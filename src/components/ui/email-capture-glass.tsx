@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
 
 import { VoltButton } from "@/components/ui/volt-button";
 import { cn } from "@/lib/utils";
@@ -22,13 +21,30 @@ export function EmailCaptureGlass({
   onSubmit,
 }: EmailCaptureGlassProps) {
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    // TODO: wire to backend / CRM. For now just surface the value.
-    onSubmit?.(email);
-    setEmail("");
+    if (!email || status === "sending") return;
+    setStatus("sending");
+    try {
+      // Relays the signup to jordon@jaba.ai (FormSubmit AJAX endpoint).
+      const res = await fetch("https://formsubmit.co/ajax/jordon@jaba.ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          email,
+          _subject: "New early-access signup - jaba.ai",
+          _template: "table",
+        }),
+      });
+      if (!res.ok) throw new Error("relay failed");
+      onSubmit?.(email);
+      setEmail("");
+      setStatus("done");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -45,8 +61,14 @@ export function EmailCaptureGlass({
         aria-label="Email address"
         className="liquid-email-input"
       />
-      <VoltButton size="sm" icon={<ArrowRight className="h-4 w-4" />}>
-        {cta}
+      <VoltButton size="sm">
+        {status === "done"
+          ? "You're on the list ✓"
+          : status === "sending"
+            ? "Sending…"
+            : status === "error"
+              ? "Try again"
+              : cta}
       </VoltButton>
     </form>
   );

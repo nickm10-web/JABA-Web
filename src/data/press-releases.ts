@@ -14,11 +14,17 @@ export interface PressRelease {
   graphic?: string;
   paragraphs: string[];
   quotes: { text: string; author: string; title: string }[];
+  /** Where the partnership was announced socially. Rendered only when set. */
+  instagram?: string;
+  linkedin?: string;
 }
 
 export const pressReleases: PressRelease[] = [
   {
     id: "cincinnati",
+    instagram: "https://www.instagram.com/p/DU6W4m5kYD6/",
+    linkedin:
+      "https://www.linkedin.com/posts/jaba-ai_jaba-cincinnati-bearcats-cincinnati-activity-7429977504557477888-pXnP",
     partner: "University of Cincinnati",
     tag: "NCAA D-I · Big 12",
     date: "February 18, 2026",
@@ -45,6 +51,9 @@ export const pressReleases: PressRelease[] = [
   },
   {
     id: "rmu",
+    instagram: "https://www.instagram.com/p/DSVK_JDERb6/",
+    linkedin:
+      "https://www.linkedin.com/posts/jaba-ai_robert-morris-university-athletics-has-partnered-activity-7406731076062281729-I4mQ",
     partner: "Robert Morris University",
     tag: "NCAA D-I · Horizon League",
     date: "December 16, 2025",
@@ -75,6 +84,9 @@ export const pressReleases: PressRelease[] = [
   },
   {
     id: "purdue",
+    instagram: "https://www.instagram.com/p/DSGPx9cj4CU/",
+    linkedin:
+      "https://www.linkedin.com/posts/jaba-ai_jaba-boilerup-activity-7404633006701027328-ch6V",
     partner: "Purdue University",
     tag: "NCAA D-I · Big Ten",
     date: "December 10, 2025",
@@ -100,6 +112,9 @@ export const pressReleases: PressRelease[] = [
   },
   {
     id: "athletes-unlimited",
+    instagram: "https://www.instagram.com/p/DRxA_cIjS9_/",
+    linkedin:
+      "https://www.linkedin.com/posts/jaba-ai_were-teaming-up-with-athletes-unlimited-activity-7401643847082323970-VB7T",
     partner: "Athletes Unlimited",
     tag: "Pro Women's Sports",
     date: "December 1, 2025",
@@ -125,6 +140,9 @@ export const pressReleases: PressRelease[] = [
   },
   {
     id: "baylor",
+    instagram: "https://www.instagram.com/p/DNQmeEYtMJi/",
+    linkedin:
+      "https://www.linkedin.com/posts/jaba-ai_our-first-major-partnership-of-the-year-is-activity-7361519620391911425-8jD2",
     partner: "Baylor University",
     tag: "NCAA D-I · Big 12",
     date: "August 12, 2025",

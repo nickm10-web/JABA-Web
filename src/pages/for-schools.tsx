@@ -6,33 +6,7 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
-import {
-  ArrowRight,
-  ArrowUpRight,
-  BarChart3,
-  Calendar,
-  Check,
-  Eye,
-  FileText,
-  Filter,
-  GripVertical,
-  Heart,
-  LayoutGrid,
-  LineChart,
-  List,
-  MessageCircle,
-  MessageSquare,
-  Play,
-  Plus,
-  RefreshCw,
-  Search,
-  Smartphone,
-  Sparkles,
-  Star,
-  Target,
-  Users,
-  Zap,
-} from "lucide-react";
+import { ArrowRight, BarChart3, Check, Eye, Filter, Heart, LayoutGrid, LineChart, List, MessageCircle, Play, Plus, RefreshCw, Search, Sparkles, Star, Target, Users } from "lucide-react";
 
 import PageLayout from "@/components/layout/page-layout";
 import SocialProofSection from "@/components/sections/social-proof-section";
@@ -2100,7 +2074,6 @@ function PricingSection() {
           </p>
           <div className="audience-page-hero-cta">
             <VoltButton
-              icon={<ArrowUpRight className="h-4 w-4" />}
               onClick={() => window.open(BOOKING_URL, "_blank", "noopener,noreferrer")}
             >
               Get started
@@ -2218,7 +2191,22 @@ export default function ForSchoolsPage({
     <PageLayout bare={bare}>
       {/* Hero — image backdrop that fades to black into the first section */}
       <WorldBackdrop type="image" src="/for-schools-hero.png" parallax>
-        {ucla ? (
+        {ucla && !bare ? (
+          /* In-site version: reads like a subpage of the home page, not a deck cover */
+          <div className="audience-page-hero-inner px-6 pb-32 pt-44 text-center md:pb-44 md:pt-56">
+            <h1 className="audience-page-h1 [text-wrap:balance]" style={{ maxWidth: "22ch", marginLeft: "auto", marginRight: "auto", marginBottom: "2.25rem" }}>
+              AI that helps athletic departments{" "}
+              <span className="italic" style={{ color: LIME }}>run NIL at scale.</span>
+            </h1>
+            <div className="audience-page-hero-cta">
+              <VoltButton
+                onClick={() => window.open(BOOKING_URL, "_blank", "noopener,noreferrer")}
+              >
+                Book a demo
+              </VoltButton>
+            </div>
+          </div>
+        ) : ucla ? (
           <div className="px-6 pb-0 pt-48 text-center md:pt-56">
             <img
               src="/deck/jaba-wordmark.png"
@@ -2257,7 +2245,7 @@ export default function ForSchoolsPage({
             </p>
             {!bare && (
               <div className="audience-page-hero-cta">
-                <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
+                <VoltButton>Book a demo</VoltButton>
               </div>
             )}
           </div>
@@ -2266,7 +2254,8 @@ export default function ForSchoolsPage({
 
       {/* School logo strip — scrolling marquee (white band on UCLA, framed in volt) */}
       {ucla && <div className="h-1.5 w-full bg-[#dfff00]" />}
-      <SocialProofSection light={ucla} />
+      {/* Logo strip: skipped on the in-site version — the home page already has it */}
+      {!(ucla && !bare) && <SocialProofSection light={ucla} />}
 
       {/* Problem framing — text-only, animated */}
       {ucla && <MovingPieces />}
@@ -2332,7 +2321,6 @@ export default function ForSchoolsPage({
             </p>
             <div className="audience-page-hero-cta">
               <VoltButton
-                icon={<Zap className="h-4 w-4" />}
                 onClick={() => window.open(BOOKING_URL, "_blank", "noopener,noreferrer")}
               >
                 Book a demo

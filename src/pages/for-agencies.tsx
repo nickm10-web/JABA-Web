@@ -1,4 +1,4 @@
-import { ArrowLeftRight, ArrowRight, Check, Download, Instagram, MapPin, Paperclip, RotateCw, Search, Send, Sparkles, TrendingUp, Zap } from "lucide-react";
+import { ArrowLeftRight, ArrowRight, Check, Download, Instagram, MapPin, Paperclip, RotateCw, Search, Send, Sparkles, TrendingUp } from "lucide-react";
 
 /* TikTok glyph (not in lucide). */
 function TiktokGlyph({ className }: { className?: string }) {
@@ -917,7 +917,7 @@ export default function ForAgenciesPage() {
             that finds the deals, writes the outreach, and tracks them to close.
           </p>
           <div className="audience-page-hero-cta">
-            <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
+            <VoltButton>Book a demo</VoltButton>
           </div>
         </div>
       </WorldBackdrop>
@@ -953,7 +953,7 @@ export default function ForAgenciesPage() {
           <p className="audience-page-cta-sub">
             See how agencies find, pitch, and close brand deals on JABA.
           </p>
-          <VoltButton icon={<Zap className="h-4 w-4" />}>Book a demo</VoltButton>
+          <VoltButton>Book a demo</VoltButton>
         </div>
       </section>
     </PageLayout>

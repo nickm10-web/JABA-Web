@@ -1,4 +1,3 @@
-import { Zap } from "lucide-react";
 
 import { VoltButton } from "@/components/ui/volt-button";
 
@@ -11,7 +10,6 @@ export default function VoltButtonDemo() {
           Volt CTA
         </p>
         <VoltButton
-          icon={<Zap className="h-4 w-4" />}
           className="shadow-[0_0_24px_rgba(223,255,0,0.28)]"
         >
           Book a demo

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Zap, Target, Eye, Clock, Search, Sparkles, Send, BarChart3, ArrowRight } from "lucide-react";
+import { ArrowRight, BarChart3, Clock, Eye, Search, Send, Sparkles, Target } from "lucide-react";
 import PageLayout from "@/components/layout/page-layout";
 import { VoltButton } from "@/components/ui/volt-button";
 
@@ -92,7 +92,7 @@ export default function ForBrandsPage() {
             from finding talent to measuring results.
           </p>
           <div className="audience-page-hero-cta">
-            <VoltButton icon={<Zap className="h-4 w-4" />}>
+            <VoltButton>
               Book a demo
             </VoltButton>
           </div>
@@ -190,7 +190,7 @@ export default function ForBrandsPage() {
           <p className="audience-page-cta-sub">
             See how JABA helps brand teams execute athlete partnerships at scale.
           </p>
-          <VoltButton icon={<Zap className="h-4 w-4" />}>
+          <VoltButton>
             Book a demo
           </VoltButton>
         </div>

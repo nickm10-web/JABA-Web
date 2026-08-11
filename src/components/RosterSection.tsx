@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 
 const LIME = "#dfff00";
@@ -51,152 +52,81 @@ const AGENTS: Agent[] = [
   },
 ];
 
+/* Pyramid across the characters only — largest in the middle, stepping down to
+   the edges. The nameplates stay on a flat baseline. */
 const FAN = [
-  { rotate: -5,   scale: 0.91, y: 20 },
-  { rotate: -2.5, scale: 0.96, y: 8  },
-  { rotate: 0,    scale: 1.06, y: -12 },
-  { rotate: 2.5,  scale: 0.96, y: 8  },
-  { rotate: 5,    scale: 0.91, y: 8 },
+  { scale: 0.82 },
+  { scale: 1.02 },
+  { scale: 1.14 },
+  { scale: 1.02 },
+  { scale: 0.82 },
 ];
 
-function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
-  const f = FAN[idx];
+function AgentCard({ agent, idx, compact }: { agent: Agent; idx: number; compact: boolean }) {
+  // The pyramid is a wide-screen composition; in a 2-up grid it just makes
+  // some agents randomly smaller than their neighbours.
+  const f = compact ? { scale: 1 } : FAN[idx];
   const featured = !!agent.captain;
 
   // GIF bleed above card (px)
-  const BLEED = 110;
+  const BLEED = compact ? 64 : 110;
   // Info section starts this far down from card top
-  const INFO_TOP = 185;
+  const INFO_TOP = compact ? 104 : 185;
   // Card height = info top + nameplate content (~140px)
-  const CARD_H = featured ? 350 : 330;
+  const CARD_H = compact ? 208 : featured ? 300 : 282;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
+      viewport={{ once: true, margin: "-40px", amount: 0.1 }}
       transition={{ duration: 0.6, delay: idx * 0.09, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{
-        scale: 1.08,
-        rotate: 0,
-        y: -20,
-        zIndex: 30,
-        transition: { type: "spring", stiffness: 250, damping: 22 },
-      }}
-      className="group cursor-pointer"
+      className="group"
       style={{
-        transform: `rotate(${f.rotate}deg) scale(${f.scale}) translateY(${f.y}px)`,
-        zIndex: featured ? 10 : idx < 2 ? idx + 1 : 5 - idx,
+        zIndex: 10 - Math.abs(idx - 2),
         // Extra headroom for bleed
         paddingTop: `${BLEED}px`,
         position: "relative",
       }}
     >
-      {/* ── Card background ── */}
+      {/* No card surface — the agents sit straight on the section's black, so
+          only the character and its nameplate read. */}
       <div
         style={{
           position: "relative",
           width: "100%",
           height: `${CARD_H}px`,
-          overflow: "hidden",
-          borderRadius: "18px",
-          background: "linear-gradient(160deg, #101010 0%, #060606 100%)",
-          border: featured
-            ? `1px solid ${LIME}66`
-            : `1px solid ${LIME}28`,
-          boxShadow: featured
-            ? `0 20px 70px rgba(0,0,0,0.9), 0 0 45px ${LIME}18`
-            : `0 10px 50px rgba(0,0,0,0.85), 0 0 24px ${LIME}08`,
           zIndex: 2,
         }}
       >
-        {/* Top edge highlight */}
-        <div
-          style={{
-            position: "absolute", top: 0, left: 0, right: 0, height: "1px", zIndex: 3,
-            background:
-              "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)",
-          }}
-        />
-
-        {/* Deep nameplate gradient */}
-        <div
-          style={{
-            position: "absolute", left: 0, right: 0, bottom: 0,
-            height: "58%",
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.98) 60%, rgba(0,0,0,0.7) 80%, transparent 100%)",
-            zIndex: 2,
-            pointerEvents: "none",
-          }}
-        />
-
         {/* ── Nameplate content ── */}
         <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 4, padding: "0 16px 16px" }}>
-          {/* Index · role — quiet, tabular, one type voice */}
-          <p
-            className="font-sans"
-            style={{
-              fontVariantNumeric: "tabular-nums",
-              fontWeight: 600,
-              fontSize: "12px",
-              letterSpacing: "0.08em",
-              color: LIME,
-              marginBottom: "7px",
-            }}
-          >
-            {agent.number} · {agent.position}
-          </p>
-
-          {/* Hairline rule */}
-          <div
-            style={{
-              height: "1px",
-              background:
-                "linear-gradient(90deg, rgba(255,255,255,0.16), transparent)",
-              marginBottom: "8px",
-            }}
-          />
-
-          {/* Name — narrative voice, serif */}
+          {/* Name */}
           <h3
-            className="font-display"
+            className="font-deck"
             style={{
-              fontSize: featured ? "1.6rem" : "1.45rem",
+              fontSize: compact ? "1.12rem" : featured ? "1.6rem" : "1.45rem",
               color: "#fff",
               lineHeight: 1.15,
               marginBottom: "7px",
             }}
           >
-            {agent.name}
+            {/* Uniform two-line titles: "The X" over "Agent" on every card. */}
+            {agent.name.replace(/ Agent$/, "")}
+            <br />
+            Agent
           </h3>
 
           {/* Description */}
           <p
             className="font-sans"
             style={{
-              fontSize: "0.82rem",
+              fontSize: compact ? "0.76rem" : "0.82rem",
               color: "rgba(255,255,255,0.6)",
               lineHeight: 1.55,
-              marginBottom: "10px",
             }}
           >
             {agent.description}
-          </p>
-
-          {/* Skills — quiet dotted line instead of rainbow pills */}
-          <p
-            className="font-sans"
-            style={{
-              fontSize: "11px",
-              color: "rgba(255,255,255,0.42)",
-              letterSpacing: "0.02em",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {agent.skills.join("  ·  ")}
           </p>
         </div>
       </div>
@@ -207,9 +137,12 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
           position: "absolute",
           top: 0,
           left: "50%",
-          width: "130%",
+          width: compact ? "104%" : "130%",
           height: `${BLEED + INFO_TOP}px`,
-          transform: "translateX(-50%)",
+          // Pyramid: only the characters scale, biggest in the middle. Grows
+          // from the bottom so they all keep their feet on one line.
+          transform: `translateX(-50%) scale(${f.scale})`,
+          transformOrigin: "bottom center",
           overflow: "visible",
           pointerEvents: "none",
           zIndex: 5,
@@ -224,7 +157,7 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
             position: "absolute",
             left: "50%",
             /* Move top anchor up so visible character is centered, cropping bottom empty space */
-            top: agent.number === "05" ? "57%" : "65%",
+            top: compact ? "48%" : agent.number === "05" ? "57%" : "65%",
             width: "100%",
             transform: `translate(-50%, -50%) scale(${agent.number === "05" ? 1.55 : 1.45})`,
             transformOrigin: "center center",
@@ -237,8 +170,18 @@ function AgentCard({ agent, idx }: { agent: Agent; idx: number }) {
 }
 
 export default function RosterSection() {
+  // Phones lay the agents out as a grid; the fanned row needs real width.
+  const [compact, setCompact] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setCompact(!mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   return (
-    <section className="relative bg-black pt-10 pb-16 text-white md:pt-14 md:pb-20">
+    <section className="relative bg-black pb-20 pt-14 text-white md:pb-32 md:pt-24">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div className="h-[600px] w-[900px] rounded-full"
           style={{ background: "radial-gradient(ellipse, rgba(255,255,255,0.018) 0%, transparent 70%)" }} />
@@ -246,21 +189,30 @@ export default function RosterSection() {
 
       <div className="relative mx-auto max-w-7xl px-6 md:px-10 lg:px-12">
         <div className="mb-2 text-center">
-          <h2 className="font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
-            Expand your team without hiring more people.
+          <h2 className="font-deck text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
+            <span className="block">Expand your team</span>
+            <span className="block">
+              without hiring <span style={{ color: LIME }}>more people.</span>
+            </span>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/50">
-            JABA's AI agents handle the manual work so you can focus on the high-level stuff and serve your athletes better.
+          <p className="mx-auto mt-4 max-w-2xl text-base text-white">
+            JABA&rsquo;s AI agents handle the manual work.
           </p>
         </div>
 
         {/* Card lineup — needs overflow visible for character bleed */}
         <div
-          style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "12px", paddingTop: "0px", paddingBottom: "2.5rem", overflow: "visible" }}
+          /* Five cards at a 160px floor need ~848px. Below that the row scrolls
+             on its own rather than dragging the whole page sideways. */
+          className="grid grid-cols-2 gap-x-3 gap-y-2 overflow-hidden pb-10 lg:flex lg:items-end lg:justify-center lg:gap-3 lg:overflow-visible lg:pb-10"
         >
           {AGENTS.map((agent, i) => (
-            <div key={agent.number} className="group" style={{ flex: 1, maxWidth: "250px", minWidth: "160px", overflow: "visible" }}>
-              <AgentCard agent={agent} idx={i} />
+            <div
+              key={agent.number}
+              className="group overflow-visible last:col-span-2 last:mx-auto last:w-1/2 lg:last:col-auto lg:last:mx-0 lg:last:w-auto"
+              style={{ flex: 1, maxWidth: "250px", overflow: "visible" }}
+            >
+              <AgentCard agent={agent} idx={i} compact={compact} />
             </div>
           ))}
         </div>

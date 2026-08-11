@@ -1,5 +1,5 @@
+import { Briefcase, Building2, Megaphone, Trophy } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
-import { Trophy, Building2, Megaphone, Briefcase } from "lucide-react";
 
 type Audience = {
   id: string;

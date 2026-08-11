@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Zap, Layers, AlertTriangle, BarChart2, Bot, Search, Send, LineChart, ArrowRight } from "lucide-react";
+import { AlertTriangle, ArrowRight, BarChart2, Bot, Layers, LineChart, Search, Send } from "lucide-react";
 import PageLayout from "@/components/layout/page-layout";
 import { VoltButton } from "@/components/ui/volt-button";
 
@@ -93,7 +93,7 @@ export default function DoordashPage() {
             slips and your impact is always clear.
           </p>
           <div className="audience-page-hero-cta">
-            <VoltButton icon={<Zap className="h-4 w-4" />}>
+            <VoltButton>
               Book a demo
             </VoltButton>
           </div>
@@ -191,7 +191,7 @@ export default function DoordashPage() {
           <p className="audience-page-cta-sub">
             See how JABA helps agents manage portfolios and prove their impact.
           </p>
-          <VoltButton icon={<Zap className="h-4 w-4" />}>
+          <VoltButton>
             Book a demo
           </VoltButton>
         </div>

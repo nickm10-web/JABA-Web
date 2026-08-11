@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700;1,800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import "lenis/dist/lenis.css";
 
 /* ── Deck heading font (Playfly GM deck): DM Sans 800, the deck's actual
    headline treatment. Opt-in per header via `.font-deck`; the serif stays the
@@ -15,6 +16,21 @@
 .font-deck .cta-headline-accent {
   font-style: normal !important;
   font-weight: 800 !important;
+}
+/* Opt-in italics inside deck headings (beats the kill rule above). */
+.font-deck .deck-italic {
+  font-style: italic !important;
+}
+
+/* iMessage typing-indicator dots (hero phone). The real ones don't bounce —
+   they only shift in tone. */
+@keyframes typing-pulse {
+  0%, 55%, 100% { background: #b6b6bb; }
+  28% { background: #85858c; }
+}
+.typing-dot {
+  background: #b6b6bb;
+  animation: typing-pulse 1.35s ease-in-out infinite;
 }
 
 /* ── Ported verbatim from the Playfly GM deck: the campaign-lifecycle rail and
@@ -198,11 +214,11 @@
   }
 
   .hero-brand-logo {
-    @apply h-auto w-auto max-w-[172px] object-contain sm:max-w-[196px] lg:max-w-[212px];
+    @apply h-auto w-auto max-w-[82px] object-contain sm:max-w-[110px] lg:max-w-[120px];
   }
 
   .hero-nav-rail {
-    @apply absolute left-1/2 top-1/2 hidden -translate-y-1/2 items-center gap-1.5 py-2 pl-3 pr-1 md:inline-flex;
+    @apply absolute left-1/2 top-1/2 hidden -translate-y-1/2 items-center gap-1.5 px-3 py-2 md:inline-flex;
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.14);
@@ -220,6 +236,27 @@
     transition:
       background 0.45s ease,
       border-color 0.45s ease;
+  }
+
+  .hero-nav-actions {
+    @apply hidden items-center gap-2.5 md:flex;
+  }
+
+  /* Sign in: plain text link, no container. Color adapts to the backdrop. */
+  .hero-signin {
+    @apply inline-flex items-center whitespace-nowrap px-2.5 py-2 text-[0.95rem] font-medium sm:px-4;
+    color: rgb(15, 23, 42);
+    transition:
+      color 0.45s ease,
+      opacity 0.2s ease;
+  }
+
+  .hero-signin:hover {
+    opacity: 0.72;
+  }
+
+  .hero-signin[data-glass="on-dark"] {
+    color: rgba(255, 255, 255, 0.94);
   }
 
   /* Press plates: FT-style drop cap on the first paragraph. Black, not
@@ -276,7 +313,8 @@
 
   /* Liquid-glass email capture — same refraction + bevel as the nav. */
   .liquid-email-glass {
-    @apply inline-flex w-full max-w-xl items-center gap-2 rounded-full py-1 pl-5 pr-1;
+    /* 14px = the inline button's 9px radius + its 5px inset, so the corners nest. */
+    @apply inline-flex w-full max-w-xl items-center gap-2 rounded-[14px] py-1 pl-5 pr-1;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow:
@@ -336,13 +374,13 @@
 
   /* Adaptive tint: stays glassy but tracks the content scrolling behind it. */
   .hero-nav-rail[data-glass="on-light"] {
-    background: rgba(255, 255, 255, 0.72);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.45);
   }
 
   .hero-nav-rail[data-glass="on-dark"] {
-    background: rgba(22, 24, 30, 0.7);
-    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.22);
   }
 
   .hero-nav-rail::before {
@@ -354,7 +392,7 @@
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.04)),
       radial-gradient(circle at top, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 56%);
-    opacity: 0.4;
+    opacity: 0.22;
     pointer-events: none;
     transition: opacity 0.45s ease;
   }
@@ -389,6 +427,232 @@
   .hero-nav-rail[data-glass="on-dark"] .hero-nav-link:hover {
     background: rgba(255, 255, 255, 0.16);
     color: #fff;
+  }
+
+  /* ── iMessage bubbles (hero phone). The tail corner gets a tight radius so
+     the tail shape meets a near-straight edge; on a fully pill-rounded corner
+     any tail leaves a visible step. ── */
+  .imsg {
+    position: relative;
+    max-width: 76%;
+    padding: 10px 16px;
+    border-radius: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    width: fit-content;
+  }
+  .imsg-recv {
+    background: #e9e9eb;
+    color: #000;
+  }
+  .imsg-sent {
+    background: #3b9bf7;
+    color: #fff;
+    margin-left: auto;
+  }
+  .imsg-tail-l {
+    border-bottom-left-radius: 7px;
+  }
+  .imsg-tail-r {
+    border-bottom-right-radius: 7px;
+  }
+  /* The tail is a beak: concave along the top, convex underneath, meeting at a
+     point past the bubble edge. The straight closing edge sits 5px inside the
+     bubble so the join is hidden in the same fill. */
+  .imsg-tail-l::after,
+  .imsg-tail-r::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 12px;
+    height: 15px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  .imsg-tail-l::after {
+    left: -7px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 15'%3E%3Cpath d='M7 0C7 7 5.5 11.5.2 14.6 3.8 15.2 6 13.8 7 11.4Z' fill='%23e9e9eb'/%3E%3C/svg%3E");
+  }
+  .imsg-tail-r::after {
+    right: -7px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 15'%3E%3Cpath d='M5 0C5 7 6.5 11.5 11.8 14.6 8.2 15.2 6 13.8 5 11.4Z' fill='%233b9bf7'/%3E%3C/svg%3E");
+  }
+
+  /* The thread travels: dashes march down the flow-chart connector and on
+     into the phone in the next section. */
+  @keyframes flowDash {
+    to { stroke-dashoffset: -20; }
+  }
+  .flow-dash {
+    animation: flowDash 1.6s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flow-dash { animation: none; }
+  }
+
+  /* Connector lines drift inward toward the JABA core. */
+  @keyframes ringDash {
+    to { stroke-dashoffset: -5.6; }
+  }
+  .ring-dash {
+    animation: ringDash 2.4s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ring-dash { animation: none; }
+  }
+
+  /* Grid drifts exactly one 50px cell so the loop is seamless, and a soft band
+     of light sweeps across it. Both are transform/opacity only — animating
+     feTurbulence's baseFrequency (the previous approach) re-rasterises the
+     whole noise field every step and visibly pops. */
+  @keyframes gridDrift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50px, -50px, 0); }
+  }
+  .grid-drift {
+    animation: gridDrift 24s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes gridSweep {
+    0% { transform: translate3d(-60%, 0, 0); opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { transform: translate3d(160%, 0, 0); opacity: 0; }
+  }
+  .grid-sweep {
+    animation: gridSweep 9s cubic-bezier(0.4, 0, 0.25, 1) infinite;
+    will-change: transform, opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grid-drift,
+    .grid-sweep {
+      animation: none;
+    }
+  }
+
+  /* Post wall: each row drifts one tile-set's width, then loops seamlessly. */
+  @keyframes wallScroll {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+  }
+  .wall-row {
+    animation-name: wallScroll;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wall-row { animation: none; }
+  }
+
+  /* Very slight drift + rock on the CTA's iMessage bubble. */
+  @keyframes bubbleFloat {
+    0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+    50%      { transform: translateY(-4px) rotate(0.5deg); }
+  }
+  .bubble-float {
+    animation: bubbleFloat 5.5s ease-in-out infinite;
+    transform-origin: 50% 90%;
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bubble-float { animation: none; }
+  }
+
+  /* ── Volt CTA button — "soft bevel" (design handoff). Ink label on a volt
+     gradient: white text on volt is ~1.4:1, so the label is never white. Two
+     surfaces differ only in edge, bevel depth, and drop shadow, so the button
+     never halos on dark. ── */
+  .volt-btn {
+    display: inline-flex;
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: "DM Sans", "Manrope", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    color: #11131a;
+    background: linear-gradient(180deg, #eeff6b, #dfff00 55%, #d2f000);
+    border: 1px solid #c9e200;
+    border-radius: 11px;
+    padding: 9px 17px;
+    cursor: pointer;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -2px 0 rgba(120, 145, 0, 0.35),
+      0 1px 2px rgba(17, 19, 26, 0.08);
+    transition:
+      box-shadow 0.12s ease,
+      transform 0.12s ease;
+  }
+  .volt-btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -2px 0 rgba(120, 145, 0, 0.35),
+      0 4px 12px rgba(17, 19, 26, 0.12);
+  }
+  /* Bevel inverts and the outer shadow drops entirely — that is what sells the press. */
+  .volt-btn:active {
+    transform: translateY(1px);
+    box-shadow: inset 0 2px 4px rgba(120, 145, 0, 0.5);
+  }
+  .volt-btn:focus-visible {
+    outline: 2px solid #11131a;
+    outline-offset: 2px;
+  }
+
+  .volt-btn--dark {
+    border-color: #93ab00;
+    background: linear-gradient(180deg, #eeff6b, #dfff00 55%, #cdec00);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -2px 0 rgba(90, 110, 0, 0.4),
+      0 6px 18px rgba(0, 0, 0, 0.5);
+  }
+  .volt-btn--dark:hover {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -2px 0 rgba(90, 110, 0, 0.4),
+      0 10px 22px rgba(0, 0, 0, 0.55);
+  }
+  .volt-btn--dark:active {
+    box-shadow: inset 0 2px 4px rgba(90, 110, 0, 0.55);
+  }
+  .volt-btn--dark:focus-visible {
+    outline-color: #ffffff;
+  }
+
+  .volt-btn--sm {
+    font-size: 13px;
+    padding: 7px 13px;
+    border-radius: 9px;
+  }
+  .volt-btn--lg {
+    font-size: 15px;
+    padding: 12px 21px;
+    border-radius: 12px;
+  }
+
+  .volt-btn:disabled {
+    background: #e8edd0;
+    border-color: #d6ddbb;
+    color: #9ca3af;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .volt-btn,
+    .volt-btn:hover,
+    .volt-btn:active {
+      transform: none;
+    }
   }
 
   .hero-nav-cta {
@@ -702,6 +966,8 @@
 
 .social-proof-label {
   text-align: center;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   font-family: "Perfectly Nineties", serif;
   font-size: 1.15rem;
   font-weight: 400;
@@ -764,6 +1030,20 @@
   object-fit: contain;
   opacity: 0.92;
   transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Phones only fit a couple of logos at full size, which reads as a crop rather
+   than a roster — scale the strip down so several are in view at once. */
+@media (max-width: 767px) {
+  .social-proof-logo-item {
+    padding: 0 0.35rem;
+  }
+  .social-proof-logo-img {
+    height: auto !important;
+    max-height: 34px;
+    width: auto;
+    max-width: 82px;
+  }
 }
 
 .social-proof-track:hover {
@@ -874,7 +1154,7 @@
 }
 
 .problem-card-title {
-  font-family: "Manrope", sans-serif;
+  font-family: "DM Sans", "Manrope", sans-serif;
   font-size: 1.15rem;
   font-weight: 700;
   color: #f7f7f7;
@@ -1237,7 +1517,7 @@
 }
 
 .hiw-step-title {
-  font-family: "Manrope", sans-serif;
+  font-family: "DM Sans", "Manrope", sans-serif;
   font-size: 1.18rem;
   font-weight: 700;
   color: #f7f7f7;
@@ -1824,7 +2104,7 @@
 
 .cta-section {
   position: relative;
-  background: #050505;
+  background: #eeeeee;
   padding: 8rem 1.5rem 9rem;
   overflow: hidden;
 }
@@ -1834,9 +2114,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 700px;
-  height: 400px;
-  background: radial-gradient(ellipse, rgba(223, 255, 0, 0.06), transparent 70%);
+  width: 900px;
+  height: 520px;
+  /* Volt on one side, a cooler violet on the other, both well under the
+     threshold where they'd read as a coloured panel. */
+  background:
+    radial-gradient(ellipse 46% 58% at 34% 45%, rgba(223, 255, 0, 0.2), transparent 70%),
+    radial-gradient(ellipse 48% 60% at 70% 58%, rgba(150, 110, 255, 0.16), transparent 72%);
   pointer-events: none;
 }
 
@@ -1853,7 +2137,7 @@
   font-size: clamp(2.6rem, 5.5vw, 4.5rem);
   line-height: 0.94;
   letter-spacing: -0.05em;
-  color: #f7f7f7;
+  color: #0a0a0a;
   margin: 0 0 1.5rem;
 }
 
@@ -1864,7 +2148,7 @@
 .cta-subtext {
   font-size: 1.02rem;
   line-height: 1.72;
-  color: rgba(255, 255, 255, 0.44);
+  color: rgba(0, 0, 0, 0.5);
   margin: 0 0 2.5rem;
 }
 
@@ -2162,7 +2446,7 @@
   transform: translateX(-50%);
   width: 800px;
   height: 600px;
-  background: radial-gradient(ellipse, rgba(223, 255, 0, 0.06), transparent 70%);
+  background: radial-gradient(ellipse, rgba(223, 255, 0, 0.18), transparent 70%);
   pointer-events: none;
 }
 
@@ -2308,7 +2592,7 @@
 }
 
 .audience-page-card-title {
-  font-family: "Manrope", sans-serif;
+  font-family: "DM Sans", "Manrope", sans-serif;
   font-size: 1.12rem;
   font-weight: 700;
   color: #f7f7f7;
@@ -2403,7 +2687,7 @@
 }
 
 .lifecycle-marquee-sub {
-  font-family: "Manrope", sans-serif;
+  font-family: "DM Sans", "Manrope", sans-serif;
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -2452,7 +2736,7 @@
 }
 
 .audience-page-transition-label {
-  font-family: "Manrope", sans-serif;
+  font-family: "DM Sans", "Manrope", sans-serif;
   font-size: 1.15rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.5);
@@ -2559,7 +2843,7 @@
   gap: 0.35rem;
   font-size: 0.75rem;
   color: rgba(255,255,255,0.35);
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -2581,7 +2865,7 @@
   border-radius: 999px;
   padding: 0.25rem 0.75rem;
   margin: 0 0 1rem;
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
 }
 
 .press-article-headline {
@@ -2605,7 +2889,7 @@
   font-size: 0.92rem;
   line-height: 1.8;
   color: rgba(255,255,255,0.5);
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
   margin: 0;
 }
 
@@ -2656,13 +2940,13 @@
   font-size: 0.83rem;
   font-weight: 700;
   color: #fff;
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
 }
 
 .press-article-quote-title {
   font-size: 0.78rem;
   color: rgba(255,255,255,0.35);
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
 }
 
 .press-article-quote-attr::before {
@@ -2687,7 +2971,7 @@
   text-transform: uppercase;
   color: rgba(223,255,0,0.6);
   margin: 0 0 1rem;
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
 }
 
 .press-article-highlights-grid {
@@ -2702,7 +2986,7 @@
   gap: 0.6rem;
   font-size: 0.84rem;
   color: rgba(255,255,255,0.6);
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
 }
 
 .press-article-highlight-dot {
@@ -2751,7 +3035,7 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.3);
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
   margin: 0 0 1rem;
 }
 
@@ -2780,7 +3064,7 @@
   font-size: 0.95rem;
   line-height: 1.75;
   color: rgba(255,255,255,0.5);
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
   margin: 0;
   max-width: 680px;
 }
@@ -2800,7 +3084,7 @@
 .press-featured-read-btn {
   font-size: 0.85rem;
   font-weight: 600;
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
   color: #dfff00;
   background: none;
   border: none;
@@ -2856,7 +3140,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #dfff00;
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
 }
 
 .press-thumb-headline {
@@ -2879,7 +3163,7 @@
 .press-thumb-cta {
   font-size: 0.78rem;
   color: rgba(223,255,0,0.7);
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
   font-weight: 600;
 }
 
@@ -3003,7 +3287,7 @@
 
 .press-featured-graphic-placeholder span {
   font-size: 0.75rem;
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.15);
@@ -3067,7 +3351,7 @@
 
 .press-thumb-graphic-placeholder span {
   font-size: 0.65rem;
-  font-family: "Barlow", sans-serif;
+  font-family: "DM Sans", "Barlow", sans-serif;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.15);
@@ -3263,7 +3547,7 @@
 .meets .meettext{position:relative;z-index:1;margin-left:clamp(280px,36vw,560px)}
 .meets .meetname{display:block}
 .meets .meetlede{font-size:clamp(16px,1.8vw,24px);line-height:1.55;color:rgba(247,247,238,.88);margin-top:26px;max-width:46ch;font-weight:500}
-@media(max-width:980px){.meets .meetbox{display:block;padding-bottom:0}.meets .walkvid{position:static;height:34vh;margin:16px auto 0;display:block}.meets .meettext{margin-left:0}}
+@media(max-width:980px){.meets .meetbox{display:flex;flex-direction:column;align-items:center;padding-bottom:0}.meets .meettext{order:1;margin-left:0;text-align:center}.meets .walkvid{order:2;position:static;height:54vh;margin:12px 0 0 calc(-1*clamp(36px,5vw,72px));width:calc(100% + clamp(72px,10vw,144px));max-width:none;display:block;align-self:flex-start;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 26%);-webkit-mask-composite:source-over;mask-image:linear-gradient(to bottom,transparent 0%,#000 26%);mask-composite:add}}
 
 /* ── Light variant of the logo strip (UCLA page) ── */
 .social-proof-section.light{background:#fff;border-top-color:rgba(0,0,0,.06);border-bottom-color:rgba(0,0,0,.06)}

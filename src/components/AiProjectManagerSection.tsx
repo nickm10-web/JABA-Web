@@ -11,23 +11,23 @@ interface Card {
 const cards: Card[] = [
   {
     number: "01",
-    title: "Centralize.",
+    title: "Outreach.",
     description:
-      "Your data, campaigns, conversations, and workflows in one place.",
+      "The right brands, the right contacts, and the pitch that starts the deal.",
     videoSrc: "/videos/01-pole.mp4",
   },
   {
     number: "02",
-    title: "Connect.",
+    title: "Manage.",
     description:
-      "JABA understands what's happening across all of it. Athletes, brands, content, deals, deadlines.",
+      "Contracts, deliverables, due dates, and approvals, coordinated over text.",
     videoSrc: "/videos/02-athlete.mp4",
   },
   {
     number: "03",
-    title: "Automate.",
+    title: "Report.",
     description:
-      "Follow ups, reminders, outreach, campaign tracking, reporting. Done.",
+      "Results measured and reported back to the brand, automatically.",
     videoSrc: "/videos/03-phone.mp4",
   },
 ];
@@ -92,19 +92,18 @@ export default function AiProjectManagerSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-black py-16 text-white md:py-20"
+      className="bg-black py-20 text-white md:py-32"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-10 lg:px-12">
         <div className="mb-10 md:mb-12">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-16">
-            <h2 className="max-w-2xl font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
+            <h2 className="max-w-2xl font-deck text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
               The <span className="italic">AI project manager</span> for
               athlete campaigns.
             </h2>
-            <p className="max-w-md text-base leading-relaxed text-white/60 md:pb-1 md:text-lg">
-              JABA runs every campaign, content drop, and brand deal across
-              your athletes, start to finish. No rip and replace. No new
-              login. Built to speak the language of the sport.
+            <p className="max-w-sm text-base leading-relaxed text-white/60 md:pb-1.5">
+              Every stage of the deal, from outreach to the final report. Your
+              athletes never have to log in. They just get a text.
             </p>
           </div>
           <div className="mt-10 h-px bg-white/10" />
@@ -123,10 +122,13 @@ export default function AiProjectManagerSection() {
                 aria-label={`Step ${card.number}: ${card.title.replace(/\.$/, "")}`}
                 onHoverStart={() => isDesktop && setHoveredIndex(i)}
                 onHoverEnd={() => isDesktop && setHoveredIndex(null)}
-                animate={{ flexGrow: isDesktop && isHovered ? 1.6 : 1 }}
+                /* flex-basis:0 + grow size the MAIN axis. The row is a column
+                   on mobile, so applying them there collapsed every card to 0
+                   height. Desktop only. */
+                animate={{ flexGrow: isDesktop ? (isHovered ? 1.6 : 1) : undefined }}
                 transition={{ type: "spring", stiffness: 200, damping: 30 }}
-                style={{ flexBasis: 0 }}
-                className="relative aspect-[3/4] cursor-pointer overflow-hidden rounded-3xl md:aspect-auto md:h-[48vh] lg:h-[52vh] xl:h-[56vh]"
+                style={isDesktop ? { flexBasis: 0 } : undefined}
+                className="relative aspect-[16/10] cursor-pointer overflow-hidden rounded-2xl md:aspect-auto md:rounded-3xl md:h-[48vh] lg:h-[52vh] xl:h-[56vh]"
               >
                 <video
                   ref={(el) => {
@@ -146,12 +148,12 @@ export default function AiProjectManagerSection() {
                 <motion.div
                   animate={{ opacity: someoneElseHovered ? 0.6 : 1 }}
                   transition={{ duration: 0.3, ease: "easeOut" }}
-                  className="absolute inset-x-0 bottom-0 p-6 md:p-8 lg:p-10"
+                  className="absolute inset-x-0 bottom-0 p-5 md:p-8 lg:p-10"
                 >
                   <p className="mb-3 text-sm font-medium text-white/70 md:text-base">
                     {card.number}
                   </p>
-                  <h3 className="mb-3 font-display text-2xl leading-tight md:mb-4 md:text-3xl lg:text-4xl">
+                  <h3 className="mb-3 font-deck text-2xl leading-tight md:mb-4 md:text-3xl lg:text-4xl">
                     {card.title}
                   </h3>
                   <p className="max-w-md text-sm leading-relaxed text-white/80 md:text-base">

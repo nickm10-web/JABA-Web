@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+
+import { useSmoothScroll } from "./hooks/useSmoothScroll";
 import App from "./App";
 import ForBrandsPage from "./pages/for-brands";
 import ForSchoolsPage from "./pages/for-schools";
 import ForAgenciesPage from "./pages/for-agencies";
 import PressPage from "./pages/press";
+import ContactPage from "./pages/contact";
 import LegalPage from "./pages/legal";
 import { privacyPolicy, termsOfUse } from "./data/legal-content";
 
@@ -13,6 +16,8 @@ function getRoute() {
 
 export default function Router() {
   const [route, setRoute] = useState(getRoute);
+
+  useSmoothScroll();
 
   useEffect(() => {
     const onHashChange = () => {
@@ -27,11 +32,13 @@ export default function Router() {
     case "/for-brands":
       return <ForBrandsPage />;
     case "/for-schools":
-      return <ForSchoolsPage />;
+      return <ForSchoolsPage ucla />;
     case "/for-agencies":
       return <ForAgenciesPage />;
     case "/press":
       return <PressPage />;
+    case "/contact":
+      return <ContactPage />;
     case "/privacy":
       return <LegalPage doc={privacyPolicy} />;
     case "/terms":

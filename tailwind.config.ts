@@ -47,7 +47,7 @@ const config: Config = {
       fontFamily: {
         heading: ["'Perfectly Nineties'", "serif"],
         body: ["'Barlow'", "sans-serif"],
-        sans: ["Manrope", "system-ui", "sans-serif"],
+        sans: ["DM Sans", "Manrope", "system-ui", "sans-serif"],
         display: ['"Perfectly Nineties"', "serif"],
       },
       keyframes: {

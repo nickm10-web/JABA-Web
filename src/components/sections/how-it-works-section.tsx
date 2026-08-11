@@ -1,5 +1,5 @@
+import { BarChart3, Cpu, Upload } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { Upload, Cpu, BarChart3 } from "lucide-react";
 
 const steps = [
   {

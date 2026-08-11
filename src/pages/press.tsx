@@ -5,7 +5,6 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
-import { Play } from "lucide-react";
 import PageLayout from "@/components/layout/page-layout";
 import {
   pressReleases,
@@ -106,7 +105,7 @@ function MonitorHero() {
       <div className="relative mx-auto max-w-7xl">
         {/* Compressed masthead band */}
         <div className="flex flex-col gap-3 border-b border-white/10 pb-5 md:flex-row md:items-end md:justify-between">
-          <h1 className="font-display text-5xl leading-none md:text-6xl">
+          <h1 className="font-deck text-5xl leading-[1.04] md:text-6xl">
             The newsroom.
           </h1>
           <div className="flex flex-col items-start gap-1 md:items-end">
@@ -137,7 +136,7 @@ function MonitorHero() {
 
           {/* Story metadata column */}
           <div className="flex flex-col md:col-span-4">
-            <h2 className="font-display text-3xl leading-tight md:text-4xl">
+            <h2 className="font-deck text-3xl leading-tight md:text-4xl">
               Never miss an opportunity again.
             </h2>
             <p className="mt-4 font-sans text-sm leading-relaxed text-white/60">
@@ -203,7 +202,7 @@ function Ledger() {
                 </div>
 
                 {/* Headline */}
-                <h3 className="col-span-12 font-display text-2xl leading-snug transition-colors duration-300 group-hover:text-[#eeeeee] md:col-span-6 md:text-3xl">
+                <h3 className="col-span-12 font-deck text-2xl leading-snug transition-colors duration-300 group-hover:text-[#eeeeee] md:col-span-6 md:text-3xl">
                   {r.headline}
                 </h3>
 
@@ -328,7 +327,7 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
 
         {/* Copy column */}
         <div className="md:col-span-5">
-          <h3 className="font-display text-3xl leading-tight md:text-4xl">
+          <h3 className="font-deck text-3xl leading-tight md:text-4xl">
             {release.headline}
           </h3>
           <div className="plate-copy mt-6 space-y-5">
@@ -341,6 +340,48 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
               </p>
             ))}
           </div>
+
+          {/* Announcement posts — each link appears only once its URL is set
+              on the release in src/data/press-releases.ts. */}
+          {(release.instagram || release.linkedin) && (
+            <div className="mt-8 border-t border-black/10 pt-5">
+              <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-black/40">
+                Announced on
+              </p>
+              <div className="mt-3 flex flex-wrap items-center gap-2.5">
+                {release.instagram && (
+                  <a
+                    href={release.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-black/15 px-3.5 py-2 font-sans text-[13px] font-semibold text-black/75 transition-colors hover:border-black/40 hover:text-black"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-[15px] w-[15px]" aria-hidden>
+                      <g fill="none" stroke="currentColor" strokeWidth="1.9">
+                        <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5.2" />
+                        <circle cx="12" cy="12" r="4.1" />
+                        <circle cx="17.1" cy="6.9" r="1.15" fill="currentColor" stroke="none" />
+                      </g>
+                    </svg>
+                    Instagram
+                  </a>
+                )}
+                {release.linkedin && (
+                  <a
+                    href={release.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-black/15 px-3.5 py-2 font-sans text-[13px] font-semibold text-black/75 transition-colors hover:border-black/40 hover:text-black"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-[15px] w-[15px]" fill="currentColor" aria-hidden>
+                      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14Zm1.78 13.02H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z" />
+                    </svg>
+                    LinkedIn
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Pull quote column */}
@@ -377,7 +418,7 @@ function PressKit() {
       <div className="relative mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-24 lg:px-12">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
-            <h2 className="font-display text-4xl leading-tight md:text-5xl">
+            <h2 className="font-deck text-4xl leading-tight md:text-5xl">
               Press kit.
             </h2>
             <p className="mt-4 max-w-sm font-sans text-sm leading-relaxed text-white/55">

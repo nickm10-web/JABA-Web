@@ -6,19 +6,25 @@ const strip = [...graphics, ...graphics];
 
 export default function PressPreviewSection() {
   return (
-    <section className="relative overflow-hidden bg-black py-20 text-white md:py-28">
-      <div className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]" />
+    <section className="relative overflow-hidden bg-[#eeeeee] py-24 text-[#0a0a0a] md:py-36">
+      <div
+        className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]"
+        style={{
+          maskImage: "linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 12%, #000 86%, transparent 100%)",
+        }}
+      />
 
       {/* Header */}
       <div className="relative mx-auto mb-12 max-w-7xl px-6 md:mb-16 md:px-10 lg:px-12">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-          <h2 className="max-w-2xl font-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
+          <h2 className="max-w-2xl font-deck text-4xl leading-[1.05] md:text-5xl lg:text-6xl">
             Official partners across{" "}
             <span className="italic">college and pro.</span>
           </h2>
           <a
             href="#/press"
-            className="group shrink-0 font-sans text-sm tracking-[0.04em] text-white/55 transition-colors hover:text-white"
+            className="group shrink-0 font-sans text-sm tracking-[0.04em] text-black/55 transition-colors hover:text-black"
           >
             See the newsroom{" "}
             <span className="transition-colors group-hover:text-[#dfff00]">
@@ -31,8 +37,8 @@ export default function PressPreviewSection() {
       {/* Auto-scrolling graphics strip */}
       <div className="press-marquee relative">
         {/* Edge fades */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-black to-transparent md:w-32" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-black to-transparent md:w-32" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#eeeeee] to-transparent md:w-32" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#eeeeee] to-transparent md:w-32" />
 
         <div className="press-marquee-track flex w-max gap-5">
           {strip.map((r, i) => (
@@ -40,12 +46,13 @@ export default function PressPreviewSection() {
               key={`${r.id}-${i}`}
               href="#/press"
               aria-label={`${r.partner} announcement`}
-              className="group relative block h-[260px] shrink-0 overflow-hidden rounded-2xl border border-white/10 md:h-[320px]"
+              /* Fixed box on every card — source art has mixed aspect ratios. */
+              className="group relative block h-[260px] w-[340px] shrink-0 overflow-hidden rounded-2xl border border-black/10 md:h-[320px] md:w-[420px]"
             >
               <img
                 src={r.graphic}
                 alt={`JABA partners with ${r.partner}`}
-                className="h-full w-auto object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               />
               {/* Partner label */}
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
