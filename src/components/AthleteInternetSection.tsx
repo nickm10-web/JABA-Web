@@ -99,12 +99,12 @@ export default function AthleteInternetSection() {
         </p>
 
         <h2 className="mt-4 font-deck text-3xl leading-[1.08] text-white md:text-5xl">
-          posts watched, and counting.
+          posts watched across the athlete internet.
         </h2>
 
         <p className="mx-auto mt-5 max-w-xl font-sans text-base leading-relaxed text-white/65 md:text-lg">
-          JABA reads every athlete post across every platform, so you know what
-          went up, what it earned, and whether the brand got what it paid for.
+          JABA reads every post on every platform, so you know what went up,
+          what it earned, and whether the brand got what it paid for.
         </p>
       </div>
     </section>
