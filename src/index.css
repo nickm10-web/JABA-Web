@@ -2132,6 +2132,7 @@
   z-index: 1;
 }
 
+
 .cta-headline {
   font-family: "Perfectly Nineties", serif;
   font-size: clamp(2.6rem, 5.5vw, 4.5rem);
@@ -2145,11 +2146,29 @@
   color: #dfff00;
 }
 
-.cta-subtext {
-  font-size: 1.02rem;
-  line-height: 1.72;
-  color: rgba(0, 0, 0, 0.5);
-  margin: 0 0 2.5rem;
+/* Rendered bubble set inline in the headline.
+   Sized and aligned from the artwork rather than by eye: the lettering occupies
+   0.409 of the image height. Its baseline sits 0.70 down the image, so the
+   vertical-align is always -0.30 x the height, dropping it onto the headline's
+   own baseline. */
+.cta-bubble {
+  display: inline-block;
+  height: 1.25em;
+  width: auto;
+  vertical-align: -0.375em;
+}
+
+/* At 5.16:1 the bubble runs 6.45x the font size, which outgrows the section's
+   padding on the narrowest phones. There it drops to its own line and is sized
+   by width instead, so it can never push the page sideways. */
+@media (max-width: 340px) {
+  .cta-bubble {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0.2em auto 0;
+    vertical-align: baseline;
+  }
 }
 
 .cta-email-shell {
@@ -3542,12 +3561,14 @@
 @media(max-width:980px){.reps .repwrap{flex-direction:column;align-items:flex-start}.reps .repside{max-width:460px}.reps .repcard{width:100%;max-width:460px}}
 
 /* ══ Deck port · "Meet JABA" (playfly-gm-deck §01b) — black card on white ══ */
-.meets .meetbox{position:relative;overflow:hidden;background:#0B0F0C;border-radius:32px;min-height:clamp(380px,54vh,560px);display:flex;align-items:center;padding:clamp(36px,5vw,72px)}
-.meets .walkvid{position:absolute;left:-4%;bottom:-2px;height:min(60vh,520px);aspect-ratio:1/1;object-fit:cover;z-index:0;filter:brightness(.82) contrast(1.06);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 30%),linear-gradient(to left,transparent 0%,#000 34%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 30%),linear-gradient(to left,transparent 0%,#000 34%);mask-composite:intersect}
+/* Card is pure black to match the footage: the walk video is now plated on
+   true black, so anything off-black would outline it as a visible rectangle. */
+.meets .meetbox{position:relative;overflow:hidden;background:#000;border-radius:32px;min-height:clamp(380px,54vh,560px);display:flex;align-items:center;padding:clamp(36px,5vw,72px)}
+.meets .walkvid{position:absolute;left:-4%;bottom:-2px;height:min(60vh,520px);aspect-ratio:1/1;object-fit:cover;z-index:0}
 .meets .meettext{position:relative;z-index:1;margin-left:clamp(280px,36vw,560px)}
 .meets .meetname{display:block}
 .meets .meetlede{font-size:clamp(16px,1.8vw,24px);line-height:1.55;color:rgba(247,247,238,.88);margin-top:26px;max-width:46ch;font-weight:500}
-@media(max-width:980px){.meets .meetbox{display:flex;flex-direction:column;align-items:center;padding-bottom:0}.meets .meettext{order:1;margin-left:0;text-align:center}.meets .walkvid{order:2;position:static;height:54vh;margin:12px 0 0 calc(-1*clamp(36px,5vw,72px));width:calc(100% + clamp(72px,10vw,144px));max-width:none;display:block;align-self:flex-start;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 26%);-webkit-mask-composite:source-over;mask-image:linear-gradient(to bottom,transparent 0%,#000 26%);mask-composite:add}}
+@media(max-width:980px){.meets .meetbox{display:flex;flex-direction:column;align-items:center;padding-bottom:0}.meets .meettext{order:1;margin-left:0;text-align:center}.meets .walkvid{order:2;position:static;height:54vh;margin:12px 0 0 calc(-1*clamp(36px,5vw,72px));width:calc(100% + clamp(72px,10vw,144px));max-width:none;display:block;align-self:flex-start}}
 
 /* ── Light variant of the logo strip (UCLA page) ── */
 .social-proof-section.light{background:#fff;border-top-color:rgba(0,0,0,.06);border-bottom-color:rgba(0,0,0,.06)}

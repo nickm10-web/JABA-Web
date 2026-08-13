@@ -8,22 +8,8 @@ export default function CtaSection() {
         <h2 className="cta-headline font-deck">
           What if you could manage every athlete's deliverables, tasks,
           calendars, and obligations through{" "}
-          <span className="bubble-float relative mt-[0.1em] inline-block rounded-[0.42em] bg-[#0a7cff] px-[0.35em] py-[0.06em] text-[0.85em] text-white">
-            one text thread?
-            <svg
-              className="absolute -right-[0.12em] bottom-0 h-[0.28em] w-[0.28em]"
-              viewBox="0 0 14 14"
-              fill="#0a7cff"
-              aria-hidden
-            >
-              <path d="M1 0 C2.5 7.5 7 12.2 14 14 C7 14.6 2 12.4 0 8.5 L0 0 Z" />
-            </svg>
-          </span>
+          <img src="/cta-bubble.webp" alt="one text thread?" className="bubble-float cta-bubble" />
         </h2>
-        <p className="cta-subtext">
-          JABA's AI drafts the replies, fires the reminders, verifies the posts,
-          and keeps every deal moving, so nothing slips.
-        </p>
 
         {/* Closing CTA — sized up and given room so it doesn't disappear
             under a headline this large. */}
