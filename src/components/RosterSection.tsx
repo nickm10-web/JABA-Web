@@ -180,8 +180,15 @@ export default function RosterSection() {
     return () => mq.removeEventListener("change", sync);
   }, []);
 
+  // overflow-x-clip, not hidden: the agent gifs are sized past their cards on
+  // purpose and must keep overhanging upward, but the outermost one otherwise
+  // runs past the viewport and widens the whole page. clip bounds the x axis
+  // while leaving y visible; hidden would force y to scroll.
+  // -mt-px: this section and the one above are both pure black, but at DPR 2
+  // with fractional heights the boundary between them rounds to a visible
+  // hairline. Overlapping by a pixel removes the seam entirely.
   return (
-    <section className="relative bg-black pb-20 pt-14 text-white md:pb-32 md:pt-24">
+    <section className="relative -mt-px overflow-x-clip bg-black pb-20 pt-14 text-white md:pb-32 md:pt-24">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <div className="h-[600px] w-[900px] rounded-full"
           style={{ background: "radial-gradient(ellipse, rgba(255,255,255,0.018) 0%, transparent 70%)" }} />

@@ -28,6 +28,11 @@ export default function Router() {
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 
+  // "/press/<releaseId>" opens the newsroom scrolled to that release's plate.
+  if (route.startsWith("/press")) {
+    return <PressPage focusRelease={route.split("/")[2] || null} />;
+  }
+
   switch (route) {
     case "/for-brands":
       return <ForBrandsPage />;
@@ -35,8 +40,6 @@ export default function Router() {
       return <ForSchoolsPage ucla />;
     case "/for-agencies":
       return <ForAgenciesPage />;
-    case "/press":
-      return <PressPage />;
     case "/contact":
       return <ContactPage />;
     case "/privacy":

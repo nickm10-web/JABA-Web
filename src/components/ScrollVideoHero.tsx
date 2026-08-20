@@ -81,9 +81,23 @@ export default function ScrollVideoHero({
 
         {/* Right — iPhone running the NIL Team thread, cropped by the fold.
             Hidden on phones: the copy carries the mobile hero. */}
-        <div className="hidden justify-center self-end md:flex lg:justify-end">
-          <div className="translate-y-[20%]">
-            <HeroPhone />
+        {/* The phone is deliberately taller than the box it sits in. Sizing the
+            box instead of letting the phone size itself is what lets it ride
+            high: the hero's height is content-driven, so a free-standing phone
+            grows the section by exactly what it gains and never actually moves
+            up. It hangs out of the bottom and the section's overflow crops it. */}
+        {/* lg, not md: the grid only splits into two columns at lg, so showing
+            the phone from md dropped it underneath the copy, centred, and grew
+            the hero past the viewport. Below lg the copy carries the hero. */}
+        <div className="hidden self-start lg:flex lg:justify-end">
+          <div className="relative h-[420px] w-[440px] lg:h-[460px] lg:w-[480px]">
+            {/* Anchored to the top of the hero, not its bottom. Bottom-anchoring
+                ties the phone to the fold, so it slid down ~180px on a taller
+                window; from the top its position holds at any viewport height
+                and the fold just crops more or less of the tail. */}
+            <div className="absolute inset-x-0 top-0 translate-y-[60px] lg:translate-y-[80px]">
+              <HeroPhone />
+            </div>
           </div>
         </div>
       </div>
@@ -100,7 +114,7 @@ const POP = {
 
 /* Per-step dwell times: pause → coach → typing → reply → typing → reply →
    sent → typing (hold), then the loop resets. */
-const STEP_MS = [500, 1100, 1400, 1600, 1300, 1700, 1300, 1500, 3600];
+const STEP_MS = [500, 1100, 1400, 1600, 1300, 1700, 1300, 1500, 1800, 1400, 1500, 3800];
 
 function TypingBubble() {
   return (
@@ -126,7 +140,7 @@ function HeroPhone() {
     return () => clearTimeout(t);
   }, [step]);
   return (
-    <div className="relative w-[300px] shrink-0 md:w-[400px] lg:w-[430px]">
+    <div className="relative w-[300px] shrink-0 md:w-[440px] lg:w-[480px]">
       {/* Side buttons — mute, volume up/down (left), power (right) */}
       <span aria-hidden className="absolute -left-[3px] top-[15%] h-6 w-[3px] rounded-l-md" style={{ background: "linear-gradient(90deg,#4a4d53,#232528)" }} />
       <span aria-hidden className="absolute -left-[3px] top-[22.5%] h-11 w-[3px] rounded-l-md" style={{ background: "linear-gradient(90deg,#4a4d53,#232528)" }} />
@@ -202,8 +216,12 @@ function HeroPhone() {
 
         {/* Thread — real iMessage bubble shapes, SF system font. Plays out as
             a live conversation, then loops. */}
+        {/* Top-aligned: the conversation has to sit directly under the header.
+            Stacking it up from the composer looks more like real iMessage but
+            drops the readable part ~150px down the screen, which cancels out
+            raising the phone at all. The empty tail below runs off the fold. */}
         <div
-          className="h-[56%] overflow-hidden bg-[#fbfbfc] px-3.5 pt-2 text-[15.5px]"
+          className="h-[61%] overflow-hidden bg-[#fbfbfc] px-3.5 pt-2 text-[15.5px]"
           style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif" }}
         >
 
@@ -257,6 +275,32 @@ function HeroPhone() {
                   ) : (
                     <motion.div {...POP} className="imsg imsg-recv imsg-tail-l" style={{ transformOrigin: "bottom left" }}>
                       &#9989; Maya posted it. Deliverable complete, brand notified.
+                    </motion.div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {step >= 9 && (
+              <motion.div key="coach-2" {...POP}>
+                <div className="pb-0.5 pl-[42px] pt-2.5 text-[12px] text-black/45">Coach Davis</div>
+                <div className="flex items-end gap-2">
+                  <span className="relative z-[1] grid h-[34px] w-[34px] shrink-0 place-items-center rounded-full text-[13px] font-bold text-white" style={{ background: "linear-gradient(#6f7bd6,#4b57b6)" }}>C</span>
+                  <div className="imsg imsg-recv imsg-tail-l" style={{ transformOrigin: "bottom left" }}>what else is open this week?</div>
+                </div>
+              </motion.div>
+            )}
+
+            {step >= 10 && (
+              <motion.div key="jaba-week" {...POP}>
+                <div className="pb-0.5 pl-[42px] pt-2.5 text-[12px] text-black/45">JABA</div>
+                <div className="flex items-end gap-2">
+                  <img src="/jaba-face.png" alt="" className="relative z-[1] h-[34px] w-[34px] shrink-0 rounded-full object-cover" />
+                  {step === 10 ? (
+                    <TypingBubble />
+                  ) : (
+                    <motion.div {...POP} className="imsg imsg-recv imsg-tail-l" style={{ transformOrigin: "bottom left" }}>
+                      Three deliverables across two athletes. Both on track, nothing at risk.
                     </motion.div>
                   )}
                 </div>

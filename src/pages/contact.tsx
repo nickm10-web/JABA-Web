@@ -4,7 +4,9 @@ import PageLayout from "@/components/layout/page-layout";
 import { VoltButton } from "@/components/ui/volt-button";
 
 const BOOKING_URL = "https://calendly.com/jordon-jaba/jaba";
-const INBOX = "jordon@jaba.ai";
+// Shared inbox, not a personal address: this is the only address the page
+// exposes, and it is shown solely as a fallback when the form fails.
+const INBOX = "hello@jaba.ai";
 
 const WHO = [
   {
@@ -121,9 +123,6 @@ export default function ContactPage() {
                   </p>
                 )}
               </div>
-              <p className="pt-1 font-sans text-[12.5px] text-black/45">
-                This opens your email app with the message ready to send.
-              </p>
             </form>
           </div>
 
@@ -137,18 +136,6 @@ export default function ContactPage() {
               <div className="mt-5">
                 <VoltButton href={BOOKING_URL}>Book a demo</VoltButton>
               </div>
-            </div>
-
-            <div className="mt-8">
-              <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.16em] text-black/40">
-                Email
-              </p>
-              <a
-                href={`mailto:${INBOX}`}
-                className="mt-2 inline-block font-sans text-[17px] font-semibold text-[#0a0a0a] underline decoration-[#dfff00] decoration-[3px] underline-offset-4"
-              >
-                {INBOX}
-              </a>
             </div>
           </div>
         </div>

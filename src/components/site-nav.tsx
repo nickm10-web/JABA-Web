@@ -16,10 +16,8 @@ export default function SiteNav() {
   // Each item samples what is directly behind *it*. Sampling the header once
   // meant the logo took its colour from whatever sat mid-screen — so it went
   // white over a dark hero bubble while sitting on light grey itself.
-  const logoRef = useRef<HTMLAnchorElement>(null);
   const signInRef = useRef<HTMLAnchorElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const logoTheme = useAdaptiveGlass(logoRef, navZoneRef);
   const signInTheme = useAdaptiveGlass(signInRef, navZoneRef);
   const ctaTheme = useAdaptiveGlass(ctaRef, navZoneRef);
 
@@ -29,13 +27,13 @@ export default function SiteNav() {
       <div ref={navZoneRef} className="pointer-events-none fixed inset-x-0 top-0 z-50">
         <div className="pointer-events-auto mx-auto w-full max-w-[1440px] px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
           <header className="hero-nav-split animate-fade-lift">
-            <a ref={logoRef} href="#/" className="hero-brand" aria-label="JABA home">
-              {/* White wordmark; invert to ink when the nav sits on bright content. */}
+            <a href="#/" className="hero-brand" aria-label="JABA home">
+              {/* Full-colour mascot head: reads on light and dark alike, so it
+                  skips the adaptive invert the wordmark needed. */}
               <img
-                src="/JABA%20White%201%20(1).png"
+                src="/jaba-head.webp"
                 alt="JABA"
-                className="hero-brand-logo transition-[filter] duration-300"
-                style={{ filter: logoTheme === "on-light" ? "invert(1)" : "none" }}
+                className="h-9 w-auto sm:h-10 lg:h-11"
               />
             </a>
 

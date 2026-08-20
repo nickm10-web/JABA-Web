@@ -45,7 +45,10 @@ export default function ProblemScrollStory() {
           className="font-deck text-4xl leading-[1.08] [text-wrap:balance] md:text-5xl lg:text-6xl"
         >
           Athlete marketing became the most valuable media on earth.{" "}
-          <span className="deck-italic text-white/40">The tools never caught up.</span>
+          {/* Same face as the line above, one step down in tone. The italic cut
+              of DM Sans 800 reads as a different voice next to its roman, and
+              40% white on black was faint enough to look unintentional. */}
+          <span className="text-white/60">The tools never caught up.</span>
         </motion.h2>
 
         <motion.p

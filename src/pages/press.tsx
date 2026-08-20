@@ -5,7 +5,10 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
+import { Play } from "lucide-react";
+
 import PageLayout from "@/components/layout/page-layout";
+import FilmLightbox from "@/components/FilmLightbox";
 import {
   pressReleases,
   type PressRelease,
@@ -82,20 +85,7 @@ function WireTicker() {
 
 /* ── Broadcast monitor hero: the Damar Hamlin tape ── */
 function MonitorHero() {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [playing, setPlaying] = useState(false);
-
-  const toggle = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (v.paused) {
-      v.play();
-      setPlaying(true);
-    } else {
-      v.pause();
-      setPlaying(false);
-    }
-  };
+  const [filmOpen, setFilmOpen] = useState(false);
 
   const tick = "absolute h-3 w-3 border-white/40";
 
@@ -125,13 +115,27 @@ function MonitorHero() {
             <span className={`${tick} -bottom-2 -left-2 border-b border-l`} />
             <span className={`${tick} -bottom-2 -right-2 border-b border-r`} />
 
-            <div className="relative overflow-hidden rounded-sm border border-white/15">
+            <div className="group relative overflow-hidden rounded-sm border border-white/15">
               <img
                 src="/DAMAR%20HAMLIN%20thumbnail.png"
                 alt="JABA launch film, introduced by Damar Hamlin"
                 className="aspect-video w-full object-cover"
               />
+              <button
+                type="button"
+                onClick={() => setFilmOpen(true)}
+                aria-label="Play the JABA launch film"
+                className="absolute inset-0 flex items-center justify-center focus-visible:outline-none"
+              >
+                <span
+                  className="flex h-14 w-14 items-center justify-center rounded-full shadow-[0_14px_40px_rgba(0,0,0,0.45)] transition-transform duration-300 group-hover:scale-110 md:h-[72px] md:w-[72px]"
+                  style={{ background: "#dfff00" }}
+                >
+                  <Play className="h-6 w-6 translate-x-0.5 text-black md:h-7 md:w-7" fill="currentColor" />
+                </span>
+              </button>
             </div>
+            <FilmLightbox open={filmOpen} onClose={() => setFilmOpen(false)} />
           </div>
 
           {/* Story metadata column */}
@@ -412,16 +416,17 @@ function PressKit() {
     { label: "3D logotype · PNG", href: "/jaba-3d-logo.png", file: "jaba-3d-logotype.png" },
   ];
 
+  // No film grain on this one: that texture is built to sit on flat black and
+  // reads as dirt on a light surface.
   return (
-    <section className="relative bg-black text-white">
-      <div className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]" />
+    <section className="relative bg-white text-[#0a0a0a]">
       <div className="relative mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-24 lg:px-12">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-5">
             <h2 className="font-deck text-4xl leading-tight md:text-5xl">
               Press kit.
             </h2>
-            <p className="mt-4 max-w-sm font-sans text-sm leading-relaxed text-white/55">
+            <p className="mt-4 max-w-sm font-sans text-sm leading-relaxed text-black/55">
               Logos, mascot assets, and brand marks, cleared for editorial
               use.
             </p>
@@ -429,7 +434,7 @@ function PressKit() {
 
           <div className="md:col-span-7">
             <div
-              className="border-t border-white/10"
+              className="border-t border-black/12"
               style={{ fontVariantNumeric: "tabular-nums" }}
             >
               {assets.map((a, i) => (
@@ -437,15 +442,16 @@ function PressKit() {
                   key={a.label}
                   href={a.href}
                   download={a.file}
-                  className="group flex items-center justify-between border-b border-white/10 py-4 font-sans text-[13px] tracking-[0.04em] text-white/70 transition-colors hover:text-white"
+                  className="group flex items-center justify-between border-b border-black/12 py-4 font-sans text-[13px] tracking-[0.04em] text-black/70 transition-colors hover:text-black"
                 >
                   <span className="flex items-center gap-5">
-                    <span className="text-white/30">
+                    <span className="text-black/35">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     {a.label}
                   </span>
-                  <span className="text-white/35 transition-colors group-hover:text-[#dfff00]">
+                  {/* Volt on white is ~1.4:1, so the hover goes to ink instead. */}
+                  <span className="text-black/40 transition-colors group-hover:text-black">
                     Download ↓
                   </span>
                 </a>
@@ -459,8 +465,21 @@ function PressKit() {
   );
 }
 
-export default function PressPage() {
+export default function PressPage({ focusRelease = null }: { focusRelease?: string | null }) {
   const [activePlate, setActivePlate] = useState(0);
+
+  // Deep link from the homepage marquee: land scrolled to that release's
+  // plate. Deferred a beat so layout has settled past the router's
+  // scroll-to-top; auto behaviour, not smooth, so it reads as a page load.
+  useEffect(() => {
+    if (!focusRelease) return;
+    const t = setTimeout(() => {
+      document
+        .getElementById(`release-${focusRelease}`)
+        ?.scrollIntoView({ behavior: "auto", block: "start" });
+    }, 120);
+    return () => clearTimeout(t);
+  }, [focusRelease]);
 
   useEffect(() => {
     const plates = document.querySelectorAll("[data-plate-idx]");
@@ -481,7 +500,8 @@ export default function PressPage() {
   }, []);
 
   return (
-    <PageLayout>
+    // Footer fades from white now that the press kit above it is a light surface.
+    <PageLayout footerFade="#ffffff">
       <Spine active={activePlate} />
       <MonitorHero />
       <Ledger />

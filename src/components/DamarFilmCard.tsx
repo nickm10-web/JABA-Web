@@ -1,28 +1,10 @@
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import { Play, X } from "lucide-react";
+import { useState } from "react";
+import { Play } from "lucide-react";
 
-/** The launch film, published as a Short but shot 16:9. */
-const VIDEO_ID = "EMX8D4zjpzU";
+import FilmLightbox from "@/components/FilmLightbox";
 
 export default function DamarFilmCard() {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    // Lenis drives the page off wheel events on window, so hiding the overflow
-    // is what actually parks the scroll while the film is up.
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
 
   return (
     <>
@@ -81,41 +63,7 @@ export default function DamarFilmCard() {
         />
       </div>
 
-      {/* Portalled to the body: this card sits inside a FadeUp, and Framer
-          Motion's transform on that wrapper would make `fixed` resolve against
-          the card instead of the viewport. Mounted only while open, so nothing
-          from YouTube loads until asked. */}
-      {open && createPortal(
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="JABA launch film"
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm md:p-10"
-        >
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            aria-label="Close"
-            className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 md:right-8 md:top-8"
-          >
-            <X className="h-5 w-5" />
-          </button>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="aspect-video w-full max-w-5xl overflow-hidden rounded-2xl bg-black shadow-[0_40px_120px_-30px_rgba(0,0,0,0.8)]"
-          >
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
-              title="Introducing JABA, featuring Damar Hamlin"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="h-full w-full border-0"
-            />
-          </div>
-        </div>,
-        document.body,
-      )}
+      <FilmLightbox open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

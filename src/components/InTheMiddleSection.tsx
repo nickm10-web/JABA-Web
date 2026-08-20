@@ -8,8 +8,23 @@ import { FadeUp } from "@/components/audience/fade-up";
    public/flow-diagram.png and set DIAGRAM_SRC below. */
 const DIAGRAM_SRC: string | null = null;
 
-const PARTIES = ["Schools", "Agents", "Teams", "Leagues", "Brands", "Freelancers", "Wealth managers"];
-const STREAMS = ["Tasks", "Calendars", "Deliverables", "Deals", "Finances", "Communication"];
+const PARTIES = [
+  { label: "Schools", emoji: "🏫" },
+  { label: "Agents", emoji: "🧑‍💼" },
+  { label: "Teams", emoji: "🏟️" },
+  { label: "Leagues", emoji: "🏆" },
+  { label: "Brands", emoji: "🛍️" },
+  { label: "Freelancers", emoji: "💻" },
+  { label: "Wealth managers", emoji: "📈" },
+];
+const STREAMS = [
+  { label: "Tasks", emoji: "✅" },
+  { label: "Calendars", emoji: "📅" },
+  { label: "Deliverables", emoji: "📦" },
+  { label: "Deals", emoji: "🤝" },
+  { label: "Finances", emoji: "💰" },
+  { label: "Communication", emoji: "💬" },
+];
 
 function Funnel({ count, flip, label }: { count: number; flip?: boolean; label: string }) {
   const mid = (count - 1) / 2;
@@ -62,7 +77,7 @@ function Funnel({ count, flip, label }: { count: number; flip?: boolean; label: 
   );
 }
 
-function Row({ items }: { items: string[] }) {
+function Row({ items }: { items: { label: string; emoji: string }[] }) {
   return (
     /* Phones wrap these as content-sized pills — a rigid 2-up grid turns 13
        chips into a long form and strands the odd one on its own row. */
@@ -70,11 +85,15 @@ function Row({ items }: { items: string[] }) {
       className="flex flex-wrap justify-center gap-2 md:grid md:[grid-template-columns:repeat(var(--cols),minmax(0,1fr))]"
       style={{ "--cols": items.length } as React.CSSProperties}
     >
-      {items.map((label) => (
+      {items.map(({ label, emoji }) => (
         <div
           key={label}
-          className="rounded-full border border-black/10 bg-white px-3.5 py-2 text-center font-sans text-[12px] font-semibold leading-tight text-black/65 shadow-[0_2px_8px_rgba(0,0,0,0.04)] md:rounded-xl md:px-2 md:py-3 md:text-[13px]"
+          className="flex items-center justify-center gap-1.5 rounded-full border border-black/10 bg-white px-3.5 py-2 text-center font-sans text-[12px] font-semibold leading-tight text-black/65 shadow-[0_2px_8px_rgba(0,0,0,0.04)] md:flex-col md:gap-1.5 md:rounded-xl md:px-2 md:py-3 md:text-[13px]"
         >
+          {/* Decorative: the label already says it, so it isn't announced. */}
+          <span aria-hidden className="text-[14px] leading-none md:text-[19px]">
+            {emoji}
+          </span>
           {label}
         </div>
       ))}

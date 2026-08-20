@@ -44,7 +44,8 @@ export default function PressPreviewSection() {
           {strip.map((r, i) => (
             <a
               key={`${r.id}-${i}`}
-              href="#/press"
+              /* Into the newsroom, landed on this release's plate. */
+              href={`#/press/${r.id}`}
               aria-label={`${r.partner} announcement`}
               /* Fixed box on every card — source art has mixed aspect ratios. */
               className="group relative block h-[260px] w-[340px] shrink-0 overflow-hidden rounded-2xl border border-black/10 md:h-[320px] md:w-[420px]"

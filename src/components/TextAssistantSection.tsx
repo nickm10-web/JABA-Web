@@ -91,7 +91,7 @@ export default function TextAssistantSection() {
                   ease: "easeInOut",
                   delay: 0.8,
                 }}
-                className="pointer-events-none absolute -bottom-12 -left-8 z-0 hidden w-24 select-none opacity-80 drop-shadow-xl md:-bottom-16 md:-left-6 md:block md:w-32 lg:-bottom-20 lg:-left-4 lg:w-40"
+                className="pointer-events-none absolute -bottom-24 -left-12 z-0 hidden w-24 select-none opacity-80 drop-shadow-xl md:-bottom-28 md:-left-12 md:block md:w-32 lg:-bottom-32 lg:-left-14 lg:w-40"
               />
               <div className="relative z-10">
                 <h2 className="font-deck text-4xl leading-[1.05] text-black md:text-5xl lg:text-6xl">
