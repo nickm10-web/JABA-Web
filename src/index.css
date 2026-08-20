@@ -2146,6 +2146,19 @@
   color: #dfff00;
 }
 
+/* Hero copy of the bubble. Bigger relative to its line than .cta-bubble is:
+   the subline is 18-24px, so matching the CTA's 1.25em would shrink the
+   bubble's lettering to half the surrounding text. 2.35em puts its lettering
+   (0.409 of image height) at roughly the subline's own size; -0.705em is the
+   usual -0.30 x height baseline drop. */
+.hero-bubble {
+  display: inline-block;
+  height: 2.35em;
+  width: auto;
+  vertical-align: -0.705em;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.25));
+}
+
 /* Rendered bubble set inline in the headline.
    Sized and aligned from the artwork rather than by eye: the lettering occupies
    0.409 of the image height. Its baseline sits 0.70 down the image, so the

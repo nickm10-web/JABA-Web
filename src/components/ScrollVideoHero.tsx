@@ -47,22 +47,11 @@ export default function ScrollVideoHero({
             style={{ textShadow: "0 2px 14px rgba(0,0,0,0.3)" }}
           >
             JABA is AI that allows anyone to work with athletes in{" "}
-            <span className="relative inline-block whitespace-nowrap text-[#dfff00]">
-              one text thread.
-              {/* hand-drawn underline, slightly overshooting like a marker stroke */}
-              <svg
-                aria-hidden
-                viewBox="0 0 300 14"
-                preserveAspectRatio="none"
-                className="absolute -bottom-[0.12em] left-[-2%] h-[0.34em] w-[104%]"
-                fill="none"
-                stroke="#dfff00"
-                strokeWidth="3.4"
-                strokeLinecap="round"
-              >
-                <path d="M4 8.5C46 4.2 116 3.1 175 4.6c37 .9 84 2.4 121 5.8" />
-              </svg>
-            </span>
+            <img
+              src="/cta-bubble.webp"
+              alt="one text thread?"
+              className="bubble-float hero-bubble"
+            />
           </p>
 
           <div className="mt-7 flex w-full max-w-xl items-center justify-center gap-3 md:justify-start">
