@@ -47,16 +47,23 @@ const socials: Array<{ label: string; href: string; path?: string; node?: React.
   },
 ];
 
-/** Back to front. `depth` is how many px the layer starts below its resting
- *  place while the footer is scrolling in; nearer layers travel further, which
- *  is what reads as depth. Everything settles to 0, so the composition at rest
+/** Back to front. Each layer starts lower AND larger, settling to its resting
+ *  place as the footer is revealed; the nearer it is, the more of both.
+ *
+ *  The scale is what makes the separation work. Translation alone has to get
+ *  huge to read at all, and at that size the near grass simply leaves the frame
+ *  and the opening state looks emptier rather than deeper. Scale is anchored to
+ *  the bottom, so a layer can only ever grow past the edges, never uncover
+ *  them, which is what lets the spread go this far and stay composed. Everything settles to 0, so the composition at rest
  *  is the tuned one and the parallax only plays on the way in. */
 const LAYERS = [
-  { src: "/footer/sky.webp", className: "z-0", depth: 0 },
-  { src: "/footer/hill-back.webp", className: "z-[1]", depth: 14 },
+  // Sky is the anchor: it must not move, or the hills have nothing to move
+  // against and the whole thing reads as one image sliding.
+  { src: "/footer/sky.webp", className: "z-0", depth: 0, scale: 0 },
+  { src: "/footer/hill-back.webp", className: "z-[1]", depth: 30, scale: 0.055 },
   // Furthest prop: first thing to go when there is no room for it.
-  { src: "/footer/hill-rotunda.webp", className: "z-[2] hidden sm:block", depth: 24 },
-  { src: "/footer/hill-mac.webp", className: "z-[3]", depth: 38 },
+  { src: "/footer/hill-rotunda.webp", className: "z-[2] hidden sm:block", depth: 52, scale: 0.1 },
+  { src: "/footer/hill-mac.webp", className: "z-[3]", depth: 80, scale: 0.155 },
 ];
 
 interface FooterSectionProps {
@@ -97,9 +104,12 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
       // 0 as the scene's top reaches the fold, 1 once its bottom has.
       const raw = (window.innerHeight - r.top) / (r.height || 1);
       const p = Math.min(Math.max(raw, 0), 1);
+      const away = 1 - p; // 1 while the footer is arriving, 0 once it has
       for (const el of els) {
         const d = Number(el.dataset.depth) || 0;
-        el.style.transform = `translate3d(0, ${(d * (1 - p)).toFixed(2)}px, 0)`;
+        const sc = Number(el.dataset.scale) || 0;
+        const t = `translate3d(0, ${(d * away).toFixed(2)}px, 0)`;
+        el.style.transform = sc ? `${t} scale(${(1 + sc * away).toFixed(4)})` : t;
       }
     };
 
@@ -245,6 +255,8 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
               draggable={false}
               loading="lazy"
               data-depth={l.depth}
+              data-scale={l.scale}
+              style={{ transformOrigin: "50% 100%" }}
               className={`absolute inset-0 h-full w-full select-none will-change-transform ${l.className}`}
             />
           ))}
@@ -265,7 +277,9 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
               alt=""
               draggable={false}
               loading="lazy"
-              data-depth={52}
+              data-depth={115}
+              data-scale={0.17}
+              style={{ transformOrigin: "50% 100%" }}
               className="w-full select-none will-change-transform"
             />
           </div>
@@ -275,7 +289,9 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
             alt=""
             draggable={false}
             loading="lazy"
-            data-depth={74}
+            data-depth={120}
+            data-scale={0.24}
+            style={{ transformOrigin: "50% 100%" }}
             className="absolute inset-0 z-20 h-full w-full select-none will-change-transform"
           />
         </div>
