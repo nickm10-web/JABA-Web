@@ -153,13 +153,17 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
         aria-hidden
         className="relative -mt-16 aspect-[1.55/1] w-full overflow-hidden leading-[0] md:-mt-24 md:aspect-[2.35/1]"
       >
-        {/* Mist hand-off: the grey has to reach far enough down to swallow the
-            sky's own edge, so the scene emerges rather than starting on a seam. */}
+        {/* Mist hand-off from the grey footer into the sky. Height is bounded by
+            the mac + mascot, whose crest sits at (1 - 0.3165 x aspect) of the
+            window: 25.6% on desktop, so the old 45% band was washing the mascot
+            out at ~40% grey. 16% clears it, and the sky's own top is pale enough
+            that the shorter blend still leaves no seam. Mobile's taller window
+            puts the crest at 50.9%, so it can afford a longer fade. */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[42%] md:h-[45%]"
+          className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[34%] md:h-[16%]"
           style={{
             background:
-              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 22%, rgba(238,238,238,0.9) 46%, rgba(238,238,238,0.6) 68%, rgba(238,238,238,0.25) 86%, transparent 100%)",
+              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 14%, rgba(238,238,238,0.75) 30%, rgba(238,238,238,0.46) 50%, rgba(238,238,238,0.23) 70%, rgba(238,238,238,0.09) 85%, transparent 100%)",
           }}
         />
 
