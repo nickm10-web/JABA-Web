@@ -1,8 +1,6 @@
 
 import { VoltButton } from "@/components/ui/volt-button";
 
-const LIME = "#dfff00";
-
 // Only links with real destinations ship. For Schools / For Agencies are
 // parked until those pages are ready for launch.
 const columns = [
@@ -48,65 +46,41 @@ const socials: Array<{ label: string; href: string; path?: string; node?: React.
 ];
 
 interface FooterSectionProps {
-  /** Color of the page surface above the footer, so the loop fades out of it. */
+  /** Color of the page surface above the footer, kept for call-site compat. */
   fadeFrom?: string;
 }
 
-export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionProps) {
+/**
+ * Light footer strip, then the JABA world with the wordmark standing in it:
+ * sky at the back, giant translucent wordmark in the middle, and a cutout of
+ * the grass foreground (footer-grass.webp, masked out of the same art) pasted
+ * over the letters' feet so the type reads as part of the landscape.
+ */
+export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProps) {
   return (
-    <footer className="relative overflow-hidden bg-black text-white">
-      {/* World loop bleeding into the footer. */}
-      <video
-        src="/videos/footer-loop.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-
-      {/* Scrim for legibility over the loop. */}
-      <div
-        aria-hidden
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.22) 30%, rgba(0,0,0,0.14) 60%, rgba(0,0,0,0.26) 100%)",
-        }}
-      />
-      {/* Fade out of whatever surface sits above the footer — tall and eased
-          so the surface melts into the scene instead of banding. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-32 md:h-44"
-        style={{
-          background: `linear-gradient(to bottom, ${fadeFrom} 0%, color-mix(in srgb, ${fadeFrom} 62%, transparent) 35%, color-mix(in srgb, ${fadeFrom} 24%, transparent) 65%, color-mix(in srgb, ${fadeFrom} 6%, transparent) 85%, transparent 100%)`,
-        }}
-      />
-
-      <div
-        className="relative mx-auto max-w-7xl px-6 pt-20 md:px-10 md:pt-24 lg:px-12"
-        // Shadow rather than a heavier scrim: the loop stays bright and the
-        // type still holds up over the sky.
-        style={{ textShadow: "0 1px 14px rgba(0,0,0,0.6), 0 1px 3px rgba(0,0,0,0.45)" }}
-      >
+    <footer className="bg-[#eeeeee] text-[#0a0a0a]">
+      <div className="mx-auto max-w-7xl px-6 pt-20 md:px-10 md:pt-24 lg:px-12">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-[1.6fr_1fr_1fr] md:gap-8">
           {/* Brand */}
           <div className="col-span-2 max-w-sm sm:col-span-3 md:col-span-1">
             <a href="#/" aria-label="JABA home" className="inline-flex">
-              <img src="/deck/jaba-wordmark.png" alt="JABA" className="h-7 w-auto md:h-8" />
+              <img src="/jaba-head.webp" alt="JABA" className="h-9 w-auto" />
             </a>
-            <p className="mt-5 font-deck text-2xl leading-snug text-white">
+            <p className="mt-5 font-deck text-2xl leading-snug">
               The operating layer for athlete marketing.
             </p>
-            <p className="mt-3 max-w-xs font-sans text-[13.5px] leading-relaxed text-white/80">
+            <p className="mt-3 max-w-xs font-sans text-[13.5px] leading-relaxed text-black/60">
               JABA finds the deals, writes the outreach, and tracks every
               campaign to close, for schools and agencies alike.
             </p>
             <div className="mt-6 flex">
-              <VoltButton surface="dark">Book a demo</VoltButton>
+              <VoltButton
+                onClick={() =>
+                  window.open("https://calendly.com/jordon-jaba/jaba", "_blank", "noopener,noreferrer")
+                }
+              >
+                Book a demo
+              </VoltButton>
             </div>
 
             <div className="mt-7 flex items-center gap-3">
@@ -117,7 +91,7 @@ export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionPro
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="grid h-9 w-9 place-items-center rounded-full border border-white/40 text-white transition-colors hover:border-white hover:bg-white/10"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-black/25 text-black/70 transition-colors hover:border-black hover:text-black"
                 >
                   <svg viewBox="0 0 24 24" className="h-[17px] w-[17px]" fill="currentColor" aria-hidden>
                     {s.node ?? <path d={s.path} />}
@@ -130,7 +104,7 @@ export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionPro
           {/* Link columns */}
           {columns.map((col) => (
             <div key={col.title}>
-              <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.16em] text-white">
+              <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.16em] text-black/45">
                 {col.title}
               </p>
               <ul className="mt-4 space-y-3">
@@ -138,7 +112,7 @@ export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionPro
                   <li key={l.label}>
                     <a
                       href={l.href}
-                      className="font-sans text-[14px] text-white/85 transition-colors hover:text-white"
+                      className="font-sans text-[14px] text-black/65 transition-colors hover:text-black"
                     >
                       {l.label}
                     </a>
@@ -149,18 +123,55 @@ export default function FooterSection({ fadeFrom = "#000000" }: FooterSectionPro
           ))}
         </div>
 
-        {/* Meta row */}
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pb-16 pt-6 md:mt-20 md:flex-row md:items-center md:justify-between">
-          <p
-            className="font-sans text-[12px] text-white/80"
-            style={{ fontVariantNumeric: "tabular-nums" }}
-          >
-            © {new Date().getFullYear()} JABA. All rights reserved.
-          </p>
-          <p className="font-sans text-[12px] text-white/80">
-            Built for the people who manage athletes.
-          </p>
-        </div>
+        {/* Copyright, centred like the reference. Lifted above the strip's
+            mist (z) because the strip pulls up underneath it. */}
+        <p
+          className="relative z-30 pb-10 pt-12 text-center font-sans text-[12.5px] font-semibold text-black/70 md:pt-14"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
+          © {new Date().getFullYear()} JABA.
+        </p>
+      </div>
+
+      {/* ── The world sign-off ── */}
+      {/* Fixed aspect crops the scene to its lower band: the full art is 72%
+          sky, which left the logo swimming. Bottom-anchored cover keeps the
+          grass line and lets the crop eat sky only. The strip pulls up over
+          the copyright (negative margin) so the fade owns the hand-off — the
+          © line sits inside the mist rather than above a visible seam. */}
+      <div aria-hidden className="relative -mt-16 aspect-[2/1] w-full overflow-hidden leading-[0] md:-mt-20 md:aspect-[2.6/1]">
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-10 h-2/5"
+          style={{
+            background:
+              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 18%, rgba(238,238,238,0.88) 42%, rgba(238,238,238,0.55) 66%, rgba(238,238,238,0.22) 85%, transparent 100%)",
+          }}
+        />
+        <img
+          src="/hero-world.webp"
+          alt=""
+          className="absolute inset-0 h-full w-full select-none object-cover object-bottom"
+          draggable={false}
+        />
+
+        {/* Middle: the 3D wordmark, feet in the grass. Bottom offset tucks it
+            behind the foreground cutout's crest. Full opacity: unlike the flat
+            white mark, the volt render carries its own depth and dims badly. */}
+        <img
+          src="/jaba-3d-logo.png"
+          alt=""
+          draggable={false}
+          className="absolute bottom-[7%] left-1/2 z-10 w-[88%] -translate-x-1/2 select-none"
+        />
+
+        {/* Front: grass cutout from the same art, same width, bottom-aligned,
+            so its pixels land exactly on the back layer's. */}
+        <img
+          src="/footer-grass.webp"
+          alt=""
+          draggable={false}
+          className="absolute bottom-0 left-0 z-20 w-full select-none"
+        />
       </div>
     </footer>
   );

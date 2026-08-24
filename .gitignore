@@ -8,3 +8,5 @@ deploy-*
 # Large media files (exceed GitHub 100MB limit)
 public/jaba-wave-original.mp4
 public/Damar Anchor Short (2).mp4
+.vercel
+.env*

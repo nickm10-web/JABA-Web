@@ -32,6 +32,58 @@ function getClient(uri: string) {
 const str = (v: unknown, max: number) =>
   typeof v === "string" ? v.trim().slice(0, max) : "";
 
+/**
+ * Emails the team that a signup landed. Deliberately fail-soft: the database
+ * write is the record of truth, so a notification problem must never cost us
+ * the lead or show the visitor an error.
+ *
+ * SendGrid rather than a new provider because jaba.ai is already DKIM-signed
+ * for it (the s1/s2/sm._domainkey CNAMEs), so mail from the domain
+ * authenticates instead of landing in spam.
+ */
+async function notify(doc: Record<string, unknown>) {
+  const key = process.env.SENDGRID_API_KEY;
+  const to = process.env.LEAD_NOTIFY_TO;
+  if (!key || !to) return; // not configured: stay silent, keep the lead
+
+  const from = process.env.LEAD_NOTIFY_FROM || "notifications@jaba.ai";
+  const isContact = doc.source === "contact";
+  const lines = [
+    `Email:   ${doc.email}`,
+    doc.name ? `Name:    ${doc.name}` : null,
+    `Source:  ${doc.source}`,
+    doc.message ? `\nMessage:\n${doc.message}` : null,
+  ].filter(Boolean);
+
+  // Never let a hanging request hold the function open.
+  const abort = new AbortController();
+  const timer = setTimeout(() => abort.abort(), 5000);
+  try {
+    const r = await fetch("https://api.sendgrid.com/v3/mail/send", {
+      method: "POST",
+      signal: abort.signal,
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        personalizations: [{ to: to.split(",").map((e) => ({ email: e.trim() })) }],
+        from: { email: from, name: "JABA site" },
+        reply_to: { email: String(doc.email) },
+        subject: isContact
+          ? `Contact form: ${doc.name || doc.email}`
+          : `New early-access signup: ${doc.email}`,
+        content: [{ type: "text/plain", value: lines.join("\n") }],
+      }),
+    });
+    if (!r.ok) console.error("lead: notify failed", r.status, await r.text());
+  } catch (err) {
+    console.error("lead: notify threw", err);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -68,12 +120,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const client = await getClient(uri);
     await client.db(DB).collection(COLLECTION).insertOne(doc);
-    return res.status(200).json({ ok: true });
   } catch (err) {
     // Never surface driver internals to the browser.
     console.error("lead: insert failed", err);
     return res.status(500).json({ ok: false, error: "store_failed" });
   }
+
+  // Outside the try on purpose. The lead is stored by this point, so nothing
+  // the notifier does may turn a saved signup into an error for the visitor.
+  await notify(doc);
+  return res.status(200).json({ ok: true });
 }
 
 function safeParse(s: string) {
