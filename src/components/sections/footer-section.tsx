@@ -1,4 +1,6 @@
 
+import { useEffect, useRef } from "react";
+
 import { VoltButton } from "@/components/ui/volt-button";
 
 // Only links with real destinations ship. For Schools / For Agencies are
@@ -45,13 +47,16 @@ const socials: Array<{ label: string; href: string; path?: string; node?: React.
   },
 ];
 
-/** Back to front. The logo is injected between hill-mac and grass-front. */
+/** Back to front. `depth` is how many px the layer starts below its resting
+ *  place while the footer is scrolling in; nearer layers travel further, which
+ *  is what reads as depth. Everything settles to 0, so the composition at rest
+ *  is the tuned one and the parallax only plays on the way in. */
 const LAYERS = [
-  { src: "/footer/sky.webp", className: "z-0" },
-  { src: "/footer/hill-back.webp", className: "z-[1]" },
+  { src: "/footer/sky.webp", className: "z-0", depth: 0 },
+  { src: "/footer/hill-back.webp", className: "z-[1]", depth: 14 },
   // Furthest prop: first thing to go when there is no room for it.
-  { src: "/footer/hill-rotunda.webp", className: "z-[2] hidden sm:block" },
-  { src: "/footer/hill-mac.webp", className: "z-[3]" },
+  { src: "/footer/hill-rotunda.webp", className: "z-[2] hidden sm:block", depth: 24 },
+  { src: "/footer/hill-mac.webp", className: "z-[3]", depth: 38 },
 ];
 
 interface FooterSectionProps {
@@ -66,6 +71,70 @@ interface FooterSectionProps {
  * inside the landscape and lets the far props drop out on small screens.
  */
 export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProps) {
+  const sceneRef = useRef<HTMLDivElement>(null);
+
+  /* Parallax, driven straight off the scene's own rect.
+     Written by hand rather than with a scroll-linked motion value because the
+     scene is absolutely positioned inside an overflow-clipped, aspect-ratio
+     box, and the library's cached measurement of that never advanced past 0.
+     Reading the rect each frame is immune to when the lazy images land.
+     Transforms are set on the nodes directly, so a scroll frame costs no React
+     render, and an observer parks the loop whenever the footer is off screen.
+     The loop is rAF-driven rather than scroll-event-driven because the scene
+     has to stay glued to a rect that moves with smooth scrolling. */
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const els = Array.from(scene.querySelectorAll<HTMLElement>("[data-depth]"));
+    let frame = 0;
+    let live = false;
+
+    const apply = () => {
+      frame = 0;
+      const r = scene.getBoundingClientRect();
+      // 0 as the scene's top reaches the fold, 1 once its bottom has.
+      const raw = (window.innerHeight - r.top) / (r.height || 1);
+      const p = Math.min(Math.max(raw, 0), 1);
+      for (const el of els) {
+        const d = Number(el.dataset.depth) || 0;
+        el.style.transform = `translate3d(0, ${(d * (1 - p)).toFixed(2)}px, 0)`;
+      }
+    };
+
+    const tick = () => {
+      apply();
+      frame = live ? requestAnimationFrame(tick) : 0;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(apply);
+    };
+
+    const io = new IntersectionObserver(
+      ([e]) => {
+        live = e.isIntersecting;
+        if (live && !frame) frame = requestAnimationFrame(tick);
+      },
+      { rootMargin: "20% 0px" },
+    );
+    io.observe(scene);
+
+    // Deliberately not applying on mount. With no inline transform the layers
+    // render at rest, which is the tuned composition, so if this driver never
+    // gets to run (hidden tab, throttled rAF, an observer that never fires) the
+    // footer degrades to correct-and-static rather than frozen at full offset.
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      live = false;
+      io.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
   return (
     <footer className="bg-[#eeeeee] text-[#0a0a0a]">
       <div className="mx-auto max-w-7xl px-6 pt-20 md:px-10 md:pt-24 lg:px-12">
@@ -167,7 +236,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
           }}
         />
 
-        <div className="absolute inset-x-0 bottom-0 aspect-[2000/1309]">
+        <div ref={sceneRef} className="absolute inset-x-0 bottom-0 aspect-[2000/1309]">
           {LAYERS.map((l) => (
             <img
               key={l.src}
@@ -175,7 +244,8 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
               alt=""
               draggable={false}
               loading="lazy"
-              className={`absolute inset-0 h-full w-full select-none ${l.className}`}
+              data-depth={l.depth}
+              className={`absolute inset-0 h-full w-full select-none will-change-transform ${l.className}`}
             />
           ))}
 
@@ -187,20 +257,26 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
               (bottom% + width/2.238) of the scene, and the mac + mascot crest
               at 48.3%; at the 62% that looked right on mobile the mark reached
               47.7% and buried the mascot. 48% keeps it clear with room to spare. */}
-          <img
-            src="/footer/logo-3d.webp"
-            alt=""
-            draggable={false}
-            loading="lazy"
-            className="absolute bottom-[18%] left-1/2 z-20 w-[48%] -translate-x-1/2 select-none md:bottom-[20%] md:w-[38%]"
-          />
+          {/* Centring lives on the wrapper so the parallax owns the image's
+              transform outright; both on one node would fight. */}
+          <div className="absolute bottom-[18%] left-1/2 z-20 w-[48%] -translate-x-1/2 md:bottom-[17%] md:w-[38%]">
+            <img
+              src="/footer/logo-3d.webp"
+              alt=""
+              draggable={false}
+              loading="lazy"
+              data-depth={52}
+              className="w-full select-none will-change-transform"
+            />
+          </div>
 
           <img
             src="/footer/grass-front.webp"
             alt=""
             draggable={false}
             loading="lazy"
-            className="absolute inset-0 z-20 h-full w-full select-none"
+            data-depth={74}
+            className="absolute inset-0 z-20 h-full w-full select-none will-change-transform"
           />
         </div>
       </div>
