@@ -45,16 +45,25 @@ const socials: Array<{ label: string; href: string; path?: string; node?: React.
   },
 ];
 
+/** Back to front. The logo is injected between hill-mac and grass-front. */
+const LAYERS = [
+  { src: "/footer/sky.webp", className: "z-0" },
+  { src: "/footer/hill-back.webp", className: "z-[1]" },
+  // Furthest prop: first thing to go when there is no room for it.
+  { src: "/footer/hill-rotunda.webp", className: "z-[2] hidden sm:block" },
+  { src: "/footer/hill-mac.webp", className: "z-[3]" },
+];
+
 interface FooterSectionProps {
   /** Color of the page surface above the footer, kept for call-site compat. */
   fadeFrom?: string;
 }
 
 /**
- * Light footer strip, then the JABA world with the wordmark standing in it:
- * sky at the back, giant translucent wordmark in the middle, and a cutout of
- * the grass foreground (footer-grass.webp, masked out of the same art) pasted
- * over the letters' feet so the type reads as part of the landscape.
+ * Light footer strip, then the JABA world as a depth stack: sky, three hill
+ * layers, the 3D wordmark, and the foreground grass over its feet. Splitting
+ * the art into layers (rather than one flat image) is what lets the logo sit
+ * inside the landscape and lets the far props drop out on small screens.
  */
 export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProps) {
   return (
@@ -134,45 +143,64 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
       </div>
 
       {/* ── The world sign-off ── */}
-      {/* Fixed aspect crops the scene to its lower band: the full art is 72%
-          sky, which left the logo swimming. Bottom-anchored cover keeps the
-          grass line and lets the crop eat sky only. The strip pulls up over
-          the copyright (negative margin) so the fade owns the hand-off — the
-          © line sits inside the mist rather than above a visible seam. */}
-      <div aria-hidden className="relative -mt-16 aspect-[2/1] w-full overflow-hidden leading-[0] md:-mt-20 md:aspect-[2.6/1]">
+      {/* Two boxes on purpose. The outer one is the crop window: it decides how
+          much of the scene the footer shows. The inner one carries the art's own
+          aspect ratio, full width and bottom-anchored, so every layer AND the
+          logo live in one coordinate space. Percentages inside it therefore mean
+          the same thing at every breakpoint, instead of drifting as the window's
+          aspect changes. */}
+      <div
+        aria-hidden
+        className="relative -mt-16 aspect-[1.55/1] w-full overflow-hidden leading-[0] md:-mt-24 md:aspect-[2.35/1]"
+      >
+        {/* Mist hand-off: the grey has to reach far enough down to swallow the
+            sky's own edge, so the scene emerges rather than starting on a seam. */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-10 h-2/5"
+          className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[42%] md:h-[45%]"
           style={{
             background:
-              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 18%, rgba(238,238,238,0.88) 42%, rgba(238,238,238,0.55) 66%, rgba(238,238,238,0.22) 85%, transparent 100%)",
+              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 22%, rgba(238,238,238,0.9) 46%, rgba(238,238,238,0.6) 68%, rgba(238,238,238,0.25) 86%, transparent 100%)",
           }}
         />
-        <img
-          src="/hero-world.webp"
-          alt=""
-          className="absolute inset-0 h-full w-full select-none object-cover object-bottom"
-          draggable={false}
-        />
 
-        {/* Middle: the 3D wordmark, feet in the grass. Bottom offset tucks it
-            behind the foreground cutout's crest. Full opacity: unlike the flat
-            white mark, the volt render carries its own depth and dims badly. */}
-        <img
-          src="/jaba-3d-logo.png"
-          alt=""
-          draggable={false}
-          className="absolute bottom-[7%] left-1/2 z-10 w-[88%] -translate-x-1/2 select-none"
-        />
+        <div className="absolute inset-x-0 bottom-0 aspect-[2000/1309]">
+          {LAYERS.map((l) => (
+            <img
+              key={l.src}
+              src={l.src}
+              alt=""
+              draggable={false}
+              loading="lazy"
+              className={`absolute inset-0 h-full w-full select-none ${l.className}`}
+            />
+          ))}
 
-        {/* Front: grass cutout from the same art, same width, bottom-aligned,
-            so its pixels land exactly on the back layer's. */}
-        <img
-          src="/footer-grass.webp"
-          alt=""
-          draggable={false}
-          className="absolute bottom-0 left-0 z-20 w-full select-none"
-        />
+          {/* Sits between the mac hill and the front grass, so the grass laps
+              over the letters' feet and the mark reads as standing in the
+              landscape rather than pasted on top of it.
+
+              The widths are capped, not chosen by eye. The mark's top lands at
+              (bottom% + width/2.238) of the scene, and the mac + mascot crest
+              at 48.3%; at the 62% that looked right on mobile the mark reached
+              47.7% and buried the mascot. 48% keeps it clear with room to spare. */}
+          <img
+            src="/footer/logo-3d.webp"
+            alt=""
+            draggable={false}
+            loading="lazy"
+            className="absolute bottom-[18%] left-1/2 z-20 w-[48%] -translate-x-1/2 select-none md:bottom-[20%] md:w-[38%]"
+          />
+
+          <img
+            src="/footer/grass-front.webp"
+            alt=""
+            draggable={false}
+            loading="lazy"
+            className="absolute inset-0 z-20 h-full w-full select-none"
+          />
+        </div>
       </div>
+
     </footer>
   );
 }
