@@ -54,8 +54,10 @@ const socials: Array<{ label: string; href: string; path?: string; node?: React.
  *  huge to read at all, and at that size the near grass simply leaves the frame
  *  and the opening state looks emptier rather than deeper. Scale is anchored to
  *  the bottom, so a layer can only ever grow past the edges, never uncover
- *  them, which is what lets the spread go this far and stay composed. Everything settles to 0, so the composition at rest
- *  is the tuned one and the parallax only plays on the way in. */
+ *  them, which is what lets the spread go this far and stay composed.
+ *
+ *  Everything settles to 0, so the composition at rest is the tuned one and the
+ *  parallax only plays on the way in. */
 const LAYERS = [
   // Sky is the anchor: it must not move, or the hills have nothing to move
   // against and the whole thing reads as one image sliding.
@@ -147,7 +149,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
 
   return (
     <footer className="bg-[#eeeeee] text-[#0a0a0a]">
-      <div className="mx-auto max-w-7xl px-6 pt-20 md:px-10 md:pt-24 lg:px-12">
+      <div className="relative z-40 mx-auto max-w-7xl px-6 pt-20 md:px-10 md:pt-24 lg:px-12">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-[1.6fr_1fr_1fr] md:gap-8">
           {/* Brand */}
           <div className="col-span-2 max-w-sm sm:col-span-3 md:col-span-1">
@@ -230,19 +232,21 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
           aspect changes. */}
       <div
         aria-hidden
-        className="relative -mt-16 aspect-[1.55/1] w-full overflow-hidden leading-[0] md:-mt-24 md:aspect-[2.35/1]"
+        className="relative -mt-24 aspect-[1.45/1] w-full overflow-hidden leading-[0] md:-mt-40 md:aspect-[2/1]"
       >
         {/* Mist hand-off from the grey footer into the sky. Height is bounded by
-            the mac + mascot, whose crest sits at (1 - 0.3165 x aspect) of the
-            window: 25.6% on desktop, so the old 45% band was washing the mascot
-            out at ~40% grey. 16% clears it, and the sky's own top is pale enough
-            that the shorter blend still leaves no seam. Mobile's taller window
-            puts the crest at 50.9%, so it can afford a longer fade. */}
+            two things at once. It has to stay fully opaque across the overlap,
+            or the footer's black copy would sit on open sky, and it has to be
+            done fading before the mac + mascot, whose crest sits at
+            (1 - 0.3165 x aspect) of the window. That crest is what set the crop:
+            at the old 2.35 there were only 153px above it, not enough to pull
+            the scene up behind the copy at all. At 2/1 there are 257px, so a
+            160px overlap and a 30% band both fit under it. */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[34%] md:h-[16%]"
+          className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[42%] md:h-[30%]"
           style={{
             background:
-              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 14%, rgba(238,238,238,0.75) 30%, rgba(238,238,238,0.46) 50%, rgba(238,238,238,0.23) 70%, rgba(238,238,238,0.09) 85%, transparent 100%)",
+              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 42%, rgba(238,238,238,0.72) 55%, rgba(238,238,238,0.43) 70%, rgba(238,238,238,0.18) 85%, transparent 100%)",
           }}
         />
 
@@ -271,7 +275,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
               47.7% and buried the mascot. 48% keeps it clear with room to spare. */}
           {/* Centring lives on the wrapper so the parallax owns the image's
               transform outright; both on one node would fight. */}
-          <div className="absolute bottom-[18%] left-1/2 z-20 w-[48%] -translate-x-1/2 md:bottom-[17%] md:w-[38%]">
+          <div className="absolute bottom-[18%] left-1/2 z-20 w-[48%] -translate-x-1/2 md:bottom-[20%] md:w-[38%]">
             <img
               src="/footer/logo-3d.webp"
               alt=""
