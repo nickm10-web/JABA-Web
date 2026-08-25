@@ -61,7 +61,12 @@ const socials: Array<{ label: string; href: string; path?: string; node?: React.
 const LAYERS = [
   // Sky is the anchor: it must not move, or the hills have nothing to move
   // against and the whole thing reads as one image sliding.
-  { src: "/footer/sky.webp", className: "z-0", depth: 0, scale: 0 },
+  // Stretched well past the scene and pinned to its bottom. The artwork is
+  // transparent above 68% of its own canvas, so at natural size there is simply
+  // no sky to show up here however far the scene is lifted; stretching the
+  // gradient upward is what actually puts sky behind the copy. It is a soft
+  // gradient, so the vertical distortion is invisible.
+  { src: "/footer/sky.webp", className: "z-0", depth: 0, scale: 0, box: "inset-x-0 bottom-0 h-[185%]" },
   { src: "/footer/hill-back.webp", className: "z-[1]", depth: 30, scale: 0.055 },
   // Furthest prop: first thing to go when there is no room for it.
   { src: "/footer/hill-rotunda.webp", className: "z-[2] hidden sm:block", depth: 52, scale: 0.1 },
@@ -232,7 +237,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
           aspect changes. */}
       <div
         aria-hidden
-        className="relative -mt-24 aspect-[1.45/1] w-full overflow-hidden leading-[0] md:-mt-40 md:aspect-[2/1]"
+        className="relative -mt-32 aspect-[1.45/1] w-full overflow-hidden leading-[0] md:-mt-56 md:aspect-[2/1]"
       >
         {/* Mist hand-off from the grey footer into the sky. Height is bounded by
             two things at once. It has to stay fully opaque across the overlap,
@@ -243,10 +248,10 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
             the scene up behind the copy at all. At 2/1 there are 257px, so a
             160px overlap and a 30% band both fit under it. */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[42%] md:h-[30%]"
+          className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[45%] md:h-[33%]"
           style={{
             background:
-              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 42%, rgba(238,238,238,0.72) 55%, rgba(238,238,238,0.43) 70%, rgba(238,238,238,0.18) 85%, transparent 100%)",
+              "linear-gradient(to bottom, #eeeeee 0%, #eeeeee 25%, rgba(238,238,238,0.66) 45%, rgba(238,238,238,0.38) 62%, rgba(238,238,238,0.16) 80%, transparent 100%)",
           }}
         />
 
@@ -261,7 +266,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
               data-depth={l.depth}
               data-scale={l.scale}
               style={{ transformOrigin: "50% 100%" }}
-              className={`absolute inset-0 h-full w-full select-none will-change-transform ${l.className}`}
+              className={`absolute w-full select-none will-change-transform ${l.box ?? "inset-0 h-full"} ${l.className}`}
             />
           ))}
 
