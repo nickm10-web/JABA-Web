@@ -4,11 +4,13 @@ import { MongoClient } from "mongodb";
 /**
  * Captures signups from the hero email field and the contact form.
  *
- * Writes to its own collection rather than anything under the CRM: this is a
- * public, unauthenticated endpoint, so whatever spam reaches it must not land
- * in the sales pipeline.
+ * Its own database, not a collection under the CRM's "leads" DB. This is a
+ * public, unauthenticated endpoint, so whatever spam reaches it must never land
+ * in the sales pipeline, and a database of its own means the login it runs on
+ * can hold the built-in readWrite role on exactly this and nothing else,
+ * instead of a custom role carved out of the CRM.
  */
-const DB = "leads";
+const DB = "jaba_site";
 const COLLECTION = "website_signups";
 
 const MAX = { email: 254, name: 120, message: 4000, source: 40 };
