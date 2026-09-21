@@ -113,7 +113,7 @@ export default function ContactPage() {
                 style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
               />
               <div className="flex items-center gap-3 pt-1">
-                <VoltButton>
+                <VoltButton type="submit">
                   {status === "sending" ? "Sending…" : status === "done" ? "Sent ✓" : "Send"}
                 </VoltButton>
                 {status === "error" && (

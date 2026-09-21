@@ -12,6 +12,11 @@ interface VoltButtonProps {
    *  change, so it never halos against dark. */
   surface?: "light" | "dark";
   disabled?: boolean;
+  /** Defaults to "button" so a CTA dropped into a form never submits it by
+   *  accident. A form's own submit button must pass "submit": with type
+   *  "button" the click does nothing, and a form with two fields and no submit
+   *  button can't be submitted with Enter either. */
+  type?: "button" | "submit";
 }
 
 /**
@@ -26,6 +31,7 @@ export function VoltButton({
   size = "default",
   surface = "light",
   disabled,
+  type = "button",
 }: VoltButtonProps) {
   const classes = cn(
     "volt-btn",
@@ -44,7 +50,7 @@ export function VoltButton({
   }
 
   return (
-    <button type="button" onClick={onClick} disabled={disabled} className={classes}>
+    <button type={type} onClick={onClick} disabled={disabled} className={classes}>
       {children}
     </button>
   );

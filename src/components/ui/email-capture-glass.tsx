@@ -68,7 +68,7 @@ export function EmailCaptureGlass({
         onChange={(e) => setHoneypot(e.target.value)}
         style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
       />
-      <VoltButton size="sm">
+      <VoltButton size="sm" type="submit">
         {status === "done"
           ? "You're on the list ✓"
           : status === "sending"
