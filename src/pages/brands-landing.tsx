@@ -41,7 +41,7 @@ function DemoLaunch() {
       }}
       className="rounded-[18px] border border-black/10 bg-white p-5 md:p-6"
     >
-      <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-black/40">
+      <p className="text-center font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-black/40">
         See how it works
       </p>
       <div className="mt-3 flex flex-col gap-3 sm:flex-row">
@@ -66,19 +66,19 @@ export default function BrandsLandingPage() {
     <PageLayout bare>
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#eeeeee] px-6 pb-16 pt-16 text-[#0a0a0a] md:px-10 md:pb-24 md:pt-20 lg:px-12">
-        <div className="mx-auto max-w-5xl">
-          <img src="/jaba-head.webp" alt="JABA" className="h-10 w-auto" />
+        <div className="mx-auto max-w-5xl text-center">
+          <img src="/jaba-head.webp" alt="JABA" className="mx-auto h-10 w-auto" />
 
-          <h1 className="mt-10 max-w-3xl font-deck text-4xl leading-[1.05] md:mt-12 md:text-6xl">
+          <h1 className="mx-auto mt-10 max-w-3xl font-deck text-4xl leading-[1.05] md:mt-12 md:text-6xl">
             Find the athletes who actually move your product.
           </h1>
 
-          <p className="mt-5 max-w-xl font-sans text-lg leading-relaxed text-black/60 md:text-xl">
+          <p className="mx-auto mt-5 max-w-xl font-sans text-lg leading-relaxed text-black/60 md:text-xl">
             JABA reads the entire athlete internet, so you can see who reaches
             your customer before you spend a dollar.
           </p>
 
-          <div className="mt-9 max-w-xl md:mt-10">
+          <div className="mx-auto mt-9 max-w-xl md:mt-10">
             <DemoLaunch />
           </div>
         </div>
