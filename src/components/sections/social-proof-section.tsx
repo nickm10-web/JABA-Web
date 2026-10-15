@@ -22,6 +22,11 @@ const logos: Logo[] = [
   { name: "Athletes Unlimited", src: "/logos/athletes-unlimited.svg", height: 34, ratio: 738.558 / 234.444 },
 ];
 
+/* Marks drawn in black, or whose main shape is black (Cincinnati's C), which
+   disappear on a black band. Checked one by one on black: everything else,
+   including the white Athletes Unlimited wordmark, reads in its own colours. */
+const REVERSE_ON_DARK = new Set(["Cincinnati", "Every True Tiger", "Rally"]);
+
 export default function SocialProofSection({
   light,
   onDark,
@@ -64,11 +69,10 @@ export default function SocialProofSection({
           {doubled.map((logo, i) => {
             // The band is light in every context now, so white wordmark
             // assets (SVGs) get inverted to stay visible.
-            // On the light band, white wordmark assets (SVGs) get inverted so
-            // they stay visible. On black every mark goes to a white
-            // silhouette instead, which is the only way a set of dark,
-            // multi-colour school crests reads at all.
             const invertOnLight = !onDark && logo.src.endsWith(".svg");
+            // On black the marks keep their own colours. Only the ones drawn
+            // in black would vanish, so those alone go to a white reverse.
+            const reverseOnDark = onDark && REVERSE_ON_DARK.has(logo.name);
             return (
               <div key={`${logo.name}-${i}`} className="social-proof-logo-item">
                 <img
@@ -80,7 +84,7 @@ export default function SocialProofSection({
                   style={{
                     height: logo.height,
                     ...(invertOnLight ? { filter: "invert(1)" } : {}),
-                    ...(onDark ? { filter: "brightness(0) invert(1)" } : {}),
+                    ...(reverseOnDark ? { filter: "brightness(0) invert(1)" } : {}),
                   }}
                   loading="eager"
                   decoding="async"
