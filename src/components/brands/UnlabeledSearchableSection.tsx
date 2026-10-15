@@ -2,40 +2,55 @@ import { useRef } from "react";
 import { useInView } from "motion/react";
 
 /**
- * "JABA makes the unlabeled searchable" — the beat from the film, in scroll
- * form. The claim is the whole moat: a caption says nothing about what is in
- * the frame, and JABA reads the frame.
+ * "JABA makes the unlabeled searchable" — the claim that nothing else on the
+ * site makes, and the one a brand cannot get anywhere else.
  *
- * The film labels each tile with the athlete's name and school. This page is
- * public, so the tiles carry the detected tag and nothing else. That is also
- * the better argument: the tag is the product, the person is not.
+ * Every tile is a real post from the index paired with something genuinely in
+ * the frame, and the box is placed on that thing. Both were read off the
+ * images one at a time: a tag that does not match its photo, or a box floating
+ * over empty grass, makes the claim look fake rather than illustrative.
  *
- * Tags land one at a time once the grid is on screen, because a grid that is
- * already finished reads as a screenshot rather than as something working.
+ * Each tile plays the scan rather than arriving finished — sweep, lock, label,
+ * then everything outside the box falls away. A grid that is already done
+ * reads as a screenshot; a grid that resolves reads as a machine working.
+ *
+ * Boxes are percentages of the TILE, not of the source image: object-cover
+ * centre-crops every photo to 4:5, so coordinates taken off the original file
+ * land in the wrong place. These were read off the cropped frame.
  */
 
-/* Each tile is a real post from the index paired with something genuinely in
-   the frame. Picked by eye against the wall, because a tag that does not match
-   its photo makes the claim look fake rather than illustrative, and these are
-   the kinds of signals a brand searches for: a product, a setting, a moment. */
-const TILES = [
-  { src: "/wall/p72.webp", tag: "SUV" },
-  { src: "/wall/p15.webp", tag: "private jet" },
-  { src: "/wall/p71.webp", tag: "championship ring" },
-  { src: "/wall/p60.webp", tag: "barbell" },
-  { src: "/wall/p25.webp", tag: "beach day" },
-  { src: "/wall/p08.webp", tag: "golf club" },
-  { src: "/wall/p28.webp", tag: "toddler" },
-  { src: "/wall/p42.webp", tag: "formal dress" },
-  { src: "/wall/p21.webp", tag: "sundress" },
-  { src: "/wall/p74.webp", tag: "tailored suit" },
-  { src: "/wall/p49.webp", tag: "smartphone" },
-  { src: "/wall/p30.webp", tag: "streetwear" },
+type Tile = {
+  src: string;
+  tag: string;
+  /** [left, top, width, height] as percentages of the frame. */
+  box: [number, number, number, number];
+};
+
+const TILES: Tile[] = [
+  { src: "/wall/p72.webp", tag: "SUV", box: [0, 36, 70, 62] },
+  { src: "/wall/p15.webp", tag: "private jet", box: [0, 0, 56, 86] },
+  { src: "/wall/p71.webp", tag: "championship ring", box: [55, 60, 27, 23] },
+  { src: "/wall/p60.webp", tag: "barbell", box: [10, 8, 86, 34] },
+  { src: "/wall/p25.webp", tag: "swimwear", box: [2, 48, 94, 36] },
+  { src: "/wall/p08.webp", tag: "golf club", box: [28, 8, 52, 58] },
+  { src: "/wall/p28.webp", tag: "toddler", box: [47, 17, 36, 68] },
+  { src: "/wall/p42.webp", tag: "formal dress", box: [61, 40, 20, 57] },
+  { src: "/wall/p21.webp", tag: "sundress", box: [24, 26, 29, 35] },
+  { src: "/wall/p74.webp", tag: "tailored suit", box: [29, 21, 34, 58] },
+  { src: "/wall/p49.webp", tag: "smartphone", box: [55, 38, 27, 28] },
+  { src: "/wall/p30.webp", tag: "streetwear", box: [49, 23, 24, 33] },
+];
+
+const CORNERS = [
+  "left-0 top-0 border-l-2 border-t-2",
+  "right-0 top-0 border-r-2 border-t-2",
+  "left-0 bottom-0 border-b-2 border-l-2",
+  "right-0 bottom-0 border-b-2 border-r-2",
 ];
 
 export default function UnlabeledSearchableSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.25 });
+  const inView = useInView(ref, { once: true, amount: 0.15 });
 
   return (
     <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
@@ -51,52 +66,71 @@ export default function UnlabeledSearchableSection() {
 
         <div
           ref={ref}
-          className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:mt-16 md:gap-4 lg:grid-cols-4"
+          className={`mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 md:mt-16 md:gap-4 lg:grid-cols-4 ${
+            inView ? "is-scanning" : ""
+          }`}
         >
-          {TILES.map((t, i) => (
-            <div
-              key={t.tag}
-              className="relative aspect-[4/5] overflow-hidden rounded-[14px] bg-[#111]"
-            >
-              <img
-                src={t.src}
-                alt=""
-                aria-hidden
-                loading="lazy"
-                className="h-full w-full object-cover opacity-85"
-              />
+          {TILES.map((t, i) => {
+            const [l, top, w, h] = t.box;
+            // Each tile starts a little after the one before it, so the grid
+            // resolves as a pass rather than all at once.
+            const delay = `${i * 170}ms`;
+            return (
               <div
-                aria-hidden
-                className="absolute inset-0"
-                style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.55))" }}
-              />
-              {/* Brackets frame the whole tile. A box drawn inside it would be
-                  claiming a position in the photo that nothing here knows. */}
-              {[
-                "left-2.5 top-2.5 border-l-2 border-t-2",
-                "right-2.5 top-2.5 border-r-2 border-t-2",
-                "left-2.5 bottom-2.5 border-b-2 border-l-2",
-                "right-2.5 bottom-2.5 border-b-2 border-r-2",
-              ].map((corner) => (
-                <span
-                  key={corner}
-                  aria-hidden
-                  className={`absolute h-5 w-5 border-[#dfff00] transition-opacity duration-500 ${corner}`}
-                  style={{ opacity: inView ? 0.9 : 0, transitionDelay: `${i * 110}ms` }}
-                />
-              ))}
-              <span
-                className="absolute bottom-3 left-3 rounded-full bg-[#dfff00] px-2.5 py-1 font-sans text-[11.5px] font-semibold text-[#0a0a0a] transition-all duration-500"
-                style={{
-                  opacity: inView ? 1 : 0,
-                  transform: inView ? "translateY(0)" : "translateY(6px)",
-                  transitionDelay: `${i * 110 + 160}ms`,
-                }}
+                key={t.tag}
+                className="scan-tile relative aspect-[4/5] overflow-hidden rounded-[14px] bg-[#111]"
+                style={{ ["--d" as string]: delay }}
               >
-                {t.tag}
-              </span>
-            </div>
-          ))}
+                <img
+                  src={t.src}
+                  alt=""
+                  aria-hidden
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                />
+
+                {/* Sweep: one pass of the frame before anything is claimed. */}
+                <span aria-hidden className="scan-sweep pointer-events-none absolute inset-x-0 h-[22%]" />
+
+                {/* Everything outside the box falls away once it locks, which
+                    is what makes the find read as a find. */}
+                {([
+                  { top: 0, left: 0, right: 0, height: `${top}%` },
+                  { top: `${top + h}%`, left: 0, right: 0, bottom: 0 },
+                  { top: `${top}%`, left: 0, width: `${l}%`, height: `${h}%` },
+                  { top: `${top}%`, left: `${l + w}%`, right: 0, height: `${h}%` },
+                ] as React.CSSProperties[]).map((pos, k) => (
+                  <span
+                    key={k}
+                    aria-hidden
+                    className="scan-dim pointer-events-none absolute bg-black"
+                    style={pos}
+                  />
+                ))}
+
+                {/* The box, on the thing itself. */}
+                <span
+                  aria-hidden
+                  className="scan-box pointer-events-none absolute"
+                  style={{ left: `${l}%`, top: `${top}%`, width: `${w}%`, height: `${h}%` }}
+                >
+                  {CORNERS.map((c) => (
+                    <span
+                      key={c}
+                      className={`absolute h-4 w-4 border-[#dfff00] md:h-5 md:w-5 ${c}`}
+                    />
+                  ))}
+                </span>
+
+                <span
+                  className="scan-tag absolute bottom-3 left-3 rounded-full bg-[#dfff00] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#0a0a0a]"
+                  style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
+                >
+                  {t.tag}
+                </span>
+              </div>
+            );
+          })}
         </div>
 
         <p className="mt-8 font-sans text-[13px] text-white/35">

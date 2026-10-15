@@ -3676,3 +3676,73 @@
   .demo-card { opacity: 1; animation: none; }
   .demo-bar { animation: none; }
 }
+
+/* ── Brands · "unlabeled searchable" scan ─────────────────────────────────
+   Each tile sweeps, locks a box on the object, labels it, then drops
+   everything outside the box. Driven by a class on the grid and a per-tile
+   --d delay, so the whole pass is CSS: the preview pane is frequently
+   backgrounded, where rAF stops and this still plays. */
+@layer components {
+  .scan-sweep {
+    top: -22%;
+    opacity: 0;
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgba(223, 255, 0, 0.1) 45%,
+      rgba(223, 255, 0, 0.55) 50%,
+      rgba(223, 255, 0, 0.1) 55%,
+      transparent
+    );
+  }
+  .scan-box,
+  .scan-tag {
+    opacity: 0;
+  }
+  .scan-box {
+    transform: scale(1.06);
+  }
+  .scan-dim {
+    opacity: 0;
+  }
+
+  .is-scanning .scan-sweep {
+    animation: scanSweep 1s cubic-bezier(0.4, 0, 0.2, 1) var(--d) 1 both;
+  }
+  .is-scanning .scan-box {
+    animation: scanLock 0.42s cubic-bezier(0.2, 1.3, 0.4, 1) calc(var(--d) + 0.78s) 1 both;
+  }
+  .is-scanning .scan-dim {
+    animation: scanDim 0.5s ease-out calc(var(--d) + 0.95s) 1 both;
+  }
+  .is-scanning .scan-tag {
+    animation: scanTag 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--d) + 1.05s) 1 both;
+  }
+
+  @keyframes scanSweep {
+    0% { top: -22%; opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+  @keyframes scanLock {
+    from { opacity: 0; transform: scale(1.06); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes scanDim {
+    from { opacity: 0; }
+    to { opacity: 0.55; }
+  }
+  @keyframes scanTag {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Reduced motion: skip the pass, keep the result legible. */
+  @media (prefers-reduced-motion: reduce) {
+    .is-scanning .scan-sweep { animation: none; opacity: 0; }
+    .is-scanning .scan-box,
+    .is-scanning .scan-tag { animation: none; opacity: 1; transform: none; }
+    .is-scanning .scan-dim { animation: none; opacity: 0.55; }
+  }
+}

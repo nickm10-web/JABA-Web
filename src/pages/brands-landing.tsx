@@ -125,8 +125,8 @@ export default function BrandsLandingPage() {
         messages={BRAND_THREAD}
         heading={
           <>
-            Then we run it,
-            <span className="block text-black/60">start to finish.</span>
+            We run it,
+            <span className="block text-black/60">brief to post.</span>
           </>
         }
         body="Quality control on every asset before you see it, and the chasing when something doesn't happen. JABA notices and texts the right person."
