@@ -133,7 +133,7 @@ function TypingBubble() {
 
 /* A realistic iPhone (dynamic island, status bar, iMessage chrome) showing the
    NIL Team group chat. Fictional athlete and brand only. */
-function HeroPhone() {
+export function HeroPhone() {
   const [step, setStep] = useState(0);
   useEffect(() => {
     const t = setTimeout(() => setStep((s) => (s + 1) % STEP_MS.length), STEP_MS[step]);
