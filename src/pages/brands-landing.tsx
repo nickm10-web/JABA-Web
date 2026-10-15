@@ -2,6 +2,10 @@ import { useState } from "react";
 
 
 import AthleteInternetSection from "@/components/AthleteInternetSection";
+import BenchmarkSection from "@/components/brands/BenchmarkSection";
+import MeetJabaSection from "@/components/brands/MeetJabaSection";
+import RightAthletesSection from "@/components/brands/RightAthletesSection";
+import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
 import PageLayout from "@/components/layout/page-layout";
 import ShortlistForm from "@/components/ShortlistForm";
 import TextAssistantSection from "@/components/TextAssistantSection";
@@ -12,23 +16,6 @@ import { VoltButton } from "@/components/ui/volt-button";
 /* Cold-email destination. Deliberately one page, one ask, and no nav: the link
    arrives in a stranger's inbox, so every exit is a lost reply. */
 
-const STEPS = [
-  {
-    art: "/step-outreach.webp",
-    title: "Find",
-    body: "Athletes whose audience already looks like your customer, not whoever has the biggest follower count.",
-  },
-  {
-    art: "/step-manage.webp",
-    title: "Run",
-    body: "Briefs, deadlines, approvals, and posts, handled over text so nothing sits waiting on someone to log in.",
-  },
-  {
-    art: "/step-report.webp",
-    title: "Prove",
-    body: "What went up, what it reached, and whether the campaign did what you paid for.",
-  },
-];
 
 /** Hands the brand to the demo page, which runs the animation on arrival. */
 function DemoLaunch() {
@@ -122,67 +109,30 @@ export default function BrandsLandingPage() {
       {/* Who already works with JABA. */}
       <SocialProofSection />
 
-      {/* The proof: the index itself. */}
+      {/* The film's own order from here: who JABA is, what it has read, what
+          it can see that a caption cannot, who that turns up, how the work
+          gets run, and what the post actually beat. */}
+      <MeetJabaSection />
+
       <AthleteInternetSection />
 
-      {/* What running it actually feels like, between the index and the steps:
-          it also breaks up two black sections that otherwise ran together. */}
+      <UnlabeledSearchableSection />
+
+      <RightAthletesSection />
+
       <TextAssistantSection
         awaitHandoff={false}
         messages={BRAND_THREAD}
         heading={
           <>
-            Your campaign runs in texts.
-            <span className="block text-black/60">No portal.</span>
-            <span className="block text-black/60">No chasing.</span>
+            Then we run it,
+            <span className="block text-black/60">start to finish.</span>
           </>
         }
-        body="Briefs, approvals, deadlines, and the recap, handled in one thread."
+        body="Quality control on every asset before you see it, and the chasing when something doesn't happen. JABA notices and texts the right person."
       />
 
-      {/* What it looks like to run a campaign. */}
-      <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="mx-auto max-w-3xl text-center font-deck text-4xl leading-[1.06] md:text-5xl">
-            Every campaign, start to finish.
-          </h2>
-
-          <div className="mt-12 grid grid-cols-1 gap-6 md:mt-16 md:grid-cols-3 md:gap-5 lg:gap-6">
-            {STEPS.map((s) => (
-              <div
-                key={s.title}
-                className="relative flex h-full flex-col overflow-hidden rounded-3xl"
-              >
-                <div
-                  aria-hidden
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "radial-gradient(120% 90% at 25% 0%, rgba(233,232,244,0.95), transparent 62%), linear-gradient(180deg, #f6f6f9 0%, #eceaf3 100%)",
-                  }}
-                />
-                <div className="relative grid flex-1 place-items-center p-6 pb-2 lg:p-8 lg:pb-3">
-                  <img
-                    src={s.art}
-                    alt=""
-                    aria-hidden
-                    loading="lazy"
-                    className="w-[92%] select-none"
-                  />
-                </div>
-                <div className="relative p-6 pt-4 lg:p-8 lg:pt-5">
-                  <h3 className="font-deck text-2xl leading-tight text-[#0a0a0a] lg:text-3xl">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-black/55 lg:text-base">
-                    {s.body}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <BenchmarkSection />
 
       {/* The ask again, for anyone who read to the end. */}
       <section className="bg-[#eeeeee] px-6 py-20 text-[#0a0a0a] md:px-10 md:py-28 lg:px-12">
