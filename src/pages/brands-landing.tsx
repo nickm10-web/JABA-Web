@@ -98,7 +98,7 @@ function BrandsHero() {
         <img src="/jaba-head.webp" alt="JABA" className="mx-auto h-10 w-auto" />
 
         <h1 className="mx-auto mt-10 max-w-3xl font-deck text-4xl leading-[1.05] md:mt-12 md:text-6xl">
-          Find the athletes who actually move your product.
+          Athlete brand campaigns, managed for you.
         </h1>
 
         <p className="mx-auto mt-5 max-w-xl font-sans text-lg leading-relaxed text-black/60 md:text-xl">
