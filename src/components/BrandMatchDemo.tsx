@@ -30,11 +30,23 @@ const CARDS = [
 
 const BAR_LABELS = ["Audience fit", "Engagement", "Category overlap"];
 
-export default function BrandMatchDemo({ onUnlock }: { onUnlock: () => void }) {
-  const [brand, setBrand] = useState("");
+export default function BrandMatchDemo({
+  onUnlock,
+  autoBrand,
+  fill = false,
+}: {
+  onUnlock: () => void;
+  /** Set on the standalone page: the brand arrived in the URL, so the
+   *  sequence starts on arrival instead of behind a second form. */
+  autoBrand?: string;
+  /** Page mode: square off the corners and hold the viewport. */
+  fill?: boolean;
+}) {
+  const [brand, setBrand] = useState(autoBrand ?? "");
   const [stage, setStage] = useState<Stage>("idle");
   const [posts, setPosts] = useState(0);
   const timers = useRef<number[]>([]);
+  const started = useRef(false);
 
   useEffect(
     () => () => {
@@ -43,16 +55,16 @@ export default function BrandMatchDemo({ onUnlock }: { onUnlock: () => void }) {
     [],
   );
 
-  const run = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!brand.trim() || stage !== "idle") return;
+  const start = (b: string) => {
+    if (!b.trim() || started.current) return;
+    started.current = true;
     setStage("reading");
 
     // Count toward the real index figure rather than a made-up one.
     const target = 1588007;
-    const started = Date.now();
+    const began = Date.now();
     const tick = () => {
-      const p = Math.min((Date.now() - started) / 2000, 1);
+      const p = Math.min((Date.now() - began) / 2000, 1);
       setPosts(Math.round(target * (1 - Math.pow(1 - p, 3))));
       if (p < 1) timers.current.push(window.setTimeout(tick, 60));
     };
@@ -62,10 +74,30 @@ export default function BrandMatchDemo({ onUnlock }: { onUnlock: () => void }) {
     timers.current.push(window.setTimeout(() => setStage("locked"), 4100));
   };
 
+  // A short beat before it begins, so the page has drawn and the visitor sees
+  // the scan start rather than arriving midway through it.
+  useEffect(() => {
+    if (!autoBrand?.trim()) return;
+    const t = window.setTimeout(() => start(autoBrand), 450);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoBrand]);
+
+  const run = (e: React.FormEvent) => {
+    e.preventDefault();
+    start(brand);
+  };
+
   const label = brand.trim() || "your brand";
 
   return (
-    <div className="relative overflow-hidden rounded-[22px] bg-[#0a0a0a] text-white">
+    <div
+      className={`relative overflow-hidden bg-[#0a0a0a] text-white ${
+        fill
+          ? "flex min-h-[78vh] items-center md:min-h-[82vh]"
+          : "rounded-[22px]"
+      }`}
+    >
       {/* Drifting index wall behind everything, lit only while scanning. */}
       <div
         aria-hidden
@@ -74,7 +106,7 @@ export default function BrandMatchDemo({ onUnlock }: { onUnlock: () => void }) {
         }`}
       >
         <div className="flex h-full flex-col justify-center gap-2">
-          {[0, 1, 2].map((row) => (
+          {(fill ? [0, 1, 2, 3, 4, 5] : [0, 1, 2]).map((row) => (
             <div key={row} className="flex w-max shrink-0">
               <div
                 className="demo-strip flex gap-2"
@@ -109,7 +141,7 @@ export default function BrandMatchDemo({ onUnlock }: { onUnlock: () => void }) {
         style={{ background: "radial-gradient(70% 70% at 50% 50%, rgba(10,10,10,0.92), rgba(10,10,10,0.6))" }}
       />
 
-      <div className="relative px-6 py-10 md:px-10 md:py-14">
+      <div className="relative w-full px-6 py-10 md:px-10 md:py-14">
         {stage === "idle" && (
           <form onSubmit={run} className="mx-auto max-w-xl text-center">
             <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-[#dfff00]">
@@ -176,14 +208,14 @@ export default function BrandMatchDemo({ onUnlock }: { onUnlock: () => void }) {
               </h2>
             </div>
 
-            <div className="mx-auto mt-9 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-3 sm:mt-9 sm:grid-cols-3 sm:gap-4">
               {CARDS.map((c, i) => (
                 <div
                   key={c.sport}
                   className="demo-card overflow-hidden rounded-[16px] border border-white/10 bg-[#141417] shadow-[0_18px_40px_-18px_rgba(0,0,0,0.9)]"
                   style={{ animationDelay: `${i * 130}ms` }}
                 >
-                  <div className="relative h-32 overflow-hidden">
+                  <div className="relative h-24 overflow-hidden sm:h-32">
                     <img
                       src={FACES[i]}
                       alt=""

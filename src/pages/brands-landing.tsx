@@ -1,9 +1,9 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
-import BrandMatchDemo from "@/components/BrandMatchDemo";
 
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import PageLayout from "@/components/layout/page-layout";
+import ShortlistForm from "@/components/ShortlistForm";
 import SocialProofSection from "@/components/sections/social-proof-section";
 import { VoltButton } from "@/components/ui/volt-button";
 
@@ -28,112 +28,40 @@ const STEPS = [
   },
 ];
 
-/** The one ask on the page. Brand plus email, so the reply can be specific. */
-function ShortlistForm({ id }: { id?: string }) {
+/** Hands the brand to the demo page, which runs the animation on arrival. */
+function DemoLaunch() {
   const [brand, setBrand] = useState("");
-  const [email, setEmail] = useState("");
-  const [honeypot, setHoneypot] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (status === "sending") return;
-    setStatus("sending");
-    try {
-      const res = await fetch("/api/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: brand,
-          email,
-          source: "brands-landing",
-          company_website: honeypot,
-        }),
-      });
-      if (!res.ok) throw new Error("failed");
-      setBrand("");
-      setEmail("");
-      setStatus("done");
-    } catch {
-      setStatus("error");
-    }
-  };
-
-  if (status === "done") {
-    return (
-      <div id={id} className="rounded-[18px] border border-black/10 bg-white p-6 md:p-7">
-        <p className="font-deck text-2xl text-[#0a0a0a]">Got it.</p>
-        <p className="mt-2 max-w-md font-sans text-[15px] leading-relaxed text-black/60">
-          We&rsquo;ll put a shortlist together and send it over. No call needed to
-          see it.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <form
-      id={id}
-      onSubmit={submit}
+      onSubmit={(e) => {
+        e.preventDefault();
+        const b = brand.trim();
+        if (!b) return;
+        window.location.href = `/brands-demo.html?brand=${encodeURIComponent(b)}`;
+      }}
       className="rounded-[18px] border border-black/10 bg-white p-5 md:p-6"
     >
-      <div className="flex flex-col gap-3 md:flex-row">
+      <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-black/40">
+        See how it works
+      </p>
+      <div className="mt-3 flex flex-col gap-3 sm:flex-row">
         <input
-          className="w-full rounded-[12px] border border-black/10 bg-[#fafafa] px-4 py-3 font-sans text-[15px] text-[#11131a] outline-none transition-colors placeholder:text-black/35 focus:border-black/35 md:flex-1"
-          placeholder="Your brand"
-          aria-label="Your brand"
+          className="w-full rounded-[12px] border border-black/10 bg-[#fafafa] px-4 py-3 font-sans text-[15px] text-[#11131a] outline-none transition-colors placeholder:text-black/35 focus:border-black/35 sm:flex-1"
+          placeholder="Enter your brand"
+          aria-label="Enter your brand"
           value={brand}
           onChange={(e) => setBrand(e.target.value)}
           required
         />
-        <input
-          type="email"
-          className="w-full rounded-[12px] border border-black/10 bg-[#fafafa] px-4 py-3 font-sans text-[15px] text-[#11131a] outline-none transition-colors placeholder:text-black/35 focus:border-black/35 md:flex-1"
-          placeholder="Work email"
-          aria-label="Work email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-
-      {/* Honeypot: offscreen and skipped by tab order, so only bots fill it. */}
-      <input
-        type="text"
-        name="company_website"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden
-        value={honeypot}
-        onChange={(e) => setHoneypot(e.target.value)}
-        style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
-      />
-
-      <div className="mt-4 flex flex-wrap items-center gap-3">
         <VoltButton type="submit" size="lg">
-          {status === "sending" ? "Sending…" : "Get my athlete shortlist"}
+          Find my athletes
         </VoltButton>
-        <span className="font-sans text-[13px] text-black/45">
-          Free, and no call required.
-        </span>
       </div>
-
-      {status === "error" && (
-        <p className="mt-3 font-sans text-[13px] text-[#b4231f]">
-          Something went wrong. Email us at{" "}
-          <a className="underline" href="mailto:hello@jaba.ai">
-            hello@jaba.ai
-          </a>
-          .
-        </p>
-      )}
     </form>
   );
 }
 
 export default function BrandsLandingPage() {
-  const askRef = useRef<HTMLDivElement>(null);
-
   return (
     <PageLayout bare>
       {/* Hero */}
@@ -150,12 +78,8 @@ export default function BrandsLandingPage() {
             your customer before you spend a dollar.
           </p>
 
-          <div className="mt-10 md:mt-12">
-            <BrandMatchDemo
-              onUnlock={() =>
-                askRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-              }
-            />
+          <div className="mt-9 max-w-xl md:mt-10">
+            <DemoLaunch />
           </div>
         </div>
       </section>
@@ -220,7 +144,7 @@ export default function BrandsLandingPage() {
             Tell us what you sell and we&rsquo;ll send back a shortlist of
             athletes worth talking to.
           </p>
-          <div ref={askRef} className="mt-9 text-left">
+          <div className="mt-9 text-left">
             <ShortlistForm id="shortlist" />
           </div>
           <p className="mt-10 font-sans text-[13px] text-black/45">
