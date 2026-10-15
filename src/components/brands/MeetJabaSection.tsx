@@ -1,9 +1,6 @@
 /**
- * "Meet JABA" — the film's framing beat, in the brand's second person.
- *
- * The promise underneath it is the one a brand feels but rarely says: you
- * already know how to buy an influencer, and athletes have always been harder.
- * This is the part that closes that gap.
+ * "Meet JABA" — the film's framing beat. The headline is the film's own line,
+ * not a new claim: only the four pillars move into the brand's second person.
  */
 
 const PILLARS = [
@@ -37,7 +34,7 @@ export default function MeetJabaSection() {
           <h2 className="max-w-2xl font-deck text-4xl leading-[1.05] md:text-5xl">
             Meet JABA.
             <span className="mt-1 block text-black/45">
-              Athletes, as easy to work with as influencers.
+              The bridge between athletes and influencers.
             </span>
           </h2>
           <img
