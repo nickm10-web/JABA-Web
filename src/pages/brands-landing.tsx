@@ -83,7 +83,18 @@ const BRAND_THREAD: ChatMessage[] = [
 function BrandsHero() {
   return (
     <section className="relative overflow-hidden bg-black px-6 pb-16 pt-16 text-white md:px-10 md:pb-24 md:pt-20 lg:px-12">
-      <div className="mx-auto max-w-5xl text-center">
+      {/* Volt ambient light from above. Volt is far hotter than white at the
+          same opacity, so this stays low and falls off early: it should read
+          as light in the room, not as a lamp behind the headline. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(55% 60% at 50% 0%, rgba(223,255,0,0.13) 0%, rgba(223,255,0,0.05) 40%, rgba(223,255,0,0) 72%)",
+        }}
+      />
+      <div className="relative mx-auto max-w-5xl text-center">
         <img src="/jaba-head.webp" alt="JABA" className="mx-auto h-10 w-auto" />
 
         <div className="mt-9 flex justify-center">
