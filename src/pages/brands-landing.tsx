@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import PageLayout from "@/components/layout/page-layout";
-import { HeroPhone } from "@/components/ScrollVideoHero";
+import BrandHeroPhone from "@/components/BrandHeroPhone";
 import ShortlistForm from "@/components/ShortlistForm";
 import SocialProofSection from "@/components/sections/social-proof-section";
 import { VoltButton } from "@/components/ui/volt-button";
@@ -121,7 +121,7 @@ function BrandsHero() {
         <div className="hidden self-start lg:flex lg:justify-end">
           <div className="relative h-[420px] w-[440px] lg:h-[460px] lg:w-[480px]">
             <div className="absolute inset-x-0 top-0 translate-y-[60px] lg:translate-y-[80px]">
-              <HeroPhone />
+              <BrandHeroPhone />
             </div>
           </div>
         </div>
