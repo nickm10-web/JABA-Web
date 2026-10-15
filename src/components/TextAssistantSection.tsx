@@ -14,14 +14,19 @@ const gapBefore = (m: ChatMessage) =>
   Math.min(450 + m.text.length * 10, 1300);
 
 export default function TextAssistantSection({
+  eyebrow,
   heading,
   body,
   messages = defaultMessages,
   awaitHandoff = true,
+  tone = "light",
 }: {
+  eyebrow?: React.ReactNode;
   heading?: React.ReactNode;
   body?: React.ReactNode;
   messages?: ChatMessage[];
+  /** "dark" for pages that run black end to end. */
+  tone?: "light" | "dark";
   /** The homepage flies a phone into this section and waits for it to land.
    *  Pages without that flight pass false, or the thread never starts. */
   awaitHandoff?: boolean;
@@ -58,6 +63,7 @@ export default function TextAssistantSection({
   }, []);
 
   const playing = inView && (landed || !handoffActive);
+  const dark = tone === "dark";
 
   useEffect(() => {
     if (!playing) return;
@@ -72,7 +78,7 @@ export default function TextAssistantSection({
   }, [playing, messages]);
 
   return (
-    <section className="relative w-full bg-[#eeeeee]">
+    <section className={`relative w-full ${dark ? "bg-black" : "bg-[#eeeeee]"}`}>
       <div className="relative w-full overflow-hidden py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-6 md:px-12">
           <div className="flex flex-col items-center justify-center gap-10 md:flex-row md:gap-16">
@@ -106,16 +112,25 @@ export default function TextAssistantSection({
                 className="pointer-events-none absolute -bottom-24 -left-12 z-0 hidden w-24 select-none opacity-80 drop-shadow-xl md:-bottom-28 md:-left-12 md:block md:w-32 lg:-bottom-32 lg:-left-14 lg:w-40"
               />
               <div className="relative z-10">
-                <h2 className="font-deck text-4xl leading-[1.05] text-black md:text-5xl lg:text-6xl">
+                {eyebrow}
+                <h2
+                  className={`font-deck text-4xl leading-[1.05] md:text-5xl lg:text-6xl ${
+                    eyebrow ? "mt-5" : ""
+                  } ${dark ? "text-white" : "text-black"}`}
+                >
                   {heading ?? (
                     <>
                       Athlete management lives in texts.
-                      <span className="block text-black/60">Not Zoom.</span>
-                      <span className="block text-black/60">Not another app.</span>
+                      <span className={`block ${dark ? "text-white/45" : "text-black/60"}`}>Not Zoom.</span>
+                      <span className={`block ${dark ? "text-white/45" : "text-black/60"}`}>Not another app.</span>
                     </>
                   )}
                 </h2>
-                <p className="mt-6 max-w-xl text-lg leading-relaxed text-black/70 md:text-xl">
+                <p
+                  className={`mt-6 max-w-xl text-lg leading-relaxed md:text-xl ${
+                    dark ? "text-white/55" : "text-black/70"
+                  }`}
+                >
                   {body ??
                     "Every deliverable, task, and calendar, managed in one text thread."}
                 </p>

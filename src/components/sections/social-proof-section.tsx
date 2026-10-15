@@ -22,7 +22,10 @@ const logos: Logo[] = [
   { name: "Athletes Unlimited", src: "/logos/athletes-unlimited.svg", height: 34, ratio: 738.558 / 234.444 },
 ];
 
-export default function SocialProofSection({ light }: { light?: boolean } = {}) {
+export default function SocialProofSection({
+  light,
+  onDark,
+}: { light?: boolean; onDark?: boolean } = {}) {
   const doubled = [...logos, ...logos];
 
   // Hold the strip until every logo has decoded — otherwise they trickle in one
@@ -45,7 +48,10 @@ export default function SocialProofSection({ light }: { light?: boolean } = {}) 
   }, []);
 
   return (
-    <section className={`social-proof-section${light ? " light" : ""}`} aria-label="Trusted by">
+    <section
+      className={`social-proof-section${light ? " light" : ""}${onDark ? " on-dark" : ""}`}
+      aria-label="Trusted by"
+    >
       <p className="social-proof-label">
         Trusted by programs building the future of the athlete economy
       </p>
@@ -58,7 +64,11 @@ export default function SocialProofSection({ light }: { light?: boolean } = {}) 
           {doubled.map((logo, i) => {
             // The band is light in every context now, so white wordmark
             // assets (SVGs) get inverted to stay visible.
-            const invertOnLight = logo.src.endsWith(".svg");
+            // On the light band, white wordmark assets (SVGs) get inverted so
+            // they stay visible. On black every mark goes to a white
+            // silhouette instead, which is the only way a set of dark,
+            // multi-colour school crests reads at all.
+            const invertOnLight = !onDark && logo.src.endsWith(".svg");
             return (
               <div key={`${logo.name}-${i}`} className="social-proof-logo-item">
                 <img
@@ -67,7 +77,11 @@ export default function SocialProofSection({ light }: { light?: boolean } = {}) 
                   className={`social-proof-logo-img${logo.invert ? " social-proof-logo-invert" : ""}`}
                   width={Math.round(logo.height * logo.ratio)}
                   height={logo.height}
-                  style={{ height: logo.height, ...(invertOnLight ? { filter: "invert(1)" } : {}) }}
+                  style={{
+                    height: logo.height,
+                    ...(invertOnLight ? { filter: "invert(1)" } : {}),
+                    ...(onDark ? { filter: "brightness(0) invert(1)" } : {}),
+                  }}
                   loading="eager"
                   decoding="async"
                   aria-hidden={i >= logos.length}

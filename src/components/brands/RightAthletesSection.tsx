@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { useInView } from "motion/react";
 
+import Eyebrow from "@/components/brands/Eyebrow";
+
 /**
  * "Then we find the right athletes" — the film's search result, on a page
  * anyone can open.
@@ -26,6 +28,9 @@ const RESULTS = [
     note: "Their most-liked post is not basketball. It is a yacht trip in Greece, at 588K likes.",
   },
   {
+    // The lead result: the one the search would actually open with, and the
+    // only card that gets the brand's full attention.
+    lead: true,
     fit: "Right for a summer in Europe",
     sport: "Volleyball",
     followers: "11.6K",
@@ -52,7 +57,8 @@ export default function RightAthletesSection() {
   return (
     <section className="bg-black px-6 pb-24 pt-4 text-white md:px-10 md:pb-32 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <h2 className="max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
+        <Eyebrow>The search</Eyebrow>
+        <h2 className="mt-5 max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
           So we already know{" "}
           <span className="text-[#dfff00]">who fits your brand.</span>
         </h2>
@@ -61,18 +67,30 @@ export default function RightAthletesSection() {
           their trips.
         </p>
 
-        <div ref={ref} className="mt-12 grid grid-cols-1 gap-4 md:mt-14 md:grid-cols-3 md:gap-5">
+        {/* One card is lifted and lit; the other two sit back. Three equal
+            cards give the eye nowhere to land, and a search does have a top
+            result. */}
+        <div ref={ref} className="mt-12 grid grid-cols-1 items-center gap-4 md:mt-14 md:grid-cols-3 md:gap-5">
           {RESULTS.map((r, i) => (
             <div
               key={r.fit}
-              className="rounded-[18px] border border-white/10 bg-[#111114] p-5 transition-all duration-500 md:p-6"
+              className={`rounded-[18px] border p-5 transition-all duration-500 md:p-6 ${
+                r.lead
+                  ? "border-[#dfff00]/25 bg-[#17171c] shadow-[0_40px_80px_-28px_rgba(0,0,0,0.95)] md:scale-[1.06] md:p-7"
+                  : "border-white/[0.08] bg-[#101013] md:opacity-70"
+              }`}
               style={{
-                opacity: inView ? 1 : 0,
-                transform: inView ? "translateY(0)" : "translateY(18px)",
+                opacity: inView ? undefined : 0,
+                transform: inView ? undefined : "translateY(18px)",
                 transitionDelay: `${i * 140}ms`,
               }}
             >
-              <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.14em] text-[#dfff00]">
+              <p
+                className={`text-[11px] uppercase tracking-[0.18em] ${
+                  r.lead ? "text-[#dfff00]" : "text-white/40"
+                }`}
+                style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
+              >
                 {r.fit}
               </p>
 

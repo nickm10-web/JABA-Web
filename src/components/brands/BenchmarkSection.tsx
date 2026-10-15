@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { useInView } from "motion/react";
 
+import Eyebrow from "@/components/brands/Eyebrow";
+
 /**
  * "And we tell you what it beat." The closing argument, and the one a brand
  * actually buys on: a number means nothing until you know what it beat.
@@ -37,13 +39,14 @@ export default function BenchmarkSection() {
   const bar = (v: number) => `${(v / HERO.value) * 100}%`;
 
   return (
-    <section className="bg-[#eeeeee] px-6 py-20 text-[#0a0a0a] md:px-10 md:py-28 lg:px-12">
+    <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
       <div className="mx-auto max-w-5xl">
-        <h2 className="max-w-2xl font-deck text-4xl leading-[1.06] md:text-5xl">
+        <Eyebrow>The report</Eyebrow>
+        <h2 className="mt-5 max-w-2xl font-deck text-4xl leading-[1.06] md:text-5xl">
           And we tell you{" "}
-          <span className="text-black/45">what it beat.</span>
+          <span className="text-[#dfff00]">what it beat.</span>
         </h2>
-        <p className="mt-5 max-w-xl font-sans text-lg leading-relaxed text-black/55">
+        <p className="mt-5 max-w-xl font-sans text-lg leading-relaxed text-white/55">
           Every post is scored against their own unpaid baseline, their other
           sponsored work, competing brands on the same roster, and every athlete
           their size.
@@ -52,7 +55,7 @@ export default function BenchmarkSection() {
         {/* The report, staged like the product shots elsewhere on the site. */}
         <div
           ref={ref}
-          className="mt-12 overflow-hidden rounded-[22px] bg-[#0d0d10] text-white shadow-[0_50px_90px_-30px_rgba(0,0,0,0.45)] md:mt-16"
+          className="mt-12 overflow-hidden rounded-[22px] border border-white/10 bg-gradient-to-b from-[#17171c] to-[#0e0e12] text-white shadow-[0_50px_90px_-30px_rgba(0,0,0,0.9)] md:mt-16"
         >
           <div className="flex items-center justify-between border-b border-white/[0.08] px-6 py-4 md:px-8">
             <div className="flex items-center gap-2.5">
@@ -142,7 +145,7 @@ export default function BenchmarkSection() {
           </div>
         </div>
 
-        <p className="mt-6 font-sans text-[13px] text-black/40">Illustrative figures.</p>
+        <p className="mt-6 font-sans text-[13px] text-white/35">Illustrative figures.</p>
       </div>
     </section>
   );

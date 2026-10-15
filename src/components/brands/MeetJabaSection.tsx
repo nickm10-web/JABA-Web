@@ -1,3 +1,5 @@
+import Eyebrow from "@/components/brands/Eyebrow";
+
 /**
  * "Meet JABA" — the film's framing beat. The headline is the film's own line,
  * not a new claim: only the four pillars move into the brand's second person.
@@ -28,20 +30,23 @@ const PILLARS = [
 
 export default function MeetJabaSection() {
   return (
-    <section className="bg-[#eeeeee] px-6 py-20 text-[#0a0a0a] md:px-10 md:py-28 lg:px-12">
+    <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
       <div className="mx-auto max-w-6xl">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <h2 className="max-w-2xl font-deck text-4xl leading-[1.05] md:text-5xl">
+          <div className="max-w-2xl">
+          <Eyebrow>Who you are talking to</Eyebrow>
+          <h2 className="mt-5 font-deck text-4xl leading-[1.05] md:text-5xl">
             Meet JABA.
-            <span className="mt-1 block text-black/45">
+            <span className="mt-1 block text-white/45">
               The bridge between athletes and influencers.
             </span>
           </h2>
+          </div>
           <img
             src="/jaba-head.webp"
             alt=""
             aria-hidden
-            className="h-16 w-auto shrink-0 md:h-20"
+            className="h-16 w-auto shrink-0 self-start md:h-20"
           />
         </div>
 
@@ -51,8 +56,8 @@ export default function MeetJabaSection() {
               <span aria-hidden className="text-[26px] leading-none">
                 {p.icon}
               </span>
-              <h3 className="mt-4 font-deck text-xl text-[#0a0a0a]">{p.title}</h3>
-              <p className="mt-2.5 font-sans text-[15px] leading-relaxed text-black/55">
+              <h3 className="mt-4 font-deck text-xl text-white">{p.title}</h3>
+              <p className="mt-2.5 font-sans text-[15px] leading-relaxed text-white/55">
                 {p.body}
               </p>
             </div>

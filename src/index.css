@@ -3746,3 +3746,10 @@
     .is-scanning .scan-dim { animation: none; opacity: 0.55; }
   }
 }
+
+/* Social proof on a black page: the band disappears and the marks go to white
+   silhouettes, because dark multi-colour school crests vanish on black. */
+.social-proof-section.on-dark { background: #000; }
+.social-proof-section.on-dark .social-proof-label { color: rgba(255,255,255,.4); }
+.social-proof-section.on-dark .social-proof-fade-left { background: linear-gradient(90deg,#000,transparent); }
+.social-proof-section.on-dark .social-proof-fade-right { background: linear-gradient(-90deg,#000,transparent); }

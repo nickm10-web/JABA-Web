@@ -3,6 +3,8 @@ import { useState } from "react";
 
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import BenchmarkSection from "@/components/brands/BenchmarkSection";
+import Eyebrow from "@/components/brands/Eyebrow";
+import WhyJabaSection from "@/components/brands/WhyJabaSection";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
 import RightAthletesSection from "@/components/brands/RightAthletesSection";
 import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
@@ -28,14 +30,14 @@ function DemoLaunch() {
         if (!b) return;
         window.location.href = `/brands-demo.html?brand=${encodeURIComponent(b)}`;
       }}
-      className="rounded-[18px] border border-black/10 bg-white p-5 md:p-6"
+      className="rounded-[18px] border border-white/10 bg-white/[0.04] p-5 md:p-6"
     >
-      <p className="text-center font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-black/40">
-        See how it works
-      </p>
+      <div className="flex justify-center">
+        <Eyebrow tone="muted">See how it works</Eyebrow>
+      </div>
       <div className="mt-3 flex flex-col gap-3 sm:flex-row">
         <input
-          className="w-full rounded-[12px] border border-black/10 bg-[#fafafa] px-4 py-3 font-sans text-[15px] text-[#11131a] outline-none transition-colors placeholder:text-black/35 focus:border-black/35 sm:flex-1"
+          className="w-full rounded-[12px] border border-white/15 bg-white/[0.06] px-4 py-3 font-sans text-[15px] text-white outline-none transition-colors placeholder:text-white/40 focus:border-white/40 sm:flex-1"
           placeholder="Enter your brand"
           aria-label="Enter your brand"
           value={brand}
@@ -80,15 +82,19 @@ const BRAND_THREAD: ChatMessage[] = [
  */
 function BrandsHero() {
   return (
-    <section className="relative overflow-hidden bg-[#eeeeee] px-6 pb-16 pt-16 text-[#0a0a0a] md:px-10 md:pb-24 md:pt-20 lg:px-12">
+    <section className="relative overflow-hidden bg-black px-6 pb-16 pt-16 text-white md:px-10 md:pb-24 md:pt-20 lg:px-12">
       <div className="mx-auto max-w-5xl text-center">
         <img src="/jaba-head.webp" alt="JABA" className="mx-auto h-10 w-auto" />
 
-        <h1 className="mx-auto mt-10 max-w-3xl font-deck text-4xl leading-[1.05] md:mt-12 md:text-6xl">
+        <div className="mt-9 flex justify-center">
+          <Eyebrow>JABA for brands</Eyebrow>
+        </div>
+
+        <h1 className="mx-auto mt-5 max-w-3xl font-deck text-4xl leading-[1.05] md:text-6xl">
           Athlete brand campaigns, managed for you.
         </h1>
 
-        <p className="mx-auto mt-5 max-w-xl font-sans text-lg leading-relaxed text-black/60 md:text-xl">
+        <p className="mx-auto mt-5 max-w-xl font-sans text-lg leading-relaxed text-white/55 md:text-xl">
           JABA reads the entire athlete internet, so you can see who reaches
           your customer before you spend a dollar.
         </p>
@@ -107,7 +113,7 @@ export default function BrandsLandingPage() {
       <BrandsHero />
 
       {/* Who already works with JABA. */}
-      <SocialProofSection />
+      <SocialProofSection onDark />
 
       {/* The film's own order from here: who JABA is, what it has read, what
           it can see that a caption cannot, who that turns up, how the work
@@ -121,12 +127,14 @@ export default function BrandsLandingPage() {
       <RightAthletesSection />
 
       <TextAssistantSection
+        tone="dark"
+        eyebrow={<Eyebrow>The campaign</Eyebrow>}
         awaitHandoff={false}
         messages={BRAND_THREAD}
         heading={
           <>
             We run it,
-            <span className="block text-black/60">brief to post.</span>
+            <span className="block text-white/45">brief to post.</span>
           </>
         }
         body="Quality control on every asset before you see it, and the chasing when something doesn't happen. JABA notices and texts the right person."
@@ -134,20 +142,25 @@ export default function BrandsLandingPage() {
 
       <BenchmarkSection />
 
+      <WhyJabaSection />
+
       {/* The ask again, for anyone who read to the end. */}
-      <section className="bg-[#eeeeee] px-6 py-20 text-[#0a0a0a] md:px-10 md:py-28 lg:px-12">
+      <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="font-deck text-4xl leading-[1.05] md:text-5xl">
+          <div className="flex justify-center">
+            <Eyebrow>The ask</Eyebrow>
+          </div>
+          <h2 className="mt-5 font-deck text-4xl leading-[1.05] md:text-5xl">
             See who fits your brand.
           </h2>
-          <p className="mx-auto mt-4 max-w-lg font-sans text-lg leading-relaxed text-black/60">
+          <p className="mx-auto mt-4 max-w-lg font-sans text-lg leading-relaxed text-white/55">
             Tell us what you sell and we&rsquo;ll send back a shortlist of
             athletes worth talking to.
           </p>
           <div className="mt-9 text-left">
-            <ShortlistForm id="shortlist" />
+            <ShortlistForm id="shortlist" tone="dark" />
           </div>
-          <p className="mt-10 font-sans text-[13px] text-black/45">
+          <p className="mt-10 font-sans text-[13px] text-white/35">
             © {new Date().getFullYear()} JABA ·{" "}
             <a className="underline" href="https://jaba.ai">
               jaba.ai

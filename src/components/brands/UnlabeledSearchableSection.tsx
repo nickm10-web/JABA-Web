@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { useInView } from "motion/react";
 
+import Eyebrow from "@/components/brands/Eyebrow";
+
 /**
  * "JABA makes the unlabeled searchable" — the claim that nothing else on the
  * site makes, and the one a brand cannot get anywhere else.
@@ -55,7 +57,8 @@ export default function UnlabeledSearchableSection() {
   return (
     <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <h2 className="max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
+        <Eyebrow>The index</Eyebrow>
+        <h2 className="mt-5 max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
           JABA makes the{" "}
           <span className="text-[#dfff00]">unlabeled searchable.</span>
         </h2>
