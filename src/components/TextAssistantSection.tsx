@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
 
-import ChatPhone, { messages, type ChatMessage } from "@/components/ChatPhone";
+import ChatPhone, { messages as defaultMessages, type ChatMessage } from "@/components/ChatPhone";
 
 // NOTE: The conversation autoplays once the phone scrolls into view: a
 // timer chain reveals messages with texting-like pacing (longer texts
@@ -13,7 +13,19 @@ import ChatPhone, { messages, type ChatMessage } from "@/components/ChatPhone";
 const gapBefore = (m: ChatMessage) =>
   Math.min(450 + m.text.length * 10, 1300);
 
-export default function TextAssistantSection() {
+export default function TextAssistantSection({
+  heading,
+  body,
+  messages = defaultMessages,
+  awaitHandoff = true,
+}: {
+  heading?: React.ReactNode;
+  body?: React.ReactNode;
+  messages?: ChatMessage[];
+  /** The homepage flies a phone into this section and waits for it to land.
+   *  Pages without that flight pass false, or the thread never starts. */
+  awaitHandoff?: boolean;
+} = {}) {
   const phoneRef = useRef<HTMLDivElement | null>(null);
   const [visibleCount, setVisibleCount] = useState(0);
   const [readShown, setReadShown] = useState(false);
@@ -29,7 +41,7 @@ export default function TextAssistantSection() {
   useEffect(() => {
     const wide = window.matchMedia("(min-width: 768px)");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setHandoffActive(wide.matches && !reduce.matches);
+    const sync = () => setHandoffActive(awaitHandoff && wide.matches && !reduce.matches);
     sync();
     wide.addEventListener("change", sync);
     reduce.addEventListener("change", sync);
@@ -37,7 +49,7 @@ export default function TextAssistantSection() {
       wide.removeEventListener("change", sync);
       reduce.removeEventListener("change", sync);
     };
-  }, []);
+  }, [awaitHandoff]);
 
   useEffect(() => {
     const onLanded = () => setLanded(true);
@@ -57,7 +69,7 @@ export default function TextAssistantSection() {
     // Read receipt lands a beat after the last message sends.
     timers.push(setTimeout(() => setReadShown(true), at + 900));
     return () => timers.forEach(clearTimeout);
-  }, [playing]);
+  }, [playing, messages]);
 
   return (
     <section className="relative w-full bg-[#eeeeee]">
@@ -95,13 +107,17 @@ export default function TextAssistantSection() {
               />
               <div className="relative z-10">
                 <h2 className="font-deck text-4xl leading-[1.05] text-black md:text-5xl lg:text-6xl">
-                  Athlete management lives in texts.
-                  <span className="block text-black/60">Not Zoom.</span>
-                  <span className="block text-black/60">Not another app.</span>
+                  {heading ?? (
+                    <>
+                      Athlete management lives in texts.
+                      <span className="block text-black/60">Not Zoom.</span>
+                      <span className="block text-black/60">Not another app.</span>
+                    </>
+                  )}
                 </h2>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-black/70 md:text-xl">
-                  Every deliverable, task, and calendar, managed in one text
-                  thread.
+                  {body ??
+                    "Every deliverable, task, and calendar, managed in one text thread."}
                 </p>
               </div>
             </div>
@@ -113,6 +129,7 @@ export default function TextAssistantSection() {
                 data-phone-end
                 visibleCount={visibleCount}
                 readShown={readShown}
+                messages={messages}
                 className="w-[300px] shrink-0 transition-opacity duration-200 md:w-[340px] lg:w-[380px]"
               />
             </div>

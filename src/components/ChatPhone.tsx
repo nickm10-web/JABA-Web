@@ -37,12 +37,16 @@ export default function ChatPhone({
   readShown,
   className = "",
   phoneRef,
+  /** Defaults to the NIL Team thread; pages with a different audience pass
+   *  their own script rather than copying the handset. */
+  messages: thread = messages,
   ...rest
 }: {
   visibleCount: number;
   readShown?: boolean;
   className?: string;
   phoneRef?: React.Ref<HTMLDivElement>;
+  messages?: ChatMessage[];
 } & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div ref={phoneRef} className={`relative ${className}`} {...rest}>
@@ -127,7 +131,7 @@ export default function ChatPhone({
                 style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif" }}
               >
                 <AnimatePresence initial={false}>
-                  {messages.slice(0, visibleCount).map((m, i, arr) => {
+                  {thread.slice(0, visibleCount).map((m, i, arr) => {
                     // Casey is the admin viewing this thread: their messages
                     // are "me" (blue, right, no sender label).
                     const isMe = m.sender === "casey";
@@ -184,7 +188,7 @@ export default function ChatPhone({
                             {m.text}
                           </div>
                         </div>
-                        {isMe && i === messages.length - 1 && readShown ? (
+                        {isMe && i === thread.length - 1 && readShown ? (
                           <motion.p
                             initial={{ opacity: 0, y: 3 }}
                             animate={{ opacity: 1, y: 0 }}

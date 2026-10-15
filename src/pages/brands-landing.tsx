@@ -3,8 +3,9 @@ import { useState } from "react";
 
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import PageLayout from "@/components/layout/page-layout";
-import BrandHeroPhone from "@/components/BrandHeroPhone";
 import ShortlistForm from "@/components/ShortlistForm";
+import TextAssistantSection from "@/components/TextAssistantSection";
+import type { ChatMessage } from "@/components/ChatPhone";
 import SocialProofSection from "@/components/sections/social-proof-section";
 import { VoltButton } from "@/components/ui/volt-button";
 
@@ -42,7 +43,7 @@ function DemoLaunch() {
       }}
       className="rounded-[18px] border border-black/10 bg-white p-5 md:p-6"
     >
-      <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-black/40">
+      <p className="text-center font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-black/40">
         See how it works
       </p>
       <div className="mt-3 flex flex-col gap-3 sm:flex-row">
@@ -62,68 +63,51 @@ function DemoLaunch() {
   );
 }
 
+/* The brand's side of the same thread the homepage shows. Dana runs the
+   campaign, Maya is the athlete, and the point of the exchange is that the
+   brand never has to chase anyone. Fictional people, fictional campaign. */
+const BRAND_THREAD: ChatMessage[] = [
+  { sender: "casey", name: "Dana", text: "we need the launch post live Friday" },
+  { sender: "brielle", name: "Maya", text: "i thought that was next week \u{1F605}" },
+  {
+    sender: "jaba",
+    name: "JABA",
+    text: "Friday 9am. I resent Maya the brief and the usage terms, both signed.",
+  },
+  {
+    sender: "jaba",
+    name: "JABA",
+    text: "Draft's with you for approval. I'll post on schedule and send the recap.",
+    reaction: { emoji: "\u{1F44D}", fromMe: true },
+  },
+  { sender: "casey", name: "Dana", text: "didn't have to chase anyone", reaction: { emoji: "\u2764\uFE0F" } },
+];
+
 /**
- * Same scene and build as the homepage hero: the colonnade vista with the copy
- * sitting on the sky band, and the phone running the thread on the right. The
- * copy is the only thing that changes, because a cold-email visitor arrives
- * knowing nothing about JABA and the scene is what makes it look like a
- * product rather than a form.
+ * Plain light hero. The scene art and the phone both came out: the phone was
+ * telling a scheduling story to someone who came here to find athletes, and
+ * without it the scene left half the fold empty.
  *
- * Copy stays left and the phone fills the right, so there is no empty half.
+ * Centred, because there is no right-hand column any more and everything below
+ * this is centred too.
  */
 function BrandsHero() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#eeeeee]">
-      <picture>
-        {/* Portrait crop on phones; the 16:9 desktop art loses the scene. */}
-        <source media="(max-width: 767px)" srcSet="/hero-world-mobile.webp" />
-        <img
-          src="/hero-world.webp"
-          alt=""
-          aria-hidden
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-      </picture>
+    <section className="relative overflow-hidden bg-[#eeeeee] px-6 pb-16 pt-16 text-[#0a0a0a] md:px-10 md:pb-24 md:pt-20 lg:px-12">
+      <div className="mx-auto max-w-5xl text-center">
+        <img src="/jaba-head.webp" alt="JABA" className="mx-auto h-10 w-auto" />
 
-      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1440px] items-start gap-12 px-4 pb-20 pt-20 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-6 lg:px-8 lg:pb-0 lg:pt-16">
-        {/* Copy, lifted above the hills so it lands on the open sky. */}
-        <div className="relative min-w-0 text-center md:text-left lg:-translate-y-20 lg:self-center">
-          <img
-            src="/jaba-head.webp"
-            alt="JABA"
-            className="mx-auto h-10 w-auto md:mx-0"
-          />
+        <h1 className="mx-auto mt-10 max-w-3xl font-deck text-4xl leading-[1.05] md:mt-12 md:text-6xl">
+          Find the athletes who actually move your product.
+        </h1>
 
-          <h1
-            className="mt-8 font-deck text-4xl leading-[1.04] text-white [text-wrap:balance] md:text-5xl lg:text-6xl"
-            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.35), 0 1px 3px rgba(0,0,0,0.25)" }}
-          >
-            <span className="block">Find the athletes who</span>
-            <span className="block text-[#dfff00]">actually move your product.</span>
-          </h1>
+        <p className="mx-auto mt-5 max-w-xl font-sans text-lg leading-relaxed text-black/60 md:text-xl">
+          JABA reads the entire athlete internet, so you can see who reaches
+          your customer before you spend a dollar.
+        </p>
 
-          <p
-            className="mx-auto mt-6 max-w-xl font-sans text-lg font-bold leading-snug text-white/95 [text-wrap:balance] md:mx-0 md:text-xl"
-            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.3)" }}
-          >
-            JABA reads the entire athlete internet, so you can see who reaches
-            your customer before you spend a dollar.
-          </p>
-
-          <div className="mx-auto mt-7 w-full max-w-xl md:mx-0">
-            <DemoLaunch />
-          </div>
-
-        </div>
-
-        {/* The phone hangs below the box on purpose: the fold crops the tail,
-            which is what lets it ride high without growing the section. */}
-        <div className="hidden self-start lg:flex lg:justify-end">
-          <div className="relative h-[420px] w-[440px] lg:h-[460px] lg:w-[480px]">
-            <div className="absolute inset-x-0 top-0 translate-y-[60px] lg:translate-y-[80px]">
-              <BrandHeroPhone />
-            </div>
-          </div>
+        <div className="mx-auto mt-9 max-w-xl md:mt-10">
+          <DemoLaunch />
         </div>
       </div>
     </section>
@@ -140,6 +124,21 @@ export default function BrandsLandingPage() {
 
       {/* The proof: the index itself. */}
       <AthleteInternetSection />
+
+      {/* What running it actually feels like, between the index and the steps:
+          it also breaks up two black sections that otherwise ran together. */}
+      <TextAssistantSection
+        awaitHandoff={false}
+        messages={BRAND_THREAD}
+        heading={
+          <>
+            Your campaign runs in texts.
+            <span className="block text-black/60">No portal.</span>
+            <span className="block text-black/60">No chasing.</span>
+          </>
+        }
+        body="Briefs, approvals, deadlines, and the recap, handled in one thread."
+      />
 
       {/* What it looks like to run a campaign. */}
       <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
