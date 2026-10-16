@@ -55,9 +55,9 @@ function Stat({ to, suffix, label, run }: { to: number; suffix: string; label: s
 }
 
 /* Each card is a different piece of the athlete internet, built in that
-   thing's own format (a post, an interview, a profile, an article, a bio)
-   rather than five copies of one card. All five are one made-up athlete so
-   they read as a single story. */
+   thing's own format (a post, an interview, an article, a profile, the
+   brand activity around it) rather than five copies of one card. The athlete
+   and the brands are made up. */
 const SHELL = "relative flex h-full flex-col overflow-hidden rounded-[20px] text-[#0a0a0a] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.9)]";
 
 function Icon({ d, className = "h-[18px] w-[18px]" }: { d: string; className?: string }) {
@@ -105,47 +105,25 @@ const CARDS = [
   {
     key: "interviews",
     node: (
-      <div className={`${SHELL} bg-white p-4`}>
-        <div className="flex items-center gap-2.5">
-          <img src="/brands/mic.webp" alt="" aria-hidden className="h-9 w-9 rounded-[8px] object-cover" />
-          <div className="min-w-0">
-            <p className="truncate font-sans text-[12.5px] font-semibold leading-tight">The Locker Room Pod</p>
-            <p className="font-sans text-[11.5px] leading-tight text-black/50">Episode 14</p>
-          </div>
-        </div>
-        <p className="mt-4 font-sans text-[19px] font-medium leading-[1.18] tracking-[-0.02em]">
+      <div className={`${SHELL} bg-[#f7f3ec] p-4`}>
+        <p className="font-sans text-[11.5px] text-black/45">From the interview</p>
+        <p className="mt-2 font-display text-[22px] leading-[1.12] text-[#1a1a1a]">
           &ldquo;Film at six, then coffee with my sister. Every game day.&rdquo;
         </p>
-        <div className="mt-auto flex items-center gap-2.5 pt-3">
-          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#0a0a0a] text-white">
-            <svg viewBox="0 0 24 24" className="ml-0.5 h-3 w-3" fill="currentColor" aria-hidden>
-              <path d="M7 5v14l12-7Z" />
-            </svg>
-          </span>
-          <span className="relative h-[3px] flex-1 rounded-full bg-black/10">
-            <span className="absolute inset-y-0 left-0 w-[34%] rounded-full bg-[#0a0a0a]" />
-          </span>
-          <span className="font-sans text-[11px] tabular-nums text-black/50">12:08</span>
-        </div>
-      </div>
-    ),
-  },
-  {
-    key: "backgrounds",
-    node: (
-      <div className={`${SHELL} bg-[#dfff00] p-4`}>
-        <p className="font-sans text-[12.5px] text-black/55">Background</p>
-        <div className="mt-2 flex flex-1 flex-col justify-center divide-y divide-black/10">
-          {[
-            ["Hometown", "Chicago"],
-            ["Interests", "Gaming & cooking"],
-            ["Off the field", "Youth coaching"],
-          ].map(([t, v]) => (
-            <div key={t} className="py-3">
-              <p className="font-sans text-[11.5px] text-black/50">{t}</p>
-              <p className="mt-0.5 font-sans text-[20px] font-medium leading-tight tracking-[-0.02em]">{v}</p>
-            </div>
-          ))}
+        <div className="relative mt-auto overflow-hidden rounded-[12px]">
+          <img src="/brands/mic.webp" alt="" aria-hidden className="h-[5.5rem] w-full object-cover" />
+          <div className="absolute inset-x-2 bottom-2 flex items-center gap-2 rounded-full bg-white/90 py-1 pl-1 pr-3 backdrop-blur">
+            <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#0a0a0a] text-white">
+              <svg viewBox="0 0 24 24" className="ml-0.5 h-2.5 w-2.5" fill="currentColor" aria-hidden>
+                <path d="M7 5v14l12-7Z" />
+              </svg>
+            </span>
+            <span className="flex h-4 flex-1 items-center gap-[2px]">
+              {[5, 9, 6, 12, 8, 14, 10, 7, 13, 9, 5, 11, 8, 13, 6, 10, 12, 7].map((h, i) => (
+                <span key={i} className="w-[2px] rounded-full bg-black/40" style={{ height: h }} />
+              ))}
+            </span>
+          </div>
         </div>
       </div>
     ),
@@ -153,30 +131,75 @@ const CARDS = [
   {
     key: "articles",
     node: (
-      <div className={`${SHELL} bg-white`}>
-        <img src="/brands/laces.webp" alt="" aria-hidden className="h-[40%] w-full object-cover object-[60%_65%]" />
-        <div className="flex flex-1 flex-col p-4">
-          <p className="font-sans text-[11px] font-semibold text-black/45">Campus Weekly</p>
-          <p className="mt-1.5 font-sans text-[16.5px] font-semibold leading-[1.15] tracking-[-0.02em]">
-            The guard coaching Chicago&rsquo;s next point guards
-          </p>
-          <p className="mt-auto line-clamp-2 pt-2 font-sans text-[12px] leading-snug text-black/55">
-            Hill runs a free Saturday camp back home, and most of his campers can already beat him at 2K.
-          </p>
+      <div className={`${SHELL} bg-white p-4`}>
+        <div className="flex items-center justify-between">
+          <p className="font-display text-[15px] leading-none">Campus Weekly</p>
+          <svg viewBox="0 0 24 24" className="h-4 w-4 text-black/60" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </div>
+        <img src="/brands/laces.webp" alt="" aria-hidden className="mt-3 h-[6.5rem] w-full rounded-[10px] object-cover object-[60%_65%]" />
+        <p className="mt-3 font-display text-[24px] leading-none">Beyond the game</p>
+        <p className="mt-1.5 font-sans text-[12.5px] leading-snug text-black/60">How athletes build community off the field.</p>
+        <p className="mt-auto font-sans text-[11px] text-black/40">4 min read</p>
+      </div>
+    ),
+  },
+  {
+    key: "profile",
+    node: (
+      <div className={`${SHELL} bg-[#dfff00] p-4`}>
+        <div className="flex items-center gap-3">
+          <img src="/brands/athlete.webp" alt="" aria-hidden className="h-12 w-12 rounded-full object-cover object-[36%_35%]" />
+          <div>
+            <p className="font-sans text-[16px] font-semibold leading-tight tracking-[-0.02em]">Marcus Hill</p>
+            <p className="font-sans text-[12px] text-black/55">Guard · Basketball</p>
+          </div>
+        </div>
+        <div className="mt-3 flex flex-1 flex-col justify-center divide-y divide-black/10">
+          {[
+            ["Hometown", "Chicago, Illinois", "M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"],
+            ["Interests", "Gaming, cooking", "M6 11h4M8 9v4M15 12h.01M18 10h.01M7 6h10a5 5 0 0 1 5 5v1a4 4 0 0 1-7 2.6L14 14h-4l-1 .6A4 4 0 0 1 2 12v-1a5 5 0 0 1 5-5Z"],
+            ["Off the field", "Runs a youth camp", "M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M10 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM21 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8"],
+          ].map(([t, v, d]) => (
+            <div key={t} className="flex items-center gap-3 py-2.5">
+              <Icon d={d} className="h-[18px] w-[18px] text-black/70" />
+              <div className="min-w-0">
+                <p className="font-sans text-[11px] leading-tight text-black/50">{t}</p>
+                <p className="font-sans text-[14px] font-medium leading-tight">{v}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     ),
   },
   {
-    key: "bios",
+    /* The kinds of signal JABA really logs (started advertising, product
+       launches, retail expansion are its three most common), shown with
+       made-up brands rather than real ones. */
+    key: "signals",
     node: (
       <div className={`${SHELL} bg-white p-4`}>
-        <img src="/brands/athlete.webp" alt="" aria-hidden className="h-16 w-16 rounded-full object-cover object-[36%_35%]" />
-        <p className="mt-4 font-sans text-[19px] font-semibold leading-tight tracking-[-0.02em]">Marcus Hill</p>
-        <p className="mt-0.5 font-sans text-[12.5px] text-black/55">Guard · Men&rsquo;s basketball</p>
-        <p className="mt-3 font-sans text-[13px] leading-snug text-black/75">
-          Chicago raised. Coffee, film, and my little sister. Coaching on Saturdays.
-        </p>
+        <p className="font-sans text-[11.5px] text-black/45">Brand signals</p>
+        <div className="mt-1 flex flex-1 flex-col justify-center divide-y divide-black/10">
+          {[
+            ["Started advertising", "Tidewater Hydration starts TikTok ads", "M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1ZM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"],
+            ["Product launch", "Northpeak drops a $99 recovery band", "m21 8-9-5-9 5 9 5 9-5ZM3 8v8l9 5 9-5V8M12 13v8"],
+            ["Retail expansion", "Crisp Pantry snacks land in 800 stores", "M3 9 4.5 4h15L21 9M3 9v11h18V9M3 9h18M9 20v-6h6v6"],
+          ].map(([t, v, d]) => (
+            <div key={t} className="flex items-start gap-2.5 py-2">
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-black/[0.05]">
+                <Icon d={d} className="h-4 w-4 text-black/75" />
+              </span>
+              <div className="min-w-0">
+                <p className="font-sans text-[12.5px] font-semibold leading-tight">{t}</p>
+                <p className="mt-0.5 font-sans text-[12px] leading-snug text-black/60">{v}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="font-sans text-[10.5px] text-black/35">Example signals</p>
       </div>
     ),
   },
@@ -291,6 +314,12 @@ export default function AthleteInternetCards() {
           JABA watches the entire
           <span className="block">athlete internet.</span>
         </h2>
+        <p
+          className="mx-auto mt-4 max-w-2xl font-sans text-[16px] text-white/85 md:text-[18px]"
+          style={{ textShadow: "0 2px 16px rgba(0,0,0,0.9)" }}
+        >
+          Athlete content, brand activity, and new partnerships. All connected.
+        </p>
       </div>
 
       {/* The fan. */}
