@@ -18,7 +18,8 @@ import Eyebrow from "@/components/brands/Eyebrow";
  *
  * Boxes are percentages of the TILE, not of the source image: object-cover
  * centre-crops every photo to 4:5, so coordinates taken off the original file
- * land in the wrong place. These were read off the cropped frame.
+ * land in the wrong place. These were checked by drawing each box onto the
+ * exact 4:5 crop the browser renders, one tile at a time.
  */
 
 export type Tile = {
@@ -31,16 +32,16 @@ export type Tile = {
 export const TILES: Tile[] = [
   { src: "/wall/p72.webp", tag: "SUV", box: [0, 36, 70, 62] },
   { src: "/wall/p15.webp", tag: "private jet", box: [0, 0, 56, 86] },
-  { src: "/wall/p71.webp", tag: "championship ring", box: [55, 60, 27, 23] },
-  { src: "/wall/p60.webp", tag: "barbell", box: [10, 8, 86, 34] },
-  { src: "/wall/p25.webp", tag: "swimwear", box: [2, 48, 94, 36] },
-  { src: "/wall/p08.webp", tag: "golf club", box: [28, 8, 52, 58] },
-  { src: "/wall/p28.webp", tag: "toddler", box: [47, 17, 36, 68] },
-  { src: "/wall/p42.webp", tag: "formal dress", box: [61, 40, 20, 57] },
-  { src: "/wall/p21.webp", tag: "sundress", box: [24, 26, 29, 35] },
-  { src: "/wall/p74.webp", tag: "tailored suit", box: [29, 21, 34, 58] },
-  { src: "/wall/p49.webp", tag: "smartphone", box: [55, 38, 27, 28] },
-  { src: "/wall/p30.webp", tag: "streetwear", box: [49, 23, 24, 33] },
+  { src: "/wall/p71.webp", tag: "championship ring", box: [36, 60, 28, 24] },
+  { src: "/wall/p60.webp", tag: "barbell", box: [2, 2, 90, 38] },
+  { src: "/wall/p04.webp", tag: "bouquet", box: [36, 6, 35, 24] },
+  { src: "/wall/p08.webp", tag: "golf club", box: [9, 6, 34, 55] },
+  { src: "/wall/p28.webp", tag: "toddler", box: [24, 14, 44, 68] },
+  { src: "/wall/p42.webp", tag: "formal dress", box: [37, 34, 26, 64] },
+  { src: "/wall/p21.webp", tag: "sundress", box: [29, 25, 33, 38] },
+  { src: "/wall/p74.webp", tag: "tailored suit", box: [3, 21, 60, 58] },
+  { src: "/wall/p49.webp", tag: "smartphone", box: [27, 35, 26, 38] },
+  { src: "/wall/p30.webp", tag: "streetwear", box: [22, 18, 46, 35] },
 ];
 
 export const CORNERS = [
