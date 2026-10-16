@@ -213,8 +213,8 @@ function Wall() {
       style={{
         /* On the section-sized layer, not the rows: the rows run taller than
            the section, so a fade measured on them lands out of sight. */
-        maskImage: "linear-gradient(to bottom, transparent 0%, #000 16%, #000 80%, transparent 100%)",
-        WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 16%, #000 80%, transparent 100%)",
+        maskImage: "linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%)",
       }}
     >
       <div className="flex flex-col gap-3 md:gap-4" style={{ filter: "blur(3px)" }}>
@@ -265,8 +265,18 @@ export default function AthleteInternetCards() {
   const inView = useInView(ref, { once: true, margin: "-20%" });
 
   return (
-    <section className="relative isolate overflow-hidden bg-black px-6 py-12 text-white md:px-10 md:py-10 lg:px-12">
+    <section className="relative isolate overflow-hidden bg-black px-6 pb-12 pt-16 text-white md:px-10 md:pb-10 md:pt-16 lg:px-12">
       <Wall />
+      {/* The homepage's curved seam, drawn inside the section so the wall runs
+          right up under the light section above instead of starting below it. */}
+      <svg
+        aria-hidden
+        viewBox="0 0 1440 44"
+        preserveAspectRatio="none"
+        className="pointer-events-none absolute inset-x-0 top-0 h-7 w-full md:h-10"
+      >
+        <path d="M0,0 L300,0 C 368,0 378,24 440,24 L1000,24 C 1062,24 1072,0 1140,0 L1440,0 Z" fill="#eeeeee" />
+      </svg>
 
       <div className="relative mx-auto max-w-6xl text-center">
         <h2

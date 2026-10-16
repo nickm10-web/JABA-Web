@@ -42,7 +42,6 @@ export default function BrandsLandingPage() {
 
       {/* What JABA sees, one dark chapter: what it reads, then what it can
           find inside a post that the caption never says. */}
-      <Seam from="#eeeeee" to="#000" />
       <AthleteInternetCards />
 
       <UnlabeledSearchableSection />
