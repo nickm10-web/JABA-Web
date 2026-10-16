@@ -3705,13 +3705,3 @@
 .social-proof-section.on-dark .social-proof-label { color: rgba(255,255,255,.4); }
 .social-proof-section.on-dark .social-proof-fade-left { background: linear-gradient(90deg,#000,transparent); }
 .social-proof-section.on-dark .social-proof-fade-right { background: linear-gradient(-90deg,#000,transparent); }
-
-/* Brands · match: JABA's ring pulses once each time a reason lands. Re-keyed
-   per beat in the component, so every beat plays it from the start. */
-@keyframes matchPulse {
-  0% { transform: scale(0.92); opacity: 0.2; }
-  35% { transform: scale(1.04); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.7; }
-}
-.match-pulse { animation: matchPulse 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-@media (prefers-reduced-motion: reduce) { .match-pulse { animation: none; opacity: 0.7; } }

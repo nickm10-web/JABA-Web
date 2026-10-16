@@ -1,208 +1,62 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import { useInView } from "motion/react";
 
 /**
- * Meet JABA, built around the character. The stage holds still and JABA
- * changes role as you scroll: he waves hello, then puts on the glasses to read
- * their feed, picks up the notepad for the idea, the headset to work over
- * text, the clipboard to run the campaign. One character, five beats, so the
- * section is a scene rather than a grid of features.
+ * Meet JABA: one beat, not a slideshow. JABA waves, his name lands, and the
+ * film's line sits under it.
  *
- * Every line is the film's, word for word: the opening line and the four
- * pillars. None of it is written for this page.
- *
- * Beats are driven by IntersectionObserver sentinels, the homepage's scroll
- * story pattern: one sentinel per beat, and only entering one changes the
- * beat, so leaving the section holds the last beat instead of resetting.
+ * The earlier version spent five scroll beats walking the film's four pillars
+ * with a table-of-contents rail and a close-up per pillar. Every one of those
+ * pillars is shown working further down the page (the index, the match, the
+ * group chat, the report), so here the character only has to say hello.
  */
-
-type Beat = {
-  rail: string;
-  title: string;
-  body: string;
-  media: { kind: "video" | "image"; src: string };
-};
-
-const BEATS: Beat[] = [
-  {
-    rail: "Meet JABA",
-    title: "Meet JABA.",
-    body: "The bridge between athletes and influencers.",
-    media: { kind: "video", src: "/meet/jaba-wave.mp4" },
-  },
-  {
-    rail: "Direction",
-    title: "Direction",
-    body: "We already know what their feed does, what performs on it, and what they sound like.",
-    media: { kind: "image", src: "/meet/data.webp" },
-  },
-  {
-    rail: "Partnership ideas",
-    title: "Partnership ideas",
-    body: "We bring the brand and the angle with the evidence attached. The athlete never has to pitch.",
-    media: { kind: "image", src: "/meet/creative.webp" },
-  },
-  {
-    rail: "Availability",
-    title: "Availability",
-    body: "Everything happens over text, in the time they actually have.",
-    media: { kind: "image", src: "/meet/ops.webp" },
-  },
-  {
-    rail: "Managing the campaign",
-    title: "Managing the campaign",
-    body: "JABA handles the follow-ups, the reminders and quality control, and checks exclusivity before anything goes out.",
-    media: { kind: "image", src: "/meet/manage.webp" },
-  },
-];
-
-const BEAT_VH = 75;
-
 export default function MeetJabaSection() {
-  const [active, setActive] = useState(0);
-  const sentinels = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.idx));
-        }
-      },
-      { rootMargin: "-50% 0px -50% 0px" },
-    );
-    sentinels.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
-  }, []);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.4 });
 
   return (
-    <section
-      className="relative bg-black text-white"
-      style={{ height: `${100 + BEATS.length * BEAT_VH}vh` }}
-    >
-      {/* One sentinel per beat; the stage reads whichever crosses mid-screen. */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0">
-        {BEATS.map((_, i) => (
+    <section className="relative overflow-hidden bg-black px-6 py-24 text-white md:px-10 md:py-32">
+      <div ref={ref} className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+        <div className="relative h-[19rem] w-[14rem] md:h-[26rem] md:w-[19.5rem]">
           <div
-            key={i}
-            data-idx={i}
-            ref={(el) => {
-              sentinels.current[i] = el;
-            }}
-            style={{ height: `${BEAT_VH}vh` }}
+            aria-hidden
+            className="absolute inset-[-12%] rounded-full"
+            style={{ background: "radial-gradient(closest-side, rgba(255,255,255,0.09), transparent)" }}
           />
-        ))}
-      </div>
-
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden px-6 md:px-10 lg:px-12">
-        <div className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]" />
-
-        <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
-          {/* Copy. Every beat's text is stacked in one fixed box, so changing
-              beat cross-fades in place instead of reflowing the column. */}
-          <div className="order-2 lg:order-1">
-            {/* The rail: where you are in the scene. The tick is the one lime
-                element on screen. */}
-            <ol className="hidden space-y-2.5 lg:block">
-              {BEATS.map((b, i) => (
-                <li
-                  key={b.rail}
-                  className={`flex items-center gap-3 font-sans text-[14px] transition-colors duration-500 ${
-                    i === active ? "text-white" : "text-white/25"
-                  }`}
-                >
-                  <span
-                    className="h-px transition-all duration-500"
-                    style={{
-                      width: i === active ? 28 : 12,
-                      background: i === active ? "#dfff00" : "rgba(255,255,255,0.25)",
-                    }}
-                  />
-                  {b.rail}
-                </li>
-              ))}
-            </ol>
-
-            <p
-              className="text-center font-sans text-[13px] text-white/40 lg:hidden"
-            >
-              {String(active + 1).padStart(2, "0")} / {String(BEATS.length).padStart(2, "0")}
-            </p>
-
-            <div className="relative mt-6 min-h-[11rem] md:min-h-[13rem] lg:mt-14 lg:min-h-[15rem]">
-              {BEATS.map((b, i) => (
-                <div
-                  key={b.title}
-                  aria-hidden={i !== active}
-                  className="absolute inset-x-0 top-0 text-center transition-all duration-500 ease-out lg:text-left"
-                  style={{
-                    opacity: i === active ? 1 : 0,
-                    transform: `translateY(${i === active ? 0 : i < active ? -18 : 18}px)`,
-                  }}
-                >
-                  <h2 className="font-deck text-[2.6rem] leading-[1.02] md:text-6xl lg:text-7xl">
-                    {b.title}
-                  </h2>
-                  <p className="mx-auto mt-5 max-w-md font-sans text-lg leading-relaxed text-white/55 lg:mx-0 md:text-xl">
-                    {b.body}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* The stage. JABA stays put; only the role changes. */}
-          <div className="relative order-1 mx-auto aspect-square w-[min(78vw,46vh)] lg:order-2 lg:w-full lg:max-w-[560px]">
-            <div
-              aria-hidden
-              className="absolute inset-[6%] rounded-full"
-              style={{ background: "radial-gradient(closest-side, rgba(255,255,255,0.09), transparent)" }}
-            />
-            <div
-              aria-hidden
-              className="absolute bottom-[4%] left-1/2 h-[7%] w-[46%] -translate-x-1/2 rounded-[50%]"
-              style={{ background: "radial-gradient(closest-side, rgba(0,0,0,0.9), transparent)" }}
-            />
-
-            {BEATS.map((b, i) => {
-              const on = i === active;
-              const style = {
-                opacity: on ? 1 : 0,
-                transform: `scale(${on ? 1 : 0.94})`,
-              };
-              const cls =
-                "absolute inset-0 h-full w-full object-contain transition-all duration-500 ease-out";
-              return b.media.kind === "video" ? (
-                <video
-                  key={b.rail}
-                  className={cls}
-                  // The video is opaque black, so over the spotlight it would
-                  // cut a dark rectangle out of the glow. Lighten drops its
-                  // black and keeps only JABA.
-                  style={{ ...style, mixBlendMode: "lighten" }}
-                  src={b.media.src}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  aria-hidden
-                />
-              ) : (
-                <img
-                  key={b.rail}
-                  // Close-ups crop tight to the character, so they get a
-                  // margin the full-body shot doesn't need.
-                  className={`${cls} p-[7%]`}
-                  style={style}
-                  src={b.media.src}
-                  alt=""
-                  aria-hidden
-                  loading="lazy"
-                  decoding="async"
-                />
-              );
-            })}
-          </div>
+          <video
+            className="absolute inset-0 h-full w-full object-contain transition-all duration-700 ease-out"
+            // The video is opaque black, so lighten drops its background and
+            // keeps only JABA over the glow.
+            style={{
+              mixBlendMode: "lighten",
+              opacity: inView ? 1 : 0,
+              transform: `translateY(${inView ? 0 : 18}px)`,
+            }}
+            src="/meet/jaba-wave.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden
+          />
         </div>
+
+        <h2
+          className="mt-6 font-deck text-5xl leading-none transition-all duration-700 ease-out md:text-7xl"
+          style={{
+            opacity: inView ? 1 : 0,
+            transform: `translateY(${inView ? 0 : 14}px)`,
+            transitionDelay: inView ? "250ms" : "0ms",
+          }}
+        >
+          Meet JABA.
+        </h2>
+        <p
+          className="mt-5 font-sans text-lg text-white/55 transition-opacity duration-700 md:text-xl"
+          style={{ opacity: inView ? 1 : 0, transitionDelay: inView ? "500ms" : "0ms" }}
+        >
+          The bridge between athletes and influencers.
+        </p>
       </div>
     </section>
   );

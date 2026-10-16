@@ -4,13 +4,11 @@ import { useState } from "react";
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import BenchmarkSection from "@/components/brands/BenchmarkSection";
 import HeroScan from "@/components/brands/HeroScan";
-import MatchSection from "@/components/brands/MatchSection";
+import BrandWalkthrough from "@/components/brands/BrandWalkthrough";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
 import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
 import PageLayout from "@/components/layout/page-layout";
 import ShortlistForm from "@/components/ShortlistForm";
-import TextAssistantSection from "@/components/TextAssistantSection";
-import type { ChatMessage } from "@/components/ChatPhone";
 import SocialProofSection from "@/components/sections/social-proof-section";
 import { VoltButton } from "@/components/ui/volt-button";
 
@@ -47,24 +45,6 @@ function DemoLaunch() {
     </form>
   );
 }
-
-/* The film's own thread, word for word: JABA catches a story that went up
-   without the paid partnership tag and fixes it before anyone has to ask. */
-const BRAND_THREAD: ChatMessage[] = [
-  {
-    sender: "jaba",
-    name: "JABA",
-    text: "\u26A0\uFE0F Her story went up without the paid partnership tag. I\u2019ve texted her to add it.",
-  },
-  { sender: "casey", name: "You", text: "how long was it up" },
-  {
-    sender: "jaba",
-    name: "JABA",
-    text: "Thirty-nine minutes. The tag is on now, and I logged it against the deliverable.",
-    reaction: { emoji: "\u{1F44D}", fromMe: true },
-  },
-  { sender: "casey", name: "You", text: "perfect, thank you" },
-];
 
 /**
  * Copy on the left, the product working on the right. The centred version was
@@ -127,17 +107,16 @@ export default function BrandsLandingPage() {
 
       <UnlabeledSearchableSection />
 
-      <MatchSection />
-
-      <TextAssistantSection
-        tone="dark"
-        awaitHandoff={false}
-        messages={BRAND_THREAD}
-        heading={
-<>We run it, start to finish.</>
-        }
-        body="Quality control on every asset before you see it, and the chasing when something doesn't happen. JABA notices and texts the right person."
-      />
+      {/* How it works, as Jordon's three acts: the same walkthrough the hero
+          opens with the visitor's brand, played here for "your brand". */}
+      <section className="bg-black py-20 md:py-28">
+        <BrandWalkthrough
+          generic
+          onFinish={() =>
+            document.getElementById("shortlist")?.scrollIntoView({ behavior: "smooth", block: "center" })
+          }
+        />
+      </section>
 
       <BenchmarkSection />
 

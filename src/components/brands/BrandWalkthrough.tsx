@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "motion/react";
 
 import ChatPhone, { type ChatMessage } from "@/components/ChatPhone";
 import { VoltButton } from "@/components/ui/volt-button";
@@ -67,16 +68,22 @@ const TICK_MS = 420;
 export default function BrandWalkthrough({
   brand: initialBrand,
   onFinish,
+  generic = false,
 }: {
   brand?: string;
   onFinish: () => void;
+  /** On the landing page there is no brand yet: it plays for "your brand",
+   *  and only once it is on screen, so nobody scrolls in to a finished run. */
+  generic?: boolean;
 }) {
-  const [brand, setBrand] = useState(initialBrand?.trim() ?? "");
+  const root = useRef<HTMLDivElement>(null);
+  const seen = useInView(root, { once: true, amount: 0.35 });
+  const [brand, setBrand] = useState(generic ? "Your brand" : (initialBrand?.trim() ?? ""));
   const [draft, setDraft] = useState("");
   const [act, setAct] = useState(0);
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
-  const playing = Boolean(brand) && !done;
+  const playing = Boolean(brand) && !done && (!generic || seen);
 
   useEffect(() => {
     if (!playing) return;
@@ -129,7 +136,7 @@ export default function BrandWalkthrough({
   const progress = done && act === ACTS.length - 1 ? 1 : Math.min(step / ACTS[act].ticks, 1);
 
   return (
-    <div className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
+    <div ref={root} className="relative mx-auto w-full max-w-6xl px-6 md:px-10">
       {/* HUD. The active act's track fills as it plays; finished acts stay full. */}
       <div className="grid grid-cols-3 gap-3 md:gap-6">
         {ACTS.map((a, i) => (
@@ -185,7 +192,7 @@ export default function BrandWalkthrough({
 
         <div className="relative mx-auto aspect-[5/6] w-full max-w-[34rem]">
           <ActInto brand={brand} on={act === 0} step={act === 0 ? step : ACTS[0].ticks} />
-          <ActFit brand={brand} on={act === 1} step={act === 1 ? step : 0} />
+          <ActFit brand={generic ? "your brand" : brand} on={act === 1} step={act === 1 ? step : 0} />
           <ActChat on={act === 2} step={act === 2 ? (done ? ACTS[2].ticks : step) : 0} />
         </div>
       </div>
