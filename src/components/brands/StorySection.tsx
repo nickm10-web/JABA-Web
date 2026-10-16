@@ -71,10 +71,10 @@ export default function StorySection() {
 
       <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 gap-4 md:mt-16 md:grid-cols-3 md:gap-5">
         <div className="relative h-[19rem] overflow-hidden rounded-[22px] bg-[#cfe0f2] md:h-[22rem]">
-          <img src="/brands/sneakers.webp" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-[76%_50%]" />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/10 to-transparent" />
+          <img src="/brands/sneakers.webp" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-[50%_70%]" />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/5 to-transparent" />
           <div className="relative flex items-start justify-between p-6">
-            <p className="max-w-[10rem] font-sans text-[22px] font-medium leading-tight tracking-[-0.02em]">Find the connection</p>
+            <p className="max-w-[10rem] font-sans text-[22px] font-medium leading-tight tracking-[-0.02em] text-white">Find the connection</p>
             <Arrow />
           </div>
         </div>

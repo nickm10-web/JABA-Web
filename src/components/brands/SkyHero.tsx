@@ -59,8 +59,13 @@ const CARDS: { key: string; tall?: boolean; node: React.ReactNode }[] = [
     key: "collage",
     node: (
       <div className={`${CARD} grid grid-cols-2 gap-1 bg-white p-1`}>
-        {["ring", "barbell", "sneakers", "club"].map((n) => (
-          <img key={n} src={`/brands/${n}.webp`} alt="" aria-hidden className="h-full w-full rounded-[12px] object-cover" />
+        {[
+          ["ring", "35% 62%"],
+          ["barbell", "40% 50%"],
+          ["sneakers", "45% 72%"],
+          ["club", "45% 62%"],
+        ].map(([n, pos]) => (
+          <img key={n} src={`/brands/${n}.webp`} alt="" aria-hidden className="h-full w-full rounded-[12px] object-cover" style={{ objectPosition: pos }} />
         ))}
       </div>
     ),
@@ -83,7 +88,7 @@ const CARDS: { key: string; tall?: boolean; node: React.ReactNode }[] = [
     node: (
       <div className={`${CARD} flex flex-col p-4`}>
         <p className={TITLE}>A natural connection</p>
-        <img src="/brands/sneakers.webp" alt="" aria-hidden className="mt-3 h-24 w-full rounded-[10px] object-cover object-[72%_60%]" />
+        <img src="/brands/laces.webp" alt="" aria-hidden className="mt-3 h-24 w-full rounded-[10px] object-cover object-[60%_70%]" />
         <p className="mt-auto font-sans text-[12px] leading-snug text-black/60">Already wearing your category</p>
       </div>
     ),
