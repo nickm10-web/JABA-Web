@@ -81,6 +81,7 @@ const FAN = [
 const CARDS = [
   {
     key: "posts",
+    label: "Posts",
     node: (
       <div className={`${SHELL} bg-white`}>
         <div className="flex items-center gap-2 px-3 py-2.5">
@@ -104,6 +105,7 @@ const CARDS = [
   },
   {
     key: "interviews",
+    label: "Interviews",
     node: (
       <div className={`${SHELL} bg-[#f7f3ec] p-4`}>
         <p className="font-sans text-[11.5px] text-black/45">From the interview</p>
@@ -129,24 +131,8 @@ const CARDS = [
     ),
   },
   {
-    key: "articles",
-    node: (
-      <div className={`${SHELL} bg-white p-4`}>
-        <div className="flex items-center justify-between">
-          <p className="font-display text-[15px] leading-none">Campus Weekly</p>
-          <svg viewBox="0 0 24 24" className="h-4 w-4 text-black/60" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
-            <path d="M4 7h16M4 12h16M4 17h16" />
-          </svg>
-        </div>
-        <img src="/brands/laces.webp" alt="" aria-hidden className="mt-3 h-[6.5rem] w-full rounded-[10px] object-cover object-[60%_65%]" />
-        <p className="mt-3 font-display text-[24px] leading-none">Beyond the game</p>
-        <p className="mt-1.5 font-sans text-[12.5px] leading-snug text-black/60">How athletes build community off the field.</p>
-        <p className="mt-auto font-sans text-[11px] text-black/40">4 min read</p>
-      </div>
-    ),
-  },
-  {
     key: "profile",
+    label: "Athlete profiles",
     node: (
       <div className={`${SHELL} bg-[#dfff00] p-4`}>
         <div className="flex items-center gap-3">
@@ -175,14 +161,32 @@ const CARDS = [
     ),
   },
   {
+    key: "articles",
+    label: "Articles",
+    node: (
+      <div className={`${SHELL} bg-white p-4`}>
+        <div className="flex items-center justify-between">
+          <p className="font-display text-[15px] leading-none">Campus Weekly</p>
+          <svg viewBox="0 0 24 24" className="h-4 w-4 text-black/60" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </div>
+        <img src="/brands/laces.webp" alt="" aria-hidden className="mt-3 h-[6.5rem] w-full rounded-[10px] object-cover object-[60%_65%]" />
+        <p className="mt-3 font-display text-[24px] leading-none">Beyond the game</p>
+        <p className="mt-1.5 font-sans text-[12.5px] leading-snug text-black/60">How athletes build community off the field.</p>
+        <p className="mt-auto font-sans text-[11px] text-black/40">4 min read</p>
+      </div>
+    ),
+  },
+  {
     /* The kinds of signal JABA really logs (started advertising, product
        launches, retail expansion are its three most common), shown with
        made-up brands rather than real ones. */
     key: "signals",
+    label: "Brand signals",
     node: (
       <div className={`${SHELL} bg-white p-4`}>
-        <p className="font-sans text-[11.5px] text-black/45">Brand signals</p>
-        <div className="mt-1 flex flex-1 flex-col justify-center divide-y divide-black/10">
+        <div className="flex flex-1 flex-col justify-center divide-y divide-black/10">
           {[
             ["Started advertising", "Tidewater Hydration starts TikTok ads", "M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1ZM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"],
             ["Product launch", "Northpeak drops a $99 recovery band", "m21 8-9-5-9 5 9 5 9-5ZM3 8v8l9 5 9-5V8M12 13v8"],
@@ -328,10 +332,11 @@ export default function AthleteInternetCards() {
           {CARDS.map((c, i) => (
             <div
               key={c.key}
-              className="h-[21rem] w-[15rem] shrink-0 snap-center md:h-[17.25rem] md:w-auto md:[transform:rotate(var(--tilt))_translateY(var(--y))]"
+              className="w-[15rem] shrink-0 snap-center md:w-auto md:[transform:rotate(var(--tilt))_translateY(var(--y))]"
               style={{ "--tilt": FAN[i].tilt, "--y": FAN[i].y } as React.CSSProperties}
             >
-              {c.node}
+              <p className="mb-2.5 pl-1 font-sans text-[14px] font-medium text-white/85">{c.label}</p>
+              <div className="h-[21rem] md:h-[17.25rem]">{c.node}</div>
             </div>
           ))}
         </div>
