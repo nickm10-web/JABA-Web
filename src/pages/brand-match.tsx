@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-import BrandMatchDemo from "@/components/BrandMatchDemo";
+import BrandWalkthrough from "@/components/brands/BrandWalkthrough";
 import PageLayout from "@/components/layout/page-layout";
 import ShortlistForm from "@/components/ShortlistForm";
 import { VoltButton } from "@/components/ui/volt-button";
@@ -45,13 +45,14 @@ export default function BrandMatchPage() {
           </a>
         </div>
 
-        <BrandMatchDemo
-          fill
-          autoBrand={brand}
-          onUnlock={() =>
-            askRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
-          }
-        />
+        <div className="flex min-h-[84vh] items-center py-10 md:py-14">
+          <BrandWalkthrough
+            brand={brand}
+            onFinish={() =>
+              askRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+            }
+          />
+        </div>
 
         {/* The ask, waiting below the fold with the brand already filled in. */}
         <section className="px-6 py-20 md:px-10 md:py-24">

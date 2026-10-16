@@ -3628,54 +3628,6 @@
 .cals .rbtn{margin-top:15px;background:rgba(255,255,255,.06);color:rgba(247,247,238,.4);border-radius:11px;padding:13px;text-align:center;font-size:13.5px;font-weight:700}
 @media(max-width:980px){.cals .calwrap{grid-template-columns:1fr}}
 
-/* ── Brand match demo ──────────────────────────────────────────────────────
-   Entrances and the index strip. Kept in CSS rather than a JS animation loop
-   so the sequence still plays in a backgrounded tab, where rAF is throttled
-   to nothing. Honours reduced motion by holding the end state. */
-@keyframes demoStrip {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
-}
-.demo-strip {
-  animation: demoStrip linear infinite;
-  will-change: transform;
-}
-
-@keyframes demoChip {
-  from { opacity: 0; transform: translateY(6px) scale(0.96); }
-  to   { opacity: 1; transform: none; }
-}
-.demo-chip {
-  opacity: 0;
-  animation: demoChip 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-@keyframes demoCard {
-  from { opacity: 0; transform: translateY(14px) rotateX(10deg); }
-  to   { opacity: 1; transform: none; }
-}
-.demo-card {
-  opacity: 0;
-  transform-origin: 50% 0;
-  animation: demoCard 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-/* Bars grow to the width set inline, so the inline value is the end state. */
-@keyframes demoBar {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
-.demo-bar {
-  transform-origin: 0 50%;
-  animation: demoBar 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .demo-strip { animation: none; }
-  .demo-chip,
-  .demo-card { opacity: 1; animation: none; }
-  .demo-bar { animation: none; }
-}
 
 /* ── Brands · "unlabeled searchable" scan ─────────────────────────────────
    Each tile sweeps, locks a box on the object, labels it, then drops
