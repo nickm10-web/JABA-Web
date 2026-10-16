@@ -281,19 +281,15 @@ export default function AthleteInternetCards() {
       <div className="relative mx-auto max-w-6xl text-center">
         <h2
           className="font-sans font-normal leading-[1] tracking-[-0.045em]"
-          style={{ fontSize: "clamp(2.2rem, 4.2vw, 3.6rem)" }}
+          style={{ fontSize: "clamp(2.2rem, 4.2vw, 3.6rem)", textShadow: "0 2px 24px rgba(0,0,0,0.85)" }}
         >
           JABA watches the entire
-          <span className="block text-white/45">athlete internet.</span>
+          <span className="block">athlete internet.</span>
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl font-sans text-[16px] leading-relaxed text-white/60 md:text-[17px]">
-          Every post, interview, article, bio, and background, across platforms. Tracked back to the
-          athlete and the brand.
-        </p>
       </div>
 
       {/* The fan. */}
-      <div className="relative mx-auto mt-8 max-w-6xl md:mt-9">
+      <div className="relative mx-auto mt-10 max-w-6xl md:mt-12">
         <div className="relative -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:grid md:grid-cols-5 md:gap-3 md:overflow-visible md:px-0 md:pb-0 lg:gap-4">
           {CARDS.map((c, i) => (
             <div
