@@ -58,7 +58,8 @@ export default function BrandWalkthrough({
   tone = "dark",
 }: {
   brand?: string;
-  onFinish: () => void;
+  /** Ending call to action; left out where the page asks elsewhere. */
+  onFinish?: () => void;
   /** On the landing page there is no brand yet: it plays for "your brand",
    *  and only once it is on screen, so nobody scrolls in to a finished run. */
   generic?: boolean;
@@ -197,9 +198,11 @@ export default function BrandWalkthrough({
         className="mt-10 flex flex-wrap items-center justify-center gap-4 transition-opacity duration-500 md:mt-14"
         style={{ opacity: done ? 1 : 0, pointerEvents: done ? "auto" : "none" }}
       >
-        <VoltButton size="lg" onClick={onFinish}>
-          Send me my athletes
-        </VoltButton>
+        {onFinish && (
+          <VoltButton size="lg" onClick={onFinish}>
+            Send me my athletes
+          </VoltButton>
+        )}
         <button
           type="button"
           onClick={() => jump(startAct)}

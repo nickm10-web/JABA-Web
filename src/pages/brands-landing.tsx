@@ -50,13 +50,7 @@ export default function BrandsLandingPage() {
           opens with the visitor's brand, played here for "your brand". */}
       <Seam from="#000" to="#eeeeee" />
       <section id="how" className="bg-[#eeeeee] py-20 md:py-28">
-        <BrandWalkthrough
-          generic
-          tone="light"
-          onFinish={() =>
-            document.getElementById("shortlist")?.scrollIntoView({ behavior: "smooth", block: "center" })
-          }
-        />
+        <BrandWalkthrough generic tone="light" />
       </section>
 
       {/* The report runs dark too: volt bars need black to carry. */}

@@ -230,18 +230,6 @@ export default function AthleteInternetCards() {
         </div>
       </div>
 
-      <div className="mt-8 text-center md:mt-8">
-        <button
-          type="button"
-          onClick={() => document.getElementById("shortlist")?.scrollIntoView({ behavior: "smooth", block: "center" })}
-          className="inline-flex h-12 items-center gap-3 rounded-full bg-[#dfff00] px-6 font-sans text-[15px] font-semibold text-[#0a0a0a] transition-transform hover:-translate-y-px"
-        >
-          Find where your brand fits
-          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </button>
-      </div>
 
       <div ref={ref} className="mx-auto mt-8 grid max-w-6xl grid-cols-3 border-t border-black/10 pt-6 md:mt-10 md:pt-8">
         {STATS.map((s, i) => (

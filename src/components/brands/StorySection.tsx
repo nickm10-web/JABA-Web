@@ -11,16 +11,6 @@ import { PARTNERS } from "@/components/brands/PartnerOrbit";
  * Sports); they aren't in the logo set, so they aren't claimed here.
  */
 
-function Arrow() {
-  return (
-    <span className="grid h-9 w-9 place-items-center rounded-full bg-white text-[#0a0a0a] shadow-sm">
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-        <path d="M7 17 17 7M9 7h8v8" />
-      </svg>
-    </span>
-  );
-}
-
 /* Schools get their name beside the mark, like the mock; the agencies' logos
    are already wordmarks, so they stand alone. */
 const WORDMARKS = new Set(["Every True Tiger", "Rally", "Athletes Unlimited"]);
@@ -75,7 +65,6 @@ export default function StorySection() {
           <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/5 to-transparent" />
           <div className="relative flex items-start justify-between p-6">
             <p className="max-w-[10rem] font-sans text-[22px] font-medium leading-tight tracking-[-0.02em] text-white">Find the connection</p>
-            <Arrow />
           </div>
         </div>
 
@@ -111,7 +100,6 @@ export default function StorySection() {
                 Outreach, content, and reporting. All connected.
               </p>
             </div>
-            <Arrow />
           </div>
           <div className="relative mt-auto h-36">
             <img

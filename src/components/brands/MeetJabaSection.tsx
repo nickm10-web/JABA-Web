@@ -27,17 +27,6 @@ export default function MeetJabaSection() {
           >
             The bridge between athletes and <span className="text-black/45">influencers.</span>
           </h2>
-          <a
-            href="#how"
-            className="mt-9 inline-flex h-14 items-center gap-4 rounded-full bg-[#dfff00] pl-7 pr-2 font-sans text-[16px] font-semibold text-[#0a0a0a] transition-transform hover:-translate-y-px"
-          >
-            See how it works
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-[#0a0a0a] text-white">
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M7 17 17 7M9 7h8v8" />
-              </svg>
-            </span>
-          </a>
         </div>
 
         <div className="relative aspect-square w-full overflow-hidden rounded-[24px] md:rounded-[28px]">
