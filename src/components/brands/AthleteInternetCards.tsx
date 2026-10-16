@@ -133,7 +133,7 @@ const CARDS = [
   {
     key: "backgrounds",
     node: (
-      <div className={`${SHELL} bg-[#cfe5fb] p-4`}>
+      <div className={`${SHELL} bg-[#dfff00] p-4`}>
         <p className="font-sans text-[12.5px] text-black/55">Background</p>
         <div className="mt-2 flex flex-1 flex-col justify-center divide-y divide-black/10">
           {[
