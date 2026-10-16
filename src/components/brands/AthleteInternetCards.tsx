@@ -43,13 +43,13 @@ function Stat({ to, suffix, label, run }: { to: number; suffix: string; label: s
   return (
     <div className="text-center">
       <p
-        className="mx-auto min-w-[5ch] font-sans font-medium leading-none tracking-[-0.05em]"
+        className="mx-auto min-w-[5ch] font-sans font-medium leading-none tracking-[-0.05em] text-[#dfff00]"
         style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)", fontVariantNumeric: "tabular-nums" }}
       >
         {(n / 10).toFixed(1)}
         {suffix}
       </p>
-      <p className="mt-1 font-sans text-[14px] text-white/50 md:text-[16px]">{label}</p>
+      <p className="mt-1 font-sans text-[14px] text-white/60 md:text-[16px]">{label}</p>
     </div>
   );
 }
@@ -177,13 +177,98 @@ const CARDS = [
   },
 ];
 
+/* Behind the cards: the old drifting wall of real posts, blurred back, with
+   the rest of the athlete internet dealt in between them (a quote, a
+   headline, a bio line), so the background is everything JABA reads. */
+const POSTS = Array.from({ length: 80 }, (_, i) => `/wall/p${String(i + 1).padStart(2, "0")}.webp`);
+const SNIPPETS: { kind: string; text: string }[] = [
+  { kind: "Interview", text: "\u201cFilm at six, then coffee with my sister.\u201d" },
+  { kind: "Article", text: "Beyond the game" },
+  { kind: "Bio", text: "Senior guard. Chicago raised." },
+  { kind: "Hometown", text: "Chicago, Illinois" },
+  { kind: "Post", text: "Game day fit check." },
+  { kind: "Off the field", text: "Runs a youth camp" },
+  { kind: "Interview", text: "\u201cMy mom still does my laundry.\u201d" },
+  { kind: "Article", text: "The walk-on who stayed" },
+  { kind: "Interests", text: "Gaming, cooking" },
+  { kind: "Bio", text: "Pre-med. Point guard." },
+  { kind: "Post", text: "Early run before class." },
+  { kind: "Podcast", text: "Episode 14: Senior night" },
+];
+type Tile = { src: string } | { kind: string; text: string };
+const WALL: { tiles: Tile[]; duration: number; reverse: boolean }[] = [0, 1, 2, 3].map((r) => {
+  const tiles: Tile[] = [];
+  POSTS.slice(r * 20, r * 20 + 20).forEach((src, i) => {
+    tiles.push({ src });
+    if (i % 3 === 1) tiles.push(SNIPPETS[(r * 7 + i) % SNIPPETS.length]);
+  });
+  return { tiles, duration: [96, 82, 108, 90][r], reverse: r % 2 === 1 };
+});
+
+function Wall() {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 flex flex-col justify-center overflow-hidden"
+      style={{
+        /* On the section-sized layer, not the rows: the rows run taller than
+           the section, so a fade measured on them lands out of sight. */
+        maskImage: "linear-gradient(to bottom, transparent 0%, #000 16%, #000 80%, transparent 100%)",
+        WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 16%, #000 80%, transparent 100%)",
+      }}
+    >
+      <div className="flex flex-col gap-3 md:gap-4" style={{ filter: "blur(3px)" }}>
+        {WALL.map((row, r) => (
+          <div key={r} className="flex w-max shrink-0">
+            <div
+              className="wall-row flex gap-3 md:gap-4"
+              style={{ animationDuration: `${row.duration}s`, animationDirection: row.reverse ? "reverse" : "normal" }}
+            >
+              {[...row.tiles, ...row.tiles].map((t, i) =>
+                "src" in t ? (
+                  <img
+                    key={i}
+                    src={t.src}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    className="h-[150px] w-[120px] shrink-0 rounded-lg object-cover md:h-[190px] md:w-[152px]"
+                  />
+                ) : (
+                  <div
+                    key={i}
+                    className="flex h-[150px] w-[150px] shrink-0 flex-col justify-between rounded-lg bg-[#1b1b1b] p-4 md:h-[190px] md:w-[190px]"
+                  >
+                    <p className="font-sans text-[12px] text-white/45">{t.kind}</p>
+                    <p className="font-sans text-[17px] leading-snug tracking-[-0.01em] text-white/85">{t.text}</p>
+                  </div>
+                ),
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Pushed back so the headline, cards and counts always read over it. */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(60% 65% at 50% 50%, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.62) 55%, rgba(0,0,0,0.4) 100%), linear-gradient(90deg, #000 0%, transparent 18%, transparent 82%, #000 100%)",
+        }}
+      />
+    </div>
+  );
+}
+
 export default function AthleteInternetCards() {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-20%" });
 
   return (
-    <section className="overflow-hidden bg-black px-6 py-12 text-white md:px-10 md:py-10 lg:px-12">
-      <div className="mx-auto max-w-6xl text-center">
+    <section className="relative isolate overflow-hidden bg-black px-6 py-12 text-white md:px-10 md:py-10 lg:px-12">
+      <Wall />
+
+      <div className="relative mx-auto max-w-6xl text-center">
         <h2
           className="font-sans font-normal leading-[1] tracking-[-0.045em]"
           style={{ fontSize: "clamp(2.2rem, 4.2vw, 3.6rem)" }}
@@ -197,13 +282,8 @@ export default function AthleteInternetCards() {
         </p>
       </div>
 
-      {/* The fan, over a faint glow so the cards lift off the black. */}
+      {/* The fan. */}
       <div className="relative mx-auto mt-8 max-w-6xl md:mt-9">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-x-16 -inset-y-12"
-          style={{ background: "radial-gradient(closest-side, rgba(255,255,255,0.09), transparent)" }}
-        />
         <div className="relative -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:grid md:grid-cols-5 md:gap-3 md:overflow-visible md:px-0 md:pb-0 lg:gap-4">
           {CARDS.map((c, i) => (
             <div
@@ -218,11 +298,9 @@ export default function AthleteInternetCards() {
       </div>
 
 
-      <div ref={ref} className="mx-auto mt-8 grid max-w-6xl grid-cols-3 border-t border-white/10 pt-6 md:mt-10 md:pt-8">
-        {STATS.map((s, i) => (
-          <div key={s.label} className={i > 0 ? "border-l border-white/10" : ""}>
-            <Stat {...s} run={inView} />
-          </div>
+      <div ref={ref} className="relative mx-auto mt-10 grid max-w-6xl grid-cols-3 md:mt-12">
+        {STATS.map((s) => (
+          <Stat key={s.label} {...s} run={inView} />
         ))}
       </div>
     </section>
