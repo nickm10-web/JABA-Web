@@ -32,12 +32,19 @@ export default function PartnerOrbit({
   linked,
   highlight,
   showBrand = true,
+  light = false,
 }: {
   brand: string;
   linked: number;
   highlight: number;
   showBrand?: boolean;
+  /** On a light page: white partner discs, dark lines, a black brand pill. The
+   *  black-drawn marks need no reverse there. Volt is too pale on light grey to
+   *  carry the travelling signal, so it runs in black. */
+  light?: boolean;
 }) {
+  const accent = light ? "#0a0a0a" : "#dfff00";
+  const rest = light ? "rgba(0,0,0,0.16)" : "rgba(255,255,255,0.28)";
   return (
     <div className="relative aspect-square w-full">
       <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden>
@@ -53,7 +60,7 @@ export default function PartnerOrbit({
               x2={50 + Math.cos(a) * R}
               y2={50 + Math.sin(a) * R}
               pathLength={1}
-              stroke={hot ? "#dfff00" : "rgba(255,255,255,0.28)"}
+              stroke={hot ? accent : rest}
               strokeWidth={hot ? 0.45 : 0.25}
               strokeDasharray={1}
               strokeDashoffset={on ? 0 : 1}
@@ -69,11 +76,11 @@ export default function PartnerOrbit({
         return (
           <div
             key={p.name}
-            className="absolute flex h-[15%] w-[15%] items-center justify-center rounded-full border bg-black transition-all duration-500"
+            className={`absolute flex h-[15%] w-[15%] items-center justify-center rounded-full border transition-all duration-500 ${light ? "bg-white shadow-[0_8px_20px_-10px_rgba(0,0,0,0.3)]" : "bg-black"}`}
             style={{
               left: `${50 + Math.cos(a) * R}%`,
               top: `${50 + Math.sin(a) * R}%`,
-              borderColor: on ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.1)",
+              borderColor: light ? (on ? "rgba(0,0,0,0.18)" : "rgba(0,0,0,0.07)") : on ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.1)",
               transform: `translate(-50%, -50%) scale(${on ? 1 : 0.9})`,
             }}
           >
@@ -83,7 +90,7 @@ export default function PartnerOrbit({
               className="max-h-[56%] max-w-[66%] object-contain transition-all duration-500"
               style={{
                 opacity: on ? 1 : 0.28,
-                filter: p.reverse ? "brightness(0) invert(1)" : on ? "none" : "grayscale(1)",
+                filter: p.reverse && !light ? "brightness(0) invert(1)" : on ? "none" : "grayscale(1)",
               }}
             />
           </div>
@@ -92,7 +99,7 @@ export default function PartnerOrbit({
 
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         <div
-          className="max-w-[11rem] truncate rounded-full bg-white px-5 py-2.5 text-center font-sans text-[15px] font-bold text-[#0a0a0a] shadow-[0_0_60px_rgba(255,255,255,0.18)] transition-transform duration-500 md:max-w-[14rem] md:text-[18px]"
+          className={`max-w-[11rem] truncate rounded-full px-5 py-2.5 text-center font-sans text-[15px] font-bold transition-transform duration-500 md:max-w-[14rem] md:text-[18px] ${light ? "bg-[#0a0a0a] text-white shadow-[0_14px_30px_-12px_rgba(0,0,0,0.45)]" : "bg-white text-[#0a0a0a] shadow-[0_0_60px_rgba(255,255,255,0.18)]"}`}
           style={{ transform: `scale(${showBrand ? 1 : 0.8})` }}
         >
           {brand}

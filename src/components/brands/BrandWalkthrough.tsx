@@ -55,6 +55,7 @@ export default function BrandWalkthrough({
   onFinish,
   generic = false,
   startAct = 0,
+  tone = "dark",
 }: {
   brand?: string;
   onFinish: () => void;
@@ -64,7 +65,11 @@ export default function BrandWalkthrough({
   /** The landing page's hero already plays act one, so the walkthrough there
    *  opens on act two with the first act shown as done. */
   startAct?: number;
+  /** "light" on the landing page, which runs light like the footer it ends
+   *  on; the click-through demo page stays dark. */
+  tone?: "light" | "dark";
 }) {
+  const light = tone === "light";
   const root = useRef<HTMLDivElement>(null);
   const seen = useInView(root, { once: true, amount: 0.35 });
   const [brand, setBrand] = useState(generic ? "Your brand" : (initialBrand?.trim() ?? ""));
@@ -136,9 +141,9 @@ export default function BrandWalkthrough({
             className="group text-left"
             aria-current={i === act ? "step" : undefined}
           >
-            <div className="h-[3px] overflow-hidden rounded-full bg-white/10">
+            <div className={`h-[3px] overflow-hidden rounded-full ${light ? "bg-black/10" : "bg-white/10"}`}>
               <div
-                className="h-full rounded-full bg-[#dfff00]"
+                className={`h-full rounded-full ${light ? "bg-[#0a0a0a]" : "bg-[#dfff00]"}`}
                 style={{
                   width: `${i < act ? 100 : i === act ? progress * 100 : 0}%`,
                   transition: `width ${TICK_MS}ms linear`,
@@ -148,7 +153,9 @@ export default function BrandWalkthrough({
             </div>
             <p
               className={`mt-3 font-sans text-[13px] transition-colors md:text-[15px] ${
-                i === act ? "text-white" : "text-white/35 group-hover:text-white/60"
+                i === act
+                  ? light ? "text-[#0a0a0a]" : "text-white"
+                  : light ? "text-black/35 group-hover:text-black/60" : "text-white/35 group-hover:text-white/60"
               }`}
             >
               <span className="mr-2 tabular-nums">{i + 1}</span>
@@ -165,14 +172,14 @@ export default function BrandWalkthrough({
             <h2
               key={a.title}
               aria-hidden={i !== act}
-              className="absolute inset-x-0 top-0 font-deck text-3xl leading-[1.08] text-white transition-all duration-500 md:text-5xl"
+              className={`absolute inset-x-0 top-0 font-deck text-3xl leading-[1.08] transition-all duration-500 md:text-5xl ${light ? "text-[#0a0a0a]" : "text-white"}`}
               style={{ opacity: i === act ? 1 : 0, transform: `translateY(${i === act ? 0 : i < act ? -14 : 14}px)` }}
             >
               {a.title}
             </h2>
           ))}
           <p
-            className="absolute inset-x-0 top-full mt-2 font-sans text-[15px] text-white/50 transition-opacity duration-500 md:text-[17px]"
+            className={`absolute inset-x-0 top-full mt-2 font-sans text-[15px] transition-opacity duration-500 md:text-[17px] ${light ? "text-black/55" : "text-white/50"}`}
             style={{ opacity: act === 1 ? 1 : 0 }}
           >
             Based on each athlete&rsquo;s personality, interests, content and audience.
@@ -180,8 +187,8 @@ export default function BrandWalkthrough({
         </div>
 
         <div className="relative mx-auto aspect-[5/6] w-full max-w-[34rem]">
-          <ActInto brand={brand} on={act === 0} step={act === 0 ? step : ACTS[0].ticks} />
-          <ActFit brand={generic ? "your brand" : brand} on={act === 1} step={act === 1 ? step : 0} />
+          <ActInto brand={brand} light={light} on={act === 0} step={act === 0 ? step : ACTS[0].ticks} />
+          <ActFit brand={generic ? "your brand" : brand} light={light} on={act === 1} step={act === 1 ? step : 0} />
           <ActChat on={act === 2} step={act === 2 ? (done ? ACTS[2].ticks : step) : 0} />
         </div>
       </div>
@@ -196,7 +203,7 @@ export default function BrandWalkthrough({
         <button
           type="button"
           onClick={() => jump(startAct)}
-          className="font-sans text-[14px] text-white/50 transition-colors hover:text-white"
+          className={`font-sans text-[14px] transition-colors ${light ? "text-black/50 hover:text-black" : "text-white/50 hover:text-white"}`}
         >
           Watch it again
         </button>
@@ -206,20 +213,20 @@ export default function BrandWalkthrough({
 }
 
 /* ── Act 1: the brand connects into every partner on JABA. ───────────────── */
-function ActInto({ brand, on, step }: { brand: string; on: boolean; step: number }) {
+function ActInto({ brand, light, on, step }: { brand: string; light: boolean; on: boolean; step: number }) {
   return (
     <div
       className="absolute inset-x-0 top-1/2 -translate-y-1/2 transition-opacity duration-500"
       style={{ opacity: on ? 1 : 0 }}
       aria-hidden={!on}
     >
-      <PartnerOrbit brand={brand} linked={Math.max(0, step - 1)} highlight={step - 2} showBrand={step >= 1} />
+      <PartnerOrbit brand={brand} light={light} linked={Math.max(0, step - 1)} highlight={step - 2} showBrand={step >= 1} />
     </div>
   );
 }
 
 /* ── Act 2: JABA scans, the criteria land, an athlete locks in. ──────────── */
-function ActFit({ brand, on, step }: { brand: string; on: boolean; step: number }) {
+function ActFit({ brand, light, on, step }: { brand: string; light: boolean; on: boolean; step: number }) {
   const scanning = step < 11;
   const lit = (i: number) => step >= [3, 5, 7, 9][i];
   const found = step >= 11;
@@ -237,9 +244,13 @@ function ActFit({ brand, on, step }: { brand: string; on: boolean; step: number 
               key={c}
               className="rounded-full border px-3 py-1.5 font-sans text-[12.5px] transition-all duration-300 md:text-[14px]"
               style={{
-                borderColor: lit(i) ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.15)",
-                color: lit(i) ? "#fff" : "rgba(255,255,255,0.35)",
-                background: lit(i) ? "rgba(255,255,255,0.08)" : "transparent",
+                borderColor: light
+                  ? lit(i) ? "rgba(0,0,0,0.75)" : "rgba(0,0,0,0.15)"
+                  : lit(i) ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.15)",
+                color: light
+                  ? lit(i) ? "#0a0a0a" : "rgba(0,0,0,0.35)"
+                  : lit(i) ? "#fff" : "rgba(255,255,255,0.35)",
+                background: lit(i) ? (light ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.08)") : "transparent",
               }}
             >
               {lit(i) ? "✓ " : ""}
