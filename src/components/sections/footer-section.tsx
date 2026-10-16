@@ -76,9 +76,9 @@ const LAYERS = [
 interface FooterSectionProps {
   /** Color of the page surface above the footer, kept for call-site compat. */
   fadeFrom?: string;
-  /** Prefix for the site's hash routes. The standalone pages (brands.html and
-   *  the like) aren't the router, so they pass "/" and the links go home. */
-  linkBase?: string;
+  /** Just the world sign-off and the copyright, without the link columns.
+   *  For single-purpose pages where the links would only be exits. */
+  sceneOnly?: boolean;
 }
 
 /**
@@ -87,7 +87,10 @@ interface FooterSectionProps {
  * the art into layers (rather than one flat image) is what lets the logo sit
  * inside the landscape and lets the far props drop out on small screens.
  */
-export default function FooterSection({ fadeFrom: _fadeFrom, linkBase = "" }: FooterSectionProps) {
+export default function FooterSection({
+  fadeFrom: _fadeFrom,
+  sceneOnly = false,
+}: FooterSectionProps) {
   const sceneRef = useRef<HTMLDivElement>(null);
 
   /* Parallax, driven straight off the scene's own rect.
@@ -157,11 +160,12 @@ export default function FooterSection({ fadeFrom: _fadeFrom, linkBase = "" }: Fo
 
   return (
     <footer className="bg-[#eeeeee] text-[#0a0a0a]">
-      <div className="relative z-40 mx-auto max-w-7xl px-6 pt-20 md:px-10 md:pt-24 lg:px-12">
+      <div className={`relative z-40 mx-auto max-w-7xl px-6 md:px-10 lg:px-12 ${sceneOnly ? "pt-6 md:pt-8" : "pt-20 md:pt-24"}`}>
+        {!sceneOnly && (
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-[1.6fr_1fr_1fr] md:gap-8">
           {/* Brand */}
           <div className="col-span-2 max-w-sm sm:col-span-3 md:col-span-1">
-            <a href={`${linkBase}#/`} aria-label="JABA home" className="inline-flex">
+            <a href="#/" aria-label="JABA home" className="inline-flex">
               <img src="/jaba-head.webp" alt="JABA" className="h-9 w-auto" />
             </a>
             <p className="mt-5 font-deck text-2xl leading-snug">
@@ -209,7 +213,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom, linkBase = "" }: Fo
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <a
-                      href={l.href.startsWith("#") ? `${linkBase}${l.href}` : l.href}
+                      href={l.href}
                       className="font-sans text-[14px] text-black/65 transition-colors hover:text-black"
                     >
                       {l.label}
@@ -220,6 +224,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom, linkBase = "" }: Fo
             </div>
           ))}
         </div>
+        )}
 
         {/* Copyright, centred like the reference. Lifted above the strip's
             mist (z) because the strip pulls up underneath it. */}

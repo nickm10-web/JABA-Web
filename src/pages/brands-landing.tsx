@@ -53,9 +53,9 @@ function DemoLaunch({ brand, onBrand }: { brand: string; onBrand: (b: string) =>
  * display object, the line under it, the ask, and the partners right under the
  * fold.
  *
- * The world is black with a faint volt bloom and a dot-mesh fabric curling in
- * from the right. The display object is the film's own title card: the 3D JABA
- * letters with JABA standing in front of them. Jordon's line is the headline;
+ * The world is black with a faint volt bloom. The display object is the
+ * film's own title card, kept small so it crowns the headline rather than
+ * competing with it: the 3D JABA letters with JABA standing in front of them. Jordon's line is the headline;
  * the advantage Out2Win can't claim is that JABA is already inside the
  * programs that manage the athletes.
  */
@@ -69,22 +69,16 @@ function BrandsHero() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(70% 55% at 50% 18%, rgba(223,255,0,0.10), rgba(223,255,0,0.025) 45%, transparent 75%), radial-gradient(60% 50% at 85% 70%, rgba(110,140,0,0.16), transparent 70%)",
+            "radial-gradient(60% 50% at 50% 12%, rgba(223,255,0,0.09), rgba(223,255,0,0.02) 45%, transparent 75%)",
         }}
-      />
-      <img
-        src="/brands/mesh.webp"
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[78%] w-full object-cover object-right opacity-90"
       />
 
       <div className="relative mx-auto max-w-6xl">
         <img src="/jaba-head.webp" alt="JABA" className="h-9 w-auto" />
 
-        <div className="mx-auto mt-6 max-w-4xl text-center md:mt-4">
+        <div className="mx-auto mt-8 max-w-4xl text-center md:mt-6">
           {/* The title card: the letters, and JABA stepping in front of them. */}
-          <div className="hero-card relative mx-auto aspect-[2000/880] w-full max-w-[52rem]">
+          <div className="hero-card relative mx-auto aspect-[2000/880] w-full max-w-[17rem] md:max-w-[22rem]">
             <img
               src="/jaba-3d-logo.png"
               alt=""
@@ -109,11 +103,12 @@ function BrandsHero() {
             />
           </div>
 
-          <h1 className="mx-auto mt-8 max-w-3xl font-deck text-4xl leading-[1.05] md:mt-10 md:text-6xl">
+          <h1 className="mx-auto mt-5 max-w-4xl font-deck text-4xl leading-[1.05] md:mt-6 md:text-6xl">
             Put your brand into the workflows of the biggest universities and agencies.
           </h1>
-          <p className="mx-auto mt-6 max-w-xl font-sans text-lg leading-relaxed text-white/60 md:text-xl">
-            Let JABA find the perfect fit, then let our AI manage it in our group chat for you.
+          <p className="mx-auto mt-6 max-w-2xl font-sans text-lg leading-relaxed text-white/60 md:text-xl">
+            Find athletes who naturally fit your brand through the universities and agencies
+            already using JABA. From first introduction to final report, JABA handles the campaign.
           </p>
           <div className="mx-auto mt-9 max-w-xl text-left">
             <DemoLaunch brand={brand} onBrand={setBrand} />
@@ -166,7 +161,9 @@ export default function BrandsLandingPage() {
           />
         </svg>
       </div>
-      <FooterSection linkBase="/" />
+      {/* The main site's footer scene, grass and all, without its link
+          columns: on a cold-email page they'd only be exits. */}
+      <FooterSection sceneOnly />
     </PageLayout>
   );
 }
