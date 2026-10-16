@@ -7,7 +7,6 @@ import Eyebrow from "@/components/brands/Eyebrow";
 import HeroScan from "@/components/brands/HeroScan";
 import WrongNumberSection from "@/components/brands/WrongNumberSection";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
-import RightAthletesSection from "@/components/brands/RightAthletesSection";
 import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
 import PageLayout from "@/components/layout/page-layout";
 import ShortlistForm from "@/components/ShortlistForm";
@@ -134,8 +133,6 @@ export default function BrandsLandingPage() {
       <UnlabeledSearchableSection />
 
       <WrongNumberSection />
-
-      <RightAthletesSection />
 
       <TextAssistantSection
         tone="dark"
