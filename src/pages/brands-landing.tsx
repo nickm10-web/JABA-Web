@@ -5,10 +5,10 @@ import AthleteInternetSection from "@/components/AthleteInternetSection";
 import BenchmarkSection from "@/components/brands/BenchmarkSection";
 import PartnerOrbit, { PARTNERS } from "@/components/brands/PartnerOrbit";
 import BrandWalkthrough from "@/components/brands/BrandWalkthrough";
+import ClosingSection from "@/components/brands/ClosingSection";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
 import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
 import PageLayout from "@/components/layout/page-layout";
-import ShortlistForm from "@/components/ShortlistForm";
 import SocialProofSection from "@/components/sections/social-proof-section";
 import { VoltButton } from "@/components/ui/volt-button";
 
@@ -154,27 +154,7 @@ export default function BrandsLandingPage() {
 
       <BenchmarkSection />
 
-      {/* The ask again, for anyone who read to the end. */}
-      <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="font-deck text-4xl leading-[1.05] md:text-5xl">
-            See who fits your brand.
-          </h2>
-          <p className="mx-auto mt-4 max-w-lg font-sans text-lg leading-relaxed text-white/55">
-            Tell us what you sell and we&rsquo;ll send back the athletes worth
-            talking to.
-          </p>
-          <div className="mt-9 text-left">
-            <ShortlistForm id="shortlist" tone="dark" />
-          </div>
-          <p className="mt-10 font-sans text-[13px] text-white/35">
-            © {new Date().getFullYear()} JABA ·{" "}
-            <a className="underline" href="https://jaba.ai">
-              jaba.ai
-            </a>
-          </p>
-        </div>
-      </section>
+      <ClosingSection />
     </PageLayout>
   );
 }
