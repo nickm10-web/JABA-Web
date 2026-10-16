@@ -199,7 +199,7 @@ export default function SkyHero() {
       <div className="relative overflow-hidden rounded-[22px] text-white md:rounded-[28px]">
         <img src="/brands/sky.webp" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
 
-        <div className="relative px-5 pb-10 pt-6 md:px-10 md:pb-14 md:pt-8">
+        <div className="relative px-5 pb-8 pt-6 md:px-10 md:pb-10 md:pt-7">
           {/* Nav: two anchors down the page and the one exit that converts. */}
           <nav className="flex items-center justify-between">
             <img src="/jaba-head.webp" alt="JABA" className="h-10 w-auto drop-shadow-[0_6px_10px_rgba(10,40,90,0.25)] md:h-11" />
@@ -217,15 +217,15 @@ export default function SkyHero() {
             </a>
           </nav>
 
-          <div className="mx-auto mt-14 max-w-4xl text-center md:mt-20">
+          <div className="mx-auto mt-10 max-w-6xl text-center md:mt-12">
             <h1
               className="font-sans font-light leading-[0.98] tracking-[-0.045em]"
-              style={{ fontSize: "clamp(2.7rem, 7.2vw, 6.2rem)" }}
+              style={{ fontSize: "clamp(2.4rem, 4.9vw, 4.4rem)" }}
             >
               Find your athletes.
               <span className="block text-white/75">Build and manage your next campaign.</span>
             </h1>
-            <p className="mx-auto mt-6 max-w-xl font-sans text-[16px] leading-relaxed text-white/90 md:text-[18px]">
+            <p className="mx-auto mt-5 max-w-xl font-sans text-[16px] leading-relaxed text-white/90 md:text-[18px]">
               Connect with athletes through the universities and agencies already using JABA. We handle the
               campaign from there.
             </p>
@@ -236,7 +236,7 @@ export default function SkyHero() {
                 const b = brandFrom(site).slice(0, 40);
                 if (b) window.location.href = `/brands-demo.html?brand=${encodeURIComponent(b)}`;
               }}
-              className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
+              className="mx-auto mt-7 flex max-w-xl flex-col gap-3 sm:flex-row"
             >
               <input
                 className="h-14 w-full rounded-full border border-white/45 bg-white/15 px-6 font-sans text-[15px] text-white outline-none backdrop-blur-md transition-colors placeholder:text-white/75 focus:border-white sm:flex-1"
@@ -260,7 +260,7 @@ export default function SkyHero() {
 
           {/* The arc. Cards sit on a cylinder seen from outside, so the edges
               turn away. */}
-          <div className="arc-stage relative mx-auto mt-10 h-[130px] sm:h-[160px] md:mt-16 md:h-[200px] lg:h-[280px]">
+          <div className="arc-stage relative mx-auto mt-10 h-[130px] sm:h-[160px] md:mt-12 md:h-[200px] lg:h-[260px]">
             <div className="arc-scale absolute left-1/2 top-0">
               <div className="arc" style={{ transform: `translateZ(-${R}px)` }}>
                 {CARDS.map((c, i) => {
