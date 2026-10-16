@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import BenchmarkSection from "@/components/brands/BenchmarkSection";
-import HeroScan from "@/components/brands/HeroScan";
+import PartnerOrbit, { PARTNERS } from "@/components/brands/PartnerOrbit";
 import BrandWalkthrough from "@/components/brands/BrandWalkthrough";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
 import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
@@ -16,9 +16,10 @@ import { VoltButton } from "@/components/ui/volt-button";
    arrives in a stranger's inbox, so every exit is a lost reply. */
 
 
-/** Hands the brand to the demo page, which runs the animation on arrival. */
-function DemoLaunch() {
-  const [brand, setBrand] = useState("");
+/** Hands the brand to the demo page, which plays the walkthrough with it. The
+ *  value lives in the hero, so the orbit beside it shows the brand as it's
+ *  typed. */
+function DemoLaunch({ brand, onBrand }: { brand: string; onBrand: (b: string) => void }) {
   return (
     <form
       onSubmit={(e) => {
@@ -34,8 +35,9 @@ function DemoLaunch() {
           className="w-full rounded-[12px] border border-white/15 bg-white/[0.06] px-4 py-3 font-sans text-[15px] text-white outline-none transition-colors placeholder:text-white/40 focus:border-white/40 sm:flex-1"
           placeholder="Enter your brand"
           aria-label="Enter your brand"
+          maxLength={40}
           value={brand}
-          onChange={(e) => setBrand(e.target.value)}
+          onChange={(e) => onBrand(e.target.value)}
           required
         />
         <VoltButton type="submit" size="lg">
@@ -47,11 +49,40 @@ function DemoLaunch() {
 }
 
 /**
- * Copy on the left, the product working on the right. The centred version was
- * type on a glow with nothing to look at; the homepage hero works because the
- * phone sits beside the copy, and this page's equivalent is the scan.
+ * Jordon's line: the advantage Out2Win can't claim is that JABA is already
+ * inside the programs that manage the athletes. The orbit beside it shows
+ * exactly that, with the visitor's brand at the centre as they type it.
+ *
+ * Partners connect one at a time on arrival; after that a signal keeps moving
+ * from partner to partner so the network reads as live, not as a diagram.
  */
 function BrandsHero() {
+  const [brand, setBrand] = useState("");
+  const [linked, setLinked] = useState(0);
+  const [highlight, setHighlight] = useState(-1);
+
+  useEffect(() => {
+    let n = 0;
+    let travel = 0;
+    const connect = window.setInterval(() => {
+      n += 1;
+      setLinked(n);
+      setHighlight(n - 1);
+      if (n >= PARTNERS.length) {
+        clearInterval(connect);
+        let h = n - 1;
+        travel = window.setInterval(() => {
+          h = (h + 1) % PARTNERS.length;
+          setHighlight(h);
+        }, 900);
+      }
+    }, 320);
+    return () => {
+      clearInterval(connect);
+      clearInterval(travel);
+    };
+  }, []);
+
   return (
     <section className="relative overflow-hidden bg-black px-6 pb-20 pt-12 text-white md:px-10 md:pb-28 md:pt-14 lg:px-12">
       {/* Volt ambient light from above. Volt is far hotter than white at the
@@ -69,21 +100,22 @@ function BrandsHero() {
       <div className="relative mx-auto max-w-6xl">
         <img src="/jaba-head.webp" alt="JABA" className="h-9 w-auto" />
 
-        <div className="mt-12 grid grid-cols-1 items-center gap-16 md:mt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
+        <div className="mt-12 grid grid-cols-1 items-center gap-12 md:mt-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
           <div>
-            <h1 className="max-w-xl font-deck text-4xl leading-[1.04] md:text-6xl">
-              Athlete brand campaigns, managed for you.
+            <h1 className="max-w-2xl font-deck text-4xl leading-[1.04] md:text-6xl">
+              Put your brand into the workflows of the biggest universities and agencies.
             </h1>
             <p className="mt-6 max-w-lg font-sans text-lg leading-relaxed text-white/55 md:text-xl">
-              Every post, every brand, every deal. Indexed, analyzed and
-              benchmarked.
+              Let JABA find the perfect fit, then let our AI manage it in our group chat for you.
             </p>
             <div className="mt-9 max-w-lg">
-              <DemoLaunch />
+              <DemoLaunch brand={brand} onBrand={setBrand} />
             </div>
           </div>
 
-          <HeroScan />
+          <div className="mx-auto w-full max-w-[25rem] lg:max-w-[30rem]">
+            <PartnerOrbit brand={brand.trim() || "Your brand"} linked={linked} highlight={highlight} />
+          </div>
         </div>
       </div>
     </section>
@@ -108,10 +140,12 @@ export default function BrandsLandingPage() {
       <UnlabeledSearchableSection />
 
       {/* How it works, as Jordon's three acts: the same walkthrough the hero
-          opens with the visitor's brand, played here for "your brand". */}
+          opens with the visitor's brand, played here for "your brand". The
+          hero already played act one, so this opens on act two. */}
       <section className="bg-black py-20 md:py-28">
         <BrandWalkthrough
           generic
+          startAct={1}
           onFinish={() =>
             document.getElementById("shortlist")?.scrollIntoView({ behavior: "smooth", block: "center" })
           }
