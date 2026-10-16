@@ -4,7 +4,8 @@ import { useState } from "react";
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import BenchmarkSection from "@/components/brands/BenchmarkSection";
 import Eyebrow from "@/components/brands/Eyebrow";
-import WhyJabaSection from "@/components/brands/WhyJabaSection";
+import HeroScan from "@/components/brands/HeroScan";
+import WrongNumberSection from "@/components/brands/WrongNumberSection";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
 import RightAthletesSection from "@/components/brands/RightAthletesSection";
 import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
@@ -32,9 +33,7 @@ function DemoLaunch() {
       }}
       className="rounded-[18px] border border-white/10 bg-white/[0.04] p-5 md:p-6"
     >
-      <div className="flex justify-center">
-        <Eyebrow tone="muted">See how it works</Eyebrow>
-      </div>
+      <Eyebrow tone="muted">See how it works</Eyebrow>
       <div className="mt-3 flex flex-col gap-3 sm:flex-row">
         <input
           className="w-full rounded-[12px] border border-white/15 bg-white/[0.06] px-4 py-3 font-sans text-[15px] text-white outline-none transition-colors placeholder:text-white/40 focus:border-white/40 sm:flex-1"
@@ -73,16 +72,13 @@ const BRAND_THREAD: ChatMessage[] = [
 ];
 
 /**
- * Plain light hero. The scene art and the phone both came out: the phone was
- * telling a scheduling story to someone who came here to find athletes, and
- * without it the scene left half the fold empty.
- *
- * Centred, because there is no right-hand column any more and everything below
- * this is centred too.
+ * Copy on the left, the product working on the right. The centred version was
+ * type on a glow with nothing to look at; the homepage hero works because the
+ * phone sits beside the copy, and this page's equivalent is the scan.
  */
 function BrandsHero() {
   return (
-    <section className="relative overflow-hidden bg-black px-6 pb-16 pt-16 text-white md:px-10 md:pb-24 md:pt-20 lg:px-12">
+    <section className="relative overflow-hidden bg-black px-6 pb-20 pt-12 text-white md:px-10 md:pb-28 md:pt-14 lg:px-12">
       {/* Volt ambient light from above. Volt is far hotter than white at the
           same opacity, so this stays low and falls off early: it should read
           as light in the room, not as a lamp behind the headline. */}
@@ -94,24 +90,26 @@ function BrandsHero() {
             "radial-gradient(55% 60% at 50% 0%, rgba(223,255,0,0.13) 0%, rgba(223,255,0,0.05) 40%, rgba(223,255,0,0) 72%)",
         }}
       />
-      <div className="relative mx-auto max-w-5xl text-center">
-        <img src="/jaba-head.webp" alt="JABA" className="mx-auto h-10 w-auto" />
 
-        <div className="mt-9 flex justify-center">
-          <Eyebrow>JABA for brands</Eyebrow>
-        </div>
+      <div className="relative mx-auto max-w-6xl">
+        <img src="/jaba-head.webp" alt="JABA" className="h-9 w-auto" />
 
-        <h1 className="mx-auto mt-5 max-w-3xl font-deck text-4xl leading-[1.05] md:text-6xl">
-          Athlete brand campaigns, managed for you.
-        </h1>
+        <div className="mt-12 grid grid-cols-1 items-center gap-16 md:mt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
+          <div>
+            <Eyebrow>JABA for brands</Eyebrow>
+            <h1 className="mt-5 max-w-xl font-deck text-4xl leading-[1.04] md:text-6xl">
+              Athlete brand campaigns, managed for you.
+            </h1>
+            <p className="mt-6 max-w-lg font-sans text-lg leading-relaxed text-white/55 md:text-xl">
+              JABA reads the entire athlete internet, so you can see who reaches
+              your customer before you spend a dollar.
+            </p>
+            <div className="mt-9 max-w-lg">
+              <DemoLaunch />
+            </div>
+          </div>
 
-        <p className="mx-auto mt-5 max-w-xl font-sans text-lg leading-relaxed text-white/55 md:text-xl">
-          JABA reads the entire athlete internet, so you can see who reaches
-          your customer before you spend a dollar.
-        </p>
-
-        <div className="mx-auto mt-9 max-w-xl md:mt-10">
-          <DemoLaunch />
+          <HeroScan />
         </div>
       </div>
     </section>
@@ -135,6 +133,8 @@ export default function BrandsLandingPage() {
 
       <UnlabeledSearchableSection />
 
+      <WrongNumberSection />
+
       <RightAthletesSection />
 
       <TextAssistantSection
@@ -143,25 +143,17 @@ export default function BrandsLandingPage() {
         awaitHandoff={false}
         messages={BRAND_THREAD}
         heading={
-          <>
-            We run it,
-            <span className="block text-white/45">brief to post.</span>
-          </>
+<>We run it, brief to post.</>
         }
         body="Quality control on every asset before you see it, and the chasing when something doesn't happen. JABA notices and texts the right person."
       />
 
       <BenchmarkSection />
 
-      <WhyJabaSection />
-
       {/* The ask again, for anyone who read to the end. */}
       <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="flex justify-center">
-            <Eyebrow>The ask</Eyebrow>
-          </div>
-          <h2 className="mt-5 font-deck text-4xl leading-[1.05] md:text-5xl">
+          <h2 className="font-deck text-4xl leading-[1.05] md:text-5xl">
             See who fits your brand.
           </h2>
           <p className="mx-auto mt-4 max-w-lg font-sans text-lg leading-relaxed text-white/55">

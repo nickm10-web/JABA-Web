@@ -1,68 +1,52 @@
-import Eyebrow from "@/components/brands/Eyebrow";
-
 /**
- * "Meet JABA" — the film's framing beat. The headline is the film's own line,
- * not a new claim: only the four pillars move into the brand's second person.
+ * "Meet JABA" as one sentence instead of four boxes. The four-pillar grid was
+ * the same skeleton as every other section, and a grid of equal icons says
+ * nothing about which part matters. A sentence reads in order and lands on the
+ * last clause, which is the one a brand is buying.
+ *
+ * The icons are rendered objects set into the type, the way the homepage sets
+ * "live it." into its headline. Each sits on the clause it belongs to; a
+ * clause without a render yet simply has none, rather than a stand-in from a
+ * different family.
+ *
+ * The line under it is the film's own, word for word.
  */
 
-const PILLARS = [
-  {
-    icon: "\u{1F9ED}",
-    title: "Direction",
-    body: "We already know what their feed does, what performs on it, and what they sound like.",
-  },
-  {
-    icon: "\u{1F4A1}",
-    title: "The idea",
-    body: "You get the athlete and the angle with the evidence attached. They never have to pitch you.",
-  },
-  {
-    icon: "\u{1F4AC}",
-    title: "Availability",
-    body: "Everything happens over text, in the time an athlete actually has.",
-  },
-  {
-    icon: "\u{1F4CB}",
-    title: "The campaign",
-    body: "Follow-ups, reminders, quality control, and an exclusivity check before anything goes out.",
-  },
-];
+function Icon({ src }: { src: string }) {
+  return (
+    <img
+      src={src}
+      alt=""
+      aria-hidden
+      className="mr-[0.18em] inline-block h-[1.4em] w-auto -translate-y-[0.06em] align-middle drop-shadow-[0_14px_24px_rgba(0,0,0,0.8)]"
+    />
+  );
+}
 
 export default function MeetJabaSection() {
   return (
-    <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
-      <div className="mx-auto max-w-6xl">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-          <Eyebrow>Who you are talking to</Eyebrow>
-          <h2 className="mt-5 font-deck text-4xl leading-[1.05] md:text-5xl">
-            Meet JABA.
-            <span className="mt-1 block text-white/45">
-              The bridge between athletes and influencers.
-            </span>
-          </h2>
-          </div>
-          <img
-            src="/jaba-head.webp"
-            alt=""
-            aria-hidden
-            className="h-16 w-auto shrink-0 self-start md:h-20"
-          />
-        </div>
-
-        <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 md:mt-20 lg:grid-cols-4">
-          {PILLARS.map((p) => (
-            <div key={p.title}>
-              <span aria-hidden className="text-[26px] leading-none">
-                {p.icon}
-              </span>
-              <h3 className="mt-4 font-deck text-xl text-white">{p.title}</h3>
-              <p className="mt-2.5 font-sans text-[15px] leading-relaxed text-white/55">
-                {p.body}
-              </p>
-            </div>
-          ))}
-        </div>
+    <section className="bg-black px-6 py-24 text-white md:px-10 md:py-36 lg:px-12">
+      <div className="mx-auto max-w-5xl">
+        {/* Each icon leads its own clause, so punctuation stays on the words
+            and the line height has room for an object taller than a capital. */}
+        <p className="font-deck text-[2.1rem] leading-[1.42] md:text-[3.4rem] md:leading-[1.38]">
+          <span className="text-white/45">Meet JABA.</span>{" "}
+          {/* Icon and the word after it wrap as one, or a line break can
+              strand the icon at the end of the line above its clause. */}
+          <span className="whitespace-nowrap">
+            <Icon src="/icon-compass.webp" />
+            It
+          </span>{" "}
+          knows their feed,{" "}
+          <span className="whitespace-nowrap">
+            <Icon src="/icon-bulb.webp" />
+            brings
+          </span>{" "}
+          the idea, and runs the whole campaign over text.
+        </p>
+        <p className="mt-8 font-sans text-lg text-white/45 md:text-xl">
+          The bridge between athletes and influencers.
+        </p>
       </div>
     </section>
   );

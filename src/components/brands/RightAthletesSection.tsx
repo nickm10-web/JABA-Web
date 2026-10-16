@@ -1,8 +1,6 @@
 import { useRef } from "react";
 import { useInView } from "motion/react";
 
-import Eyebrow from "@/components/brands/Eyebrow";
-
 /**
  * "Then we find the right athletes" — the film's search result, on a page
  * anyone can open.
@@ -57,10 +55,8 @@ export default function RightAthletesSection() {
   return (
     <section className="bg-black px-6 pb-24 pt-4 text-white md:px-10 md:pb-32 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <Eyebrow>The search</Eyebrow>
-        <h2 className="mt-5 max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
-          So we already know{" "}
-          <span className="text-[#dfff00]">who fits your brand.</span>
+        <h2 className="max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
+          A shortlist with the evidence attached.
         </h2>
         <p className="mt-5 max-w-2xl font-sans text-lg leading-relaxed text-white/55">
           An example search: a travel brand that wants athletes already posting
@@ -122,11 +118,9 @@ export default function RightAthletesSection() {
         </div>
 
         <p className="mt-7 max-w-3xl font-sans text-[13px] leading-relaxed text-white/35">
-          <span className="text-white/55">Performs like:</span> the following an
-          athlete would normally need to earn the likes this athlete actually
-          earns. Illustrative results, so no athlete is listed against a brand
-          they haven&rsquo;t agreed to. The shape of the evidence is what a real
-          search returns.
+          Illustrative results, so no athlete is listed against a brand they
+          haven&rsquo;t agreed to. The shape of the evidence is what a real search
+          returns.
         </p>
       </div>
     </section>

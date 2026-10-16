@@ -21,14 +21,14 @@ import Eyebrow from "@/components/brands/Eyebrow";
  * land in the wrong place. These were read off the cropped frame.
  */
 
-type Tile = {
+export type Tile = {
   src: string;
   tag: string;
   /** [left, top, width, height] as percentages of the frame. */
   box: [number, number, number, number];
 };
 
-const TILES: Tile[] = [
+export const TILES: Tile[] = [
   { src: "/wall/p72.webp", tag: "SUV", box: [0, 36, 70, 62] },
   { src: "/wall/p15.webp", tag: "private jet", box: [0, 0, 56, 86] },
   { src: "/wall/p71.webp", tag: "championship ring", box: [55, 60, 27, 23] },
@@ -43,7 +43,7 @@ const TILES: Tile[] = [
   { src: "/wall/p30.webp", tag: "streetwear", box: [49, 23, 24, 33] },
 ];
 
-const CORNERS = [
+export const CORNERS = [
   "left-0 top-0 border-l-2 border-t-2",
   "right-0 top-0 border-r-2 border-t-2",
   "left-0 bottom-0 border-b-2 border-l-2",
