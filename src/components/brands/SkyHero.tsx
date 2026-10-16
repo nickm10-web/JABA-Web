@@ -202,7 +202,7 @@ export default function SkyHero() {
         <div className="relative px-5 pb-10 pt-6 md:px-10 md:pb-14 md:pt-8">
           {/* Nav: two anchors down the page and the one exit that converts. */}
           <nav className="flex items-center justify-between">
-            <img src="/deck/jaba-wordmark.png" alt="JABA" className="h-7 w-auto brightness-0 invert md:h-8" />
+            <img src="/jaba-head.webp" alt="JABA" className="h-10 w-auto drop-shadow-[0_6px_10px_rgba(10,40,90,0.25)] md:h-11" />
             <div className="hidden items-center gap-10 font-sans text-[13px] font-medium text-white/90 md:flex">
               <a href="#how" className="transition-opacity hover:opacity-70">How it works</a>
               <a href="#network" className="transition-opacity hover:opacity-70">Our network</a>
@@ -223,7 +223,7 @@ export default function SkyHero() {
               style={{ fontSize: "clamp(2.7rem, 7.2vw, 6.2rem)" }}
             >
               Find your athletes.
-              <span className="block text-white/75">Build your next campaign.</span>
+              <span className="block text-white/75">Build and manage your next campaign.</span>
             </h1>
             <p className="mx-auto mt-6 max-w-xl font-sans text-[16px] leading-relaxed text-white/90 md:text-[18px]">
               Connect with athletes through the universities and agencies already using JABA. We handle the
