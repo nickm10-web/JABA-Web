@@ -3705,3 +3705,16 @@
 .social-proof-section.on-dark .social-proof-label { color: rgba(255,255,255,.4); }
 .social-proof-section.on-dark .social-proof-fade-left { background: linear-gradient(90deg,#000,transparent); }
 .social-proof-section.on-dark .social-proof-fade-right { background: linear-gradient(-90deg,#000,transparent); }
+
+/* Brands hero: the title card assembles once on load. The letters rise, the
+   floor light comes up, then JABA steps in. CSS rather than JS, so it plays
+   before anything has hydrated. */
+@keyframes heroLetters { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes heroFloor { from { opacity: 0; } to { opacity: 1; } }
+@keyframes heroJaba { from { opacity: 0; transform: translate(-50%, 36px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.hero-card .hero-letters { animation: heroLetters 900ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-card .hero-floor { animation: heroFloor 900ms ease-out 450ms both; }
+.hero-card .hero-jaba { transform: translateX(-50%); animation: heroJaba 800ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-card .hero-letters, .hero-card .hero-floor, .hero-card .hero-jaba { animation: none; }
+}
