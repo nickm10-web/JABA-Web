@@ -56,8 +56,9 @@ function Stat({ to, suffix, label, run }: { to: number; suffix: string; label: s
 
 const CARD = "relative flex h-full flex-col rounded-[20px] p-4 shadow-[0_30px_60px_-30px_rgba(8,40,96,0.45)]";
 
-function Chip({ children, tone = "bg-[#e8f1fb] text-[#0a0a0a]" }: { children: React.ReactNode; tone?: string }) {
-  return <span className={`inline-flex w-fit rounded-full px-3 py-1 font-sans text-[12px] font-medium ${tone}`}>{children}</span>;
+/** The card's name, set like the titles on the hero's arc cards. */
+function Title({ children }: { children: React.ReactNode }) {
+  return <p className="font-sans text-[15px] font-medium leading-tight tracking-[-0.01em]">{children}</p>;
 }
 
 function Icon({ d }: { d: string }) {
@@ -77,7 +78,7 @@ const CARDS = [
     y: "18px",
     node: (
       <div className={`${CARD} bg-white`}>
-        <Chip>Posts</Chip>
+        <Title>Posts</Title>
         <img src="/brands/sneakers.webp" alt="" aria-hidden className="mt-3 aspect-[16/10] w-full rounded-[12px] object-cover object-[50%_70%]" />
         <div className="mt-3 flex items-center gap-3 text-black/70">
           <Icon d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" />
@@ -96,7 +97,7 @@ const CARDS = [
     y: "6px",
     node: (
       <div className={`${CARD} bg-white`}>
-        <Chip>Interviews</Chip>
+        <Title>Interviews</Title>
         <img src="/brands/mic.webp" alt="" aria-hidden className="mt-3 aspect-[16/10] w-full rounded-[12px] object-cover" />
         <div className="mt-3 flex items-center gap-2.5">
           <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-black/15">
@@ -121,14 +122,14 @@ const CARDS = [
     tilt: "0deg",
     y: "0px",
     node: (
-      <div className={`${CARD} bg-[#f7f3ec]`}>
-        <Chip tone="bg-black/[0.06] text-[#0a0a0a]">Articles</Chip>
-        <p className="mt-4 font-sans text-[30px] font-semibold leading-[0.98] tracking-[-0.04em]">Beyond the game</p>
-        <span className="mt-3 block h-px w-full bg-black/15" />
-        <p className="mt-3 font-sans text-[14px] leading-snug text-black/75">
-          How today&rsquo;s athletes are building communities and creating change on and off the field.
+      <div className={`${CARD} bg-white`}>
+        <Title>Articles</Title>
+        <img src="/brands/laces.webp" alt="" aria-hidden className="mt-3 aspect-[16/10] w-full rounded-[12px] object-cover object-[60%_65%]" />
+        <p className="mt-3 font-sans text-[16px] font-semibold leading-tight tracking-[-0.02em]">Beyond the game</p>
+        <p className="mt-1 font-sans text-[12.5px] leading-snug text-black/60">
+          How today&rsquo;s athletes are building communities on and off the field.
         </p>
-        <p className="mt-auto pt-3 font-sans text-[12px] text-black/45">Campus weekly · 4 min read</p>
+        <p className="mt-auto pt-2 font-sans text-[11.5px] text-black/40">Campus weekly · 4 min read</p>
       </div>
     ),
   },
@@ -138,7 +139,7 @@ const CARDS = [
     y: "6px",
     node: (
       <div className={`${CARD} bg-[#cfe5fb]`}>
-        <Chip tone="bg-white/70 text-[#0a0a0a]">Backgrounds</Chip>
+        <Title>Backgrounds</Title>
         <div className="mt-3 space-y-2">
           {[
             ["Hometown", "Chicago, Illinois", "M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"],
@@ -164,20 +165,13 @@ const CARDS = [
     node: (
       <div className={`${CARD} items-center bg-white text-center`}>
         <div className="self-start">
-          <Chip>Bios</Chip>
+          <Title>Bios</Title>
         </div>
-        <img src="/brands/athlete.webp" alt="" aria-hidden className="mt-1 h-20 w-20 rounded-full object-cover object-[36%_35%]" />
+        <img src="/brands/athlete.webp" alt="" aria-hidden className="mt-5 h-24 w-24 rounded-full object-cover object-[36%_35%]" />
         <p className="mt-3 font-sans text-[17px] font-semibold tracking-[-0.02em]">Senior guard</p>
         <p className="mt-1 font-sans text-[12.5px] leading-snug text-black/60">
           Chicago raised. Coffee, film, and my little sister.
         </p>
-        <div className="mt-auto flex flex-wrap justify-center gap-1.5 pt-3">
-          {["Style", "Music", "Community"].map((t) => (
-            <span key={t} className="rounded-full border border-black/10 px-2.5 py-1 font-sans text-[11.5px]">
-              {t}
-            </span>
-          ))}
-        </div>
       </div>
     ),
   },
