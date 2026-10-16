@@ -71,11 +71,19 @@ function Icon({ d }: { d: string }) {
 
 const WAVE = [6, 12, 8, 16, 10, 20, 14, 9, 18, 12, 7, 15, 11, 19, 8, 13, 17, 9, 12, 6, 14, 10];
 
+/* Left to right; the fan's tilt comes from the slot, so the middle card
+   always sits straight. */
+const FAN = [
+  { tilt: "-4deg", y: "18px" },
+  { tilt: "-1.5deg", y: "6px" },
+  { tilt: "0deg", y: "0px" },
+  { tilt: "1.5deg", y: "6px" },
+  { tilt: "4deg", y: "18px" },
+];
+
 const CARDS = [
   {
     key: "posts",
-    tilt: "-4deg",
-    y: "18px",
     node: (
       <div className={`${CARD} bg-white`}>
         <Title>Posts</Title>
@@ -93,8 +101,6 @@ const CARDS = [
   },
   {
     key: "interviews",
-    tilt: "-1.5deg",
-    y: "6px",
     node: (
       <div className={`${CARD} bg-white`}>
         <Title>Interviews</Title>
@@ -118,9 +124,30 @@ const CARDS = [
     ),
   },
   {
+    key: "backgrounds",
+    node: (
+      <div className={`${CARD} bg-[#cfe5fb]`}>
+        <Title>Backgrounds</Title>
+        <div className="mt-3 flex flex-1 flex-col justify-center gap-2.5">
+          {[
+            ["Hometown", "Chicago, Illinois", "M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"],
+            ["Interests", "Gaming, cooking", "M6 11h4M8 9v4M15 12h.01M18 10h.01M7 6h10a5 5 0 0 1 5 5v1a4 4 0 0 1-7 2.6L14 14h-4l-1 .6A4 4 0 0 1 2 12v-1a5 5 0 0 1 5-5Z"],
+            ["Off the field", "Runs a youth camp", "M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M10 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM21 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8"],
+          ].map(([t, v, d]) => (
+            <div key={t} className="flex items-center gap-3 rounded-[12px] bg-white px-3 py-3">
+              <Icon d={d} />
+              <div className="min-w-0">
+                <p className="font-sans text-[13px] font-medium leading-tight">{t}</p>
+                <p className="font-sans text-[12px] leading-tight text-black/55">{v}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+  {
     key: "articles",
-    tilt: "0deg",
-    y: "0px",
     node: (
       <div className={`${CARD} bg-white`}>
         <Title>Articles</Title>
@@ -134,34 +161,7 @@ const CARDS = [
     ),
   },
   {
-    key: "backgrounds",
-    tilt: "1.5deg",
-    y: "6px",
-    node: (
-      <div className={`${CARD} bg-[#cfe5fb]`}>
-        <Title>Backgrounds</Title>
-        <div className="mt-3 space-y-2">
-          {[
-            ["Hometown", "Chicago, Illinois", "M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"],
-            ["Interests", "Gaming, cooking", "M6 11h4M8 9v4M15 12h.01M18 10h.01M7 6h10a5 5 0 0 1 5 5v1a4 4 0 0 1-7 2.6L14 14h-4l-1 .6A4 4 0 0 1 2 12v-1a5 5 0 0 1 5-5Z"],
-            ["Off the field", "Runs a youth camp", "M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M10 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM21 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8"],
-          ].map(([t, v, d]) => (
-            <div key={t} className="flex items-center gap-3 rounded-[12px] bg-white px-3 py-2.5">
-              <Icon d={d} />
-              <div className="min-w-0">
-                <p className="font-sans text-[13px] font-medium leading-tight">{t}</p>
-                <p className="font-sans text-[12px] leading-tight text-black/55">{v}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    ),
-  },
-  {
     key: "bios",
-    tilt: "4deg",
-    y: "18px",
     node: (
       <div className={`${CARD} items-center bg-white text-center`}>
         <div className="self-start">
@@ -212,11 +212,11 @@ export default function AthleteInternetCards() {
           }}
         />
         <div className="relative -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:grid md:grid-cols-5 md:gap-3 md:overflow-visible md:px-0 md:pb-0 lg:gap-4">
-          {CARDS.map((c) => (
+          {CARDS.map((c, i) => (
             <div
               key={c.key}
               className="h-[21rem] w-[15rem] shrink-0 snap-center md:h-[17.25rem] md:w-auto md:[transform:rotate(var(--tilt))_translateY(var(--y))]"
-              style={{ "--tilt": c.tilt, "--y": c.y } as React.CSSProperties}
+              style={{ "--tilt": FAN[i].tilt, "--y": FAN[i].y } as React.CSSProperties}
             >
               {c.node}
             </div>
