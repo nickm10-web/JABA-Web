@@ -6,6 +6,7 @@ import BenchmarkSection from "@/components/brands/BenchmarkSection";
 import PartnerOrbit, { PARTNERS } from "@/components/brands/PartnerOrbit";
 import BrandWalkthrough from "@/components/brands/BrandWalkthrough";
 import ClosingSection from "@/components/brands/ClosingSection";
+import FooterSection from "@/components/sections/footer-section";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
 import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
 import PageLayout from "@/components/layout/page-layout";
@@ -155,6 +156,18 @@ export default function BrandsLandingPage() {
       <BenchmarkSection />
 
       <ClosingSection />
+
+      {/* The main site's footer, grass and all. Its links are the homepage's
+          hash routes, so they're pointed back at the root. */}
+      <div aria-hidden className="relative bg-black leading-[0]">
+        <svg viewBox="0 0 1440 44" preserveAspectRatio="none" className="-mb-px block h-7 w-full translate-y-px md:h-10">
+          <path
+            d="M0,0 L300,0 C 368,0 378,24 440,24 L1000,24 C 1062,24 1072,0 1140,0 L1440,0 L1440,44 L0,44 Z"
+            fill="#eeeeee"
+          />
+        </svg>
+      </div>
+      <FooterSection linkBase="/" />
     </PageLayout>
   );
 }

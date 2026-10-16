@@ -76,6 +76,9 @@ const LAYERS = [
 interface FooterSectionProps {
   /** Color of the page surface above the footer, kept for call-site compat. */
   fadeFrom?: string;
+  /** Prefix for the site's hash routes. The standalone pages (brands.html and
+   *  the like) aren't the router, so they pass "/" and the links go home. */
+  linkBase?: string;
 }
 
 /**
@@ -84,7 +87,7 @@ interface FooterSectionProps {
  * the art into layers (rather than one flat image) is what lets the logo sit
  * inside the landscape and lets the far props drop out on small screens.
  */
-export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProps) {
+export default function FooterSection({ fadeFrom: _fadeFrom, linkBase = "" }: FooterSectionProps) {
   const sceneRef = useRef<HTMLDivElement>(null);
 
   /* Parallax, driven straight off the scene's own rect.
@@ -158,7 +161,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 md:grid-cols-[1.6fr_1fr_1fr] md:gap-8">
           {/* Brand */}
           <div className="col-span-2 max-w-sm sm:col-span-3 md:col-span-1">
-            <a href="#/" aria-label="JABA home" className="inline-flex">
+            <a href={`${linkBase}#/`} aria-label="JABA home" className="inline-flex">
               <img src="/jaba-head.webp" alt="JABA" className="h-9 w-auto" />
             </a>
             <p className="mt-5 font-deck text-2xl leading-snug">
@@ -206,7 +209,7 @@ export default function FooterSection({ fadeFrom: _fadeFrom }: FooterSectionProp
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <a
-                      href={l.href}
+                      href={l.href.startsWith("#") ? `${linkBase}${l.href}` : l.href}
                       className="font-sans text-[14px] text-black/65 transition-colors hover:text-black"
                     >
                       {l.label}
