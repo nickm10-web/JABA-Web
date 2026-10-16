@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "motion/react";
 
 /**
- * "JABA watches the entire athlete internet", light, from Nick's mock: five
+ * "JABA watches the entire athlete internet", from Nick's mock but on black: five
  * cards for the five things JABA reads (posts, interviews, articles,
  * backgrounds, bios) fanned over a soft sky glow, then the index counts.
  *
@@ -49,12 +49,12 @@ function Stat({ to, suffix, label, run }: { to: number; suffix: string; label: s
         {(n / 10).toFixed(1)}
         {suffix}
       </p>
-      <p className="mt-1 font-sans text-[14px] text-black/50 md:text-[16px]">{label}</p>
+      <p className="mt-1 font-sans text-[14px] text-white/50 md:text-[16px]">{label}</p>
     </div>
   );
 }
 
-const CARD = "relative flex h-full flex-col rounded-[20px] p-4 shadow-[0_30px_60px_-30px_rgba(8,40,96,0.45)]";
+const CARD = "relative flex h-full flex-col rounded-[20px] p-4 text-[#0a0a0a] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.9)]";
 
 /** The card's name, set like the titles on the hero's arc cards. */
 function Title({ children }: { children: React.ReactNode }) {
@@ -182,34 +182,27 @@ export default function AthleteInternetCards() {
   const inView = useInView(ref, { once: true, margin: "-20%" });
 
   return (
-    <section className="overflow-hidden bg-[#eeeeee] px-6 py-12 text-[#0a0a0a] md:px-10 md:py-10 lg:px-12">
+    <section className="overflow-hidden bg-black px-6 py-12 text-white md:px-10 md:py-10 lg:px-12">
       <div className="mx-auto max-w-6xl text-center">
         <h2
           className="font-sans font-normal leading-[1] tracking-[-0.045em]"
           style={{ fontSize: "clamp(2.2rem, 4.2vw, 3.6rem)" }}
         >
           JABA watches the entire
-          <span className="block text-black/45">athlete internet.</span>
+          <span className="block text-white/45">athlete internet.</span>
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl font-sans text-[16px] leading-relaxed text-black/60 md:text-[17px]">
+        <p className="mx-auto mt-4 max-w-2xl font-sans text-[16px] leading-relaxed text-white/60 md:text-[17px]">
           Every post, interview, article, bio, and background, across platforms. Tracked back to the
           athlete and the brand.
         </p>
       </div>
 
-      {/* The fan. A soft sky glow sits behind it so the cards float. */}
+      {/* The fan, over a faint glow so the cards lift off the black. */}
       <div className="relative mx-auto mt-8 max-w-6xl md:mt-9">
         <div
           aria-hidden
           className="pointer-events-none absolute -inset-x-16 -inset-y-12"
-          style={{
-            backgroundImage: "url(/brands/sky.webp)",
-            backgroundSize: "cover",
-            backgroundPosition: "center 85%",
-            opacity: 0.7,
-            maskImage: "radial-gradient(closest-side, #000 35%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(closest-side, #000 35%, transparent 100%)",
-          }}
+          style={{ background: "radial-gradient(closest-side, rgba(255,255,255,0.09), transparent)" }}
         />
         <div className="relative -mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:grid md:grid-cols-5 md:gap-3 md:overflow-visible md:px-0 md:pb-0 lg:gap-4">
           {CARDS.map((c, i) => (
@@ -225,9 +218,9 @@ export default function AthleteInternetCards() {
       </div>
 
 
-      <div ref={ref} className="mx-auto mt-8 grid max-w-6xl grid-cols-3 border-t border-black/10 pt-6 md:mt-10 md:pt-8">
+      <div ref={ref} className="mx-auto mt-8 grid max-w-6xl grid-cols-3 border-t border-white/10 pt-6 md:mt-10 md:pt-8">
         {STATS.map((s, i) => (
-          <div key={s.label} className={i > 0 ? "border-l border-black/10" : ""}>
+          <div key={s.label} className={i > 0 ? "border-l border-white/10" : ""}>
             <Stat {...s} run={inView} />
           </div>
         ))}

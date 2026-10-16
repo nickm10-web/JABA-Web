@@ -40,9 +40,10 @@ export default function BrandsLandingPage() {
           gets run, and what the post actually beat. */}
       <MeetJabaSection />
 
-      {/* What JABA reads, light, as five cards; the scan below runs dark. */}
-      <AthleteInternetCards />
+      {/* What JABA sees, one dark chapter: what it reads, then what it can
+          find inside a post that the caption never says. */}
       <Seam from="#eeeeee" to="#000" />
+      <AthleteInternetCards />
 
       <UnlabeledSearchableSection />
 
