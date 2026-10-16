@@ -88,7 +88,7 @@ export default function BenchmarkSection() {
           <div>
             <Eyebrow tone="muted">The report</Eyebrow>
             <h2 className="mt-4 max-w-sm font-deck text-3xl leading-[1.04] md:text-5xl lg:mt-6">
-              And we tell you what it beat.
+              We benchmark it against everything else.
             </h2>
             <p className="mt-5 hidden max-w-sm font-sans text-[15px] leading-relaxed text-white/45 lg:block">
               Every post is scored against their own baseline, their other

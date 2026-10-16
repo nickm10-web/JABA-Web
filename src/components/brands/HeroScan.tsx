@@ -92,7 +92,7 @@ export default function HeroScan() {
         className="mt-5 text-center text-[11px] uppercase tracking-[0.2em] text-white/35"
         style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
       >
-        Read from the frame, not the caption
+        Frame by frame, not just the caption
       </p>
     </div>
   );

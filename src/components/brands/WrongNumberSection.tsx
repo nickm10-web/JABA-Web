@@ -32,16 +32,16 @@ export default function WrongNumberSection() {
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
         <div>
           <h2 className="max-w-xl font-deck text-4xl leading-[1.04] md:text-6xl">
-            Followers are the wrong number.
+            We find the right athletes.
           </h2>
           <p className="mt-7 max-w-md font-sans text-lg leading-relaxed text-white/55 md:text-xl">
-            A travel brand asked for athletes who already post their trips. This
-            one has 63.1K followers, and their most-liked post isn&rsquo;t
-            basketball. It&rsquo;s a yacht trip in Greece, at 588K likes.
+            An example search: a travel brand that wants athletes who already
+            post their trips. This one has 63.1K followers. Their most-liked post
+            is not basketball. It is a yacht trip in Greece, at 588K likes.
           </p>
           <p className="mt-5 max-w-md font-sans text-lg leading-relaxed text-white md:text-xl">
-            Their posts earn what an account of 391K normally does. Priced by
-            followers, they cost a sixth of what they deliver.
+            Performs like: the following an athlete would normally need to earn
+            the likes this athlete actually earns.
           </p>
           <p className="mt-8 font-sans text-[12.5px] text-white/30">
             Example athlete: the numbers are real, the name is withheld. Circles

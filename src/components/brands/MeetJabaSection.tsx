@@ -7,8 +7,8 @@ import { useEffect, useRef, useState } from "react";
  * text, the clipboard to run the campaign. One character, five beats, so the
  * section is a scene rather than a grid of features.
  *
- * The copy is the film's four pillars, turned to face the brand. The opening
- * line under "Meet JABA." is the film's, word for word.
+ * Every line is the film's, word for word: the opening line and the four
+ * pillars. None of it is written for this page.
  *
  * Beats are driven by IntersectionObserver sentinels, the homepage's scroll
  * story pattern: one sentinel per beat, and only entering one changes the
@@ -31,26 +31,26 @@ const BEATS: Beat[] = [
   },
   {
     rail: "Direction",
-    title: "Knows their feed.",
-    body: "What it does, what performs on it, and what they sound like, before you ever reach out.",
+    title: "Direction",
+    body: "We already know what their feed does, what performs on it, and what they sound like.",
     media: { kind: "image", src: "/meet/data.webp" },
   },
   {
-    rail: "The idea",
-    title: "Brings the idea.",
-    body: "The athlete and the angle, with the evidence attached. Nobody has to pitch.",
+    rail: "Partnership ideas",
+    title: "Partnership ideas",
+    body: "We bring the brand and the angle with the evidence attached. The athlete never has to pitch.",
     media: { kind: "image", src: "/meet/creative.webp" },
   },
   {
     rail: "Availability",
-    title: "Works over text.",
-    body: "Everything happens in a thread, in the time an athlete actually has.",
+    title: "Availability",
+    body: "Everything happens over text, in the time they actually have.",
     media: { kind: "image", src: "/meet/ops.webp" },
   },
   {
-    rail: "The campaign",
-    title: "Runs the campaign.",
-    body: "Follow-ups, reminders, quality control, and an exclusivity check before anything goes out.",
+    rail: "Managing the campaign",
+    title: "Managing the campaign",
+    body: "JABA handles the follow-ups, the reminders and quality control, and checks exclusivity before anything goes out.",
     media: { kind: "image", src: "/meet/manage.webp" },
   },
 ];

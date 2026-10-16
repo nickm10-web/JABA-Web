@@ -50,24 +50,22 @@ function DemoLaunch() {
   );
 }
 
-/* The brand's side of the same thread the homepage shows. Dana runs the
-   campaign, Maya is the athlete, and the point of the exchange is that the
-   brand never has to chase anyone. Fictional people, fictional campaign. */
+/* The film's own thread, word for word: JABA catches a story that went up
+   without the paid partnership tag and fixes it before anyone has to ask. */
 const BRAND_THREAD: ChatMessage[] = [
-  { sender: "casey", name: "Dana", text: "we need the launch post live Friday" },
-  { sender: "brielle", name: "Maya", text: "i thought that was next week \u{1F605}" },
   {
     sender: "jaba",
     name: "JABA",
-    text: "Friday 9am. I resent Maya the brief and the usage terms, both signed.",
+    text: "\u26A0\uFE0F Her story went up without the paid partnership tag. I\u2019ve texted her to add it.",
   },
+  { sender: "casey", name: "You", text: "how long was it up" },
   {
     sender: "jaba",
     name: "JABA",
-    text: "Draft's with you for approval. I'll post on schedule and send the recap.",
+    text: "Thirty-nine minutes. The tag is on now, and I logged it against the deliverable.",
     reaction: { emoji: "\u{1F44D}", fromMe: true },
   },
-  { sender: "casey", name: "Dana", text: "didn't have to chase anyone", reaction: { emoji: "\u2764\uFE0F" } },
+  { sender: "casey", name: "You", text: "perfect, thank you" },
 ];
 
 /**
@@ -100,8 +98,8 @@ function BrandsHero() {
               Athlete brand campaigns, managed for you.
             </h1>
             <p className="mt-6 max-w-lg font-sans text-lg leading-relaxed text-white/55 md:text-xl">
-              JABA reads the entire athlete internet, so you can see who reaches
-              your customer before you spend a dollar.
+              Every post, every brand, every deal. Indexed, analyzed and
+              benchmarked.
             </p>
             <div className="mt-9 max-w-lg">
               <DemoLaunch />
@@ -140,7 +138,7 @@ export default function BrandsLandingPage() {
         awaitHandoff={false}
         messages={BRAND_THREAD}
         heading={
-<>We run it, brief to post.</>
+<>We run it, start to finish.</>
         }
         body="Quality control on every asset before you see it, and the chasing when something doesn't happen. JABA notices and texts the right person."
       />

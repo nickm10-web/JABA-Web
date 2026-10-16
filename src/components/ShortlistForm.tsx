@@ -33,7 +33,6 @@ export default function ShortlistForm({
   const field = dark
     ? "w-full rounded-[12px] border border-white/15 bg-white/[0.06] px-4 py-3 font-sans text-[15px] text-white outline-none transition-colors placeholder:text-white/40 focus:border-white/40 md:flex-1"
     : "w-full rounded-[12px] border border-black/10 bg-[#fafafa] px-4 py-3 font-sans text-[15px] text-[#11131a] outline-none transition-colors placeholder:text-black/35 focus:border-black/35 md:flex-1";
-  const muted = dark ? "text-white/45" : "text-black/45";
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,8 +64,7 @@ export default function ShortlistForm({
           Got it.
         </p>
         <p className={`mt-2 max-w-md font-sans text-[15px] leading-relaxed ${dark ? "text-white/60" : "text-black/60"}`}>
-          We&rsquo;ll pull the athletes who fit and send them over. No call needed
-          to see it.
+          We&rsquo;ll be in touch.
         </p>
       </div>
     );
@@ -110,9 +108,6 @@ export default function ShortlistForm({
         <VoltButton type="submit" size="lg">
           {status === "sending" ? "Sending…" : "Find my athletes"}
         </VoltButton>
-        <span className={`font-sans text-[13px] ${muted}`}>
-          Free, and no call required.
-        </span>
       </div>
 
       {status === "error" && (
