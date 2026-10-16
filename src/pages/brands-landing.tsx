@@ -4,7 +4,7 @@ import { useState } from "react";
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import BenchmarkSection from "@/components/brands/BenchmarkSection";
 import HeroScan from "@/components/brands/HeroScan";
-import WrongNumberSection from "@/components/brands/WrongNumberSection";
+import MatchSection from "@/components/brands/MatchSection";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
 import UnlabeledSearchableSection from "@/components/brands/UnlabeledSearchableSection";
 import PageLayout from "@/components/layout/page-layout";
@@ -127,7 +127,7 @@ export default function BrandsLandingPage() {
 
       <UnlabeledSearchableSection />
 
-      <WrongNumberSection />
+      <MatchSection />
 
       <TextAssistantSection
         tone="dark"
