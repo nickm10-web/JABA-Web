@@ -259,7 +259,7 @@ export default function SkyHero() {
           </div>
 
           {/* The arc. Cards sit on a cylinder seen from outside, so the edges
-              turn away; each one drifts on its own beat. */}
+              turn away. */}
           <div className="arc-stage relative mx-auto mt-10 h-[130px] sm:h-[160px] md:mt-16 md:h-[200px] lg:h-[280px]">
             <div className="arc-scale absolute left-1/2 top-0">
               <div className="arc" style={{ transform: `translateZ(-${R}px)` }}>
@@ -277,9 +277,7 @@ export default function SkyHero() {
                         transform: `rotateY(${k * STEP}deg) translateZ(${R}px)`,
                       }}
                     >
-                      <div className="arc-bob h-full w-full" style={{ animationDelay: `${i * -0.7}s` }}>
-                        {c.node}
-                      </div>
+                      {c.node}
                       {c.key === "insights" && (
                         <img
                           src="/jaba-head.webp"
