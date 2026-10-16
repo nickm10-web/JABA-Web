@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-import Eyebrow from "@/components/brands/Eyebrow";
 
 /**
  * "And we tell you what it beat," as a climb rather than a dashboard.
@@ -40,7 +39,6 @@ const TAKEAWAYS = [
   { value: "0", note: "people had to chase it" },
 ];
 
-const MONO = { fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" };
 
 export default function BenchmarkSection() {
   const [active, setActive] = useState(0);
@@ -82,12 +80,11 @@ export default function BenchmarkSection() {
       <div className="sticky top-0 flex h-screen items-center overflow-hidden px-6 md:px-10 lg:px-12">
         <div className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]" />
 
-        {/* Columns align at the top, so "The report" and the stage label share
-            one line and the headline sits level with the number. */}
+        {/* Columns align at the top, so the headline sits level with the stage
+            label and the number. */}
         <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-14">
           <div>
-            <Eyebrow tone="muted">The report</Eyebrow>
-            <h2 className="mt-4 max-w-sm font-deck text-3xl leading-[1.04] md:text-5xl lg:mt-6">
+            <h2 className="max-w-sm font-deck text-3xl leading-[1.04] md:text-5xl">
               We benchmark it against everything else.
             </h2>
             <p className="mt-5 hidden max-w-sm font-sans text-[15px] leading-relaxed text-white/45 lg:block">
@@ -130,10 +127,9 @@ export default function BenchmarkSection() {
                     }}
                   >
                     <p
-                      className={`text-[11px] uppercase tracking-[0.2em] ${
-                        i === CLIMAX ? "text-white" : "text-white/45"
+                      className={`font-sans text-[15px] ${
+                        i === CLIMAX ? "text-white" : "text-white/50"
                       }`}
-                      style={MONO}
                     >
                       {s.label}
                     </p>

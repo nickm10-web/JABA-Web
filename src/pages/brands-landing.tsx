@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import AthleteInternetSection from "@/components/AthleteInternetSection";
 import BenchmarkSection from "@/components/brands/BenchmarkSection";
-import Eyebrow from "@/components/brands/Eyebrow";
 import HeroScan from "@/components/brands/HeroScan";
 import WrongNumberSection from "@/components/brands/WrongNumberSection";
 import MeetJabaSection from "@/components/brands/MeetJabaSection";
@@ -32,8 +31,7 @@ function DemoLaunch() {
       }}
       className="rounded-[18px] border border-white/10 bg-white/[0.04] p-5 md:p-6"
     >
-      <Eyebrow tone="muted">See how it works</Eyebrow>
-      <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row">
         <input
           className="w-full rounded-[12px] border border-white/15 bg-white/[0.06] px-4 py-3 font-sans text-[15px] text-white outline-none transition-colors placeholder:text-white/40 focus:border-white/40 sm:flex-1"
           placeholder="Enter your brand"
@@ -93,8 +91,7 @@ function BrandsHero() {
 
         <div className="mt-12 grid grid-cols-1 items-center gap-16 md:mt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
           <div>
-            <Eyebrow>JABA for brands</Eyebrow>
-            <h1 className="mt-5 max-w-xl font-deck text-4xl leading-[1.04] md:text-6xl">
+            <h1 className="max-w-xl font-deck text-4xl leading-[1.04] md:text-6xl">
               Athlete brand campaigns, managed for you.
             </h1>
             <p className="mt-6 max-w-lg font-sans text-lg leading-relaxed text-white/55 md:text-xl">
@@ -134,7 +131,6 @@ export default function BrandsLandingPage() {
 
       <TextAssistantSection
         tone="dark"
-        eyebrow={<Eyebrow>The campaign</Eyebrow>}
         awaitHandoff={false}
         messages={BRAND_THREAD}
         heading={

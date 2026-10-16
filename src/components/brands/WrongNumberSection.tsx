@@ -81,8 +81,7 @@ export default function WrongNumberSection() {
               391K
             </p>
             <p
-              className="mt-3 text-[11px] uppercase tracking-[0.22em] text-white/60"
-              style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
+              className="mt-3 font-sans text-[15px] text-white/65"
             >
               Performs like
             </p>
@@ -100,8 +99,7 @@ export default function WrongNumberSection() {
               63.1K
             </p>
             <p
-              className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/50"
-              style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
+              className="mt-2 font-sans text-[13px] text-white/55"
             >
               Followers
             </p>

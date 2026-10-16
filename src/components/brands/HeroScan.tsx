@@ -81,16 +81,14 @@ export default function HeroScan() {
         </span>
 
         <span
-          className="scan-tag absolute bottom-3.5 left-3.5 rounded-full bg-[#dfff00] px-3 py-1.5 text-[11.5px] font-semibold uppercase tracking-[0.06em] text-[#0a0a0a]"
-          style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
+          className="scan-tag absolute bottom-3.5 left-3.5 rounded-full bg-[#dfff00] px-3 py-1.5 font-sans text-[13px] font-semibold text-[#0a0a0a]"
         >
           {live.tag}
         </span>
       </div>
 
       <p
-        className="mt-5 text-center text-[11px] uppercase tracking-[0.2em] text-white/35"
-        style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
+        className="mt-5 text-center font-sans text-[13.5px] text-white/40"
       >
         Frame by frame, not just the caption
       </p>

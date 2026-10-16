@@ -106,10 +106,9 @@ export default function MeetJabaSection() {
               {BEATS.map((b, i) => (
                 <li
                   key={b.rail}
-                  className={`flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] transition-colors duration-500 ${
+                  className={`flex items-center gap-3 font-sans text-[14px] transition-colors duration-500 ${
                     i === active ? "text-white" : "text-white/25"
                   }`}
-                  style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
                 >
                   <span
                     className="h-px transition-all duration-500"
@@ -124,8 +123,7 @@ export default function MeetJabaSection() {
             </ol>
 
             <p
-              className="text-center text-[11px] uppercase tracking-[0.22em] text-white/35 lg:hidden"
-              style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
+              className="text-center font-sans text-[13px] text-white/40 lg:hidden"
             >
               {String(active + 1).padStart(2, "0")} / {String(BEATS.length).padStart(2, "0")}
             </p>

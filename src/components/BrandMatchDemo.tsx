@@ -144,10 +144,7 @@ export default function BrandMatchDemo({
       <div className="relative w-full px-6 py-10 md:px-10 md:py-14">
         {stage === "idle" && (
           <form onSubmit={run} className="mx-auto max-w-xl text-center">
-            <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-[#dfff00]">
-              See how it works
-            </p>
-            <h2 className="mt-4 font-deck text-3xl leading-[1.08] md:text-4xl">
+            <h2 className="font-deck text-3xl leading-[1.08] md:text-4xl">
               Which athletes fit your brand?
             </h2>
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -166,7 +163,7 @@ export default function BrandMatchDemo({
 
         {(stage === "reading" || stage === "matching") && (
           <div className="mx-auto max-w-xl py-6 text-center md:py-10">
-            <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-[#dfff00]">
+            <p className="font-sans text-[16px] text-white/70">
               {stage === "reading" ? "Reading the athlete internet" : `Matching ${label}`}
             </p>
 
@@ -200,10 +197,7 @@ export default function BrandMatchDemo({
         {stage === "locked" && (
           <div>
             <div className="text-center">
-              <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-[#dfff00]">
-                Your athletes are ready
-              </p>
-              <h2 className="mt-4 font-deck text-3xl leading-[1.08] md:text-4xl">
+              <h2 className="font-deck text-3xl leading-[1.08] md:text-4xl">
                 This is what we&rsquo;d send you for {label}.
               </h2>
             </div>

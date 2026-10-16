@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { useInView } from "motion/react";
 
-import Eyebrow from "@/components/brands/Eyebrow";
 
 /**
  * "JABA makes the unlabeled searchable" — the claim that nothing else on the
@@ -58,8 +57,7 @@ export default function UnlabeledSearchableSection() {
   return (
     <section className="bg-black px-6 py-20 text-white md:px-10 md:py-28 lg:px-12">
       <div className="mx-auto max-w-6xl">
-        <Eyebrow>The index</Eyebrow>
-        <h2 className="mt-5 max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
+        <h2 className="max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
           JABA makes the{" "}
           <span className="text-[#dfff00]">unlabeled searchable.</span>
         </h2>
@@ -127,8 +125,7 @@ export default function UnlabeledSearchableSection() {
                 </span>
 
                 <span
-                  className="scan-tag absolute bottom-3 left-3 rounded-full bg-[#dfff00] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-[#0a0a0a]"
-                  style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
+                  className="scan-tag absolute bottom-3 left-3 rounded-full bg-[#dfff00] px-2.5 py-1 font-sans text-[12.5px] font-semibold text-[#0a0a0a]"
                 >
                   {t.tag}
                 </span>
