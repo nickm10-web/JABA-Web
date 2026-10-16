@@ -5,7 +5,8 @@ import { PARTNERS } from "@/components/brands/PartnerOrbit";
  * "Your brand belongs in the athlete's story" over three cards that walk the
  * campaign from the connection to the work.
  *
- * The partners are JABA's own, the same set as the logo strip and the orbit.
+ * The partners are JABA's own, the same set as the logo strip and the orbit,
+ * scrolling with the school's name beside each mark.
  * The mock showed others (Wisconsin, Alabama, LSU, Playfly, Religion of
  * Sports); they aren't in the logo set, so they aren't claimed here.
  */
@@ -20,23 +21,44 @@ function Arrow() {
   );
 }
 
-const ROW = PARTNERS.filter((p) => !["Every True Tiger", "Rally"].includes(p.name)).slice(0, 7);
+/* Schools get their name beside the mark, like the mock; the agencies' logos
+   are already wordmarks, so they stand alone. */
+const WORDMARKS = new Set(["Every True Tiger", "Rally", "Athletes Unlimited"]);
+const SIZE: Record<string, string> = {
+  "Every True Tiger": "h-12 md:h-14",
+  Rally: "h-9 md:h-10",
+  "Athletes Unlimited": "h-7 md:h-8",
+};
+
+function PartnerItem({ name, src }: { name: string; src: string }) {
+  const word = WORDMARKS.has(name);
+  return (
+    <div className="flex shrink-0 items-center gap-3 px-8 md:px-10">
+      <img
+        src={src}
+        alt={word ? name : ""}
+        aria-hidden={word ? undefined : true}
+        className={`w-auto object-contain opacity-60 ${SIZE[name] ?? "h-9 md:h-10"}`}
+        style={{ filter: name === "Athletes Unlimited" ? "brightness(0)" : "grayscale(1) contrast(1.1)" }}
+      />
+      {!word && <span className="whitespace-nowrap font-sans text-[17px] font-medium tracking-[-0.01em] text-black/55 md:text-[19px]">{name}</span>}
+    </div>
+  );
+}
 
 export default function StorySection() {
   return (
     <section className="bg-[#eeeeee] px-6 pb-20 pt-10 text-[#0a0a0a] md:px-10 md:pb-28 lg:px-12">
-      <div id="network" className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-6 gap-y-6 md:justify-between">
-        {ROW.map((p, i) => (
-          <div key={p.name} className="flex items-center gap-6">
-            {i > 0 && <span aria-hidden className="hidden h-8 w-px bg-black/10 md:block" />}
-            <img
-              src={p.src}
-              alt={p.name}
-              className="h-9 w-auto object-contain opacity-55 md:h-10"
-              style={{ filter: "grayscale(1) contrast(1.1)" }}
-            />
-          </div>
-        ))}
+      <div
+        id="network"
+        className="partner-marquee -mx-6 overflow-hidden md:-mx-10 lg:-mx-12"
+        style={{ maskImage: "linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent)", WebkitMaskImage: "linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent)" }}
+      >
+        <div className="partner-marquee-track flex w-max items-center">
+          {[...PARTNERS, ...PARTNERS].map((p, i) => (
+            <PartnerItem key={`${p.name}-${i}`} name={p.name} src={p.src} />
+          ))}
+        </div>
       </div>
 
       <h2

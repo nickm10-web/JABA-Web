@@ -3729,3 +3729,8 @@
 @media (max-width: 1100px) { .arc-scale { --arc-scale: 0.82; } }
 @media (max-width: 820px) { .arc-scale { --arc-scale: 0.6; } }
 @media (max-width: 520px) { .arc-scale { --arc-scale: 0.46; } }
+
+/* Brands partner row: the list twice over, slid one copy's width, so it loops. */
+.partner-marquee-track { animation: marquee 50s linear infinite; will-change: transform; }
+.partner-marquee:hover .partner-marquee-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .partner-marquee-track { animation: none; } }
