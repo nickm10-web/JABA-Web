@@ -4,7 +4,7 @@ import { VoltButton } from "@/components/ui/volt-button";
 
 /**
  * "See how it works": the visitor types their brand and watches JABA read the
- * athlete internet, then hits a locked shortlist.
+ * athlete internet, then hits a locked set of matches.
  *
  * The cards are deliberately a format preview, not a result. Nothing here
  * claims an analysis happened, because none did: the copy says what we would
@@ -201,7 +201,7 @@ export default function BrandMatchDemo({
           <div>
             <div className="text-center">
               <p className="font-sans text-[12px] font-semibold uppercase tracking-[0.18em] text-[#dfff00]">
-                Shortlist ready
+                Your athletes are ready
               </p>
               <h2 className="mt-4 font-deck text-3xl leading-[1.08] md:text-4xl">
                 This is what we&rsquo;d send you for {label}.
@@ -263,7 +263,7 @@ export default function BrandMatchDemo({
               </p>
               <div className="mt-6 flex justify-center">
                 <VoltButton size="lg" onClick={onUnlock}>
-                  Send me the real shortlist
+                  Send me my athletes
                 </VoltButton>
               </div>
             </div>

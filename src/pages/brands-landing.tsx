@@ -157,8 +157,8 @@ export default function BrandsLandingPage() {
             See who fits your brand.
           </h2>
           <p className="mx-auto mt-4 max-w-lg font-sans text-lg leading-relaxed text-white/55">
-            Tell us what you sell and we&rsquo;ll send back a shortlist of
-            athletes worth talking to.
+            Tell us what you sell and we&rsquo;ll send back the athletes worth
+            talking to.
           </p>
           <div className="mt-9 text-left">
             <ShortlistForm id="shortlist" tone="dark" />

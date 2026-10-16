@@ -152,8 +152,9 @@ export default function TextAssistantSection({
         </div>
       </div>
 
-      {/* Volt divider into the post wall */}
-      <div className="h-1.5 w-full bg-[#dfff00]" />
+      {/* Volt divider into the post wall. Homepage only: on a page that runs
+          black end to end it is a stray line, not a transition. */}
+      {!dark && <div className="h-1.5 w-full bg-[#dfff00]" />}
     </section>
   );
 }

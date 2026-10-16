@@ -56,7 +56,7 @@ export default function RightAthletesSection() {
     <section className="bg-black px-6 pb-24 pt-4 text-white md:px-10 md:pb-32 lg:px-12">
       <div className="mx-auto max-w-6xl">
         <h2 className="max-w-3xl font-deck text-4xl leading-[1.06] md:text-5xl">
-          A shortlist with the evidence attached.
+          Athletes, with the evidence attached.
         </h2>
         <p className="mt-5 max-w-2xl font-sans text-lg leading-relaxed text-white/55">
           An example search: a travel brand that wants athletes already posting

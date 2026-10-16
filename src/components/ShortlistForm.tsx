@@ -65,7 +65,7 @@ export default function ShortlistForm({
           Got it.
         </p>
         <p className={`mt-2 max-w-md font-sans text-[15px] leading-relaxed ${dark ? "text-white/60" : "text-black/60"}`}>
-          We&rsquo;ll put a shortlist together and send it over. No call needed
+          We&rsquo;ll pull the athletes who fit and send them over. No call needed
           to see it.
         </p>
       </div>
@@ -108,7 +108,7 @@ export default function ShortlistForm({
 
       <div className="mt-4 flex flex-wrap items-center gap-3">
         <VoltButton type="submit" size="lg">
-          {status === "sending" ? "Sending…" : "Get my athlete shortlist"}
+          {status === "sending" ? "Sending…" : "Find my athletes"}
         </VoltButton>
         <span className={`font-sans text-[13px] ${muted}`}>
           Free, and no call required.
