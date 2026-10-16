@@ -54,22 +54,19 @@ function Stat({ to, suffix, label, run }: { to: number; suffix: string; label: s
   );
 }
 
-const CARD = "relative flex h-full flex-col rounded-[20px] p-4 text-[#0a0a0a] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.9)]";
+/* Each card is a different piece of the athlete internet, built in that
+   thing's own format (a post, an interview, a profile, an article, a bio)
+   rather than five copies of one card. All five are one made-up athlete so
+   they read as a single story. */
+const SHELL = "relative flex h-full flex-col overflow-hidden rounded-[20px] text-[#0a0a0a] shadow-[0_30px_60px_-24px_rgba(0,0,0,0.9)]";
 
-/** The card's name, set like the titles on the hero's arc cards. */
-function Title({ children }: { children: React.ReactNode }) {
-  return <p className="font-sans text-[15px] font-medium leading-tight tracking-[-0.01em]">{children}</p>;
-}
-
-function Icon({ d }: { d: string }) {
+function Icon({ d, className = "h-[18px] w-[18px]" }: { d: string; className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-black/70" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg viewBox="0 0 24 24" className={`${className} shrink-0`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d={d} />
     </svg>
   );
 }
-
-const WAVE = [6, 12, 8, 16, 10, 20, 14, 9, 18, 12, 7, 15, 11, 19, 8, 13, 17, 9, 12, 6, 14, 10];
 
 /* Left to right; the fan's tilt comes from the slot, so the middle card
    always sits straight. */
@@ -85,61 +82,68 @@ const CARDS = [
   {
     key: "posts",
     node: (
-      <div className={`${CARD} bg-white`}>
-        <Title>Posts</Title>
-        <img src="/brands/sneakers.webp" alt="" aria-hidden className="mt-3 aspect-[16/10] w-full rounded-[12px] object-cover object-[50%_70%]" />
-        <div className="mt-3 flex items-center gap-3 text-black/70">
-          <Icon d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" />
-          <Icon d="M20 12a8 8 0 1 1-3.2-6.4L21 4l-1 4.2A8 8 0 0 1 20 12Z" />
-          <Icon d="m22 3-9.5 9.5M22 3l-6.5 18-3-8.5-8.5-3L22 3Z" />
+      <div className={`${SHELL} bg-white`}>
+        <div className="flex items-center gap-2 px-3 py-2.5">
+          <img src="/brands/athlete.webp" alt="" aria-hidden className="h-6 w-6 rounded-full object-cover object-[36%_35%]" />
+          <p className="font-sans text-[12.5px] font-semibold">marcus.hill</p>
+          <span className="ml-auto font-sans text-[15px] leading-none text-black/40">···</span>
         </div>
-        <p className="mt-2 font-sans text-[12.5px] leading-snug text-black/70">
-          Early run before class. Same pair every morning.
-        </p>
+        <img src="/brands/sneakers.webp" alt="" aria-hidden className="min-h-0 w-full flex-1 object-cover object-[50%_72%]" />
+        <div className="px-3 pb-3 pt-2">
+          <div className="flex items-center gap-3 text-black/80">
+            <Icon d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" />
+            <Icon d="M20 12a8 8 0 1 1-3.2-6.4L21 4l-1 4.2A8 8 0 0 1 20 12Z" />
+            <Icon d="m22 3-9.5 9.5M22 3l-6.5 18-3-8.5-8.5-3L22 3Z" />
+          </div>
+          <p className="mt-1.5 truncate font-sans text-[12px] leading-snug text-black/75">
+            <span className="font-semibold text-black">marcus.hill</span> Early run before class.
+          </p>
+        </div>
       </div>
     ),
   },
   {
     key: "interviews",
     node: (
-      <div className={`${CARD} bg-white`}>
-        <Title>Interviews</Title>
-        <img src="/brands/mic.webp" alt="" aria-hidden className="mt-3 aspect-[16/10] w-full rounded-[12px] object-cover" />
-        <div className="mt-3 flex items-center gap-2.5">
-          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-black/15">
-            <svg viewBox="0 0 24 24" className="ml-0.5 h-3.5 w-3.5" fill="currentColor" aria-hidden>
+      <div className={`${SHELL} bg-white p-4`}>
+        <div className="flex items-center gap-2.5">
+          <img src="/brands/mic.webp" alt="" aria-hidden className="h-9 w-9 rounded-[8px] object-cover" />
+          <div className="min-w-0">
+            <p className="truncate font-sans text-[12.5px] font-semibold leading-tight">The Locker Room Pod</p>
+            <p className="font-sans text-[11.5px] leading-tight text-black/50">Episode 14</p>
+          </div>
+        </div>
+        <p className="mt-4 font-sans text-[19px] font-medium leading-[1.18] tracking-[-0.02em]">
+          &ldquo;Film at six, then coffee with my sister. Every game day.&rdquo;
+        </p>
+        <div className="mt-auto flex items-center gap-2.5 pt-3">
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#0a0a0a] text-white">
+            <svg viewBox="0 0 24 24" className="ml-0.5 h-3 w-3" fill="currentColor" aria-hidden>
               <path d="M7 5v14l12-7Z" />
             </svg>
           </span>
-          <div className="flex h-6 items-center gap-[3px]">
-            {WAVE.map((h, i) => (
-              <span key={i} className="w-[2px] rounded-full bg-black/35" style={{ height: h }} />
-            ))}
-          </div>
+          <span className="relative h-[3px] flex-1 rounded-full bg-black/10">
+            <span className="absolute inset-y-0 left-0 w-[34%] rounded-full bg-[#0a0a0a]" />
+          </span>
+          <span className="font-sans text-[11px] tabular-nums text-black/50">12:08</span>
         </div>
-        <p className="mt-2 font-sans text-[12.5px] leading-snug text-black/70">
-          &ldquo;Film at six, then coffee with my sister. Every game day.&rdquo;
-        </p>
       </div>
     ),
   },
   {
     key: "backgrounds",
     node: (
-      <div className={`${CARD} bg-[#cfe5fb]`}>
-        <Title>Backgrounds</Title>
-        <div className="mt-3 flex flex-1 flex-col justify-center gap-2.5">
+      <div className={`${SHELL} bg-[#cfe5fb] p-4`}>
+        <p className="font-sans text-[12.5px] text-black/55">Background</p>
+        <div className="mt-2 flex flex-1 flex-col justify-center divide-y divide-black/10">
           {[
-            ["Hometown", "Chicago, Illinois", "M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11Zm0-8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"],
-            ["Interests", "Gaming, cooking", "M6 11h4M8 9v4M15 12h.01M18 10h.01M7 6h10a5 5 0 0 1 5 5v1a4 4 0 0 1-7 2.6L14 14h-4l-1 .6A4 4 0 0 1 2 12v-1a5 5 0 0 1 5-5Z"],
-            ["Off the field", "Runs a youth camp", "M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M10 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM21 20v-1a4 4 0 0 0-3-3.9M16 4.1a3.5 3.5 0 0 1 0 6.8"],
-          ].map(([t, v, d]) => (
-            <div key={t} className="flex items-center gap-3 rounded-[12px] bg-white px-3 py-3">
-              <Icon d={d} />
-              <div className="min-w-0">
-                <p className="font-sans text-[13px] font-medium leading-tight">{t}</p>
-                <p className="font-sans text-[12px] leading-tight text-black/55">{v}</p>
-              </div>
+            ["Hometown", "Chicago"],
+            ["Interests", "Gaming & cooking"],
+            ["Off the field", "Youth coaching"],
+          ].map(([t, v]) => (
+            <div key={t} className="py-3">
+              <p className="font-sans text-[11.5px] text-black/50">{t}</p>
+              <p className="mt-0.5 font-sans text-[20px] font-medium leading-tight tracking-[-0.02em]">{v}</p>
             </div>
           ))}
         </div>
@@ -149,28 +153,29 @@ const CARDS = [
   {
     key: "articles",
     node: (
-      <div className={`${CARD} bg-white`}>
-        <Title>Articles</Title>
-        <img src="/brands/laces.webp" alt="" aria-hidden className="mt-3 aspect-[16/10] w-full rounded-[12px] object-cover object-[60%_65%]" />
-        <p className="mt-3 font-sans text-[16px] font-semibold leading-tight tracking-[-0.02em]">Beyond the game</p>
-        <p className="mt-1 font-sans text-[12.5px] leading-snug text-black/60">
-          How today&rsquo;s athletes are building communities on and off the field.
-        </p>
-        <p className="mt-auto pt-2 font-sans text-[11.5px] text-black/40">Campus weekly · 4 min read</p>
+      <div className={`${SHELL} bg-white`}>
+        <img src="/brands/laces.webp" alt="" aria-hidden className="h-[40%] w-full object-cover object-[60%_65%]" />
+        <div className="flex flex-1 flex-col p-4">
+          <p className="font-sans text-[11px] font-semibold text-black/45">Campus Weekly</p>
+          <p className="mt-1.5 font-sans text-[16.5px] font-semibold leading-[1.15] tracking-[-0.02em]">
+            The guard coaching Chicago&rsquo;s next point guards
+          </p>
+          <p className="mt-auto line-clamp-2 pt-2 font-sans text-[12px] leading-snug text-black/55">
+            Hill runs a free Saturday camp back home, and most of his campers can already beat him at 2K.
+          </p>
+        </div>
       </div>
     ),
   },
   {
     key: "bios",
     node: (
-      <div className={`${CARD} items-center bg-white text-center`}>
-        <div className="self-start">
-          <Title>Bios</Title>
-        </div>
-        <img src="/brands/athlete.webp" alt="" aria-hidden className="mt-5 h-24 w-24 rounded-full object-cover object-[36%_35%]" />
-        <p className="mt-3 font-sans text-[17px] font-semibold tracking-[-0.02em]">Senior guard</p>
-        <p className="mt-1 font-sans text-[12.5px] leading-snug text-black/60">
-          Chicago raised. Coffee, film, and my little sister.
+      <div className={`${SHELL} bg-white p-4`}>
+        <img src="/brands/athlete.webp" alt="" aria-hidden className="h-16 w-16 rounded-full object-cover object-[36%_35%]" />
+        <p className="mt-4 font-sans text-[19px] font-semibold leading-tight tracking-[-0.02em]">Marcus Hill</p>
+        <p className="mt-0.5 font-sans text-[12.5px] text-black/55">Guard · Men&rsquo;s basketball</p>
+        <p className="mt-3 font-sans text-[13px] leading-snug text-black/75">
+          Chicago raised. Coffee, film, and my little sister. Coaching on Saturdays.
         </p>
       </div>
     ),
