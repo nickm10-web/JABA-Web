@@ -1,44 +1,37 @@
 import { useEffect, useRef, useState } from "react";
 
-
 /**
- * "And we tell you what it beat," as a climb rather than a dashboard.
+ * "We benchmark it against everything else," as bars drawn to scale.
  *
- * Scrolling walks up through what the post was up against, lowest first. Each
- * benchmark takes the stage, then drops into a ranked board beneath it, so the
- * board fills from the bottom up. At the top the campaign post lands in volt
- * and strikes through every number under it, one after another: the section's
- * title, shown literally.
+ * Scrolling lands one benchmark at a time, lowest first, each bar longer than
+ * the last, so the rows build into a staircase down the page. Then the post's
+ * own bar runs past every one of them in volt, a guide drops from its end so
+ * you can see how far short each falls, and the film's three ratios appear
+ * beside the bars they were measured against.
  *
- * The first version was a rounded card with a big number, a bar list and
- * three stat tiles, seven volt elements in one view. Here volt is spent once,
- * on the climax.
+ * The earlier version struck through a list of numbers and closed on four stat
+ * tiles. A struck list reads as clutter, and none of it showed how much bigger
+ * the post was. Bars at true scale do that on sight.
  *
- * Every value sits in a fixed slot, so nothing reflows as beats change.
- * Figures are illustrative and the section says so.
+ * All figures and lines are the film's. Bars are drawn from the values, so the
+ * picture can never disagree with the numbers printed on it.
  */
 
-const BENCHMARKS = [
+type Row = { label: string; value: number; ratio?: string; post?: boolean };
+
+const ROWS: Row[] = [
   { label: "Athletes their size, every sport", value: 16400 },
-  { label: "Competing brands, same roster", value: 18300 },
+  { label: "Competing brands, same roster", value: 18300, ratio: "2.3×" },
   { label: "Same format across the index", value: 21700 },
   { label: "The brand's other athlete posts", value: 24800 },
-  { label: "Their other sponsored posts", value: 26100 },
-  { label: "Their own unpaid baseline", value: 29400 },
-];
-const POST = { label: "This campaign post", value: 41200 };
-
-const STAGE = [...BENCHMARKS, POST];
-const CLIMAX = STAGE.length - 1;
-const BEAT_VH = 55;
-
-const TAKEAWAYS = [
-  { value: "+40%", note: "over what they normally get" },
-  { value: "+58%", note: "over their other campaigns" },
-  { value: "2.3×", note: "what competing brands get on this roster" },
-  { value: "0", note: "people had to chase it" },
+  { label: "Their other sponsored posts", value: 26100, ratio: "+58%" },
+  { label: "Their own unpaid baseline", value: 29400, ratio: "+40%" },
+  { label: "This campaign post", value: 41200, post: true },
 ];
 
+const MAX = Math.max(...ROWS.map((r) => r.value));
+const CLIMAX = ROWS.length - 1;
+const BEAT_VH = 50;
 
 export default function BenchmarkSection() {
   const [active, setActive] = useState(0);
@@ -60,12 +53,9 @@ export default function BenchmarkSection() {
   const climax = active === CLIMAX;
 
   return (
-    <section
-      className="relative bg-black text-white"
-      style={{ height: `${100 + STAGE.length * BEAT_VH}vh` }}
-    >
+    <section className="relative bg-black text-white" style={{ height: `${100 + ROWS.length * BEAT_VH}vh` }}>
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0">
-        {STAGE.map((_, i) => (
+        {ROWS.map((_, i) => (
           <div
             key={i}
             data-idx={i}
@@ -80,143 +70,121 @@ export default function BenchmarkSection() {
       <div className="sticky top-0 flex h-screen items-center overflow-hidden px-6 md:px-10 lg:px-12">
         <div className="film-grain pointer-events-none absolute inset-0 opacity-[0.05]" />
 
-        {/* Columns align at the top, so the headline sits level with the stage
-            label and the number. */}
-        <div className="relative mx-auto grid w-full max-w-6xl grid-cols-1 gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:gap-14">
-          <div>
-            <h2 className="max-w-sm font-deck text-3xl leading-[1.04] md:text-5xl">
+        <div className="relative mx-auto w-full max-w-6xl">
+          {/* Header across the full width, so nothing leaves half the frame
+              empty under a short headline. */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1.1fr_0.9fr] md:items-end md:gap-12">
+            <h2 className="font-deck text-3xl leading-[1.04] md:text-5xl">
               We benchmark it against everything else.
             </h2>
-            <p className="mt-5 hidden max-w-sm font-sans text-[15px] leading-relaxed text-white/45 lg:block">
-              Every post is scored against their own baseline, their other
-              sponsored work, competing brands on the same roster, and every
-              athlete their size.
+            <p className="hidden font-sans text-[14px] leading-relaxed text-white/50 md:block md:text-[16px]">
+              Against their own unpaid baseline, their other sponsored work, the brand&rsquo;s
+              other athlete posts, competing brands on the same roster, the same format across
+              the whole index, and every athlete their size.
             </p>
           </div>
 
-          <div className="relative">
-            {/* The glow that warms up behind the winner, as on the homepage. */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -left-16 -top-16 h-72 w-[36rem] max-w-[95vw] rounded-full transition-opacity duration-1000"
-              style={{
-                opacity: climax ? 1 : 0,
-                background: "radial-gradient(ellipse, rgba(223,255,0,0.12), transparent 70%)",
-                filter: "blur(24px)",
-              }}
-            />
+          {/* The bars. Every bar sits in the same fixed-width track, so length
+              is the value and nothing else. Values and the film's ratios live
+              in the reserved gutter to the right; the guide marks the post's
+              length, which is the full track. */}
+          <div className="mt-8 pr-16 md:mt-12 md:pr-28">
+            <div className="relative">
+              <div
+                aria-hidden
+                className="absolute -bottom-2 -top-2 right-0 w-px transition-opacity duration-700"
+                style={{
+                  opacity: climax ? 1 : 0,
+                  transitionDelay: climax ? "900ms" : "0ms",
+                  backgroundImage: "linear-gradient(rgba(255,255,255,0.4) 50%, transparent 0)",
+                  backgroundSize: "1px 6px",
+                }}
+              />
 
-            {/* Centre stage: one number at a time, each in the same fixed slot. */}
-            <div className="relative h-[7.5rem] md:h-[11.5rem]">
-              {STAGE.map((s, i) => {
-                const on = i === active;
-                const past = i < active;
-                return (
-                  <div
-                    key={s.label}
-                    aria-hidden={!on}
-                    className="absolute inset-x-0 top-0 ease-out"
-                    // The outgoing number clears before the next arrives, so
-                    // two values never sit on top of each other mid-change.
-                    style={{
-                      opacity: on ? 1 : 0,
-                      transform: `translateY(${on ? 0 : past ? -26 : 26}px)`,
-                      transition: on
-                        ? "opacity 420ms ease-out 180ms, transform 520ms cubic-bezier(0.2,0.8,0.2,1) 180ms"
-                        : "opacity 200ms ease-in, transform 260ms ease-in",
-                    }}
-                  >
-                    <p
-                      className={`font-sans text-[15px] ${
-                        i === CLIMAX ? "text-white" : "text-white/50"
-                      }`}
+              <div className="space-y-3 md:space-y-4">
+                {ROWS.map((r, i) => {
+                  const shown = i <= active;
+                  const latest = i === active && !r.post;
+                  const pct = (r.value / MAX) * 100;
+                  return (
+                    <div
+                      key={r.label}
+                      className="relative transition-opacity duration-500"
+                      style={{ opacity: shown ? (r.post || latest || climax ? 1 : 0.55) : 0 }}
                     >
-                      {s.label}
-                    </p>
-                    <p
-                      className={`mt-3 font-sans font-extrabold leading-none tracking-[-0.03em] ${
-                        i === CLIMAX ? "text-[#dfff00]" : "text-white"
-                      }`}
-                      style={{
-                        fontSize: "clamp(4.5rem, 10vw, 9.5rem)",
-                        fontVariantNumeric: "tabular-nums",
-                      }}
-                    >
-                      {s.value.toLocaleString()}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
+                      <span
+                        className={`font-sans text-[13px] md:text-[16px] ${
+                          r.post ? "font-semibold text-white" : "text-white/70"
+                        }`}
+                      >
+                        {r.label}
+                      </span>
 
-            {/* The board, ranked highest first. Each number you pass slides in
-                at the top and pushes the rest down, so the board always sits
-                flush under the stage, and every row strikes through when the
-                post lands. Rows open on grid-rows rather than height, so
-                nothing above the board ever moves. */}
-            <ol className="mt-5 border-t border-white/10 md:mt-10">
-              {[...BENCHMARKS].reverse().map((b, j) => {
-                const idx = BENCHMARKS.length - 1 - j;
-                const shown = idx < active;
-                return (
-                  <li
-                    key={b.label}
-                    className="grid transition-[grid-template-rows,opacity] duration-500 ease-out"
-                    style={{
-                      gridTemplateRows: shown ? "1fr" : "0fr",
-                      opacity: shown ? (climax ? 0.4 : 0.65) : 0,
-                    }}
-                  >
-                    <div className="overflow-hidden">
-                      <div className="relative flex items-baseline justify-between gap-6 border-b border-white/[0.07] py-2 md:py-2.5">
-                        <span className="font-sans text-[13.5px] text-white/80">{b.label}</span>
-                        <span
-                          className="font-sans text-[15px] font-bold text-white"
-                          style={{ fontVariantNumeric: "tabular-nums" }}
-                        >
-                          {b.value.toLocaleString()}
-                        </span>
-                        {/* Struck through when the post lands, top row first. */}
-                        <span
-                          aria-hidden
-                          className="absolute inset-x-0 top-1/2 h-px origin-left bg-white transition-transform duration-500 ease-out"
+                      <div className={`relative mt-1.5 ${r.post ? "h-5 md:h-9" : "h-3 md:h-5"}`}>
+                        <div
+                          className={`absolute inset-y-0 left-0 rounded-full transition-colors duration-500 ${
+                            r.post ? "bg-[#dfff00]" : latest ? "bg-white/75" : "bg-white/40"
+                          }`}
                           style={{
-                            transform: `scaleX(${climax ? 1 : 0})`,
-                            transitionDelay: climax ? `${300 + j * 110}ms` : "0ms",
+                            width: shown ? `${pct}%` : "0%",
+                            transition: `width ${r.post ? 1100 : 700}ms cubic-bezier(0.16,1,0.3,1)`,
+                            boxShadow: r.post ? "0 0 28px rgba(223,255,0,0.35)" : undefined,
                           }}
                         />
+                        <span
+                          className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap font-sans font-bold transition-opacity duration-500 ${
+                            r.post ? "text-[15px] md:text-[22px]" : "text-[12.5px] md:text-[16px]"
+                          } ${
+                            r.post ? "text-[#dfff00]" : "text-white/80"
+                          }`}
+                          style={{
+                            left: `calc(${pct}% + 12px)`,
+                            fontVariantNumeric: "tabular-nums",
+                            opacity: shown ? 1 : 0,
+                            transitionDelay: shown ? `${r.post ? 750 : 380}ms` : "0ms",
+                          }}
+                        >
+                          {r.value.toLocaleString()}
+                        </span>
+
+                        {/* The ratio the film states for this benchmark,
+                            in the gutter, once the post has beaten it. */}
+                        {r.ratio && (
+                          <span
+                            className="absolute top-1/2 -right-16 w-14 -translate-y-1/2 text-right font-sans text-[16px] font-extrabold text-white transition-opacity duration-500 md:-right-28 md:w-24 md:text-[28px]"
+                            style={{
+                              opacity: climax ? 1 : 0,
+                              transitionDelay: climax ? "1100ms" : "0ms",
+                              fontVariantNumeric: "tabular-nums",
+                            }}
+                          >
+                            {r.ratio}
+                          </span>
+                        )}
                       </div>
                     </div>
-                  </li>
-                );
-              })}
-            </ol>
-
-            {/* The takeaways arrive after the strikes, in white: volt is
-                already spent on the winning number. */}
-            <div
-              className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 transition-all md:mt-8 md:gap-y-5 duration-700 ease-out sm:grid-cols-4"
-              style={{
-                opacity: climax ? 1 : 0,
-                transform: `translateY(${climax ? 0 : 12}px)`,
-                transitionDelay: climax ? "1100ms" : "0ms",
-              }}
-            >
-              {TAKEAWAYS.map((t) => (
-                <div key={t.value}>
-                  <p
-                    className="font-sans text-2xl font-extrabold leading-none text-white"
-                    style={{ fontVariantNumeric: "tabular-nums" }}
-                  >
-                    {t.value}
-                  </p>
-                  <p className="mt-2 font-sans text-[12.5px] leading-snug text-white/45">{t.note}</p>
-                </div>
-              ))}
+                  );
+                })}
+              </div>
             </div>
-
-            <p className="mt-6 font-sans text-[12px] text-white/25">Illustrative figures.</p>
           </div>
+
+          <div
+            className="mt-8 grid grid-cols-[auto_1fr] items-baseline gap-4 transition-all duration-700 md:mt-12 md:gap-6"
+            style={{
+              opacity: climax ? 1 : 0,
+              transform: `translateY(${climax ? 0 : 10}px)`,
+              transitionDelay: climax ? "1400ms" : "0ms",
+            }}
+          >
+            <p className="font-sans text-4xl font-extrabold leading-none md:text-6xl">0</p>
+            <p className="max-w-xl font-sans text-[14px] leading-relaxed text-white/60 md:text-[17px]">
+              people had to chase it. The post is matched to the approved asset and the deliverable
+              closes itself.
+            </p>
+          </div>
+
+          <p className="mt-5 font-sans text-[11.5px] text-white/25">Illustrative figures.</p>
         </div>
       </div>
     </section>
