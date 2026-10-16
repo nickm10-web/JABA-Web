@@ -6,8 +6,8 @@ import { useInView } from "motion/react";
  * framed sky on the right, the same sky as the hero so the page reads as one
  * world.
  *
- * JABA is a still from the 4K wave render with the black keyed out, so he
- * stays sharp at this size. A second copy of the sky, masked to its bottom
+ * JABA waves on a loop: the 4K wave render with the black keyed out frame by
+ * frame, so he stays sharp at this size. A second copy of the sky, masked to its bottom
  * edge, sits in front of him so he stands in the clouds rather than on them.
  */
 export default function MeetJabaSection() {
@@ -43,7 +43,7 @@ export default function MeetJabaSection() {
         <div className="relative aspect-square w-full overflow-hidden rounded-[24px] md:rounded-[28px]">
           <img src="/brands/sky.webp" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-bottom" />
           <img
-            src="/meet/jaba-wave-still.webp"
+            src="/meet/jaba-wave-hd.webp"
             alt="JABA waving"
             loading="lazy"
             className="absolute bottom-[3%] left-1/2 h-[90%] w-auto -translate-x-1/2 transition-all duration-1000 ease-out"
