@@ -1,4 +1,4 @@
-import AthleteInternetSection from "@/components/AthleteInternetSection";
+import AthleteInternetCards from "@/components/brands/AthleteInternetCards";
 import BenchmarkSection from "@/components/brands/BenchmarkSection";
 import BrandWalkthrough from "@/components/brands/BrandWalkthrough";
 import SkyHero from "@/components/brands/SkyHero";
@@ -40,9 +40,9 @@ export default function BrandsLandingPage() {
           gets run, and what the post actually beat. */}
       <MeetJabaSection />
 
-      {/* The index runs dark: a wall of real posts reads best on black. */}
+      {/* What JABA reads, light, as five cards; the scan below runs dark. */}
+      <AthleteInternetCards />
       <Seam from="#eeeeee" to="#000" />
-      <AthleteInternetSection />
 
       <UnlabeledSearchableSection />
 
