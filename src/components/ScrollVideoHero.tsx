@@ -14,13 +14,13 @@ interface ScrollVideoHeroProps {
  * light-section rules.)
  */
 export default function ScrollVideoHero({
-  bgSrc = "/hero-world.webp",
+  bgSrc = "/hero-arch.webp",
 }: ScrollVideoHeroProps) {
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-[#eeeeee]">
       {/* Portrait crop on phones (16:9 desktop art loses the scene there) */}
       <picture>
-        <source media="(max-width: 767px)" srcSet="/hero-world-mobile.webp" />
+        <source media="(max-width: 767px)" srcSet="/hero-arch-mobile.webp" />
         <img
           src={bgSrc}
           alt=""
@@ -28,7 +28,16 @@ export default function ScrollVideoHero({
           className="absolute inset-0 h-full w-full object-cover"
         />
       </picture>
-
+      {/* The arch scene is bright sky behind the copy, so a soft blue shade
+          on the left keeps the white and volt lines readable. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(8,38,84,0.42) 0%, rgba(8,38,84,0.22) 38%, rgba(8,38,84,0) 62%)",
+        }}
+      />
 
       <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1440px] items-start gap-12 px-4 pb-20 pt-36 sm:px-6 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-6 lg:px-8 lg:pb-0 lg:pt-16">
         {/* Left — copy, nudged above the hills so it sits on the sky band */}
