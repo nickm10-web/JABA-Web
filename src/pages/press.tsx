@@ -347,7 +347,7 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
 
           {/* Announcement posts — each link appears only once its URL is set
               on the release in src/data/press-releases.ts. */}
-          {(release.instagram || release.linkedin) && (
+          {(release.instagram || release.linkedin || release.coverage) && (
             <div className="mt-8 border-t border-black/10 pt-5">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.16em] text-black/40">
                 Announced on
@@ -381,6 +381,20 @@ function Plate({ release, i }: { release: PressRelease; i: number }) {
                       <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14Zm1.78 13.02H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0Z" />
                     </svg>
                     LinkedIn
+                  </a>
+                )}
+                {release.coverage && (
+                  <a
+                    href={release.coverage.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-black/15 px-3.5 py-2 font-sans text-[13px] font-semibold text-black/75 transition-colors hover:border-black/40 hover:text-black"
+                  >
+                    <svg viewBox="0 0 24 24" className="h-[15px] w-[15px]" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                      <path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4Z" />
+                      <path d="M18 9h1.5a1.5 1.5 0 0 1 1.5 1.5V18a2 2 0 0 1-2 2M8.5 8.5h6M8.5 12h6M8.5 15.5h3.5" />
+                    </svg>
+                    {release.coverage.outlet}
                   </a>
                 )}
               </div>

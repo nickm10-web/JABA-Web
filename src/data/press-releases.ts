@@ -17,9 +17,49 @@ export interface PressRelease {
   /** Where the partnership was announced socially. Rendered only when set. */
   instagram?: string;
   linkedin?: string;
+  /** Press coverage of the announcement, e.g. { outlet: "Sports Business Journal", url }. */
+  coverage?: { outlet: string; url: string };
 }
 
 export const pressReleases: PressRelease[] = [
+  {
+    id: "playfly",
+    partner: "Playfly Sports",
+    tag: "11 partner schools",
+    date: "November 23, 2026",
+    wireDate: "NOV 23 2026 · NEW YORK, NY",
+    plateDate: "NOV 23",
+    logo: "/playfly/playfly-logo.png",
+    graphic: "/press/jabaxplayfly.jpg",
+    instagram: "https://www.instagram.com/reel/DgFqlhyRqJf/",
+    linkedin:
+      "https://www.linkedin.com/posts/jordon-rooney_today-we-announced-our-partnership-with-playfly-activity-7530682918537596928-uMdc",
+    coverage: {
+      outlet: "Sports Business Journal",
+      url: "https://www.sportsbusinessjournal.com/Articles/2026/11/23/playfly-sports-expands-deal-with-jaba-across-11-schools/",
+    },
+    headline: "Playfly Sports expands partnership with JABA, working with 10 new schools.",
+    location: "New York, NY",
+    paragraphs: [
+      "Playfly Sports, the sports industry’s leading revenue maximization company, today announced a partnership with JABA, an AI platform that supports the people building, selling and managing athlete partnerships. The agreement adds 10 new schools to JABA’s roster of Playfly partners, as well as Baylor, who began utilizing the technology in August 2025.",
+      "Playfly’s on-campus staff across the 11 total partner schools will use JABA’s proprietary technology to support pre- and post-sale NIL work, helping athletics departments, student-athletes and brands coordinate partnerships and activations. Playfly is pairing its NIL business with JABA’s AI agents to amplify the work of its teams, helping them reach more brands, develop more creative deals and create more earning opportunities for athletes.",
+      "Functioning as an AI assistant for athletes and staff, JABA supports the daily work behind athlete partnerships. Its AI agents help identify prospective brand opportunities, prepare personalized pitches and proposals, coordinate campaign deadlines and deliverables, and track social media performance. For Playfly’s on-campus teams, that support creates more time to build relationships with athletes and brands and grow their NIL business.",
+      "The partnership will give staff support on both sides of a signed deal. Teams can use brand research to prepare proposals around a company’s marketing goals, then use campaign reporting to show the brand what athletes delivered and discuss future work together.",
+      "In addition to Baylor University, the participating schools are Auburn University, Louisiana State University, Michigan State University, Pennsylvania State University, Texas A&M University, University of Maryland, University of Nebraska, University of Texas at San Antonio, University of Virginia and Washington State University.",
+    ],
+    quotes: [
+      {
+        text: "Playfly is putting more resources behind the people who create NIL opportunities for athletes. Their teams know the athletes and build the brand relationships. JABA gives them more support to research the next prospect, prepare a pitch and manage the work on a signed deal. We’re excited to help Playfly partners grow their NIL business and create more earning opportunities for athletes.",
+        author: "Jordon Rooney",
+        title: "CEO, JABA",
+      },
+      {
+        text: "As we ramp up operations, we’re most excited about what JABA can do to ease the management of NIL partnerships on campus for student-athletes and our on-property staff. JABA’s technology will supercharge our customer service and help us ensure we’re delivering fair-market-value across the board.",
+        author: "Jon Bishop",
+        title: "VP of Playfly NIL Max",
+      },
+    ],
+  },
   {
     id: "cincinnati",
     instagram: "https://www.instagram.com/p/DU6W4m5kYD6/",
